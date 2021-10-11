@@ -1,0 +1,3 @@
+import extractSPARQLtoJSON
+
+extractSPARQLtoJSON.extract()
