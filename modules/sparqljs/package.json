@@ -1,0 +1,116 @@
+{
+  "_args": [
+    [
+      "sparqljs",
+      ""
+    ]
+  ],
+  "_from": "sparqljs@latest",
+  "_hasShrinkwrap": false,
+  "_id": "sparqljs@3.5.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/sparqljs",
+  "_nodeVersion": "16.5.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/sparqljs_3.5.1_1632750396662_0.4251532259032913"
+  },
+  "_npmUser": {
+    "email": "ruben@verborgh.org",
+    "name": "rubenverborgh"
+  },
+  "_npmVersion": "7.19.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "sparqljs",
+    "raw": "sparqljs",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/sparqljs/-/sparqljs-3.5.1.tgz",
+  "_shasum": "631cd4b5bcc3d9ce23c5313b3a158eccf858e28b",
+  "_shrinkwrap": null,
+  "_spec": "sparqljs",
+  "_where": "",
+  "author": {
+    "email": "ruben.verborgh@gmail.com",
+    "name": "Ruben Verborgh"
+  },
+  "bin": {
+    "sparqljs": "bin/sparql-to-json"
+  },
+  "browser": {
+    "_process": false,
+    "fs": false,
+    "path": false
+  },
+  "bugs": {
+    "url": "https://github.com/RubenVerborgh/SPARQL.js/issues"
+  },
+  "dependencies": {
+    "rdf-data-factory": "^1.0.4"
+  },
+  "description": "A parser for the SPARQL query language",
+  "devDependencies": {
+    "expect": "^24.8.0",
+    "jison": "0.4.18",
+    "mocha": "^7.0.0",
+    "pre-commit": "^1.2.2",
+    "rdf-test-suite": "^1.11.0"
+  },
+  "directories": {},
+  "dist": {
+    "fileCount": 9,
+    "integrity": "sha512-sHc6z7hNF3ACvXurKe8hT1sD52Fc0fN3uPLS6SQnXRV9CJl33GNAS4w5Dd3X3GgykUt9SlnjhI1QRKhLzun4qQ==",
+    "shasum": "631cd4b5bcc3d9ce23c5313b3a158eccf858e28b",
+    "tarball": "https://registry.npmjs.org/sparqljs/-/sparqljs-3.5.1.tgz",
+    "unpackedSize": 134358
+  },
+  "engines": {
+    "node": ">=8.0"
+  },
+  "gitHead": "bb4fd68667f175cbdd7deb1ef22bb11a549f966a",
+  "homepage": "https://github.com/RubenVerborgh/SPARQL.js#readme",
+  "keywords": [
+    "parser",
+    "query",
+    "rdf",
+    "sparql"
+  ],
+  "license": "MIT",
+  "main": "sparql.js",
+  "maintainers": [
+    {
+      "name": "rubenverborgh",
+      "email": "ruben@verborgh.org"
+    }
+  ],
+  "name": "sparqljs",
+  "optionalDependencies": {},
+  "pre-commit": [
+    "build",
+    "test"
+  ],
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RubenVerborgh/SPARQL.js.git"
+  },
+  "scripts": {
+    "build": "jison lib/sparql.jison -p slr -o lib/SparqlParser.js",
+    "prepublishOnly": "npm run build",
+    "spec": "npm run spec-base-query && npm run spec-base-update",
+    "spec-base-query": "rdf-test-suite spec/parser.js http://w3c.github.io/rdf-tests/sparql11/data-sparql11/manifest-all.ttl -s http://www.w3.org/TR/sparql11-query/ -c .rdf-test-suite-cache/",
+    "spec-base-update": "rdf-test-suite spec/parser.js http://w3c.github.io/rdf-tests/sparql11/data-sparql11/manifest-all.ttl -s http://www.w3.org/TR/sparql11-update/ -c .rdf-test-suite-cache/",
+    "spec-earl-query": "npm run spec-base-query --silent -- -o earl -p spec/earl-meta.json > spec/earl-query.ttl",
+    "spec-earl-update": "npm run spec-base-update --silent -- -o earl -p spec/earl-meta.json > spec/earl-update.ttl",
+    "test": "mocha"
+  },
+  "version": "3.5.1"
+}
