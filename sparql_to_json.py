@@ -6,7 +6,7 @@ import time
 from urllib.parse import unquote_plus
 
 
-def extract(location):
+def extract_SPARQL_to_JSON(location):
     tsv_data_path = "data/" + location + ".tsv.gz"
 
     with gzip.open(tsv_data_path, 'rt') as sample_data:
