@@ -7,15 +7,12 @@ from urllib.parse import unquote_plus
 
 
 def extract(location):
-
     tsv_data_path = "data/" + location + ".tsv.gz"
 
     with gzip.open(tsv_data_path, 'rt') as sample_data:
 
         read_tsv = csv.reader(sample_data, delimiter="\t")
         i = 0
-        sample_sparql = ""
-        check_file = []
 
         start_time = time.time()
 
@@ -25,11 +22,13 @@ def extract(location):
             # Information for the strings from https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format
 
             contains = ""
-            if("<http://www.w3.org/ns/prov#wasDerivedFrom>" in sample_sparql):
-                if("<http://www.wikidata.org/prop/reference" in sample_sparql):
+            if "<http://www.w3.org/ns/prov#wasDerivedFrom>" in sample_sparql:
+                if "<http://www.wikidata.org/prop/reference" in sample_sparql:
                     contains = "both"
-                else: contains = "only_derived"
-            if("<http://www.wikidata.org/prop/reference" in sample_sparql
+                else:
+                    contains = "only_derived"
+
+            if ("<http://www.wikidata.org/prop/reference" in sample_sparql
                     and "<http://www.w3.org/ns/prov#wasDerivedFrom>" not in sample_sparql):
                 contains = "only_reference"
 
@@ -43,7 +42,7 @@ def extract(location):
                 output_bytes, err = process.communicate()
                 print(err)
 
-                if err == None:
+                if err is None:
                     output_str = output_bytes.decode("utf-8")
 
                     output_json = json.loads(output_str)
@@ -51,13 +50,13 @@ def extract(location):
                     output_json["timestamp"] = row[1]
                     output_json["sourceCategory"] = row[2]
                     output_json["user_agent"] = row[3]
-                    print("Queries found: " , i)
-                    print("Time required so far in min: ", (time.time()-start_time)/60 )
+                    print("Queries found: ", i)
+                    print("Time required so far in min: ", (time.time() - start_time) / 60)
 
-                    path_to_json = "data/" + location[:21] + "/" +\
+                    path_to_json = "data/" + location[:21] + "/" + \
                                    location[22:] + "/" + contains + "/" + str(i) + ".json"
-                    path_to_sparql = "data/" + location[:21] + "/" +\
-                                   location[22:] + "/" + contains + "/" + str(i) + ".sparql"
+                    path_to_sparql = "data/" + location[:21] + "/" + \
+                                     location[22:] + "/" + contains + "/" + str(i) + ".sparql"
 
                     with open(path_to_json, "wt") as result_data:
                         json.dump(output_json, result_data)
@@ -69,7 +68,7 @@ def extract(location):
                     end_time_ref_query = time.time()
                     time_taken_ref_query = end_time_ref_query - start_time_ref_query
                     print("Time taken for this query in sec: ", time_taken_ref_query)
-                    print("Time taken on average for a query:", (time.time()-start_time)/i)
+                    print("Time taken on average for a query:", (time.time() - start_time) / i)
                     print("\n")
 
         print("Pffff.... that took a long time.")
