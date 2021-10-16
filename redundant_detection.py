@@ -34,7 +34,7 @@ def delete_redundant_queries(location):
                                     print("Because of: ", query_file.title().lower())
                                     print("\n")
                                     os.remove(path_to_delete)
-                                    os.remove(path_to_delete[:len(path_to_delete)-7]+"json")
+                                    os.remove(path_to_delete[:len(path_to_delete)-7]+".json")
 
                         sparql_test_data.close()
             sparql_data.close()
