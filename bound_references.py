@@ -23,20 +23,22 @@ def find_bound_references(location):
                     if where_part["type"] == "bgp":
                         triples = where_part["triples"]
                         for triple in triples:
+
+                            # bound statement node -> reference node
                             if triple["subject"]["termType"] == "NamedNode":
 
                                 # TODO, add the property path
 
                                 if triple["predicate"]["termType"] == "NamedNode":
-                                    if (triple["predicate"]["value"] == "http://www.w3.org/ns/prov#wasDerivedFrom"
-                                            or "http://www.wikidata.org/prop/reference/" in triple["predicate"][
-                                                "value"]):
+                                    if triple["predicate"]["value"] == "http://www.w3.org/ns/prov#wasDerivedFrom":
                                         bound_reference_file = "data/" + location[
                                                                          :21] + "/bound_references/" + json_file.split("/")[4]
                                         with open(bound_reference_file, "wt") as result_data:
                                             json.dump(json_object, result_data)
                                             i += 1
                                         result_data.close()
+
+
             print("f")
             print(i)
         json_data.close()
