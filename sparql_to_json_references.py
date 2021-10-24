@@ -72,9 +72,9 @@ def extract_SPARQL_to_JSON(location):
                     print("Time required so far in min: ", (time.time() - start_time) / 60)
 
                     path_to_json = "data/" + location[:21] + "/" + \
-                                   location[22:] + "/" + contains + "/" + str(i) + ".json"
+                                   location[22:] + "/reference_metadata/" + contains + "/" + str(i) + ".json"
                     path_to_sparql = "data/" + location[:21] + "/" + \
-                                     location[22:] + "/" + contains + "/" + str(i) + ".sparql"
+                                     location[22:] + "/reference_metadata/" + contains + "/" + str(i) + ".sparql"
 
                     with open(path_to_json, "wt") as result_data:
                         json.dump(output_json, result_data)
