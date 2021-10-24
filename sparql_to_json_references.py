@@ -21,18 +21,36 @@ def extract_SPARQL_to_JSON(location):
 
             # Information for the strings from https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format
 
-            contains = ""
+            contains = "none"
+
             if "<http://www.w3.org/ns/prov#wasDerivedFrom>" in sample_sparql:
+
                 if "<http://www.wikidata.org/prop/reference" in sample_sparql:
-                    contains = "both"
+
+                    if "<http://www.wikidata.org/reference" in sample_sparql:
+                        contains = "all_three"
+                    else:
+                        contains = "derived_+_reference_property"
+
+                elif "<http://www.wikidata.org/reference" in sample_sparql:
+                    contains = "derived_+_reference_node"
                 else:
                     contains = "only_derived"
 
-            if ("<http://www.wikidata.org/prop/reference" in sample_sparql
-                    and "<http://www.w3.org/ns/prov#wasDerivedFrom>" not in sample_sparql):
-                contains = "only_reference"
+            elif "<http://www.wikidata.org/prop/reference" in sample_sparql:
 
-            if contains != "":
+                if "<http://www.wikidata.org/reference" in sample_sparql:
+                    contains = "reference_node_+_reference_property"
+                else:
+                    contains = "only_reference_property"
+
+            elif "<http://www.wikidata.org/reference" in sample_sparql:
+                contains = "only_reference_node"
+
+
+
+
+            if contains != "none":
                 i += 1
 
                 start_time_ref_query = time.time()
