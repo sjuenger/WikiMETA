@@ -29,5 +29,14 @@ var query = args[0]; //von mir
 //  process.stdout.write(JSON.stringify(parseTree, null, '  ') + '\n');
 //});
 
-var parseTree = new SparqlParser({ sparqlStar: !strictMode }).parse(query);
-process.stdout.write(JSON.stringify(parseTree, null, '  ') + '\n');
+try {
+   var parseTree = new SparqlParser({ sparqlStar: !strictMode }).parse(query);
+   process.stdout.write(JSON.stringify(parseTree, null, '  ') + '\n');
+}
+catch (e) {
+
+}
+
+
+
+
