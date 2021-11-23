@@ -13,7 +13,6 @@ def extract_SPARQL_to_JSON(location):
 
         read_tsv = csv.reader(sample_data, delimiter="\t")
         i = 0
-        failed_conversions = 0
 
         start_time = time.time()
 
@@ -68,7 +67,6 @@ def extract_SPARQL_to_JSON(location):
                 except subprocess.CalledProcessError as e:
                     print(err)
                     print(e)
-                    failed_conversions += 1
 
                 if len(output_bytes) != 0:
 
@@ -83,9 +81,11 @@ def extract_SPARQL_to_JSON(location):
                     print("Time required so far in min: ", (time.time() - start_time) / 60)
 
                     path_to_json = "data/" + location[:21] + "/" + \
-                                   location[22:] + "/reference_metadata/" + contains + "/" + str(i) + ".json"
+                                   location[22:] + "/reference_metadata/" + contains + "/" + str(k) + \
+                                   " " + unquote_plus(row[1]) + ".json"
                     path_to_sparql = "data/" + location[:21] + "/" + \
-                                     location[22:] + "/reference_metadata/" + contains + "/" + str(i) + ".sparql"
+                                     location[22:] + "/reference_metadata/" + contains + "/" + str(k) + \
+                                     " " +unquote_plus(row[1]) + ".sparql"
 
                     with open(path_to_json, "wt") as result_data:
                         json.dump(output_json, result_data)
@@ -102,7 +102,6 @@ def extract_SPARQL_to_JSON(location):
 
                 else:
                     print(sample_sparql)
-                    failed_conversions += 1
                     path_to_failed = "data/" + location[:21] + "/" + \
                                   location[22:] + "/reference_metadata/" + "failed_queries" + "/" + str(k)\
                                      + " " + unquote_plus(row[1]) + ".txt"
@@ -113,16 +112,9 @@ def extract_SPARQL_to_JSON(location):
                         failed_txt.write(unquote_plus(row[2]))
                         failed_txt.write(unquote_plus(row[3]))
 
-        path_to_txt = "data/" + location[:21] + "/" + \
-                      location[22:] + "/reference_metadata/" + "property_reference" + "/" + str(
-            failed_conversions) + ".txt"
-
-        with open(path_to_txt, "wt") as failed_txt:
-            failed_txt.write(failed_conversions.to_string())
 
         print("Pffff.... that took a long time.")
         print("Total amount of queries found: ", i)
         print("Total amount of queries: ", k)
-        print("Total amount of failed query conversions: ", failed_conversions)
 
     sample_data.close()

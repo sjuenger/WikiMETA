@@ -17,4 +17,5 @@ source.on('data', function (data) { query += data; });
 source.on('end', function () {
   var sparqlText = new SparqlGenerator().stringify(JSON.parse(query));
   process.stdout.write(sparqlText + '\n');
+  process.stdout.write("test" + '\n');
 });
