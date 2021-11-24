@@ -1,6 +1,7 @@
 # Statistics based on data dump 11/8/2021
 # https://sqid.toolforge.org/#/browse?type=properties
 import property_to_facets_WD
+import property_is_qualifier
 
 property_qualifer_reference_facets = {}
 
@@ -27,40 +28,21 @@ with open("data/SQID_properties_list.txt") as txt_list:
             # get the facets, attached to a property (if any)
             facets = property_to_facets_WD.getFacet(PID)
 
+            # decide, whether the property is a qualifier or reference
+            # according to the recommended properties of Wikidata
+            qualifier = property_is_qualifier.is_qualifier(PID)
+
             # ... and put it into a dictionary
-            property_qualifer_reference_facets[PID] = (statements_no, qualifiers_no, reference_no, facets)
+            property_qualifer_reference_facets[PID] = (statements_no, qualifiers_no, reference_no, facets, qualifier)
 
             print(PID)
             print(statements_no)
             print(qualifiers_no)
             print(reference_no)
+            print(facets)
+            print(qualifier)
 
             print(property_qualifer_reference_facets)
 
 
-
-
-
-
-
-property_qualifier_reference = {
-    "P1476" : (63990, 1736182),
-    "P577"  : (484233, 2862002),
-    "P1433" : (6783, 12032),
-    "P304"  : (428675, 108772),
-    "P478" : (173416, 11760),
-    "P1215" : (1, 0),
-    "P433" : (31350, 14837),
-    "P528" : (16615, 4456),
-    "P356" : (20328, 167652),
-    "P50" : (14820, 8963),
-    "P921" : (1343, 104),
-    "P17" : (75004, 25),
-    "P407" : (1082869, 1730903),
-    "P131" : (146847, 30),
-    "P2215" : (1,0),
-    "P106" : (135068, 171),
-    "P625" : (118920, 247),
-    "P30382" : (1,2)
-}
 # Statistics based on data dump 11/8/2021
