@@ -17,7 +17,7 @@ def is_scenario_one(json_object):
 
     # find scenario 1
 
-    # multiple bgp (basic graph patterns
+    # multiple bgp (basic graph patterns)
     for where_part in where:
 
         if where_part["type"] == "bgp":

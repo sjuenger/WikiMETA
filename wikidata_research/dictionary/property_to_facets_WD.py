@@ -27,7 +27,7 @@ def getFacet(property_PID):
     facet_of = []
 
     for var in results['results']['bindings']:
-        item = var['facetLabel']['value']
+        item = var['facetOFLabel']['value']
 
         if not utilities.found_in_array(item, facet_of):
             facet_of.append(item)
