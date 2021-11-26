@@ -1,9 +1,9 @@
-import sparql_to_json_references
-import sparql_to_json_qualifiers
-import sparql_to_json_ranks
-import bound_references
-import redundant_detection
-import scenario_detection_unit
+import query_research.transform_data.sparql_to_json_references
+import query_research.transform_data.sparql_to_json_qualifiers
+import query_research.transform_data.sparql_to_json_ranks
+import query_research.bound_references
+import query_research.redundant_detection
+import query_research.scenarios.scenario_detection_unit
 
 # TODO: Add the whole list of data sources
 LOCATION = "2017-06-12_2017-07-09_organic"

@@ -1,7 +1,7 @@
 # get, if a property on wikidata is a qualifier
 # .. according to the recommended properties of wikidata
 import SPARQLWrapper
-import utilities
+import wikidata_research.dictionary.utilities as utilities
 
 def is_qualifier(property_PID):
 
@@ -32,8 +32,6 @@ def is_qualifier(property_PID):
         prop_class = var['classLabel']['value']
         prop_classes.append(prop_class)
 
-        print(prop_classes)
-
     result = ""
 
     if "restrictive qualifier" in prop_classes:
@@ -45,4 +43,4 @@ def is_qualifier(property_PID):
     elif "Wikidata qualifier" in prop_classes:
         result += "Wikidata qualifier"
 
-    return prop_classes
+    return result
