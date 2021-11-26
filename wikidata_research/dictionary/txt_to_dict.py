@@ -49,9 +49,9 @@ with open("../../data/SQID_properties_list.txt") as txt_list:
             qualifier = property_is_qualifier.is_qualifier(PID)
 
             # if the property if a facet of 'Wikipedia:Citing sources' ->
+            is_a_reference = facet_of.__contains__('Wikipedia:Citing sources')
 
-            # ... and put it into a dictionary
-
+            # ... and put it into the dictionary per property
             prop_dict[PID] = (statements_no, qualifiers_no, reference_no, facet_of, qualifier)
 
 
