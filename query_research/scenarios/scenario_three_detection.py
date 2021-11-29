@@ -1,25 +1,25 @@
-# method to detect scenario one
+# method to detect scenario three
 #
 #
 #
 # constellation for "wasDerivedFrom"
 #
-# scenario 1:
-# ?s prov:wasDerivedFrom ?o .
+# scenario 3:
+# ?s prov:wasDerivedFrom BOUND .
 #
 #
 #
 # look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
 
 
-def is_scenario_one(json_object, look_for):
+def is_scenario_three(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
     bound_variables = []
     for where_part in where:
         if where_part["type"] == "bind":
-            print(where_part)
+            #print(where_part)
             #print(json_data.name)
 
             if "termType" in where_part["expression"]:
@@ -51,8 +51,8 @@ def is_scenario_one(json_object, look_for):
                                        look_for)
                                       in bound_variables)))):
 
-                            if (triple["object"]["termType"] == "Variable") and ((triple["object"]
-                            ["value"]) not in bound_variables):
+                            if (triple["object"]["termType"] == "NamedNode") or ((triple["object"]
+                            ["value"]) in bound_variables):
 
                               result = True
     #if result:
@@ -61,4 +61,3 @@ def is_scenario_one(json_object, look_for):
         #print(where)
 
     return result
-

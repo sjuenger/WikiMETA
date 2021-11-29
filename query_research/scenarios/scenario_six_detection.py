@@ -40,7 +40,7 @@ def is_scenario_one(json_object, look_for):
         if where_part["type"] == "bgp":
             for triple in where_part["triples"]:
 
-                if (triple["subject"]["termType"] == "Variable") and ((triple["subject"]["value"])
+                if (triple["subject"]["termType"] == "Variable") or ((triple["subject"]["value"])
                                                                      not in bound_variables):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
@@ -51,7 +51,7 @@ def is_scenario_one(json_object, look_for):
                                        look_for)
                                       in bound_variables)))):
 
-                            if (triple["object"]["termType"] == "Variable") and ((triple["object"]
+                            if (triple["object"]["termType"] == "Variable") or ((triple["object"]
                             ["value"]) not in bound_variables):
 
                               result = True
