@@ -1,19 +1,19 @@
-# method to detect scenario six
+# method to detect scenario eight
 #
 #
 #
 # constellation for "wdref:1234567.."
 # ( a reference node)
 #
-# scenario 6:
-# ?s BOUDN wdref:.... .
+# scenario 8:
+# BOUND BOUND wdref:.... .
 #
 #
 #
 # look_for e.g. "<http://www.wikidata.org/reference/0b1317d88f3e23f552ee804b79987760961819a0>"
 
 
-def is_scenario_six(json_object, look_for):
+def is_scenario_eight(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -31,7 +31,7 @@ def is_scenario_six(json_object, look_for):
                 print("Bound Variables: ")
                 print(bound_variables)
 
-    # find scenario 6
+    # find scenario 8
 
     result = False
 
@@ -41,8 +41,8 @@ def is_scenario_six(json_object, look_for):
         if where_part["type"] == "bgp":
             for triple in where_part["triples"]:
 
-                if (triple["subject"]["termType"] == "Variable") and ((triple["subject"]["value"])
-                                                                      not in bound_variables):
+                if (triple["subject"]["termType"] == "NamedNode") or ((triple["subject"]["value"])
+                                                                      in bound_variables):
 
                     if ("termType" in triple["predicate"]):
                         # on property paths, there also could be no termType

@@ -1,19 +1,19 @@
-# method to detect scenario six
+# method to detect scenario nine
 #
 #
 #
 # constellation for "wdref:1234567.."
 # ( a reference node)
 #
-# scenario 6:
-# ?s BOUDN wdref:.... .
+# scenario 9:
+# wdref:.... ?p ?o .
 #
 #
 #
 # look_for e.g. "<http://www.wikidata.org/reference/0b1317d88f3e23f552ee804b79987760961819a0>"
 
 
-def is_scenario_six(json_object, look_for):
+def is_scenario_nine(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -31,7 +31,7 @@ def is_scenario_six(json_object, look_for):
                 print("Bound Variables: ")
                 print(bound_variables)
 
-    # find scenario 6
+    # find scenario 9
 
     result = False
 
@@ -41,18 +41,18 @@ def is_scenario_six(json_object, look_for):
         if where_part["type"] == "bgp":
             for triple in where_part["triples"]:
 
-                if (triple["subject"]["termType"] == "Variable") and ((triple["subject"]["value"])
+                if (triple["object"]["termType"] == "Variable") and ((triple["object"]["value"])
                                                                       not in bound_variables):
 
                     if ("termType" in triple["predicate"]):
                         # on property paths, there also could be no termType
-                        if (triple["predicate"]["termType"] == "NamedNode") or ((triple["predicate"]["value"])
-                                                                                in bound_variables):
+                        if (triple["predicate"]["termType"] == "Variable") and ((triple["predicate"]["value"])
+                                                                                not in bound_variables):
 
-                            if ((triple["object"]["termType"] == "NamedNode" and
-                                 triple["object"]["value"].__contains__(look_for) )
-                                    or (triple["object"]["termType"] == "Variable" and
-                                        (triple["object"]["value"], look_for) in bound_variables)):
+                            if ((triple["subject"]["termType"] == "NamedNode" and
+                                 triple["subject"]["value"].__contains__(look_for) )
+                                    or (triple["subject"]["termType"] == "Variable" and
+                                        (triple["subject"]["value"], look_for) in bound_variables)):
                                 result = True
 
     # if result:
