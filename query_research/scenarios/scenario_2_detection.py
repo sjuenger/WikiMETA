@@ -1,33 +1,33 @@
-# method to detect scenario four
+# method to detect scenario two
 #
 #
 #
 # constellation for "wasDerivedFrom"
 #
-# scenario 4:
-# BOUND prov:wasDerivedFrom BOUND .
+# scenario 2:
+# BOUND prov:wasDerivedFrom ?o .
 #
 #
 #
 # look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
 
 
-def is_scenario_four(json_object, look_for):
+def is_scenario_two(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
     bound_variables = []
     for where_part in where:
         if where_part["type"] == "bind":
-            #print(where_part)
+            print(where_part)
             #print(json_data.name)
 
             if "termType" in where_part["expression"]:
-                if where_part["expression"]["termType"] == "namedNode":
+                if where_part["expression"]["termType"] == "NamedNode":
                     if where_part["variable"]["termType"] == "Variable":
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
-                print("Bound Variables: ")
+                print("Bound Variables: 2")
                 print(bound_variables)
 
     # find scenario 1
@@ -41,7 +41,7 @@ def is_scenario_four(json_object, look_for):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "NamedNode") or ((triple["subject"]["value"])
-                                                                     in bound_variables):
+                                                                     in bound_variables.__str__()):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
                         if (((triple["predicate"]["termType"] == "NamedNode" and
@@ -51,8 +51,8 @@ def is_scenario_four(json_object, look_for):
                                        look_for)
                                       in bound_variables)))):
 
-                            if (triple["object"]["termType"] == "NamedNode") or ((triple["object"]
-                            ["value"]) in bound_variables):
+                            if (triple["object"]["termType"] == "Variable") and ((triple["object"]
+                            ["value"]) not in bound_variables.__str__()):
 
                               result = True
     #if result:

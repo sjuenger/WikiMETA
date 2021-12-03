@@ -23,11 +23,11 @@ def is_scenario_one(json_object, look_for):
             #print(json_data.name)
 
             if "termType" in where_part["expression"]:
-                if where_part["expression"]["termType"] == "namedNode":
+                if where_part["expression"]["termType"] == "NamedNode":
                     if where_part["variable"]["termType"] == "Variable":
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
-                print("Bound Variables: ")
+                print("Bound Variables: 1")
                 print(bound_variables)
 
     # find scenario 1
@@ -41,7 +41,7 @@ def is_scenario_one(json_object, look_for):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "Variable") and ((triple["subject"]["value"])
-                                                                     not in bound_variables):
+                                                                     not in bound_variables.__str__()):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
                         if (((triple["predicate"]["termType"] == "NamedNode" and
@@ -52,7 +52,7 @@ def is_scenario_one(json_object, look_for):
                                       in bound_variables)))):
 
                             if (triple["object"]["termType"] == "Variable") and ((triple["object"]
-                            ["value"]) not in bound_variables):
+                            ["value"]) not in bound_variables.__str__()):
 
                               result = True
     #if result:
