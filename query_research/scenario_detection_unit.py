@@ -1,6 +1,7 @@
 import json
 import glob
 import os
+import shutil
 
 """{
 # scenario 5:
@@ -35,130 +36,165 @@ import query_research.scenarios.scenario_optional_detection as scenario_optional
 
 def detect_scenarios(location, data_type):
     # Retrieve all files, ending with .json
-    files_sparql = glob.glob("data/" + location[:21] + "/" +
+    files_json = glob.glob("data/" + location[:21] + "/" +
                              location[22:] + "/" + data_type + "/*.json")
+    # get the path to the folder, where all scenarios are saved
+    path_to_scenarios = "data/" + location[:21] + "/" + location[22:] + "/" + \
+                        data_type.split('/')[0] + "/scenarios"
+    # get the path to the folder, where the json file about the gathered statistical information
+    # .. is stored
+    path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/" + \
+                        data_type.split('/')[0] + "/statistical_information"
 
-    print(".json files in total in this folder: ", files_sparql.__len__())
 
     total_SELECT_queries = 0
     total_DESCRIBE_queries = 0
     total_CONSTRUCT_queries = 0
     total_ASK_queries = 0
 
-    # create a dictionary -> to count the different scenarios
-    scenario_dict = {
-    "one" : 0,\
-    "two" : 0,\
-    "three" : 0,\
-    "four" : 0,\
-    "five" : 0,\
-    "six" : 0,\
-    "seven" : 0,\
-    "eight" : 0,\
-    "nine" : 0,\
-    "ten" : 0,\
-    "eleven" : 0,\
-    "twelve" : 0,\
-    "filter" : 0,\
-    "optional" : 0,\
-    "others" : 0
-    }
     # a scenario fora non-recognized scenario
 
     # auch BIND als scenario
     # property path als scenario
 
+    # to check for the type of the SPARQL query (SELECT, DESCRIBE, ASK, CONSTRUCT)
+    for query_file in files_json:
+        if os.path.isfile(query_file.title().lower()):
+            with open(query_file, "rt") as json_data:
+                json_object = json.load(json_data)
+
+                if json_object["queryType"] == "SELECT":
+                    total_SELECT_queries += 1
+                elif json_object["queryType"] == "DESCRIBE":
+                    total_DESCRIBE_queries += 1
+                elif json_object["queryType"] == "ASK":
+                    total_ASK_queries += 1
+                elif json_object["queryType"] == "CONSTRUCT":
+                    total_CONSTRUCT_queries += 1
+
+
+    # to check for the scenarios
 
     array_looking_for = get_mode(data_type)
 
-
-    i = 0
+    dict_overview_looking_for = {"list_per_search": []}
 
     for looking_for in array_looking_for:
-        for query_file in files_sparql:
+
+        # create a scenario per "looking for" , e.g. "wasDerivedFrom"
+        dict_looking_for = {
+            "looking_for" : looking_for,
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 0,
+            "six": 0,
+            "seven": 0,
+            "eight": 0,
+            "nine": 0,
+            "ten": 0,
+            "eleven": 0,
+            "twelve": 0,
+            "filter": 0,
+            "optional": 0,
+            "other": 0}
+
+        for query_file in files_json:
             if os.path.isfile(query_file.title().lower()):
                 with open(query_file, "rt") as json_data:
                     json_object = json.load(json_data)
 
-                    if json_object["queryType"] == "SELECT":
-                        total_SELECT_queries += 1
+                    # the path to the sparql text file (corresponding to the json object
+                    # to later be able to copy the sparql text file to a specific directors (for debugging)
+                    # Data/2017-06-12_2017-07-09/Organic/Reference_Metadata/Derived_+_Reference_Property/182150 2017-07-07 19:06:30.json
+                    # -->
+                    # Data/2017-06-12_2017-07-09/Organic/Reference_Metadata/Derived_+_Reference_Property/182150 2017-07-07 19:06:30.sparql
+                    path_to_sparql_text_file = query_file[:-4]+"sparql"
 
-                        # to later check, if something changed in the list
-                        # -> to detect, if a scenario did apply
-                        tmp_dict = scenario_dict
+                    # to later check, if something changed in the list
+                    # -> to detect, if a scenario did apply
+                    tmp_dict = dict_looking_for.copy()
 
-                        if scenario_one_detection.is_scenario_one(json_object, looking_for):
-                            scenario_dict["one"] += 1
-                        if scenario_two_detection.is_scenario_two(json_object, looking_for):
-                            scenario_dict["two"] += 1
-                        if scenario_three_detection.is_scenario_three(json_object, looking_for):
-                            scenario_dict["three"] += 1
-                        if scenario_four_detection.is_scenario_four(json_object, looking_for):
-                            scenario_dict["four"] += 1
+                    if scenario_one_detection.is_scenario_one(json_object, looking_for):
+                        dict_looking_for["one"] += 1
+                        # copy the corresponding sparql file (to the JSON file) to a specific folder for scenarios
+                        # .. used for debugging and review of the results
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/one")
 
-                        if scenario_five_detection.is_scenario_five(json_object, looking_for):
-                            scenario_dict["five"] += 1
-                        if scenario_six_detection.is_scenario_six(json_object, looking_for):
-                            scenario_dict["six"] += 1
-                        if scenario_seven_detection.is_scenario_seven(json_object, looking_for):
-                            scenario_dict["seven"] += 1
-                        if scenario_eight_detection.is_scenario_eight(json_object, looking_for):
-                            scenario_dict["eight"] += 1
+                    if scenario_two_detection.is_scenario_two(json_object, looking_for):
+                        dict_looking_for["two"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/two")
+                    if scenario_three_detection.is_scenario_three(json_object, looking_for):
+                        dict_looking_for["three"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/three")
+                    if scenario_four_detection.is_scenario_four(json_object, looking_for):
+                        dict_looking_for["four"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/four")
 
-                        if scenario_nine_detection.is_scenario_nine(json_object, looking_for):
-                            scenario_dict["nine"] += 1
-                        if scenario_ten_detection.is_scenario_ten(json_object, looking_for):
-                            scenario_dict["ten"] += 1
-                        if scenario_eleven_detection.is_scenario_eleven(json_object, looking_for):
-                            scenario_dict["eleven"] += 1
-                        if scenario_twelve_detection.is_scenario_twelve(json_object, looking_for):
-                            scenario_dict["twelve"] += 1
+                    if scenario_five_detection.is_scenario_five(json_object, looking_for):
+                        dict_looking_for["five"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/five")
+                    if scenario_six_detection.is_scenario_six(json_object, looking_for):
+                        dict_looking_for["six"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/six")
+                    if scenario_seven_detection.is_scenario_seven(json_object, looking_for):
+                        dict_looking_for["seven"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/seven")
+                    if scenario_eight_detection.is_scenario_eight(json_object, looking_for):
+                        dict_looking_for["eight"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/eight")
 
-                        if scenario_filter_detection.is_scenario_filter(json_object, looking_for):
-                            scenario_dict["filter"] += 1
-                        if scenario_optional_detection.is_scenario_optional(json_object, looking_for):
-                            scenario_dict["optional"] += 1
+                    if scenario_nine_detection.is_scenario_nine(json_object, looking_for):
+                        dict_looking_for["nine"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/nine")
+                    if scenario_ten_detection.is_scenario_ten(json_object, looking_for):
+                        dict_looking_for["ten"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/ten")
+                    if scenario_eleven_detection.is_scenario_eleven(json_object, looking_for):
+                        dict_looking_for["eleven"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/eleven")
+                    if scenario_twelve_detection.is_scenario_twelve(json_object, looking_for):
+                        dict_looking_for["twelve"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/twelve")
 
-                        # check  if non scenario was applied
-                        if scenario_dict == tmp_dict:
-                            scenario_dict["others"] += 1
+                    if scenario_filter_detection.is_scenario_filter(json_object, looking_for):
+                        dict_looking_for["filter"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/filter")
+                    if scenario_optional_detection.is_scenario_optional(json_object, looking_for):
+                        dict_looking_for["optional"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/optional")
+
+                    # check  if non scenario was applied
+                    if dict_looking_for == tmp_dict:
+                        dict_looking_for["other"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/other")
+                        # with the "other" -> also copy the .json file
+                        # -> so, it is a bit easier to develop new filters
+                        shutil.copy(query_file, path_to_scenarios + "/other")
 
 
-                        #print(query_file)
+        # attach the dictionary for looking for to the dictionary for the whole data type
+        dict_overview_looking_for["list_per_search"].append(dict_looking_for)
 
-                    elif json_object["queryType"] == "DESCRIBE":
-                        total_DESCRIBE_queries += 1
-                    elif json_object["queryType"] == "ASK":
-                        total_ASK_queries += 1
-                    elif json_object["queryType"] == "CONSTRUCT":
-                        total_CONSTRUCT_queries += 1
 
-        print(data_type)
-        print(looking_for)
+    scenario_dict = {
+        "data_type": data_type,
+        "total queries": files_json.__len__(),
+        "SELECT_queries": total_SELECT_queries,
+        "DESCRIBE_queries": total_DESCRIBE_queries,
+        "CONSTRUCT_queries": total_CONSTRUCT_queries,
+        "ASK_queries": total_ASK_queries,
+        "found_scenarios": dict_overview_looking_for
+    }
 
-        print("scenario one: ", scenario_dict["one"])
-        print("scenario two: ", scenario_dict["two"])
-        print("scenario three: ", scenario_dict["three"])
-        print("scenario four: ", scenario_dict["four"])
 
-        print("scenario five: ", scenario_dict["five"])
-        print("scenario six: ", scenario_dict["six"])
-        print("scenario seven: ", scenario_dict["seven"])
-        print("scenario eight: ", scenario_dict["eight"])
+    # save the scneario_dict to a folder
+    with open(path_to_stat_information + "/" + data_type.split('/')[1] , "wt") as information_data:
+        json.dump(scenario_dict, information_data)
 
-        print("scenario nine: ", scenario_dict["nine"]) # not yet tested
-        print("scenario ten: ", scenario_dict["ten"]) # not yet tested
-        print("scenario eleven: ", scenario_dict["eleven"]) # not yet tested
-        print("scenario twelve: ", scenario_dict["twelve"]) # not yet tested
+    # test the bind variables
 
-        # not yet tested
-        print("scenario filter: ", scenario_dict["filter"])
-        print("scenario optional: ", scenario_dict["optional"])
-        print("scenario others: ", scenario_dict["others"], "\n")
-
-        # ! delete the test.json file !
-        # test the bind variables
-    print("\n")
     return
 
 

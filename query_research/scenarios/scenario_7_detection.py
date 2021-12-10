@@ -20,16 +20,12 @@ def is_scenario_seven(json_object, look_for):
     bound_variables = []
     for where_part in where:
         if where_part["type"] == "bind":
-            # print(where_part)
-            # print(json_data.name)
 
             if "termType" in where_part["expression"]:
                 if where_part["expression"]["termType"] == "NamedNode":
                     if where_part["variable"]["termType"] == "Variable":
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
-                print("Bound Variables: 7")
-                print(bound_variables)
 
     # find scenario 7
 

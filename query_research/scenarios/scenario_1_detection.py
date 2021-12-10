@@ -20,7 +20,6 @@ def is_scenario_one(json_object, look_for):
     for where_part in where:
         if where_part["type"] == "bind":
             print(where_part)
-            #print(json_data.name)
 
             if "termType" in where_part["expression"]:
                 if where_part["expression"]["termType"] == "NamedNode":
