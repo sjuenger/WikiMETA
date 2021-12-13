@@ -1,18 +1,20 @@
-# method to detect scenario optional
+# method to detect scenario union
 #
 #
 #
 # constellation for "wasDerivedFrom"
 #
 # scenario filter:
-# OPTIONAL( ?s prov:wasDerivedFrom ?o . ) .
+# { ?s prov:wasDerivedFrom ?o . }
+# UNION
+# { ?s2 prov:wasDerivedFrom ?o2 . }
 #
 #
 #
 # look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
 
 
-def is_scenario_optional(json_object, look_for):
+def is_scenario_union(json_object, look_for):
     where = json_object["where"]
 
     # find scenario 'filter'
@@ -21,13 +23,13 @@ def is_scenario_optional(json_object, look_for):
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
-        if where_part["type"] == "optional":
+        if where_part["type"] == "union":
             if (look_for in str(where_part["patterns"])):
                 result = True
 
-    # if result:
-    # print(result)
-    # print("Scenario 1")
-    # print(where)
+    if result:
+        print(result)
+        print("Scenario union")
+        print(where)
 
     return result

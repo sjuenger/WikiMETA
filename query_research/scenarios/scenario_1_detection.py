@@ -29,6 +29,8 @@ def is_scenario_one(json_object, look_for):
                 print("Bound Variables: 1")
                 print(bound_variables)
 
+                # TODO: Declare the bound variables as an own scenario
+
     # find scenario 1
 
     result = False

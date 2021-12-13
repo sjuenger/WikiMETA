@@ -22,7 +22,7 @@ def is_scenario_filter(json_object, look_for):
     # multiple bgp (basic graph patterns)
     for where_part in where:
         if where_part["type"] == "filter":
-            if (look_for in where_part["expression"]):
+            if (look_for in str(where_part["expression"])):
                 result = True
 
     # if result:

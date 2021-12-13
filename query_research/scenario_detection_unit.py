@@ -33,6 +33,8 @@ import query_research.scenarios.scenario_12_detection as scenario_twelve_detecti
 
 import query_research.scenarios.scenario_filter_detection as scenario_filter_detection
 import query_research.scenarios.scenario_optional_detection as scenario_optional_detection
+import query_research.scenarios.scenario_union_detection as scenario_union_detection
+import query_research.scenarios.scenario_prop_path_detection as scenario_prop_path_detection
 
 def detect_scenarios(location, data_type):
     # Retrieve all files, ending with .json
@@ -98,6 +100,8 @@ def detect_scenarios(location, data_type):
             "twelve": 0,
             "filter": 0,
             "optional": 0,
+            "union" : 0,
+            "prop_path" : 0,
             "other": 0}
 
         for query_file in files_json:
@@ -164,6 +168,12 @@ def detect_scenarios(location, data_type):
                     if scenario_optional_detection.is_scenario_optional(json_object, looking_for):
                         dict_looking_for["optional"] += 1
                         shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/optional")
+                    if scenario_union_detection.is_scenario_union(json_object, looking_for):
+                        dict_looking_for["union"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/union")
+                    if scenario_prop_path_detection.is_scenario_prop_path(json_object, looking_for):
+                        dict_looking_for["prop_path"] += 1
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/prop_path")
 
                     # check  if non scenario was applied
                     if dict_looking_for == tmp_dict:
@@ -206,7 +216,7 @@ def get_mode(data_type):
         return ["http://www.wikidata.org/reference", "http://www.w3.org/ns/prov#wasDerivedFrom"]
     elif data_type == "reference_metadata/derived_+_reference_property":
         return ["http://www.wikidata.org/prop/reference", "http://www.w3.org/ns/prov#wasDerivedFrom"]
-    elif data_type == "reference_metadata/donly_derived":
+    elif data_type == "reference_metadata/only_derived":
         return ["http://www.w3.org/ns/prov#wasDerivedFrom"]
     elif data_type == "reference_metadata/only_reference_node":
         return ["http://www.wikidata.org/reference"]
