@@ -26,7 +26,7 @@ def is_scenario_three(json_object, look_for):
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
 
-    # find scenario 1
+    # find scenario 3
 
     result = False
 
@@ -37,23 +37,22 @@ def is_scenario_three(json_object, look_for):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "Variable") and ((triple["subject"]["value"])
-                                                                     not in bound_variables.__str__()):
+                                                                      not in bound_variables.__str__()):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
                         if (((triple["predicate"]["termType"] == "NamedNode" and
-                              triple["predicate"]["value"] == look_for))
+                              look_for in str(triple["predicate"]["value"]))) # TODO: BETTER METHOD, THAN JUST THIS STR -> use regex with x numbers behind the "P" also for other scenarios
                                 or ((triple["predicate"]["termType"] == "Variable" and
                                      ((triple["predicate"]["value"],
                                        look_for)
                                       in bound_variables)))):
 
-                            if (triple["object"]["termType"] == "NamedNode") or ((triple["object"]
-                            ["value"]) in bound_variables.__str__()):
-
-                              result = True
-    #if result:
-        #print(result)
-        #print("Scenario 1")
-        #print(where)
+                            if (triple["object"]["termType"] == "NamedNode") or \
+                                    ((triple["object"]["value"]) in bound_variables.__str__()):
+                                result = True
+    # if result:
+    # print(result)
+    # print("Scenario 1")
+    # print(where)
 
     return result

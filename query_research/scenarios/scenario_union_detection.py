@@ -27,9 +27,9 @@ def is_scenario_union(json_object, look_for):
             if (look_for in str(where_part["patterns"])):
                 result = True
 
-    if result:
-        print(result)
-        print("Scenario union")
-        print(where)
+    #if result:
+    #    print(result)
+    #    print("Scenario union")
+    #    print(where)
 
     return result

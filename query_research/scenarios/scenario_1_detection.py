@@ -29,7 +29,7 @@ def is_scenario_one(json_object, look_for):
                 print("Bound Variables: 1")
                 print(bound_variables)
 
-                # TODO: Declare the bound variables as an own scenario
+                # TODO: Declare a reference in bound variables as an own scenario
 
     # find scenario 1
 
@@ -42,24 +42,22 @@ def is_scenario_one(json_object, look_for):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "Variable") and ((triple["subject"]["value"])
-                                                                     not in bound_variables.__str__()):
+                                                                      not in bound_variables.__str__()):
                     # on property paths, there also could be no termType
-                    if ("termType" in triple["predicate"]):
+                    if "termType" in triple["predicate"]:
                         if (((triple["predicate"]["termType"] == "NamedNode" and
                               triple["predicate"]["value"] == look_for))
                                 or ((triple["predicate"]["termType"] == "Variable" and
                                      ((triple["predicate"]["value"],
-                                       look_for)
+                                       look_for)  # TODO: CHANGE TO OWN SCENARIO ?
                                       in bound_variables)))):
 
                             if (triple["object"]["termType"] == "Variable") and ((triple["object"]
                             ["value"]) not in bound_variables.__str__()):
-
-                              result = True
-    #if result:
-        #print(result)
-        #print("Scenario 1")
-        #print(where)
+                                result = True
+    # if result:
+    # print(result)
+    # print("Scenario 1")
+    # print(where)
 
     return result
-
