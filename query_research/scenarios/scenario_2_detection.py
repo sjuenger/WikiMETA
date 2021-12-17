@@ -9,10 +9,10 @@
 #
 #
 #
-# look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
+# look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def is_scenario_two(json_object, look_for):
+def scenario_two_occurrences(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -26,9 +26,9 @@ def is_scenario_two(json_object, look_for):
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
 
-    # find scenario 1
+    # find scenarios 2
 
-    result = False
+    result = 0
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
@@ -37,23 +37,18 @@ def is_scenario_two(json_object, look_for):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "NamedNode") or ((triple["subject"]["value"])
-                                                                     in bound_variables.__str__()):
+                                                                      in bound_variables.__str__()):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
-                        if (((triple["predicate"]["termType"] == "NamedNode" and
-                              triple["predicate"]["value"] == look_for))
-                                or ((triple["predicate"]["termType"] == "Variable" and
-                                     ((triple["predicate"]["value"],
-                                       look_for)
-                                      in bound_variables)))):
+                        if ((triple["predicate"]["termType"] == "NamedNode" and
+                             look_for in triple["predicate"]["value"])):
 
                             if (triple["object"]["termType"] == "Variable") and ((triple["object"]
                             ["value"]) not in bound_variables.__str__()):
-
-                              result = True
-    #if result:
-        #print(result)
-        #print("Scenario 1")
-        #print(where)
+                                result += 1
+    # if result:
+    # print(result)
+    # print("Scenario 1")
+    # print(where)
 
     return result

@@ -10,10 +10,10 @@
 #
 #
 #
-# look_for e.g. "<http://www.wikidata.org/reference/0b1317d88f3e23f552ee804b79987760961819a0>"
+# look_for e.g. "http://www.wikidata.org/reference/0b1317d88f3e23f552ee804b79987760961819a0"
 
 
-def is_scenario_eight(json_object, look_for):
+def scenario_eight_occurrences(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -27,9 +27,9 @@ def is_scenario_eight(json_object, look_for):
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
 
-    # find scenario 8
+    # find scenarios 8
 
-    result = False
+    result = 0
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
@@ -45,11 +45,9 @@ def is_scenario_eight(json_object, look_for):
                         if (triple["predicate"]["termType"] == "NamedNode") or ((triple["predicate"]["value"])
                                                                                 in bound_variables.__str__()):
 
-                            if ((triple["object"]["termType"] == "NamedNode" and
-                                 triple["object"]["value"].__contains__(look_for) )
-                                    or (triple["object"]["termType"] == "Variable" and
-                                        (triple["object"]["value"], look_for) in bound_variables)):
-                                result = True
+                            if (triple["object"]["termType"] == "NamedNode" and
+                                 look_for in triple["object"]["value"]):
+                                result += 1
 
     # if result:
     # print(result)

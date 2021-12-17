@@ -9,21 +9,21 @@
 #
 #
 #
-# look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
+# look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def is_scenario_optional(json_object, look_for):
+def scenario_optional_occurrences(json_object, look_for):
     where = json_object["where"]
 
-    # find scenario 'filter'
+    # find scenarios 'optional'
 
-    result = False
+    result = 0
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
         if where_part["type"] == "optional":
             if (look_for in str(where_part["patterns"])):
-                result = True
+                result += 1
 
     # if result:
     # print(result)

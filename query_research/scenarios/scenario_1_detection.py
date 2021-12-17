@@ -9,10 +9,10 @@
 #
 #
 #
-# look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
+# look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def is_scenario_one(json_object, look_for):
+def scenario_one_occurrences(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -31,9 +31,9 @@ def is_scenario_one(json_object, look_for):
 
                 # TODO: Declare a reference in bound variables as an own scenario
 
-    # find scenario 1
-
-    result = False
+    # find scenarios 1
+    # -> there might be more than one scenario one found
+    result = 0
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
@@ -45,16 +45,18 @@ def is_scenario_one(json_object, look_for):
                                                                       not in bound_variables.__str__()):
                     # on property paths, there also could be no termType
                     if "termType" in triple["predicate"]:
-                        if (((triple["predicate"]["termType"] == "NamedNode" and
-                              triple["predicate"]["value"] == look_for))
-                                or ((triple["predicate"]["termType"] == "Variable" and
-                                     ((triple["predicate"]["value"],
-                                       look_for)  # TODO: CHANGE TO OWN SCENARIO ?
-                                      in bound_variables)))):
+                        # the "look_for in" is necessary, for the properties / nodes with a specific identifying number
+                        # Example:
+                        # Triple: ?var5  <http://www.wikidata.org/prop/reference/P3987>  ?var6 .
+                        # Code: "http://www.wikidata.org/prop/reference/P" in triple["predicate"]["value"]
+                        # All variables in the data are named in a schema like ?var1, ?var2, ...
+                        # .. so, there can't be e.g. a varaible named "http://www.wikidata.org/prop/reference/Pxxx"
+                        if (triple["predicate"]["termType"] == "NamedNode" and
+                                look_for in triple["predicate"]["value"]):
 
-                            if (triple["object"]["termType"] == "Variable") and ((triple["object"]
-                            ["value"]) not in bound_variables.__str__()):
-                                result = True
+                            if (triple["object"]["termType"] == "Variable") and ((triple["object"]["value"])
+                                                                                 not in bound_variables.__str__()):
+                                result += 1
     # if result:
     # print(result)
     # print("Scenario 1")

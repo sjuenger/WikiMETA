@@ -9,10 +9,10 @@
 #
 #
 #
-# look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
+# look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def is_scenario_three(json_object, look_for):
+def scenario_three_occurrences(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -28,7 +28,7 @@ def is_scenario_three(json_object, look_for):
 
     # find scenario 3
 
-    result = False
+    result = 0
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
@@ -40,16 +40,14 @@ def is_scenario_three(json_object, look_for):
                                                                       not in bound_variables.__str__()):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
-                        if (((triple["predicate"]["termType"] == "NamedNode" and
-                              look_for in str(triple["predicate"]["value"]))) # TODO: BETTER METHOD, THAN JUST THIS STR -> use regex with x numbers behind the "P" also for other scenarios
-                                or ((triple["predicate"]["termType"] == "Variable" and
-                                     ((triple["predicate"]["value"],
-                                       look_for)
-                                      in bound_variables)))):
+                        if (triple["predicate"]["termType"] == "NamedNode" and
+                              look_for in triple["predicate"]["value"]):
+                            # TODO: BETTER METHOD, THAN JUST THIS STR -> use regex with x numbers behind the "P" also for other scenarios):
 
                             if (triple["object"]["termType"] == "NamedNode") or \
                                     ((triple["object"]["value"]) in bound_variables.__str__()):
-                                result = True
+
+                                result +=1
     # if result:
     # print(result)
     # print("Scenario 1")

@@ -9,10 +9,10 @@
 #
 #
 #
-# look_for e.g. "<http://www.w3.org/ns/prov#wasDerivedFrom>"
+# look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def is_scenario_prop_path(json_object, look_for):
+def scenario_prop_path_occurrences(json_object, look_for):
     where = json_object["where"]
 
     # find BIND Variables
@@ -26,7 +26,7 @@ def is_scenario_prop_path(json_object, look_for):
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
 
-    # find scenario property path
+    # find scenarios property path
 
     result = False
 
@@ -42,7 +42,7 @@ def is_scenario_prop_path(json_object, look_for):
                         if look_for in str(triple["predicate"]["items"]):
                             # TODO: add the bind variables here ?
 
-                            result = True
+                            result += 1
 
     # if result:
     # print(result)
