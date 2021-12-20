@@ -39,6 +39,8 @@ import query_research.scenarios.scenario_group_detection as scenario_group_detec
 import query_research.scenarios.scenario_bind_detection as scenario_bind_detection
 import query_research.scenarios.scenario_blank_node_detection as scenario_blank_node_detection
 import query_research.scenarios.scenario_minus_detection as scenario_minus_detection
+import query_research.scenarios.scenario_subselect_detection as scenario_subselect_detection
+import query_research.scenarios.scenario_ref_value_detection as scenario_ref_value_detection
 
 def detect_scenarios(location, data_type):
     # Retrieve all files, ending with .json
@@ -110,6 +112,8 @@ def detect_scenarios(location, data_type):
             "bind": 0,
             "blank_node": 0,
             "minus": 0,
+            "subselect": 0,
+            "ref_value": 0,
             "other": 0}
         # TODO: Ad "total" occurences of a "looking for"
 
@@ -266,6 +270,20 @@ def detect_scenarios(location, data_type):
                     dict_looking_for["minus"] += occurrences_scenario_minus
                     if occurrences_scenario_minus > 0:
                         shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/minus")
+
+                    # scenario subselect
+                    occurrences_scenario_subselect = \
+                        scenario_subselect_detection.scenario_subselect_occurrences(json_object, looking_for)
+                    dict_looking_for["subselect"] += occurrences_scenario_subselect
+                    if occurrences_scenario_subselect > 0:
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/subselect")
+
+                    # scenario ref value
+                    occurrences_scenario_ref_value = \
+                        scenario_ref_value_detection.scenario_ref_value_occurrences(json_object, looking_for)
+                    dict_looking_for["ref_value"] += occurrences_scenario_ref_value
+                    if occurrences_scenario_ref_value > 0:
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/ref_value")
 
                     # check  if no scenario did apply
                     if dict_looking_for == tmp_dict:
