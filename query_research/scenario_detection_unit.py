@@ -63,9 +63,6 @@ def detect_scenarios(location, data_type):
 
     # a scenario fora non-recognized scenario
 
-    # auch BIND als scenario
-    # property path als scenario
-
     # to check for the type of the SPARQL query (SELECT, DESCRIBE, ASK, CONSTRUCT)
     for query_file in files_json:
         if os.path.isfile(query_file.title().lower()):
@@ -80,7 +77,6 @@ def detect_scenarios(location, data_type):
                     total_ASK_queries += 1
                 elif json_object["queryType"] == "CONSTRUCT":
                     total_CONSTRUCT_queries += 1
-
 
     # to check for the scenarios
 
@@ -302,10 +298,8 @@ def detect_scenarios(location, data_type):
                         # -> so, it is a bit easier to develop new filters
                         shutil.copy(query_file, path_to_scenarios + "/other")
 
-
         # attach the dictionary for looking for to the dictionary for the whole data type
         dict_overview_looking_for["list_per_search"].append(dict_looking_for)
-
 
     scenario_dict = {
         "data_type": data_type,
@@ -316,7 +310,6 @@ def detect_scenarios(location, data_type):
         "ASK_queries": total_ASK_queries,
         "found_scenarios": dict_overview_looking_for
     }
-
 
     # save the scneario_dict to a folder
     with open(path_to_stat_information + "/" + data_type.split('/')[1] , "wt") as information_data:
