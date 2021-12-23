@@ -41,6 +41,7 @@ import query_research.scenarios.scenario_blank_node_detection as scenario_blank_
 import query_research.scenarios.scenario_minus_detection as scenario_minus_detection
 import query_research.scenarios.scenario_subselect_detection as scenario_subselect_detection
 import query_research.scenarios.scenario_ref_value_detection as scenario_ref_value_detection
+import query_research.scenarios.scenario_literal_detection as scenario_literal_detection
 
 def detect_scenarios(location, data_type):
     # Retrieve all files, ending with .json
@@ -114,6 +115,7 @@ def detect_scenarios(location, data_type):
             "minus": 0,
             "subselect": 0,
             "ref_value": 0,
+            "literal": 0,
             "other": 0}
         # TODO: Ad "total" occurences of a "looking for"
 
@@ -284,6 +286,13 @@ def detect_scenarios(location, data_type):
                     dict_looking_for["ref_value"] += occurrences_scenario_ref_value
                     if occurrences_scenario_ref_value > 0:
                         shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/ref_value")
+
+                    # scenario literal
+                    occurrences_scenario_literal = \
+                        scenario_literal_detection.scenario_literal_occurrences(json_object, looking_for)
+                    dict_looking_for["literal"] += occurrences_scenario_literal
+                    if occurrences_scenario_literal > 0:
+                        shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/literal")
 
                     # check  if no scenario did apply
                     if dict_looking_for == tmp_dict:
