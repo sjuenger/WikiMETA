@@ -8,7 +8,7 @@ def create_dir_structure_of_data(TIMEFRAMES):
     data_dir = []
     # delete the "organic" form the timeframes
     for TIMEFRAME in TIMEFRAMES:
-        data_dir.append(".data/" + TIMEFRAME[21:])
+        data_dir.append("./data/" + TIMEFRAME[:21])
 
     # directory structure for one timeframe directory
     timeframe_dir = [
@@ -26,7 +26,7 @@ def create_dir_structure_of_data(TIMEFRAMES):
         "only_derived",
         "only_reference_node",
         "only_reference_property",
-        "reference_node_+_reference_property"
+        "reference_node_+_reference_property",
         "scenarios",
         "statistical_information"
     ]
@@ -75,50 +75,56 @@ def create_dir_structure_of_data(TIMEFRAMES):
 
     # check if the directories exist
     # .. and if not, create them
-
     for directory in data_dir:
         if not os.path.isdir(directory):
             os.makedirs(directory)
 
-        for directory in timeframe_dir:
-            if not os.path.isdir(directory):
-                os.makedirs(directory)
+        for directory_U in timeframe_dir:
+            tmp_diretory = directory + "/" + directory_U
+            if not os.path.isdir(tmp_diretory):
+                os.makedirs(tmp_diretory)
 
             # path for references:
-            if directory == "organic/reference_metadata":
-                for directory in reference_dir:
-                    if not os.path.isdir(directory):
-                        os.makedirs(directory)
+            if directory_U == "organic/reference_metadata":
+                for directory_U_U in reference_dir:
+                    tmp_directory = directory + "/" + directory_U + "/" + directory_U_U
+                    if not os.path.isdir(tmp_directory):
+                        os.makedirs(tmp_directory)
 
                     # path for scenarios
-                    if directory == "scenarios":
-                        for directory in scenarios_dir:
-                            if not os.path.isdir(directory):
-                                os.makedirs(directory)
+                    if directory_U_U == "scenarios":
+                        for directory_U_U_U in scenarios_dir:
+                            tmp_directory = directory + "/" + directory_U + "/" + directory_U_U + "/" + directory_U_U_U
+                            if not os.path.isdir(tmp_directory):
+                                os.makedirs(tmp_directory)
 
             # path for qualifiers:
-            if directory == "organic/qualifier_metadata":
-                for directory in qualifier_dir:
-                    if not os.path.isdir(directory):
-                        os.makedirs(directory)
+            if directory_U == "organic/qualifier_metadata":
+                for directory_U_U in qualifier_dir:
+                    tmp_directory = directory + "/" + directory_U + "/" + directory_U_U
+                    if not os.path.isdir(tmp_directory):
+                        os.makedirs(tmp_directory)
 
                     # path for scenarios
-                    if directory == "scenarios":
-                        for directory in scenarios_dir:
-                            if not os.path.isdir(directory):
-                                os.makedirs(directory)
+                    if directory_U_U == "scenarios":
+                        for directory_U_U_U in scenarios_dir:
+                            tmp_directory = directory + "/" + directory_U + "/" + directory_U_U + "/" + directory_U_U_U
+                            if not os.path.isdir(tmp_directory):
+                                os.makedirs(tmp_directory)
 
-            # path for ranks:
-            if directory == "organic/rank_metadata":
-                for directory in rank_dir:
-                    if not os.path.isdir(directory):
-                        os.makedirs(directory)
+            # path for qualifiers:
+            if directory_U == "organic/rank_metadata":
+                for directory_U_U in rank_dir:
+                    tmp_directory = directory + "/" + directory_U + "/" + directory_U_U
+                    if not os.path.isdir(tmp_directory):
+                        os.makedirs(tmp_directory)
 
                     # path for scenarios
-                    if directory == "scenarios":
-                        for directory in scenarios_dir:
-                            if not os.path.isdir(directory):
-                                os.makedirs(directory)
+                    if directory_U_U == "scenarios":
+                        for directory_U_U_U in scenarios_dir:
+                            tmp_directory = directory + "/" + directory_U + "/" + directory_U_U + "/" + directory_U_U_U
+                            if not os.path.isdir(tmp_directory):
+                                os.makedirs(tmp_directory)
 
 
 def is_already_extracted():
