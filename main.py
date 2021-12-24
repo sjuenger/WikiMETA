@@ -7,7 +7,6 @@ import query_research.scenario_detection_unit as scenario_detection_unit
 import wikidata_research.dictionary.txt_to_dict as txt_to_dict
 import directory_structure_handler
 
-# TODO: Add the whole list of data sources
 TIMEFRAMES = [
      "2017-06-12_2017-07-09_organic",
      "2017-07-10_2017-08-06_organic",
@@ -33,7 +32,8 @@ DATA_TYPES_REFERENCE = [
 # TODO: Add some modi here, like "Extraction",
 #  "redundant_detection", "sitaution detection"...
 
-directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
+#directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
+#directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
 #for TIMEFRAME in TIMEFRAMES:
     #sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
@@ -44,8 +44,8 @@ directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 
 #redundant_detection.delete_redundant_queries(LOCATION)
 
-#for TIMEFRAME in TIMEFRAMES:
-#    for DATA_TYPE in DATA_TYPES_REFERENCE:
-#        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+for TIMEFRAME in TIMEFRAMES:
+    for DATA_TYPE in DATA_TYPES_REFERENCE:
+        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 
 #txt_to_dict.get_dict()

@@ -3,7 +3,6 @@ import os
 
 # creates the structure of folders in /data, needed for the project
 def create_dir_structure_of_data(TIMEFRAMES):
-
     # directory structure for data/
     data_dir = []
     # delete the "organic" form the timeframes
@@ -40,7 +39,7 @@ def create_dir_structure_of_data(TIMEFRAMES):
     # directory structure for rank metadata
     rank_dir = [
         "failed_queries",
-        "proerty_qualifier",
+        "wikibase_rank",
         "scenarios",
         "statistical_information"
     ]
@@ -130,6 +129,58 @@ def create_dir_structure_of_data(TIMEFRAMES):
 def is_already_extracted():
     return
 
-def delete_gathered_data():
+
+# delete the identified scenarios in the specific folders of all the handed
+# .. over timeframes
+def delete_identified_scenarios(TIMEFRAMES):
+    # directory structure for scenarios
+    scenarios_dir = [
+        "bind",
+        "blank_node",
+        "eight",
+        "eleven",
+        "filter",
+        "five",
+        "four",
+        "group",
+        "literal",
+        "minus",
+        "nine",
+        "one",
+        "optional",
+        "other",
+        "prop_path",
+        "ref_value",
+        "seven",
+        "six",
+        "subselect",
+        "ten",
+        "three",
+        "twelve",
+        "two",
+        "union"
+    ]
+
+    # loop through all different scenario directories and delete their content
+    for TIMEFRAME in TIMEFRAMES:
+        tmp_path_to_reference_scenarios = "./data/" + TIMEFRAME[:21] +\
+                                "/organic/reference_metadata/scenarios/"
+        tmp_path_to_qualifier_scenarios = "./data/" + TIMEFRAME[:21] +\
+                                "/organic/qualifier_metadata/scenarios/"
+        tmp_path_to_rank_scenarios = "./data/" + TIMEFRAME[:21] +\
+                                "/organic/rank_metadata/scenarios/"
+
+        for scenario in scenarios_dir:
+
+            # iterate over all files
+            for file in os.listdir(tmp_path_to_reference_scenarios + scenario):
+                os.remove(tmp_path_to_reference_scenarios + scenario + "/" + file)
+            for file in os.listdir(tmp_path_to_qualifier_scenarios + scenario):
+                os.remove(tmp_path_to_qualifier_scenarios + scenario + "/" + file)
+            for file in os.listdir(tmp_path_to_rank_scenarios + scenario):
+                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + file)
+
+
+
     return
 # Maybe a class here?
