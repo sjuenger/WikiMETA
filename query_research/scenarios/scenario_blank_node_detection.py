@@ -35,8 +35,8 @@ def scenario_blank_node_occurrences(json_object, look_for):
                     # -> compare the string
 
                     if look_for in str(triple["predicate"]):
-
-                        result += 1
+                        # there may be more than one
+                        result += str(triple["predicate"]).count(look_for)
                         
     # if result:
     # print(result)

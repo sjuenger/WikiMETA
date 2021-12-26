@@ -32,8 +32,8 @@ DATA_TYPES_REFERENCE = [
 # TODO: Add some modi here, like "Extraction",
 #  "redundant_detection", "sitaution detection"...
 
-#directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
-#directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
+directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
+directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
 #for TIMEFRAME in TIMEFRAMES:
     #sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)

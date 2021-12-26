@@ -33,7 +33,8 @@ def scenario_ref_value_occurrences(json_object, look_for):
     # multiple bgp (basic graph patterns)
     for where_part in where:
         if "http://www.wikidata.org/prop/reference/value" in str(where_part):
-            result += 1
+            # there may be more than one
+            result += str(where_part).count("http://www.wikidata.org/prop/reference/value")
 
     #if result:
     #    print(result)

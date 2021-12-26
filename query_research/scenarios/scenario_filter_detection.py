@@ -23,7 +23,8 @@ def scenario_filter_occurrences(json_object, look_for):
     for where_part in where:
         if where_part["type"] == "filter":
             if (look_for in str(where_part["expression"])):
-                result += 1
+                # there may be more than one
+                result += str(where_part["expression"]).count(look_for)
 
     # if result:
     # print(result)

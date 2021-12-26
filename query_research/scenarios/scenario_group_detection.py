@@ -31,7 +31,8 @@ def scenario_group_occurrences(json_object, look_for):
     for where_part in where:
         if where_part["type"] == "group":
             if (look_for in str(where_part["patterns"])):
-                result += 1
+                # there may be more than one
+                result += str(where_part["patterns"]).count(look_for)
 
     # if result:
     # print(result)

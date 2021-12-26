@@ -79,9 +79,7 @@ def detect_scenarios(location, data_type):
                     total_CONSTRUCT_queries += 1
 
     # to check for the scenarios
-
     array_looking_for = get_mode(data_type)
-
     dict_overview_looking_for = {"list_per_search": []}
 
     for looking_for in array_looking_for:
@@ -89,6 +87,7 @@ def detect_scenarios(location, data_type):
         # create a scenario per "looking for" , e.g. "wasDerivedFrom"
         dict_looking_for = {
             "looking_for": looking_for,
+            "total_occurences": 0,
             "one": 0,
             "two": 0,
             "three": 0,
@@ -297,6 +296,14 @@ def detect_scenarios(location, data_type):
                         # with the "other" -> also copy the .json file
                         # -> so, it is a bit easier to develop new filters
                         shutil.copy(query_file, path_to_scenarios + "/other")
+
+                    # detect, how many times the item we are looking for in the current
+                    # .. loop is detected in the json object
+                    # -> there may be multiple occurences per query
+                    dict_looking_for["total_occurences"] += str(json_object).count(looking_for)
+                    # for the ref value.
+                    dict_looking_for["total_occurences"] += \
+                        str(json_object).count("http://www.wikidata.org/prop/reference/value")
 
         # attach the dictionary for looking for to the dictionary for the whole data type
         dict_overview_looking_for["list_per_search"].append(dict_looking_for)
