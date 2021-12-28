@@ -34,9 +34,20 @@ def scenario_blank_node_occurrences(json_object, look_for):
                     # on property paths, there also could be no termType - or on normal predicates no "type"
                     # -> compare the string
 
+                    # if the item to look for is found in the predicate
                     if look_for in str(triple["predicate"]):
                         # there may be more than one
                         result += str(triple["predicate"]).count(look_for)
+
+                    # if the item to look for is found in the subject
+                    if look_for in str(triple["subject"]):
+                        # there may be more than one
+                        result += str(triple["subject"]).count(look_for)
+
+                    # if the item to look for is found in the object
+                    if look_for in str(triple["object"]):
+                        # there may be more than one
+                        result += str(triple["object"]).count(look_for)
                         
     # if result:
     # print(result)

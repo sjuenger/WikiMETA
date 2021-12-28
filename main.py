@@ -27,6 +27,28 @@ DATA_TYPES_REFERENCE = [
                         "reference_metadata/reference_node_+_reference_property"
                         ]
 
+DATA_TYPES_QUALIFIER = [
+                        "qualifier_metadata/property_qualifier"
+                        ]
+
+DATA_TYPES_RANK = [
+                    "rank_metadata/rank_property",
+                    "rank_metadata/best_rank_+_rank_property",
+                    "rank_metadata/normal_rank_+_rank_property",
+                    "rank_metadata/deprecated_rank_+_rank_property",
+                    "rank_metadata/best_+_normal_rank_+_rank_property",
+                    "rank_metadata/best_+_deprecated_rank_+_rank_property",
+                    "rank_metadata/normal_+_deprecated_rank_+_rank_property",
+                    "rank_metadata/all_ranks_+_rank_property",
+                    "rank_metadata/normal_rank",
+                    "rank_metadata/deprecated_rank",
+                    "rank_metadata/best_rank",
+                    "rank_metadata/best_+_normal_rank",
+                    "rank_metadata/best_deprecated_rank",
+                    "rank_metadata/normal_+_deprecated_rank",
+                    "rank_metadata/all_ranks"
+                ]
+
 #: Wirte a script, which buils an directory structure fpr extractSPARQLtoJSON
 
 # TODO: Add some modi here, like "Extraction",
@@ -45,7 +67,16 @@ directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 #redundant_detection.delete_redundant_queries(LOCATION)
 
 for TIMEFRAME in TIMEFRAMES:
+    print("REFERENCES")
     for DATA_TYPE in DATA_TYPES_REFERENCE:
         scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-
+    print("\n\n")
+    print("QUALIFIERS")
+    for DATA_TYPE in DATA_TYPES_QUALIFIER:
+        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+    print("\n\n")
+    print("RANKS")
+    for DATA_TYPE in DATA_TYPES_RANK:
+        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+    print("\n\n")
 #txt_to_dict.get_dict()

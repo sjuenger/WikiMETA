@@ -21,7 +21,65 @@ def extract_SPARQL_to_JSON(location):
             sample_sparql = unquote_plus(row[0])
             print(k)
             k += 1
-            if "<http://wikiba.se/ontology#rank" in sample_sparql:
+
+            # Information for the strings from https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format
+
+            contains = "none"
+
+            if "<http://wikiba.se/ontology#rank>" in sample_sparql:
+
+                if "<http://wikiba.se/ontology#BestRank>" in sample_sparql:
+
+                    if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                        if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                            contains = "all_ranks_+_rank_property"
+                        else:
+                            contains = "best_+_deprecated_rank_+_rank_property"
+
+                    elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                        contains = "best_+_normal_rank_+_rank_property"
+                    else:
+                        contains = "best_rank_+_rank_property"
+
+                elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                    if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                        contains = "normal_+_deprecated_rank_+_rank_property"
+                    else:
+                        contains = "deprecated_rank_+_rank_property"
+
+                elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                    contains = "normal_rank_+_rank_property"
+
+                else:
+                    contains = "rank_property"
+
+            elif "<http://wikiba.se/ontology#BestRank>" in sample_sparql:
+
+                if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                    if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                        contains = "all_ranks"
+                    else:
+                        contains = "best_+_deprecated_rank"
+
+                elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                    contains = "best_+_normal_rank"
+                else:
+                    contains = "best_rank"
+
+            elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                    contains = "normal_+_deprecated_rank"
+                else:
+                    contains = "deprecated_rank"
+
+            elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                contains = "normal_rank"
+
+            if contains != "none":
                 i += 1
 
                 start_time_ref_query = time.time()
@@ -45,10 +103,10 @@ def extract_SPARQL_to_JSON(location):
                     print("Time required so far in min: ", (time.time() - start_time) / 60)
 
                     path_to_json = "data/" + location[:21] + "/" + \
-                                   location[22:] + "/rank_metadata/" + "wikibase_rank" + "/" + str(k) +\
+                                   location[22:] + "/rank_metadata/" + contains + "/" + str(k) +\
                                    " " + unquote_plus(row[1]) + ".json"
                     path_to_sparql = "data/" + location[:21] + "/" + \
-                                     location[22:] + "/rank_metadata/" + "wikibase_rank" + "/" + str(k) +\
+                                     location[22:] + "/rank_metadata/" + contains + "/" + str(k) +\
                                      " " + unquote_plus(row[1]) + ".sparql"
 
                     with open(path_to_json, "wt") as result_data:

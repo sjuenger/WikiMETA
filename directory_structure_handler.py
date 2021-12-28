@@ -39,9 +39,23 @@ def create_dir_structure_of_data(TIMEFRAMES):
     # directory structure for rank metadata
     rank_dir = [
         "failed_queries",
-        "wikibase_rank",
         "scenarios",
-        "statistical_information"
+        "statistical_information",
+        "rank_property",
+        "best_rank_+_rank_property",
+        "normal_rank_+_rank_property",
+        "deprecated_rank_+_rank_property",
+        "best_+_normal_rank_+_rank_property",
+        "best_+_deprecated_rank_+_rank_property",
+        "normal_+_deprecated_rank_+_rank_property",
+        "all_ranks_+_rank_property",
+        "normal_rank",
+        "deprecated_rank",
+        "best_rank",
+        "best_+_normal_rank",
+        "best_+_deprecated_rank",
+        "normal_+_deprecated_rank",
+        "all_ranks"
     ]
 
     # directory structure for scenarios

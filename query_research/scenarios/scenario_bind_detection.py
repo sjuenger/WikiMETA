@@ -47,7 +47,7 @@ def scenario_bind_occurrences(json_object, look_for):
                     # there may be more than one
                     result += str(where_part["expression"]["value"]).count(look_for)
 
-                # TODO: if that happens -> detect the scenario, the resultnig variable was in!
+                # TODO: if that happens -> detect the scenario, the resulting variable was in!
 
     # if result:
     # print(result)
