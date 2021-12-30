@@ -83,7 +83,9 @@ def create_dir_structure_of_data(TIMEFRAMES):
         "three",
         "twelve",
         "two",
-        "union"
+        "union",
+        "values",
+        "service"
     ]
 
     # check if the directories exist

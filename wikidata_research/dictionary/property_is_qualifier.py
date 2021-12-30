@@ -3,6 +3,7 @@
 import SPARQLWrapper
 import wikidata_research.dictionary.utilities as utilities
 
+
 def is_qualifier(property_PID):
 
     sparql = SPARQLWrapper.SPARQLWrapper("https://query.wikidata.org/sparql")

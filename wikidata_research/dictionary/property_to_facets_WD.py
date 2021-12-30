@@ -2,6 +2,7 @@
 import SPARQLWrapper
 import wikidata_research.dictionary.utilities as utilities
 
+
 def getFacet(property_PID):
 
     sparql = SPARQLWrapper.SPARQLWrapper("https://query.wikidata.org/sparql")

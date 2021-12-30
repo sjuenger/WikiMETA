@@ -20,7 +20,7 @@ def get_dict():
     with open("data/SQID_properties_list.txt") as txt_list:
         for index in range(56160):
 
-            if (index-1)%6 == 0: #title line
+            if (index-1)%6 == 0:  # title line
 
                 # to counter the TIMEOUT of Wikidata
                 sleep(2)

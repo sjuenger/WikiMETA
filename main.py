@@ -5,7 +5,7 @@ import query_research.bound_references as bound_references
 import query_research.redundant_detection as redundant_detection
 import query_research.scenario_detection_unit as scenario_detection_unit
 import wikidata_research.dictionary.txt_to_dict as txt_to_dict
-import directory_structure_handler
+import utilities.directory_structure_handler as directory_structure_handler
 
 TIMEFRAMES = [
      "2017-06-12_2017-07-09_organic",
@@ -58,9 +58,9 @@ directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
 #for TIMEFRAME in TIMEFRAMES:
-    #sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
-    #sparql_to_json_references.extract_SPARQL_to_JSON(TIMEFRAME)
-    #sparql_to_json_ranks.extract_SPARQL_to_JSON(TIMEFRAME)
+#    sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
+#    sparql_to_json_references.extract_SPARQL_to_JSON(TIMEFRAME)
+#    sparql_to_json_ranks.extract_SPARQL_to_JSON(TIMEFRAME)
 
 #bound_references.find_bound_references(LOCATION)
 

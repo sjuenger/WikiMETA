@@ -42,6 +42,8 @@ import query_research.scenarios.scenario_minus_detection as scenario_minus_detec
 import query_research.scenarios.scenario_subselect_detection as scenario_subselect_detection
 import query_research.scenarios.scenario_ref_value_detection as scenario_ref_value_detection
 import query_research.scenarios.scenario_literal_detection as scenario_literal_detection
+import query_research.scenarios.scenario_values_detection as scenario_values_detection
+import query_research.scenarios.scenario_service_detection as scenario_service_detection
 
 def detect_scenarios(location, data_type):
     # Retrieve all files, ending with .json
@@ -111,6 +113,8 @@ def detect_scenarios(location, data_type):
             "subselect": 0,
             "ref_value": 0,
             "literal": 0,
+            "values": 0,
+            "service": 0,
             "other": 0}
         # TODO: Ad "total" occurrences of a "looking for"
 
@@ -290,6 +294,20 @@ def detect_scenarios(location, data_type):
                         if occurrences_scenario_literal > 0:
                             shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/literal")
 
+                        # scenario values
+                        occurrences_scenario_values = \
+                            scenario_values_detection.scenario_values_occurrences(json_object, looking_for)
+                        dict_looking_for["values"] += occurrences_scenario_values
+                        if occurrences_scenario_values > 0:
+                            shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/values")
+
+                        # scenario service
+                        occurrences_scenario_service = \
+                            scenario_service_detection.scenario_service_occurrences(json_object, looking_for)
+                        dict_looking_for["service"] += occurrences_scenario_service
+                        if occurrences_scenario_service > 0:
+                            shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/service")
+
                         occurrences_scenario_other = 0
                         # check  if no scenario did apply
                         if dict_looking_for == tmp_dict:
@@ -333,6 +351,8 @@ def detect_scenarios(location, data_type):
                             occurrences_scenario_ref_value + \
                             occurrences_scenario_subselect + \
                             occurrences_scenario_union + \
+                            occurrences_scenario_values + \
+                            occurrences_scenario_service + \
                             occurrences_scenario_other
 
                         if (str(json_object).count("http://www.wikidata.org/prop/reference/value")
@@ -361,6 +381,8 @@ def detect_scenarios(location, data_type):
                             "ref_value: " , occurrences_scenario_ref_value , \
                             "subselect: " , occurrences_scenario_subselect , \
                             "union: " , occurrences_scenario_union, \
+                            "values: ", occurrences_scenario_values, \
+                            "service: ", occurrences_scenario_service, \
                             "other: ", occurrences_scenario_other)
                             print(str(json_object).count("http://www.wikidata.org/prop/reference/value")
                               +  str(json_object).count(looking_for) )

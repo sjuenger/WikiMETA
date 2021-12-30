@@ -16,6 +16,7 @@
 #
 # look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
+import time
 
 def scenario_bind_occurrences(json_object, look_for):
     where = json_object["where"]
@@ -32,8 +33,11 @@ def scenario_bind_occurrences(json_object, look_for):
             # TODO: Which type of BIND? Exist, If, ...
             if "args" in where_part["expression"]:
                 if (look_for in str(where_part["expression"]["args"])):
-                    print("args " + where_part["expression"]["operator"])
-
+                    if "operator" in where_part["expression"]:
+                        print("args " + where_part["expression"]["operator"])
+                    else:
+                        print("here")
+                        print(where_part)
                     # there may be more than one
                     result += str(where_part["expression"]["args"]).count(look_for)
 

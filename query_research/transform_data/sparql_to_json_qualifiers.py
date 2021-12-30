@@ -22,6 +22,10 @@ def extract_SPARQL_to_JSON(location):
             sample_sparql = unquote_plus(row[0])
             print(k)
             k += 1
+
+            # TODO: think about how to include the qualifier properties here!
+            # there are xx qualifiers in total
+
             if "<http://www.wikidata.org/prop/qualifier" in sample_sparql:
                 i += 1
 

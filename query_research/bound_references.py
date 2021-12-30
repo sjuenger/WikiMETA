@@ -1,6 +1,7 @@
 import glob
 import json
 
+# to hand over the bound references to each scenario detection -> so, that is does not have to be done there
 
 def find_bound_references(location):
     # Retrieve all files, ending with .json
