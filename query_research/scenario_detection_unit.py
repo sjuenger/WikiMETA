@@ -116,7 +116,7 @@ def detect_scenarios(location, data_type):
             "values": 0,
             "service": 0,
             "other": 0}
-        # TODO: Ad "total" occurrences of a "looking for"
+        # TODO: Add "total" occurrences of a "looking for"
 
         for query_file in files_json:
             if os.path.isfile(query_file.title().lower()):
@@ -253,8 +253,11 @@ def detect_scenarios(location, data_type):
                             shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/group")
 
                         # scenario bind
+                        # additionally add the path to the scenario -> for the statistical information
+                        # about the scenarios the found bound variables are in
                         occurrences_scenario_bind = \
-                            scenario_bind_detection.scenario_bind_occurrences(json_object, looking_for)
+                            scenario_bind_detection.scenario_bind_occurrences(json_object,
+                                                                              looking_for, path_to_scenarios)
                         dict_looking_for["bind"] += occurrences_scenario_bind
                         if occurrences_scenario_bind > 0:
                             shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/bind")
@@ -458,7 +461,7 @@ def get_mode(data_type):
         return ["http://wikiba.se/ontology#BestRank"]
     elif data_type == "rank_metadata/best_+_normal_rank":
         return ["http://wikiba.se/ontology#BestRank", "http://wikiba.se/ontology#NormalRank"]
-    elif data_type == "rank_metadata/best_deprecated_rank":
+    elif data_type == "rank_metadata/best_+_deprecated_rank":
         return ["http://wikiba.se/ontology#BestRank", "http://wikiba.se/ontology#DeprecatedRank"]
     elif data_type == "rank_metadata/normal_+_deprecated_rank":
         return ["http://wikiba.se/ontology#NormalRank", "http://wikiba.se/ontology#DeprecatedRank"]

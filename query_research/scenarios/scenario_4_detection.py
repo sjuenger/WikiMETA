@@ -41,7 +41,8 @@ def scenario_four_occurrences(json_object, look_for):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
                         if (triple["predicate"]["termType"] == "NamedNode" and
-                              look_for in triple["predicate"]["value"]):
+                              look_for in triple["predicate"]["value"])\
+                                or (look_for == triple["predicate"]["value"] and look_for in str(bound_variables)):
 
                             if (triple["object"]["termType"] == "NamedNode") or ((triple["object"]
                             ["value"]) in bound_variables.__str__()):

@@ -30,6 +30,7 @@ def scenario_one_occurrences(json_object, look_for):
                 print(bound_variables)
 
                 # TODO: Declare a reference in bound variables as an own scenario
+                # TODO: Change this bound variables tuple arry to a dictionary to get rid of the .__str__()
 
     # find scenarios 1
     # -> there might be more than one scenario one found
@@ -52,7 +53,10 @@ def scenario_one_occurrences(json_object, look_for):
                         # All variables in the data are named in a schema like ?var1, ?var2, ...
                         # .. so, there can't be e.g. a varaible named "http://www.wikidata.org/prop/reference/Pxxx"
                         if (triple["predicate"]["termType"] == "NamedNode" and
-                                look_for in triple["predicate"]["value"]):
+                                look_for in triple["predicate"]["value"])\
+                                or (look_for == triple["predicate"]["value"] and look_for in str(bound_variables)):
+                            # -> if a 'var4' is bound to a item we are looking for
+                            # e.g.
 
                             if (triple["object"]["termType"] == "Variable") and ((triple["object"]["value"])
                                                                                  not in bound_variables.__str__()):

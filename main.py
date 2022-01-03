@@ -44,7 +44,7 @@ DATA_TYPES_RANK = [
                     "rank_metadata/deprecated_rank",
                     "rank_metadata/best_rank",
                     "rank_metadata/best_+_normal_rank",
-                    "rank_metadata/best_deprecated_rank",
+                    "rank_metadata/best_+_deprecated_rank",
                     "rank_metadata/normal_+_deprecated_rank",
                     "rank_metadata/all_ranks"
                 ]

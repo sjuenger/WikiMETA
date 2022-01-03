@@ -13,7 +13,8 @@ def create_dir_structure_of_data(TIMEFRAMES):
     timeframe_dir = [
         "organic/qualifier_metadata",
         "organic/rank_metadata",
-        "organic/reference_metadata"
+        "organic/reference_metadata",
+        "organic/statistical_information"
     ]
 
     # directory structure for reference metadata
@@ -141,6 +142,10 @@ def create_dir_structure_of_data(TIMEFRAMES):
                             if not os.path.isdir(tmp_directory):
                                 os.makedirs(tmp_directory)
 
+    # add the statistical_information for the whole project to 'data'
+    if not os.path.isdir("./data/statistical_information"):
+        os.makedirs("./data/statistical_information")
+
 
 def is_already_extracted():
     return
@@ -174,7 +179,9 @@ def delete_identified_scenarios(TIMEFRAMES):
         "three",
         "twelve",
         "two",
-        "union"
+        "union",
+        "values",
+        "service"
     ]
 
     # loop through all different scenario directories and delete their content
@@ -196,6 +203,13 @@ def delete_identified_scenarios(TIMEFRAMES):
             for file in os.listdir(tmp_path_to_rank_scenarios + scenario):
                 os.remove(tmp_path_to_rank_scenarios + scenario + "/" + file)
 
+        # delete the found scenarios "inside" the bind scenarios
+        if os.path.isfile(tmp_path_to_rank_scenarios + "bind_statistical_information.json"):
+            os.remove(tmp_path_to_rank_scenarios + "bind_statistical_information.json")
+        if os.path.isfile(tmp_path_to_qualifier_scenarios + "bind_statistical_information.json"):
+            os.remove(tmp_path_to_qualifier_scenarios + "bind_statistical_information.json")
+        if os.path.isfile(tmp_path_to_reference_scenarios + "bind_statistical_information.json"):
+            os.remove(tmp_path_to_reference_scenarios + "bind_statistical_information.json")
 
 
     return
