@@ -166,6 +166,46 @@ def scenario_bind_occurrences(json_object, look_for, location):
                     # scenario twelve
                     bind_statistical_information["twelve"] += \
                         scenario_twelve_detection.scenario_twelve_occurrences(json_object, variable_look_for)
+                    # scenario bind
+                    # -> no covering of this case. A variable cannot be assigned to another variable
+                    # TODO: check this statement
+                    # scenario blank_mode
+                    bind_statistical_information["blank_node"] += \
+                        scenario_blank_node_detection.scenario_blank_node_occurrences(json_object, variable_look_for)
+                    # scenario filter
+                    bind_statistical_information["filter"] += \
+                        scenario_filter_detection.scenario_filter_occurrences(json_object, variable_look_for)
+                    # scenario group
+                    bind_statistical_information["group"] += \
+                        scenario_group_detection.scenario_group_occurrences(json_object, variable_look_for)
+                    # scenario literal
+                    bind_statistical_information["literal"] += \
+                        scenario_literal_detection.scenario_literal_occurrences(json_object, variable_look_for)
+                    # scenario minus
+                    bind_statistical_information["minus"] += \
+                        scenario_minus_detection.scenario_minus_occurrences(json_object, variable_look_for)
+                    # scenario optional
+                    bind_statistical_information["optional"] += \
+                        scenario_optional_detection.scenario_optional_occurrences(json_object, variable_look_for)
+                    # scenario prop_path
+                    bind_statistical_information["prop_path"] += \
+                        scenario_prop_path_detection.scenario_prop_path_occurrences(json_object, variable_look_for)
+                    # scenario ref_value
+                    bind_statistical_information["ref_value"] += \
+                        scenario_ref_value_detection.scenario_ref_value_occurrences(json_object, variable_look_for)
+                    # scenario service
+                    bind_statistical_information["service"] += \
+                        scenario_service_detection.scenario_service_occurrences(json_object, variable_look_for)
+                    # scenario subselect
+                    bind_statistical_information["subselect"] += \
+                        scenario_subselect_detection.scenario_subselect_occurrences(json_object, variable_look_for)
+                    # scenario union
+                    bind_statistical_information["union"] += \
+                        scenario_union_detection.scenario_union_occurrences(json_object, variable_look_for)
+                    # scenario values
+                    bind_statistical_information["values"] += \
+                        scenario_values_detection.scenario_values_occurrences(json_object, variable_look_for)
+
 
                     # save the json object
                     with open(location + "/bind_statistical_information.json", "w") as json_data:
