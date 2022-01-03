@@ -25,7 +25,6 @@ def scenario_prop_path_occurrences(json_object, look_for):
                     if where_part["variable"]["termType"] == "Variable":
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
-
     # find scenarios property path
 
     result = False
@@ -43,6 +42,9 @@ def scenario_prop_path_occurrences(json_object, look_for):
                             # TODO: add the bind variables here ?
 
                             result += 1
+                    else:
+                        if look_for in str(where_part):
+                            raise Exception
 
     # if result:
     # print(result)

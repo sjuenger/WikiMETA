@@ -43,7 +43,7 @@ def scenario_bind_occurrences(json_object, look_for):
 
             # if the bind operation is just an assignment to a variable
             # {'type': 'bind', 'variable': {'termType': 'Variable', 'value': 'var4'}, 'expression': {'termType': 'NamedNode', 'value': 'http://www.wikidata.org/prop/qualifier/P582'}}
-            if "termType" in where_part["expression"]:
+            elif "termType" in where_part["expression"]:
                 print("termType")
 
                 if (look_for in str(where_part["expression"]["value"])):
@@ -53,6 +53,19 @@ def scenario_bind_occurrences(json_object, look_for):
 
                 # TODO: if that happens -> detect the scenario, the resulting variable was in!
 
+            # for e.g. :
+            # BIND(MIN( ?var15Label  ) AS  ?var7 ).
+            # BIND(CONCAT("[[", ?var16, "]]" )  AS  ?var2 ).
+            # --> constructions, that do not correspond to the above constellations
+            elif look_for in str(where_part["expression"]):
+                # there may be more than one
+                result += str(where_part["expression"]).count(look_for)
+
+            else:
+                if look_for in str(where_part):
+                    raise Exception
+
+            # TODO: Check the other scenarios like this one!
     # if result:
     # print(result)
     # print("Scenario 1")

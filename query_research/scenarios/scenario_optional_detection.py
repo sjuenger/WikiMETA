@@ -25,6 +25,9 @@ def scenario_optional_occurrences(json_object, look_for):
             if (look_for in str(where_part["patterns"])):
                 # there may be more than one
                 result += str(where_part["patterns"]).count(look_for)
+            else:
+                if look_for in str(where_part):
+                    raise Exception
 
     # if result:
     # print(result)
