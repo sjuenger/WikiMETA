@@ -54,6 +54,12 @@ DATA_TYPES_RANK = [
 # TODO: Add some modi here, like "Extraction",
 #  "redundant_detection", "sitaution detection"...
 
+# TODO: Add a method, that automatically extracts the entries from SQID + the 5 missing properties from Wikidata Property Talk
+# + stated IN, Retrieved, Reference URL, instance of, series ordinal ! .... fehlen in SQID
+# TODO: Also add in that method, to automatically download the data from the SAPRQL logs
+# TODO: Add a GUI for the project
+
+
 directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
@@ -66,17 +72,18 @@ directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
 #redundant_detection.delete_redundant_queries(LOCATION)
 
-for TIMEFRAME in TIMEFRAMES:
-    print("REFERENCES")
-    for DATA_TYPE in DATA_TYPES_REFERENCE:
-        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    print("\n\n")
-    print("QUALIFIERS")
-    for DATA_TYPE in DATA_TYPES_QUALIFIER:
-        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    print("\n\n")
-    print("RANKS")
-    for DATA_TYPE in DATA_TYPES_RANK:
-        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    print("\n\n")
-#txt_to_dict.get_dict()
+#for TIMEFRAME in TIMEFRAMES:
+    #print("REFERENCES")
+    #for DATA_TYPE in DATA_TYPES_REFERENCE:
+    #    scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+    #print("\n\n")
+    #print("QUALIFIERS")
+    #for DATA_TYPE in DATA_TYPES_QUALIFIER:
+    #    scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+    #print("\n\n")
+    #print("RANKS")
+    #for DATA_TYPE in DATA_TYPES_RANK:
+    #    scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+    #print("\n\n")
+
+txt_to_dict.get_dict()
