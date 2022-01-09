@@ -1,11 +1,7 @@
-import query_research.transform_data.sparql_to_json_references as sparql_to_json_references
-import query_research.transform_data.sparql_to_json_qualifiers as sparql_to_json_qualifiers
-import query_research.transform_data.sparql_to_json_ranks as sparql_to_json_ranks
-import query_research.bound_references as bound_references
-import query_research.redundant_detection as redundant_detection
-import query_research.scenario_detection_unit as scenario_detection_unit
 import wikidata_research.dictionary.txt_to_dict as txt_to_dict
 import utilities.directory_structure_handler as directory_structure_handler
+import query_research.statistical_information_handler as statistical_information_handler
+import query_research.scenario_detection_unit as scenario_detection_unit
 
 TIMEFRAMES = [
      "2017-06-12_2017-07-09_organic",
@@ -72,11 +68,11 @@ directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
 #redundant_detection.delete_redundant_queries(LOCATION)
 
-#for TIMEFRAME in TIMEFRAMES:
-    #print("REFERENCES")
-    #for DATA_TYPE in DATA_TYPES_REFERENCE:
-    #    scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    #print("\n\n")
+for TIMEFRAME in TIMEFRAMES:
+    print("REFERENCES")
+    for DATA_TYPE in DATA_TYPES_REFERENCE:
+        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+    print("\n\n")
     #print("QUALIFIERS")
     #for DATA_TYPE in DATA_TYPES_QUALIFIER:
     #    scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
@@ -86,4 +82,12 @@ directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
     #    scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
     #print("\n\n")
 
-txt_to_dict.get_dict()
+#txt_to_dict.get_dict()
+
+statistical_information_handler.\
+    summarize_statistical_information_about_scenarios("2017-06-12_2017-07-09_organic",
+                                                      DATA_TYPES_REFERENCE, "reference_metadata")
+statistical_information_handler.\
+    summarize_statistical_information_about_metadata("2017-06-12_2017-07-09_organic",
+                                                     ["reference_metadata"],
+                                                     "2017-06-12_2017-07-09_reference_metadata")

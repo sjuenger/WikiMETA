@@ -23,9 +23,7 @@ def get_dict():
     with open("data/SQID_properties_list.txt") as txt_list:
         # iterate through all the lines
         for line_index, line in enumerate(txt_list):
-
-            print(line_index)
-            print(line)
+            #
             title_complex_string = str(line)
             statements_no = txt_list.readline().strip("\n")
             txt_list.readline()

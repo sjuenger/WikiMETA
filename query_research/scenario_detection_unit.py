@@ -397,7 +397,7 @@ def detect_scenarios(location, data_type):
 
     scenario_dict = {
         "data_type": data_type,
-        "total queries": files_json.__len__(),
+        "total_queries": files_json.__len__(),
         "SELECT_queries": total_SELECT_queries,
         "DESCRIBE_queries": total_DESCRIBE_queries,
         "CONSTRUCT_queries": total_CONSTRUCT_queries,

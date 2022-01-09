@@ -57100,7 +57100,7 @@ reference URL (P854)	URL
 5840
 
 60638820
-instance of	(P31)	Item
+instance of (P31)	Item
 101938489
 
 119662
