@@ -80,6 +80,8 @@ def detect_scenarios(location, data_type):
                 elif json_object["queryType"] == "CONSTRUCT":
                     total_CONSTRUCT_queries += 1
 
+            json_data.close()
+
     # to check for the scenarios
     array_looking_for = get_mode(data_type)
     dict_overview_looking_for = {"list_per_search": []}
@@ -391,6 +393,8 @@ def detect_scenarios(location, data_type):
                               +  str(json_object).count(looking_for) )
                             print(json_data.name)
 
+                json_data.close()
+
 
         # attach the dictionary for looking for to the dictionary for the whole data type
         dict_overview_looking_for["list_per_search"].append(dict_looking_for)
@@ -408,6 +412,7 @@ def detect_scenarios(location, data_type):
     # save the scneario_dict to a folder
     with open(path_to_stat_information + "/" + data_type.split('/')[1] , "wt") as information_data:
         json.dump(scenario_dict, information_data)
+    information_data.close()
 
     # test the bind variables
 

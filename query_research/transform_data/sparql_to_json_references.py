@@ -111,6 +111,7 @@ def extract_SPARQL_to_JSON(location):
                         failed_txt.write(unquote_plus(row[1]))
                         failed_txt.write(unquote_plus(row[2]))
                         failed_txt.write(unquote_plus(row[3]))
+                    failed_txt.close()
 
 
         print("Pffff.... that took a long time.")

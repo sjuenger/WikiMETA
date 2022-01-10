@@ -114,5 +114,7 @@ def get_dict():
     with open("data/property_dictionary.json", "wt") as result_data:
         json.dump(prop_dict, result_data)
 
+    txt_list.close()
+    result_data.close()
     # Statistics based on data dump 11/8/2021
     # TODO: Add a comment for github here, explaining it.

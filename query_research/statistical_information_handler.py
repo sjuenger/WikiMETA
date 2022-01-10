@@ -123,17 +123,18 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["union"]
                 metadata_dict["found_scenarios"]["values"] = \
                     elem["values"]
+        json_data.close()
 
     with open(path_to_stat_information_metadata, "w") as json_result:
         json.dump(metadata_dict, json_result)
-
+    json_result.close()
 
 # summarize the statistical information about the different timeframes
-def summarize_statistical_information_about_metadata(location, datatype_list, timeframe):
+def summarize_statistical_information_about_timeframes(locations, metadata):
     # struct for the resulting .json object
 
     dict_looking_for = {
-        "looking_for": timeframe,
+        "looking_for": metadata,
         "total_occurrences": 0,
         "one": 0,
         "two": 0,
@@ -163,7 +164,7 @@ def summarize_statistical_information_about_metadata(location, datatype_list, ti
         "other": 0}
 
     metadata_dict = {
-        "data_type": timeframe,
+        "data_type": metadata,
         "total_queries": 0,
         "SELECT_queries": 0,
         "DESCRIBE_queries": 0,
@@ -172,13 +173,14 @@ def summarize_statistical_information_about_metadata(location, datatype_list, ti
         "found_scenarios": dict_looking_for
     }
 
-    for datatype in datatype_list:
+    # 'location' e.g. "2017-06-12_2017-07-09_organic"
+    for location in locations:
         # get the path to the folder, where the json file about the gathered statistical information
         # .. about the metadata is stored (on the current timeframe)
 
         path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] +\
-                             "/statistical_information/" + datatype + ".json"
-        path_to_stat_information_timeframe = "data/statistical_information/" + datatype + ".json"
+                             "/statistical_information/" + metadata + ".json"
+        path_to_stat_information_timeframe = "data/statistical_information/" + metadata + ".json"
 
         # extract the statistical information
         with open(path_to_stat_information_metadata, "r") as json_data:
@@ -191,61 +193,63 @@ def summarize_statistical_information_about_metadata(location, datatype_list, ti
             metadata_dict["CONSTRUCT_queries"] += metadata_subtype_dict["CONSTRUCT_queries"]
             metadata_dict["ASK_queries"] += metadata_subtype_dict["ASK_queries"]
 
-            for elem in metadata_subtype_dict["found_scenarios"]["list_per_search"]:
-            elem = metadata_subtype_dict
 
-                metadata_dict["found_scenarios"]["total_occurrences"] += \
-                    elem["total_occurrences"]
-                metadata_dict["found_scenarios"]["one"] += \
-                    elem["one"]
-                metadata_dict["found_scenarios"]["two"] += \
-                    elem["two"]
-                metadata_dict["found_scenarios"]["three"] += \
-                    elem["three"]
-                metadata_dict["found_scenarios"]["four"] += \
-                    elem["four"]
-                metadata_dict["found_scenarios"]["five"] += \
-                    elem["five"]
-                metadata_dict["found_scenarios"]["six"] += \
-                    elem["six"]
-                metadata_dict["found_scenarios"]["seven"] += \
-                    elem["seven"]
-                metadata_dict["found_scenarios"]["eight"] += \
-                    elem["eight"]
-                metadata_dict["found_scenarios"]["nine"] += \
-                    elem["nine"]
-                metadata_dict["found_scenarios"]["ten"] += \
-                    elem["ten"]
-                metadata_dict["found_scenarios"]["eleven"] += \
-                    elem["eleven"]
-                metadata_dict["found_scenarios"]["twelve"] += \
-                    elem["twelve"]
-                metadata_dict["found_scenarios"]["bind"] += \
-                    elem["bind"]
-                metadata_dict["found_scenarios"]["blank_node"] += \
-                    elem["blank_node"]
-                metadata_dict["found_scenarios"]["filter"] += \
-                    elem["filter"]
-                metadata_dict["found_scenarios"]["group"] += \
-                    elem["group"]
-                metadata_dict["found_scenarios"]["literal"] += \
-                    elem["literal"]
-                metadata_dict["found_scenarios"]["minus"] += \
-                    elem["minus"]
-                metadata_dict["found_scenarios"]["optional"] += \
-                    elem["optional"]
-                metadata_dict["found_scenarios"]["prop_path"] += \
-                    elem["prop_path"]
-                metadata_dict["found_scenarios"]["ref_value"] += \
-                    elem["ref_value"]
-                metadata_dict["found_scenarios"]["service"] += \
-                    elem["service"]
-                metadata_dict["found_scenarios"]["subselect"] = \
-                    elem["subselect"]
-                metadata_dict["found_scenarios"]["union"] = \
-                    elem["union"]
-                metadata_dict["found_scenarios"]["values"] = \
-                    elem["values"]
+            elem =  metadata_subtype_dict["found_scenarios"]
 
-    with open(path_to_stat_information_metadata, "w") as json_result:
+            metadata_dict["found_scenarios"]["total_occurrences"] += \
+                elem["total_occurrences"]
+            metadata_dict["found_scenarios"]["one"] += \
+                elem["one"]
+            metadata_dict["found_scenarios"]["two"] += \
+                elem["two"]
+            metadata_dict["found_scenarios"]["three"] += \
+                elem["three"]
+            metadata_dict["found_scenarios"]["four"] += \
+                elem["four"]
+            metadata_dict["found_scenarios"]["five"] += \
+                elem["five"]
+            metadata_dict["found_scenarios"]["six"] += \
+                elem["six"]
+            metadata_dict["found_scenarios"]["seven"] += \
+                elem["seven"]
+            metadata_dict["found_scenarios"]["eight"] += \
+                elem["eight"]
+            metadata_dict["found_scenarios"]["nine"] += \
+                elem["nine"]
+            metadata_dict["found_scenarios"]["ten"] += \
+                elem["ten"]
+            metadata_dict["found_scenarios"]["eleven"] += \
+                elem["eleven"]
+            metadata_dict["found_scenarios"]["twelve"] += \
+                elem["twelve"]
+            metadata_dict["found_scenarios"]["bind"] += \
+                elem["bind"]
+            metadata_dict["found_scenarios"]["blank_node"] += \
+                elem["blank_node"]
+            metadata_dict["found_scenarios"]["filter"] += \
+                elem["filter"]
+            metadata_dict["found_scenarios"]["group"] += \
+                elem["group"]
+            metadata_dict["found_scenarios"]["literal"] += \
+                elem["literal"]
+            metadata_dict["found_scenarios"]["minus"] += \
+                elem["minus"]
+            metadata_dict["found_scenarios"]["optional"] += \
+                elem["optional"]
+            metadata_dict["found_scenarios"]["prop_path"] += \
+                elem["prop_path"]
+            metadata_dict["found_scenarios"]["ref_value"] += \
+                elem["ref_value"]
+            metadata_dict["found_scenarios"]["service"] += \
+                elem["service"]
+            metadata_dict["found_scenarios"]["subselect"] = \
+                elem["subselect"]
+            metadata_dict["found_scenarios"]["union"] = \
+                elem["union"]
+            metadata_dict["found_scenarios"]["values"] = \
+                elem["values"]
+        json_data.close()
+
+    with open(path_to_stat_information_timeframe, "w") as json_result:
         json.dump(metadata_dict, json_result)
+    json_result.close()
