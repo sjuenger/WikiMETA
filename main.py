@@ -1,6 +1,7 @@
 import os
 
 import wikidata_research.dictionary.txt_to_dict as txt_to_dict
+import wikidata_research.dictionary.dictionary_evaluation as dictionary_evaluation
 import utilities.directory_structure_handler as directory_structure_handler
 import query_research.statistical_information_handler as statistical_information_handler
 import query_research.scenario_detection_unit as scenario_detection_unit
@@ -60,56 +61,62 @@ DATA_TYPES_RANK = [
 # + stated IN, Retrieved, Reference URL, instance of, series ordinal ! .... fehlen in SQID
 # TODO: Also add in that method, to automatically download the data from the SAPRQL logs
 # TODO: Add a GUI for the project
+# TODO: Add references a https://sqid.toolforge.org/#/ to the code
 
 
-directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
-directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
+#directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
+#directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
-for TIMEFRAME in TIMEFRAMES:
-    sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
-    sparql_to_json_references.extract_SPARQL_to_JSON(TIMEFRAME)
-    sparql_to_json_ranks.extract_SPARQL_to_JSON(TIMEFRAME)
+dictionary_evaluation.get_top_x_metadata_overall(10,"reference")
+dictionary_evaluation.get_top_x_metadata_overall(10,"qualifier")
+
+#for TIMEFRAME in TIMEFRAMES:
+#    sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
+#    sparql_to_json_references.extract_SPARQL_to_JSON(TIMEFRAME)
+#    sparql_to_json_ranks.extract_SPARQL_to_JSON(TIMEFRAME)
 
 # bound_references.find_bound_references(LOCATION)
 
 # redundant_detection.delete_redundant_queries(LOCATION)
 
-for TIMEFRAME in TIMEFRAMES:
-    print("REFERENCES")
-    for DATA_TYPE in DATA_TYPES_REFERENCE:
-        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    print("\n\n")
-    print("QUALIFIERS")
-    for DATA_TYPE in DATA_TYPES_QUALIFIER:
-       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    print("\n\n")
-    print("RANKS")
-    for DATA_TYPE in DATA_TYPES_RANK:
-       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
-    print("\n\n")
+#for TIMEFRAME in TIMEFRAMES:
+#    print("REFERENCES")
+#    for DATA_TYPE in DATA_TYPES_REFERENCE:
+#        scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+#    print("\n\n")
+#    print("QUALIFIERS")
+#    for DATA_TYPE in DATA_TYPES_QUALIFIER:
+#       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+#    print("\n\n")
+#    print("RANKS")
+#    for DATA_TYPE in DATA_TYPES_RANK:
+#       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
+#    print("\n\n")
 
-if not os.path.isfile("data/property_dictionary.json"):
-    txt_to_dict.get_dict()
+#if not os.path.isfile("data/property_dictionary.json"):
+#    txt_to_dict.get_dict()
 
-for timeframe in TIMEFRAMES:
-    statistical_information_handler. \
-        summarize_statistical_information_about_scenarios(timeframe,
-                                                          DATA_TYPES_REFERENCE, "reference_metadata")
-    statistical_information_handler. \
-        summarize_statistical_information_about_scenarios(timeframe,
-                                                          DATA_TYPES_REFERENCE, "qualifier_metadata")
-    statistical_information_handler. \
-        summarize_statistical_information_about_scenarios(timeframe,
-                                                          DATA_TYPES_REFERENCE, "rank_metadata")
-statistical_information_handler. \
-    summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                       "reference_metadata")
-statistical_information_handler. \
-    summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                       "qualifier_metadata")
-statistical_information_handler. \
-    summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                       "rank_metadata")
+#for timeframe in TIMEFRAMES:
+#    statistical_information_handler. \
+#        summarize_statistical_information_about_scenarios(timeframe,
+#                                                          DATA_TYPES_REFERENCE, "reference_metadata")
+#    statistical_information_handler. \
+#        summarize_statistical_information_about_scenarios(timeframe,
+#                                                          DATA_TYPES_REFERENCE, "qualifier_metadata")
+#    statistical_information_handler. \
+#        summarize_statistical_information_about_scenarios(timeframe,
+#                                                          DATA_TYPES_REFERENCE, "rank_metadata")
+#statistical_information_handler. \
+#    summarize_statistical_information_about_timeframes(TIMEFRAMES,
+#                                                       "reference_metadata")
+#statistical_information_handler. \
+#    summarize_statistical_information_about_timeframes(TIMEFRAMES,
+#                                                       "qualifier_metadata")
+#statistical_information_handler. \
+#    summarize_statistical_information_about_timeframes(TIMEFRAMES,
+#                                                       "rank_metadata")
 #for timeframe in TIMEFRAMES:
     #for location in DATA_TYPES_REFERENCE:
         #redundant_detection.delete_redundant_queries(timeframe, location)
+
+
