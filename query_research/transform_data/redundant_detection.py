@@ -10,22 +10,22 @@ from datetime import datetime, timedelta
 
 def delete_redundant_queries(timeframe, location):
     # Retrieve all files, ending with .json
-    files_sparql = glob.glob("data/" + timeframe[:21] + "/" +
-                                  timeframe[22:] + "/" + location + "/*.sparql")
+    files_json = glob.glob("data/" + timeframe[:21] + "/" +
+                                  timeframe[22:] + "/" + location + "/*.json")
 
     i = 0
-    for query_file in sorted(files_sparql):
+    for query_file in sorted(files_json):
 
-        with open(query_file, "rt") as sparql_data:
-            query_one = sparql_data.read()
+        with open(query_file, "rt") as json_data:
+            query_one = json_data.read()
 
             # ignore files, which were marked as deleted beforehand
-            path_of_sparql_data = sparql_data.name.split("/")
-            title_of_sparql_data = str(path_of_sparql_data[len(path_of_sparql_data)-1])
+            path_of_json_data = json_data.name.split("/")
+            title_of_json_data = str(path_of_json_data[len(path_of_json_data)-1])
 
-            if not title_of_sparql_data.startswith("x"):
+            if not title_of_json_data.startswith("x"):
 
-                for test_query_file in sorted(files_sparql):
+                for test_query_file in sorted(files_json):
 
                     # look only at the files, which are max. 25hours apart
 
@@ -43,14 +43,22 @@ def delete_redundant_queries(timeframe, location):
 
                     # open the files again to compare a 'test' file with the first one
                     # -> to see, if the 'test' file is equal to the first one
-                    with open(test_query_file, "rt") as sparql_test_data:
-                        query_two = sparql_test_data.read()
+                    with open(test_query_file, "rt") as json_test_data:
+                        query_two = json_test_data.read()
 
                         # mark the second query, if it was created after the first one
                         # .. and their contents are the same
                         # .. and th second query was created/prompted not longer than 25hours after the first one
                         # ----(secured, through the above 'if', which in this case, breaks the loop)
-                        if query_one_datetime < query_two_datetime and query_one == query_two:
+                        #
+                        # from the sparql object all expressions are seperated, which do not change the semantic
+                        # .. of the query. e.g. the SELECT, LIMIT, OFFSET
+                        # .. -> we are only looking for the pure "WHERE" part of the query
+                        query_one_comparable = query_one["where"]
+                        query_two_compareable = query_two["where"]
+
+                        if query_one_datetime < query_two_datetime and \
+                                compare_dictionary_structure(query_one_comparable, query_two_compareable):
 
                             # add a 'x' to the name of the file, which is to be deleted
                             new_file_name = test_query_file.title().split("/")
@@ -64,7 +72,7 @@ def delete_redundant_queries(timeframe, location):
                             print("\n")
 
                             # replace the test query file name with its new, marked name
-                            #os.rename(test_query_file, new_file_name)
+                            os.rename(test_query_file, new_file_name)
 
                             # save the information, about the renaming (for debugging)
                             renamed_dict = {
@@ -74,10 +82,16 @@ def delete_redundant_queries(timeframe, location):
                                 "Because of Query Text: ": query_one,
                                 "New name: ": new_file_name
                             }
-                            with open(test_query_file.replace(".sparql", "_deletion_information.json"), "w") as renamed_data:
+                            with open(test_query_file.replace(".json", "_deletion_information.json"), "w") as renamed_data:
                                 json.dump(renamed_dict, renamed_data)
 
                             renamed_data.close()
 
-                    sparql_test_data.close()
-        sparql_data.close()
+                    json_test_data.close()
+        json_data.close()
+
+def compare_dictionary_structure(dict1, dict2):
+    result = False
+    if dict1 == dict2:
+        result = True
+    return result
