@@ -69,6 +69,8 @@ DATA_TYPES_RANK = [
 
 dictionary_evaluation.get_top_x_metadata_overall(10,"reference")
 dictionary_evaluation.get_top_x_metadata_overall(10,"qualifier")
+dictionary_evaluation.get_top_x_metadata_recommended(10, "qualifier")
+dictionary_evaluation.get_top_x_metadata_recommended(10, "reference")
 
 #for TIMEFRAME in TIMEFRAMES:
 #    sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
