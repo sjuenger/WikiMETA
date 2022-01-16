@@ -26,17 +26,28 @@ def get_top_x_metadata_overall(x, mode):
 
 
         for PID in property_dictionary:
-            # check, if th current property is smaller than any property in the result dictionary and swap them
+            # check, if the current property is greater than any property in the result dictionary and swap it
+            # .. with the smallest item in the result property
             for result_PID in result_dictionary:
-                if property_dictionary[PID]["PID"] != result_dictionary[result_PID]["PID"] \
+                if PID != result_PID \
                         and (int(property_dictionary[PID][mode + "_no"]) >
                                 int(result_dictionary[result_PID][mode + "_no"])):
-                    result_dictionary.pop(result_PID)
-                    result_dictionary[PID] = property_dictionary[PID]
-                break
 
-        # once all the top x entries are creaed, store them in a .json file
-        result_path = "data/statistical_information/property_dictionary_top_"+ str(x) + "_" + mode + "_metadata"
+                    # swap with the smallest in the result property
+                    smallest_PID=""
+                    for test_PID in result_dictionary:
+                        if smallest_PID == "" or \
+                            int(result_dictionary[test_PID][mode + "_no"]) \
+                            < int(result_dictionary[smallest_PID][mode + "_no"]):
+                            smallest_PID = test_PID
+
+                    result_dictionary.pop(smallest_PID)
+                    result_dictionary[PID] = property_dictionary[PID]
+
+                    break
+
+        # once all the top x entries are created, store them in a .json file
+        result_path = "data/statistical_information/property_dictionary_top_"+ str(x) + "_" + mode + "_metadata.json"
         with open(result_path, "w") \
                 as result_json:
             json.dump(result_dictionary, result_json)
