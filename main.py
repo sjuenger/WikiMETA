@@ -1,7 +1,7 @@
 import os
 
 import wikidata_research.dictionary.txt_to_dict as txt_to_dict
-import wikidata_research.dictionary.dictionary_evaluation as dictionary_evaluation
+import wikidata_research.dictionary_evaluation_handler as wikidata_property_dictionary_evaluation_handler
 import utilities.directory_structure_handler as directory_structure_handler
 import query_research.statistical_information_handler as statistical_information_handler
 import query_research.scenario_detection_unit as scenario_detection_unit
@@ -67,18 +67,8 @@ DATA_TYPES_RANK = [
 #directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 #directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
-#dictionary_evaluation.get_top_x_metadata(10, "reference")
-#dictionary_evaluation.get_top_x_metadata(10, "qualifier")
-#dictionary_evaluation.get_top_x_metadata(10, "qualifier", True)
-#dictionary_evaluation.get_top_x_metadata(10, "reference", True)
-#dictionary_evaluation.get_top_x_metadata(10, "qualifier", False)
-#dictionary_evaluation.get_top_x_metadata(10, "reference", False)
-#dictionary_evaluation.get_top_x_facets_from_metadata(10, "qualifier", True)
-#dictionary_evaluation.get_top_x_facets_from_metadata(10, "qualifier", False)
-#dictionary_evaluation.get_top_x_facets_from_metadata(10, "reference", True)
-#dictionary_evaluation.get_top_x_facets_from_metadata(10, "reference", False)
-dictionary_evaluation.get_top_x_facets_from_metadata(10, "qualifier")
-dictionary_evaluation.get_top_x_facets_from_metadata(10, "reference")
+wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
+wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
 
 #for TIMEFRAME in TIMEFRAMES:
 #    sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)

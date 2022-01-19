@@ -25,14 +25,13 @@ path_to_json_dictionary = "data/property_dictionary.json"
 # query every property available to the mode
 
 def get_top_x_metadata(x, mode, recommended = None):
-    if mode not in ["qualifier", "reference"]:
-        error_message = "Not supported mode."
-        raise Exception(error_message)
-
     with open(path_to_json_dictionary, "r") as dict_data:
         property_dictionary = json.load(dict_data)
 
         result_dictionary = {}
+        result_dictionary["properties"] = {}
+        result_dictionary["total_usages_of_" + mode] = 0
+        result_dictionary["total_unique_properties"] = len(property_dictionary)
 
         for PID in property_dictionary:
             # check, if the property is /is not a recommended reference/qualifier by Wikidata
@@ -45,7 +44,7 @@ def get_top_x_metadata(x, mode, recommended = None):
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
                 else:
                     recommended_bool = False
-            elif not recommended:
+            elif recommended is not None:
                 # --> but they are min. 1x times used as a reference
                 if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
                     recommended_bool = not bool(property_dictionary[PID]["is_reference"])
@@ -57,58 +56,57 @@ def get_top_x_metadata(x, mode, recommended = None):
 
 
             if recommended_bool:
+                result_dictionary["total_usages_of_" + mode] += \
+                    int(property_dictionary[PID][mode + "_no"])
                 # check, if the current property is smaller than any property in the result dictionary and swap them
                 # or, if the result dictionary has not yet got 'X' entries, just add the property
-                if len(result_dictionary) < x:
-                    result_dictionary[PID] = property_dictionary[PID]
+                if len(result_dictionary["properties"]) < x:
+                    result_dictionary["properties"][PID] = property_dictionary[PID]
                 else:
                     # no need to check for (non-) recommended properties here (only (non-) recommended properties
                     #   can be added to this dictionary)
-                    for result_PID in result_dictionary:
+                    for result_PID in result_dictionary["properties"]:
                         if PID != result_PID \
                                 and (int(property_dictionary[PID][mode + "_no"]) >
-                                     int(result_dictionary[result_PID][mode + "_no"])):
+                                     int(result_dictionary["properties"][result_PID][mode + "_no"])):
 
                             # swap with the smallest in the result property
                             smallest_PID = ""
-                            for test_PID in result_dictionary:
+                            for test_PID in result_dictionary["properties"]:
                                 if smallest_PID == "" or \
-                                        int(result_dictionary[test_PID][mode + "_no"]) \
-                                        < int(result_dictionary[smallest_PID][mode + "_no"]):
+                                        int(result_dictionary["properties"][test_PID][mode + "_no"]) \
+                                        < int(result_dictionary["properties"][smallest_PID][mode + "_no"]):
                                     smallest_PID = test_PID
 
-                            result_dictionary.pop(smallest_PID)
-                            result_dictionary[PID] = property_dictionary[PID]
+                            result_dictionary["properties"].pop(smallest_PID)
+                            result_dictionary["properties"][PID] = property_dictionary[PID]
 
                             break
 
         # once all the top x entries are created, store them in a .json file
-        if recommended == True:
+        if recommended:
             tmp_string = "_recommended_"
-        elif not recommended == True:
+        elif recommended is not None:
             tmp_string = "_non_recommended_"
         else:
             tmp_string = "_"
 
-        with open("data/statistical_information/property_dictionary_top_" + str(x) + tmp_string +
-                  mode + "_metadata.json", "w") \
+        with open("data/statistical_information/wikidata_property_dictionary/properties/top_" + str(x) + tmp_string +
+                  "for_" + mode + ".json", "w") \
                 as result_json:
             json.dump(result_dictionary, result_json)
 
 
 # query the top facets (properties have) from qualifier / reference
 # .. of recommended / non-recommended / overall properties
-def get_top_x_facets_from_metadata(x, mode, recommended = None):
-    if mode not in ["qualifier", "reference"]:
-        error_message = "Not supported mode."
-        raise Exception(error_message)
+def get_top_x_facets_by_metadata(x, mode, recommended = None):
+
 
     with open(path_to_json_dictionary, "r") as dict_data:
         property_dictionary = json.load(dict_data)
 
         facets_dictionary = {}
-        # add all available facets as keys to a dictionary
-        facets_dictionary["facets"] = get_all_facets_from_property_dictionary()
+        facets_dictionary["facets"] = {}
         # add a counter for the total amount of facets and properties
         facets_dictionary["total_facets"] = 0
         facets_dictionary["total_properties"] = 0
@@ -123,7 +121,7 @@ def get_top_x_facets_from_metadata(x, mode, recommended = None):
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
-            elif not recommended:
+            elif recommended is not None:
                 # --> but they are min. 1x times used as a reference
                 if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
                     recommended_bool = not bool(property_dictionary[PID]["is_reference"])
@@ -139,61 +137,252 @@ def get_top_x_facets_from_metadata(x, mode, recommended = None):
 
                 for facet in current_facet_list:
                     facets_dictionary["total_facets"] += 1
-                    facets_dictionary["facets"][facet] += 1
+                    # add the facet as keys to a dictionary, if it wasn't added before
+                    if facet not in facets_dictionary["facets"]:
+                        facets_dictionary["facets"][facet] = 1
+                    else:
+                        facets_dictionary["facets"][facet] += 1
 
-            # extract the top x facets by usages
-            result_facets_dictionary = {"facets" : {}}
-            result_facets_dictionary["total_facets"] = facets_dictionary["total_facets"]
-            result_facets_dictionary["total_properties"] = facets_dictionary["total_properties"]
+        # extract the top x facets by usages
+        result_facets_dictionary = {"facets" : {}}
+        result_facets_dictionary["total_facets"] = facets_dictionary["total_facets"]
+        result_facets_dictionary["total_properties"] = facets_dictionary["total_properties"]
+        result_facets_dictionary["total_unique_facets"] = len(facets_dictionary["facets"])
 
-            for facet in facets_dictionary["facets"]:
-                if len(result_facets_dictionary["facets"]) < x:
-                    result_facets_dictionary["facets"][facet] = facets_dictionary["facets"][facet]
-                else:
-                    # swap with the smallest in the result list
-                    smallest_ID = ""
-                    for facet_ID in result_facets_dictionary["facets"]:
-                        if smallest_ID == "" or \
-                                int(result_facets_dictionary["facets"][facet_ID]) \
-                                < int(result_facets_dictionary["facets"][smallest_ID]):
-                            smallest_ID = facet_ID
-
+        for facet in facets_dictionary["facets"]:
+            if len(result_facets_dictionary["facets"]) < x:
+                result_facets_dictionary["facets"][facet] = facets_dictionary["facets"][facet]
+            else:
+                # swap with the smallest in the result list -> it is greater than that
+                smallest_ID = ""
+                for facet_ID in result_facets_dictionary["facets"]:
+                    if smallest_ID == "" or \
+                            int(result_facets_dictionary["facets"][facet_ID]) \
+                            < int(result_facets_dictionary["facets"][smallest_ID]):
+                        smallest_ID = facet_ID
+                if facets_dictionary["facets"][facet] > facets_dictionary["facets"][smallest_ID]:
                     result_facets_dictionary["facets"].pop(smallest_ID)
                     result_facets_dictionary["facets"][facet] = facets_dictionary["facets"][facet]
 
         # once all the top x entries are creaed, store them in a .json file
-        if recommended == True:
+        if recommended:
             tmp_string = "_recommended_"
-        elif recommended == False:
+        elif recommended is not None:
             tmp_string = "_non_recommended_"
         else:
-            tmp_string = ""
-        with open("data/statistical_information/property_dictionary_top_" + str(x) + tmp_string +
-                  mode + "_facets.json", "w") \
+            tmp_string = "_"
+        with open("data/statistical_information/wikidata_property_dictionary/facets/top_" + str(x) + tmp_string +
+                  "for_" + mode + ".json", "w") \
                 as result_json:
             json.dump(result_facets_dictionary, result_json)
 
 
-# query only those references or qualifiers, that are intended by Wikidata
-# and order them by their facets
+# get the used datatypes for every metadata
+# -> a datatype can e.g. be String, WikibaseItem, etc.
+#
+def get_datatypes_by_metadata(mode, recommended = None):
+
+
+    with open(path_to_json_dictionary, "r") as dict_data:
+        property_dictionary = json.load(dict_data)
+
+        datatypes_dictionary = {}
+        datatypes_dictionary["datatypes"] = {}
+        # add a counter for the total amount of datatypes and properties
+        datatypes_dictionary["total_properties"] = 0
+
+
+        for PID in property_dictionary:
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended:
+                if mode == "reference":
+                    recommended_bool = bool(property_dictionary[PID]["is_reference"])
+                elif mode == "qualifier":
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+            elif recommended is not None:
+                # --> but they are min. 1x times used as a reference
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
+                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
+                # --> but they are min. 1x times used as a reference
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+                datatypes_dictionary["total_properties"] += 1
+                current_datatype = property_dictionary[PID]["datatype"]
+                # add the datatype as a key to the dictionary, if it wasn't added before
+                if current_datatype not in datatypes_dictionary["datatypes"]:
+                    datatypes_dictionary["datatypes"][current_datatype] = 1
+                else:
+                    datatypes_dictionary["datatypes"][current_datatype] += 1
+
+        datatypes_dictionary["total_unique_datatypes"] = len(datatypes_dictionary["datatypes"])
+
+
+        # once all the top x entries are creaed, store them in a .json file
+        if recommended:
+            tmp_string = "_recommended_"
+        elif recommended is not None:
+            tmp_string = "_non_recommended_"
+        else:
+            tmp_string = "_"
+
+        with open("data/statistical_information/wikidata_property_dictionary/datatypes/" +
+                  "for_" + mode + tmp_string + ".json", "w") \
+                as result_json:
+            json.dump(datatypes_dictionary, result_json)
+
+
+# get the accumulated facets by occurences of a (recommended) property in Wikidata
+# so, e.g. if "Series Ordinal" occures as a reference 5Miox times in Wikidata, count all of his facets 5Miox times
+def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
+
+    with open(path_to_json_dictionary, "r") as dict_data:
+        property_dictionary = json.load(dict_data)
+
+        facets_dictionary = {}
+        facets_dictionary["facets"] = {}
+        # add a counter for the total amount of facets and properties
+        facets_dictionary["total_accumulated_facets"] = 0
+        facets_dictionary["total_accumulated_properties"] = 0
+
+        for PID in property_dictionary:
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended:
+                if mode == "reference":
+                    recommended_bool = bool(property_dictionary[PID]["is_reference"])
+                elif mode == "qualifier":
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+            elif recommended is not None:
+                # --> but they are min. 1x times used as a reference
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
+                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
+                # --> but they are min. 1x times used as a reference
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+                facets_dictionary["total_accumulated_properties"] += int(property_dictionary[PID][mode + "_no"])
+                current_facet_list = property_dictionary[PID]["facet_of"]
+                facets_dictionary["total_accumulated_facets"] += \
+                    len(current_facet_list) * int(property_dictionary[PID][mode + "_no"])
+
+                for facet in current_facet_list:
+                    # add the facet as keys to a dictionary, if it wasn't added before
+                    if facet not in facets_dictionary["facets"]:
+                        facets_dictionary["facets"][facet] = int(property_dictionary[PID][mode + "_no"])
+                    else:
+                        facets_dictionary["facets"][facet] += int(property_dictionary[PID][mode + "_no"])
+
+        # extract the top x facets by usages
+        result_facets_dictionary = {"facets": {}}
+        result_facets_dictionary["total_accumulated_facets"] = facets_dictionary["total_accumulated_properties"]
+        result_facets_dictionary["total_accumulated_properties"] = facets_dictionary["total_accumulated_properties"]
+
+        for facet in facets_dictionary["facets"]:
+            if len(result_facets_dictionary["facets"]) < x:
+                result_facets_dictionary["facets"][facet] = facets_dictionary["facets"][facet]
+            else:
+                # swap with the smallest in the result list -> it is greater than that
+                smallest_ID = ""
+                for facet_ID in result_facets_dictionary["facets"]:
+                    if smallest_ID == "" or \
+                            int(result_facets_dictionary["facets"][facet_ID]) \
+                            < int(result_facets_dictionary["facets"][smallest_ID]):
+                        smallest_ID = facet_ID
+                if facets_dictionary["facets"][facet] > facets_dictionary["facets"][smallest_ID]:
+                    result_facets_dictionary["facets"].pop(smallest_ID)
+                    result_facets_dictionary["facets"][facet] = facets_dictionary["facets"][facet]
+
+        # once all the top x entries are creaed, store them in a .json file
+        if recommended:
+            tmp_string = "_recommended_"
+        elif recommended is not None:
+            tmp_string = "_non_recommended_"
+        else:
+            tmp_string = "_"
+        with open("data/statistical_information/wikidata_property_dictionary/accumulated_facets/top_" + str(x) + tmp_string +
+                  "for_" + mode + ".json", "w") \
+                as result_json:
+            json.dump(result_facets_dictionary, result_json)
+
+
+# get the accumulated datatypes by occurences of a (recommended) property in Wikidata
+# so, e.g. if "Series Ordinal" occures as a reference 5Miox times in Wikidata, count his datatype 5Miox times
+def get_datatypes_by_accumulated_properties(mode, recommended = None):
+
+    with open(path_to_json_dictionary, "r") as dict_data:
+        property_dictionary = json.load(dict_data)
+
+        datatypes_dictionary = {}
+        datatypes_dictionary["datatypes"] = {}
+        # add a counter for the total amount of datatypes and properties
+        datatypes_dictionary["total_properties"] = 0
+        datatypes_dictionary["total_accumulated_properties"] = 0
+
+
+        for PID in property_dictionary:
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended:
+                if mode == "reference":
+                    recommended_bool = bool(property_dictionary[PID]["is_reference"])
+                elif mode == "qualifier":
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+            elif recommended is not None:
+                # --> but they are min. 1x times used as a reference
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
+                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
+                # --> but they are min. 1x times used as a reference
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+                datatypes_dictionary["total_properties"] += 1
+                datatypes_dictionary["total_accumulated_properties"] += int(property_dictionary[PID][mode + "_no"])
+                current_datatype = property_dictionary[PID]["datatype"]
+                # add the datatype as a key to the dictionary, if it wasn't added before
+                if current_datatype not in datatypes_dictionary["datatypes"]:
+                    datatypes_dictionary["datatypes"][current_datatype] = int(property_dictionary[PID][mode + "_no"])
+                else:
+                    datatypes_dictionary["datatypes"][current_datatype] += int(property_dictionary[PID][mode + "_no"])
+
+        datatypes_dictionary["total_unique_datatypes"] = len(datatypes_dictionary["datatypes"])
+
+
+        # once all the top x entries are creaed, store them in a .json file
+        if recommended:
+            tmp_string = "_recommended_"
+        elif recommended is not None:
+            tmp_string = "_non_recommended_"
+        else:
+            tmp_string = "_"
+
+        with open("data/statistical_information/wikidata_property_dictionary/accumulated_datatypes/" +
+                  "for_" + mode + tmp_string + ".json", "w") \
+                as result_json:
+            json.dump(datatypes_dictionary, result_json)
+
+
+# get the cummulated facets by occurences of a (recommended) property in Wikidata
 def get_top_x_metadata_recommended_by_facet(x, mode):
     return
 
 
-def get_top_x_overall_metadata_by_each_facet():
-    return
-
-
-def get_top_x_recommended_metadata_by_each_facet():
-    return
-
-
-def get_top_x_non_recommended_metadata_by_each_facet():
-    return
-
-
 # get all facets, that are available inside the property dictionary
-def get_all_facets_from_property_dictionary():
+# -> for the provided mode
+def get_all_facets_from_property_dictionary(mode, recommended = None):
     with open(path_to_json_dictionary, "r") as dict_data:
         property_dictionary = json.load(dict_data)
 
@@ -215,6 +404,27 @@ def get_all_facets_from_property_dictionary():
 
                 if facet not in result_dict:
                     result_dict[facet] = 0
+
+        dict_data.close()
+        return result_dict
+
+
+# get all datatypes, that are available inside the property dictionary
+def get_all_datatypes_from_property_dictionary():
+    with open(path_to_json_dictionary, "r") as dict_data:
+        property_dictionary = json.load(dict_data)
+
+        result_dict = {}
+
+        i = 0
+        for PID in property_dictionary:
+
+            tmp_datatype = property_dictionary[PID]["datatype"]
+
+
+            if tmp_datatype not in result_dict:
+                result_dict[tmp_datatype] = 0
+
 
         dict_data.close()
         return result_dict
