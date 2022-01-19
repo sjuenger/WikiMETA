@@ -284,7 +284,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
 
         # extract the top x facets by usages
         result_facets_dictionary = {"facets": {}}
-        result_facets_dictionary["total_accumulated_facets"] = facets_dictionary["total_accumulated_properties"]
+        result_facets_dictionary["total_accumulated_facets"] = facets_dictionary["total_accumulated_facets"]
         result_facets_dictionary["total_accumulated_properties"] = facets_dictionary["total_accumulated_properties"]
 
         for facet in facets_dictionary["facets"]:
@@ -309,8 +309,8 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
             tmp_string = "_non_recommended_"
         else:
             tmp_string = "_"
-        with open("data/statistical_information/wikidata_property_dictionary/accumulated_facets/top_" + str(x) + tmp_string +
-                  "for_" + mode + ".json", "w") \
+        with open("data/statistical_information/wikidata_property_dictionary/accumulated_facets/top_"
+                  + str(x) + tmp_string + "for_" + mode + ".json", "w") \
                 as result_json:
             json.dump(result_facets_dictionary, result_json)
 
