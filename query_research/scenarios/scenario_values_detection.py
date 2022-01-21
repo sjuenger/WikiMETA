@@ -20,7 +20,7 @@
 # look_for e.g. "http://wikiba.se/ontology#NormalRank"
 
 
-def scenario_values_occurrences(json_object, look_for):
+def scenario_values_occurrences(json_object, look_for, _):
     where = json_object["where"]
 
     # find scenarios 'values'
@@ -36,10 +36,5 @@ def scenario_values_occurrences(json_object, look_for):
             else:
                 if look_for in str(where_part):
                     raise Exception
-
-    #if result:
-    #    print(result)
-    #    print("Scenario union")
-    #    print(where)
 
     return result

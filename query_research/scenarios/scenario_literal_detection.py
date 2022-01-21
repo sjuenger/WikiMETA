@@ -17,7 +17,7 @@
 # look_for e.g. "http://www.wikidata.org/prop/reference/P...."
 
 
-def scenario_literal_occurrences(json_object, look_for):
+def scenario_literal_occurrences(json_object, look_for, _):
     where = json_object["where"]
 
     # find scenarios with literals
@@ -37,10 +37,5 @@ def scenario_literal_occurrences(json_object, look_for):
 
                     if look_for in str(triple["predicate"]):
                         result += 1
-
-    # if result:
-    # print(result)
-    # print("Scenario 1")
-    # print(where)
 
     return result

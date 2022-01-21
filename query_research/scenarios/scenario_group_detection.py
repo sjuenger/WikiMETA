@@ -20,7 +20,7 @@
 # result:   1x scenario one for 'wasDerivedFrom'
 #           1x scenario group for '.../prop/reference/P....'
 
-def scenario_group_occurrences(json_object, look_for):
+def scenario_group_occurrences(json_object, look_for, _):
     where = json_object["where"]
 
     # find scenarios 'group'
@@ -36,10 +36,5 @@ def scenario_group_occurrences(json_object, look_for):
             else:
                 if look_for in str(where_part):
                     raise Exception
-
-    # if result:
-    # print(result)
-    # print("Scenario 1")
-    # print(where)
 
     return result

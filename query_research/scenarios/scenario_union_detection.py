@@ -14,7 +14,7 @@
 # look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def scenario_union_occurrences(json_object, look_for):
+def scenario_union_occurrences(json_object, look_for, _):
     where = json_object["where"]
 
     # find scenarios 'union'
@@ -30,10 +30,5 @@ def scenario_union_occurrences(json_object, look_for):
             else:
                 if look_for in str(where_part):
                     raise Exception
-
-    #if result:
-    #    print(result)
-    #    print("Scenario union")
-    #    print(where)
 
     return result

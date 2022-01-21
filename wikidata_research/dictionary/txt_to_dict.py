@@ -41,17 +41,16 @@ def get_dict():
             label = ' '.join(title_string_array).strip("\n")
 
             # a dictionary for every property with information about
-            # KEY1: PID : The identifying PID of a property
-            # KEY2: label : The name/label of the property
-            # KEY3: datatype : The datatype of the property
-            # KEY4: statments_no : Number of usage cases of the property in a statement
-            # KEY5: qualifiers_no : Number of usage cases of the property as a qualifier
-            # KEY6: references_no : Number of usage cases of the property in a refernce
-            # KEY7: facet_of : list of every entity, that the property is a facet of
-            # KEY8: qualifier_class : if the property is intended by wikidata to be used
+            # KEY1: label : The name/label of the property
+            # KEY2: datatype : The datatype of the property
+            # KEY3: statments_no : Number of usage cases of the property in a statement
+            # KEY4: qualifiers_no : Number of usage cases of the property as a qualifier
+            # KEY5: references_no : Number of usage cases of the property in a refernce
+            # KEY6: facet_of : list of every entity, that the property is a facet of
+            # KEY7: qualifier_class : if the property is intended by wikidata to be used
             #                         as a qualifier -> here is the exact class(es)
             #                          e.g. "restrictive qualifier", ...
-            # KEY9: is_reference : if the property is intended by Wikidata to be used
+            # KEY8: is_reference : if the property is intended by Wikidata to be used
             #                       as a reference property -> true / false here
             #                       true: the property is a facet of:
             #                       'Wikipedia:Citing sources'
@@ -80,7 +79,6 @@ def get_dict():
                     successful = False
 
             # ... and put it into the dictionary per property
-            values["PID"] = PID
             values["label"] = label
             values["datatype"] = datatype
             values["statement_no"] = statements_no

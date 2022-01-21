@@ -50,7 +50,7 @@ import os
 import json
 
 
-def scenario_bind_occurrences(json_object, look_for, location):
+def scenario_bind_occurrences(json_object, look_for, location, _):
     # 'location' is the path to the current 'scenarios' folder
     # -> for the statistical information, in which scenario the found
     # bound "looking for ITEM" is used afterwards
@@ -225,9 +225,5 @@ def scenario_bind_occurrences(json_object, look_for, location):
                     raise Exception
 
             # TODO: Check the other scenarios like this one!
-    # if result:
-    # print(result)
-    # print("Scenario 1")
-    # print(where)
 
     return result

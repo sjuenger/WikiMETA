@@ -16,7 +16,7 @@
 # look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def scenario_blank_node_occurrences(json_object, look_for):
+def scenario_blank_node_occurrences(json_object, look_for, _):
     where = json_object["where"]
 
     # find scenarios blank node
@@ -48,10 +48,5 @@ def scenario_blank_node_occurrences(json_object, look_for):
                     if look_for in str(triple["object"]):
                         # there may be more than one
                         result += str(triple["object"]).count(look_for)
-                        
-    # if result:
-    # print(result)
-    # print("Scenario 1")
-    # print(where)
 
     return result

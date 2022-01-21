@@ -13,19 +13,8 @@
 # look_for e.g. "http://www.wikidata.org/reference/0b1317d88f3e23f552ee804b79987760961819a0"
 
 
-def scenario_seven_occurrences(json_object, look_for):
+def scenario_seven_occurrences(json_object, look_for, bound_variables):
     where = json_object["where"]
-
-    # find BIND Variables
-    bound_variables = []
-    for where_part in where:
-        if where_part["type"] == "bind":
-
-            if "termType" in where_part["expression"]:
-                if where_part["expression"]["termType"] == "NamedNode":
-                    if where_part["variable"]["termType"] == "Variable":
-                        bound_variables.append(
-                            (where_part["variable"]["value"], where_part["expression"]["value"]))
 
     # find scenarios 7
 
@@ -49,10 +38,5 @@ def scenario_seven_occurrences(json_object, look_for):
                                 look_for in triple["object"]["value"]) \
                                     or (look_for == triple["object"]["value"] and look_for in str(bound_variables)):
                                 result += 1
-
-    # if result:
-    # print(result)
-    # print("Scenario 1")
-    # print(where)
 
     return result

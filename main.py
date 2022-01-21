@@ -67,9 +67,6 @@ DATA_TYPES_RANK = [
 #directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 #directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
-wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
-wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
-
 #for TIMEFRAME in TIMEFRAMES:
 #    sparql_to_json_qualifiers.extract_SPARQL_to_JSON(TIMEFRAME)
 #    sparql_to_json_references.extract_SPARQL_to_JSON(TIMEFRAME)
@@ -93,8 +90,11 @@ wikidata_property_dictionary_evaluation_handler.generate_information_of_property
 #       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 #    print("\n\n")
 
-#if not os.path.isfile("data/property_dictionary.json"):
-#    txt_to_dict.get_dict()
+if not os.path.isfile("data/property_dictionary.json"):
+    txt_to_dict.get_dict()
+
+#wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
+#wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
 
 #for timeframe in TIMEFRAMES:
 #    statistical_information_handler. \

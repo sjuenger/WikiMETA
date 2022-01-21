@@ -23,7 +23,7 @@
 # look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 
-def scenario_ref_value_occurrences(json_object, look_for):
+def scenario_ref_value_occurrences(json_object, look_for, _):
     where = json_object["where"]
 
     # find scenarios 'ref value'
@@ -35,10 +35,5 @@ def scenario_ref_value_occurrences(json_object, look_for):
         if "http://www.wikidata.org/prop/reference/value" in str(where_part):
             # there may be more than one
             result += str(where_part).count("http://www.wikidata.org/prop/reference/value")
-
-    #if result:
-    #    print(result)
-    #    print("Scenario union")
-    #    print(where)
 
     return result
