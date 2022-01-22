@@ -14,7 +14,7 @@ def count_property_in(property, mode):
         raise Exception(error_message)
 
     # check, if the property dictionary already exists
-    #if
+    # if
 
     #with open("")
 

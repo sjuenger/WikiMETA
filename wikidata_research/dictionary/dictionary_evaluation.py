@@ -31,33 +31,48 @@ def get_top_x_metadata(x, mode, recommended = None):
         result_dictionary = {}
         result_dictionary["properties"] = {}
         result_dictionary["total_usages_of_" + mode] = 0
-        result_dictionary["total_unique_properties"] = len(property_dictionary)
+        result_dictionary["total_unique_properties"] = 0
 
         for PID in property_dictionary:
             # check, if the property is /is not a recommended reference/qualifier by Wikidata
-            recommended_bool = True
+            recommended_bool = False
 
-            if recommended:
+            if recommended == True:
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
                 else:
                     recommended_bool = False
-            elif recommended is not None:
-                # --> but they are min. 1x times used as a reference
-                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
-                # --> but they are min. 1x times used as a reference
-                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and not bool(property_dictionary[PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and property_dictionary[PID]["qualifier_class"] == "":
+                    recommended_bool = True
                 else:
                     recommended_bool = False
 
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if (mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or bool(property_dictionary[PID]["is_reference"]))):
+                    recommended_bool = True
+                elif (mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or property_dictionary[PID]["qualifier_class"] != "")):
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
 
             if recommended_bool:
                 result_dictionary["total_usages_of_" + mode] += \
                     int(property_dictionary[PID][mode + "_no"])
+                result_dictionary["total_unique_properties"] += 1
                 # check, if the current property is smaller than any property in the result dictionary and swap them
                 # or, if the result dictionary has not yet got 'X' entries, just add the property
                 if len(result_dictionary["properties"]) < x:
@@ -116,18 +131,35 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
             # check, if the property is /is not a recommended reference/qualifier by Wikidata
             recommended_bool = True
 
-            if recommended:
+            if recommended == True:
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
-            elif recommended is not None:
-                # --> but they are min. 1x times used as a reference
-                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
-                # --> but they are min. 1x times used as a reference
-                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and not bool(property_dictionary[PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and property_dictionary[PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or bool(property_dictionary[PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or property_dictionary[PID]["qualifier_class"] != ""):
+                    recommended_bool = True
                 else:
                     recommended_bool = False
 
@@ -196,18 +228,35 @@ def get_datatypes_by_metadata(mode, recommended = None):
             # check, if the property is /is not a recommended reference/qualifier by Wikidata
             recommended_bool = True
 
-            if recommended:
+            if recommended == True:
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
-            elif recommended is not None:
-                # --> but they are min. 1x times used as a reference
-                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
-                # --> but they are min. 1x times used as a reference
-                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and not bool(property_dictionary[PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and property_dictionary[PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or bool(property_dictionary[PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or property_dictionary[PID]["qualifier_class"] != ""):
+                    recommended_bool = True
                 else:
                     recommended_bool = False
 
@@ -254,18 +303,35 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
             # check, if the property is /is not a recommended reference/qualifier by Wikidata
             recommended_bool = True
 
-            if recommended:
+            if recommended == True:
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
-            elif recommended is not None:
-                # --> but they are min. 1x times used as a reference
-                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
-                # --> but they are min. 1x times used as a reference
-                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and not bool(property_dictionary[PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and property_dictionary[PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or bool(property_dictionary[PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or property_dictionary[PID]["qualifier_class"] != ""):
+                    recommended_bool = True
                 else:
                     recommended_bool = False
 
@@ -333,18 +399,35 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
             # check, if the property is /is not a recommended reference/qualifier by Wikidata
             recommended_bool = True
 
-            if recommended:
+            if recommended == True:
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
                     recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
-            elif recommended is not None:
-                # --> but they are min. 1x times used as a reference
-                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = not bool(property_dictionary[PID]["is_reference"])
-                # --> but they are min. 1x times used as a reference
-                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0:
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] == ""
+                else:
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and not bool(property_dictionary[PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
+                        and property_dictionary[PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or bool(property_dictionary[PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
+                        or property_dictionary[PID]["qualifier_class"] != ""):
+                    recommended_bool = True
                 else:
                     recommended_bool = False
 
@@ -378,35 +461,6 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
 # get the cummulated facets by occurences of a (recommended) property in Wikidata
 def get_top_x_metadata_recommended_by_facet(x, mode):
     return
-
-
-# get all facets, that are available inside the property dictionary
-# -> for the provided mode
-def get_all_facets_from_property_dictionary(mode, recommended = None):
-    with open(path_to_json_dictionary, "r") as dict_data:
-        property_dictionary = json.load(dict_data)
-
-        result_dict = {}
-
-        i = 0
-        for PID in property_dictionary:
-
-            tmp_facets_list = property_dictionary[PID]["facet_of"]
-            i += 1
-            print(i)
-            if "Wikipedia:Citing sources" in property_dictionary[PID]["facet_of"]:
-
-                print(PID)
-                if PID == "P2093":
-                    print(property_dictionary[PID]["facet_of"])
-
-            for facet in tmp_facets_list:
-
-                if facet not in result_dict:
-                    result_dict[facet] = 0
-
-        dict_data.close()
-        return result_dict
 
 
 # get all datatypes, that are available inside the property dictionary

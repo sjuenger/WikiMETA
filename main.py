@@ -90,11 +90,11 @@ DATA_TYPES_RANK = [
 #       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 #    print("\n\n")
 
-if not os.path.isfile("data/property_dictionary.json"):
-    txt_to_dict.get_dict()
+#if not os.path.isfile("data/property_dictionary.json"):
+#    txt_to_dict.get_dict()
 
-#wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
-#wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
+wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
+wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
 
 #for timeframe in TIMEFRAMES:
 #    statistical_information_handler. \
