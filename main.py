@@ -9,6 +9,7 @@ import query_research.transform_data.redundant_detection as redundant_detection
 import query_research.transform_data.sparql_to_json_references as sparql_to_json_references
 import query_research.transform_data.sparql_to_json_qualifiers as sparql_to_json_qualifiers
 import query_research.transform_data.sparql_to_json_ranks as sparql_to_json_ranks
+import query_research.properties_counter as properties_counter
 
 TIMEFRAMES = [
     "2017-06-12_2017-07-09_organic",
@@ -90,22 +91,28 @@ DATA_TYPES_RANK = [
 #       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 #    print("\n\n")
 
+for TIMEFRAME in TIMEFRAMES:
+    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
+    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
+
 #if not os.path.isfile("data/property_dictionary.json"):
 #    txt_to_dict.get_dict()
 
-wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
-wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
+#wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
+#wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
 
 #for timeframe in TIMEFRAMES:
 #    statistical_information_handler. \
 #        summarize_statistical_information_about_scenarios(timeframe,
 #                                                          DATA_TYPES_REFERENCE, "reference_metadata")
 #    statistical_information_handler. \
-#        summarize_statistical_information_about_scenarios(timeframe,
-#                                                          DATA_TYPES_REFERENCE, "qualifier_metadata")
+#       summarize_statistical_information_about_scenarios(timeframe,
+#                                                          DATA_TYPES_QUALIFIER, "qualifier_metadata")
 #    statistical_information_handler. \
-#        summarize_statistical_information_about_scenarios(timeframe,
-#                                                          DATA_TYPES_REFERENCE, "rank_metadata")
+#       summarize_statistical_information_about_scenarios(timeframe,
+#                                                          DATA_TYPES_RANK, "rank_metadata")
+
+
 #statistical_information_handler. \
 #    summarize_statistical_information_about_timeframes(TIMEFRAMES,
 #                                                       "reference_metadata")
@@ -118,5 +125,6 @@ wikidata_property_dictionary_evaluation_handler.generate_information_of_property
 #for timeframe in TIMEFRAMES:
     #for location in DATA_TYPES_REFERENCE:
         #redundant_detection.delete_redundant_queries(timeframe, location)
+
 
 

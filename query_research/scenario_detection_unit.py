@@ -510,5 +510,5 @@ def get_mode(data_type):
 
     # qualifiers
     elif data_type == "qualifier_metadata/property_qualifier":
-        return ["http://www.wikidata.org/prop/qualifier"]
+        return ["http://www.wikidata.org/prop/qualifier/P"]
 
