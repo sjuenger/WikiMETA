@@ -10,6 +10,7 @@ import query_research.transform_data.sparql_to_json_references as sparql_to_json
 import query_research.transform_data.sparql_to_json_qualifiers as sparql_to_json_qualifiers
 import query_research.transform_data.sparql_to_json_ranks as sparql_to_json_ranks
 import query_research.properties_counter as properties_counter
+import query_research.wikidata_dictionary_and_found_query_properties as wikidata_dictionary_and_found_query_properties
 
 TIMEFRAMES = [
     "2017-06-12_2017-07-09_organic",
@@ -91,9 +92,9 @@ DATA_TYPES_RANK = [
 #       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 #    print("\n\n")
 
-for TIMEFRAME in TIMEFRAMES:
-    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
-    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
+#for TIMEFRAME in TIMEFRAMES:
+#    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
+#    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
 
 #if not os.path.isfile("data/property_dictionary.json"):
 #    txt_to_dict.get_dict()
@@ -122,6 +123,30 @@ for TIMEFRAME in TIMEFRAMES:
 #statistical_information_handler. \
 #    summarize_statistical_information_about_timeframes(TIMEFRAMES,
 #                                                       "rank_metadata")
+
+statistical_information_handler.\
+    summarize_statistical_information_about_counted_properties(TIMEFRAMES, "qualifier_metadata")
+statistical_information_handler.\
+    summarize_statistical_information_about_counted_properties(TIMEFRAMES, "reference_metadata")
+statistical_information_handler.\
+    get_top_x_counted_properties_overall(10, "qualifier_metadata")
+statistical_information_handler.\
+    get_top_x_counted_properties_overall(10, "reference_metadata")
+
+for timeframe in TIMEFRAMES:
+    statistical_information_handler.\
+        get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata")
+    statistical_information_handler.\
+        get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata")
+
+for timeframe in TIMEFRAMES:
+        wikidata_dictionary_and_found_query_properties.\
+            create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(\
+            timeframe, "qualifier_metadata")
+        wikidata_dictionary_and_found_query_properties.\
+            create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(\
+            timeframe, "reference_metadata")
+
 #for timeframe in TIMEFRAMES:
     #for location in DATA_TYPES_REFERENCE:
         #redundant_detection.delete_redundant_queries(timeframe, location)

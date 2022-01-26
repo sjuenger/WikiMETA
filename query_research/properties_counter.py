@@ -47,7 +47,7 @@ def count_property_in(location, mode, DATATYPES):
 
                     where_part = query_json["where"]
 
-                    if mode == "qualifier_metadata":
+                    if mode == "reference_metadata":
                         search_list_deep_for_multiple_metadata_properties  \
                             (where_part, "http://www.wikidata.org/prop/reference/P", result_dict)
                     else:
@@ -88,8 +88,10 @@ def search_dict_deep_for_multiple_metadata_properties(current_dict, look_for, fo
                 if PID not in found_prop_dict["properties"]:
                     found_prop_dict["properties"][PID] = 1
                     found_prop_dict["unique_properties"] += 1
+                    found_prop_dict["total_properties"] += 1
                 else:
                     found_prop_dict["properties"][PID] += 1
+                    found_prop_dict["total_properties"] += 1
 
     return
 
@@ -121,8 +123,10 @@ def search_list_deep_for_multiple_metadata_properties(current_list, look_for, fo
                 if PID not in found_prop_dict["properties"]:
                     found_prop_dict["properties"][PID] = 1
                     found_prop_dict["unique_properties"] += 1
+                    found_prop_dict["total_properties"] += 1
                 else:
                     found_prop_dict["properties"][PID] += 1
+                    found_prop_dict["total_properties"] += 1
                 print(found_prop_dict)
 
     return

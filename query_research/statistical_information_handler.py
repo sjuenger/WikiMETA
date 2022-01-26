@@ -1,6 +1,7 @@
 import glob
 import json
 
+
 # the purpose of this module is to summarize the many different statistical informations at different stages
 # .. in the /data folder to one for every 'hierarchy step'
 
@@ -54,9 +55,10 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         # get the path to the folder, where the json file about the gathered statistical information
         # .. about the scenarios is stored (on the current datatype)
         path_to_stat_information_subtypes = "data/" + location[:21] + "/" + location[22:] + "/" + \
-                            datatype.split('/')[0] + "/statistical_information/" + datatype.split('/')[1]
-        path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] +\
-                             "/statistical_information/" + metadata + ".json"
+                                            datatype.split('/')[0] + "/statistical_information/" + datatype.split('/')[
+                                                1]
+        path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
+                                            "/statistical_information/" + metadata + ".json"
 
         # extract the statistical information
         with open(path_to_stat_information_subtypes, "r") as json_data:
@@ -70,7 +72,6 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
             metadata_dict["ASK_queries"] += metadata_subtype_dict["ASK_queries"]
 
             for elem in metadata_subtype_dict["found_scenarios"]["list_per_search"]:
-
                 metadata_dict["found_scenarios"]["total_occurrences"] += \
                     elem["total_occurrences"]
                 metadata_dict["found_scenarios"]["one"] += \
@@ -129,6 +130,7 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         json.dump(metadata_dict, json_result)
     json_result.close()
 
+
 # summarize the statistical information about the different timeframes
 def summarize_statistical_information_about_timeframes(locations, metadata):
     # struct for the resulting .json object
@@ -178,8 +180,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata):
         # get the path to the folder, where the json file about the gathered statistical information
         # .. about the metadata is stored (on the current timeframe)
 
-        path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] +\
-                             "/statistical_information/" + metadata + ".json"
+        path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
+                                            "/statistical_information/" + metadata + ".json"
         path_to_stat_information_timeframe = "data/statistical_information/" + metadata + ".json"
 
         # extract the statistical information
@@ -193,8 +195,7 @@ def summarize_statistical_information_about_timeframes(locations, metadata):
             metadata_dict["CONSTRUCT_queries"] += metadata_subtype_dict["CONSTRUCT_queries"]
             metadata_dict["ASK_queries"] += metadata_subtype_dict["ASK_queries"]
 
-
-            elem =  metadata_subtype_dict["found_scenarios"]
+            elem = metadata_subtype_dict["found_scenarios"]
 
             metadata_dict["found_scenarios"]["total_occurrences"] += \
                 elem["total_occurrences"]
@@ -253,3 +254,127 @@ def summarize_statistical_information_about_timeframes(locations, metadata):
     with open(path_to_stat_information_timeframe, "w") as json_result:
         json.dump(metadata_dict, json_result)
     json_result.close()
+
+
+# summarize the counted properties for references / qualifiers in the timeframes to an overall one
+def summarize_statistical_information_about_counted_properties(TIMEFRAMES, mode):
+    if mode not in ["qualifier_metadata", "reference_metadata"]:
+        error_message = "Not supported mode."
+        raise Exception(error_message)
+
+    result_dict = {}
+    result_dict["properties"] = {}
+    result_dict["unique_properties"] = 0
+    result_dict["total_properties"] = 0
+
+    for location in TIMEFRAMES:
+
+        path_to_timeframe_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
+                                   + mode + "_properties_counted.json"
+        with open(path_to_timeframe_stat_information, "r") as timeframe_data:
+            timeframe_dict = json.load(timeframe_data)
+
+            result_dict["total_properties"] += timeframe_dict["total_properties"]
+            result_dict["unique_properties"] += timeframe_dict["unique_properties"]
+
+            for PID in timeframe_dict["properties"]:
+                if PID in result_dict["properties"]:
+                    result_dict["properties"][PID] += timeframe_dict["properties"][PID]
+                else:
+                    result_dict["properties"][PID] = timeframe_dict["properties"][PID]
+
+        timeframe_data.close()
+
+    path_to_overall_stat_information = \
+        "data/statistical_information/query_research/" + mode + "_properties_counted.json"
+    with open(path_to_overall_stat_information, "w") as result_data:
+        json.dump(result_dict, result_data)
+
+
+# get the top x counted properties in the counted properties list for references / qualifiers
+def get_top_x_counted_properties_overall(x, mode):
+    if mode not in ["qualifier_metadata", "reference_metadata"]:
+        error_message = "Not supported mode."
+        raise Exception(error_message)
+    if x < 1:
+        error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+
+    result_dict = {}
+
+    path_to_stat_information = "data/statistical_information/query_research/" + mode + "_properties_counted.json"
+
+    with open(path_to_stat_information, "r") as raw_data:
+        raw_dict = json.load(raw_data)
+
+        for PID in raw_dict["properties"]:
+
+            if len(result_dict) < x:
+                result_dict[PID] = raw_dict["properties"][PID]
+            else:
+                # get the smallest element out of the result_dict
+                smallest_ID = None
+                for test_PID in result_dict:
+                    if smallest_ID is None:
+                        smallest_ID = test_PID
+                    elif result_dict[test_PID] < result_dict[smallest_ID]:
+                        smallest_ID = test_PID
+
+                # if the current element of the raw_dict is greater than the smallest element of the result_dict
+                # .. -> swap them in the result_dict
+                if result_dict[smallest_ID] < raw_dict["properties"][PID]:
+                    result_dict.pop(smallest_ID)
+                    result_dict[PID] = raw_dict["properties"][PID]
+
+        raw_data.close()
+
+    path_to_top_x_stat_information = \
+        "data/statistical_information/query_research/" + "top_" + str(x) + "_" + mode + "_properties_counted.json"
+    with open(path_to_top_x_stat_information, "w") as result_data:
+        json.dump(result_dict, result_data)
+
+
+# get the top x counted properties in the counted properties list for references / qualifiers in the current timeframe
+def get_top_x_counted_properties_timeframe(location, x, mode):
+    if mode not in ["qualifier_metadata", "reference_metadata"]:
+        error_message = "Not supported mode."
+        raise Exception(error_message)
+    if x < 1:
+        error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+
+    result_dict = {}
+
+    path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
+                                   + mode + "_properties_counted.json"
+
+    with open(path_to_stat_information, "r") as raw_data:
+        raw_dict = json.load(raw_data)
+
+        for PID in raw_dict["properties"]:
+
+            if len(result_dict) < x:
+                result_dict[PID] = raw_dict["properties"][PID]
+            else:
+                # get the smallest element out of the result_dict
+                smallest_ID = None
+                for test_PID in result_dict:
+                    if smallest_ID is None:
+                        smallest_ID = test_PID
+                    elif result_dict[test_PID] < result_dict[smallest_ID]:
+                        smallest_ID = test_PID
+
+                # if the current element of the raw_dict is greater than the smallest element of the result_dict
+                # .. -> swap them in the result_dict
+                if result_dict[smallest_ID] < raw_dict["properties"][PID]:
+                    result_dict.pop(smallest_ID)
+                    result_dict[PID] = raw_dict["properties"][PID]
+
+        raw_data.close()
+
+    path_to_top_x_stat_information = \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"\
+        + "top_" + str(x) + "_" + mode + "_properties_counted.json"
+
+    with open(path_to_top_x_stat_information, "w") as result_data:
+        json.dump(result_dict, result_data)
