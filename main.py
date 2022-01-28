@@ -138,6 +138,10 @@ for timeframe in TIMEFRAMES:
         get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata")
     statistical_information_handler.\
         get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata")
+    statistical_information_handler.\
+        get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata")
+    statistical_information_handler.\
+        get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata")
 
 for timeframe in TIMEFRAMES:
         wikidata_dictionary_and_found_query_properties.\
@@ -146,6 +150,36 @@ for timeframe in TIMEFRAMES:
         wikidata_dictionary_and_found_query_properties.\
             create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(\
             timeframe, "reference_metadata")
+
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_facets_timeframe(\
+            timeframe, 10, "qualifier_metadata")
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_facets_timeframe(\
+            timeframe, 10, "reference_metadata")
+
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_datatypes_timeframe(\
+            timeframe, 10, "qualifier_metadata")
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_datatypes_timeframe(\
+            timeframe, 10, "reference_metadata")
+
+
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_accumulated_facets_timeframe(\
+            timeframe, 10, "qualifier_metadata")
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_accumulated_facets_timeframe(\
+            timeframe, 10, "reference_metadata")
+
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_accumulated_datatypes_timeframe(\
+            timeframe, 10, "qualifier_metadata")
+        wikidata_dictionary_and_found_query_properties.\
+            get_top_x_counted_accumulated_datatypes_timeframe(\
+            timeframe, 10, "reference_metadata")
+        # TODO: get the 'total datatypes and facets' right -> also accumulatenthem
 
 #for timeframe in TIMEFRAMES:
     #for location in DATA_TYPES_REFERENCE:

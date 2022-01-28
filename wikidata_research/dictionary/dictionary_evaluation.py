@@ -116,7 +116,6 @@ def get_top_x_metadata(x, mode, recommended = None):
 # .. of recommended / non-recommended / overall properties
 def get_top_x_facets_by_metadata(x, mode, recommended = None):
 
-
     with open(path_to_json_dictionary, "r") as dict_data:
         property_dictionary = json.load(dict_data)
 
