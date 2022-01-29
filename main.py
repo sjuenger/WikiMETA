@@ -66,7 +66,7 @@ DATA_TYPES_RANK = [
 # TODO: Add references a https://sqid.toolforge.org/#/ to the code
 
 
-#directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
+directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 #directory_structure_handler.delete_identified_scenarios(TIMEFRAMES)
 
 #for TIMEFRAME in TIMEFRAMES:
@@ -92,9 +92,9 @@ DATA_TYPES_RANK = [
 #       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 #    print("\n\n")
 
-#for TIMEFRAME in TIMEFRAMES:
-#    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
-#    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
+for TIMEFRAME in TIMEFRAMES:
+    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
+    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
 
 #if not os.path.isfile("data/property_dictionary.json"):
 #    txt_to_dict.get_dict()

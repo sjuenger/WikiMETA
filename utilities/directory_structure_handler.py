@@ -14,7 +14,19 @@ def create_dir_structure_of_data(TIMEFRAMES):
         "organic/qualifier_metadata",
         "organic/rank_metadata",
         "organic/reference_metadata",
-        "organic/statistical_information"
+        "organic/statistical_information",
+        "organic/statistical_information/qualifier_metadata",
+        "organic/statistical_information/reference_metadata",
+        "organic/statistical_information/qualifier_metadata/properties",
+        "organic/statistical_information/reference_metadata/properties",
+        "organic/statistical_information/qualifier_metadata/facets",
+        "organic/statistical_information/reference_metadata/facets",
+        "organic/statistical_information/qualifier_metadata/datatypes",
+        "organic/statistical_information/reference_metadata/datatypes",
+        "organic/statistical_information/qualifier_metadata/accumulated_facets",
+        "organic/statistical_information/reference_metadata/accumulated_facets",
+        "organic/statistical_information/qualifier_metadata/accumulated_datatypes",
+        "organic/statistical_information/reference_metadata/accumulated_datatypes"
     ]
 
     # directory structure for reference metadata

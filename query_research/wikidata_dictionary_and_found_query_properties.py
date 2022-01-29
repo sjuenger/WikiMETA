@@ -14,7 +14,7 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
     result_dict["false_wikidata_properties"] = {}
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_counted.json"
+                                   + mode + "/properties/properties_counted.json"
     path_to_wikidata_property_dict = "data/property_dictionary.json"
 
     with open(path_to_stat_information, "r") as stat_info_file:
@@ -45,7 +45,7 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
 
 
     path_to_output = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_facets_and_datatypes.json"
+                                   + mode + "/properties_facets_and_datatypes.json"
 
     with open(path_to_output, "w") as result_data:
         json.dump(result_dict, result_data)
@@ -71,7 +71,7 @@ def get_top_x_counted_facets_timeframe(location, x, mode):
     facet_dict["unique_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_facets_and_datatypes.json"
+                                   + mode + "/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -93,7 +93,7 @@ def get_top_x_counted_facets_timeframe(location, x, mode):
 
         path_to_facet_stat_information = \
             "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "_facets.json"
+            + mode + "/facets/facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(facet_dict, result_data)
@@ -121,8 +121,8 @@ def get_top_x_counted_facets_timeframe(location, x, mode):
         summarized_data.close()
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"\
-        + "top_" + str(x) + "_" + mode + "_facets.json"
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + "/facets/"\
+        + "top_" + str(x) + "_facets.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)
@@ -148,7 +148,7 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode):
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_facets_and_datatypes.json"
+                                   + mode + "/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -170,7 +170,7 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode):
 
         path_to_facet_stat_information = \
             "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "_datatypes.json"
+            + mode + "/datatypes/datatypes.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(datatype_dict, result_data)
@@ -198,8 +198,8 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode):
         summarized_data.close()
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"\
-        + "top_" + str(x) + "_" + mode + "_datatypes.json"
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"+ mode + \
+        "/datatypes/top_" + str(x) + "_datatypes.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)
@@ -217,16 +217,16 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
 
     result_dict = {}
     result_dict["facets"] = {}
-    result_dict["total_facet"] = 0
+    result_dict["total_accumulated_facet"] = 0
     result_dict["unique_facets"] = 0
 
     facet_dict = {}
     facet_dict["facets"] = {}
-    facet_dict["total_facets"] = 0
+    facet_dict["total_accumulated_facets"] = 0
     facet_dict["unique_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_facets_and_datatypes.json"
+                                   + mode + "/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -238,19 +238,21 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
                 if (facet not in facet_dict["facets"]):
                     facet_dict["facets"][facet] = \
                         summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                    facet_dict["total_facets"] += 1
+                    facet_dict["total_accumulated_facets"] += \
+                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
                     facet_dict["unique_facets"] += 1
                 else:
                     facet_dict["facets"][facet] += \
                         summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                    facet_dict["total_facets"] += 1
+                    facet_dict["total_accumulated_facets"] += \
+                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
 
         result_dict["unique_facets"] = facet_dict["unique_facets"]
-        result_dict["total_facet"] = facet_dict["total_facets"]
+        result_dict["total_accumulated_facet"] = facet_dict["total_accumulated_facets"]
 
         path_to_facet_stat_information = \
             "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "_accumulated_facets.json"
+            + mode + "/accumulated_facets/accumulated_facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(facet_dict, result_data)
@@ -278,8 +280,8 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
         summarized_data.close()
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"\
-        + "top_" + str(x) + "_" + mode + "accumulated_facets.json"
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode +\
+        "/accumulated_facets/top_" + str(x) + "_accumulated_facets.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)
@@ -297,16 +299,16 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode):
 
     result_dict = {}
     result_dict["datatypes"] = {}
-    result_dict["total_datatypes"] = 0
+    result_dict["total_accumulated_datatypes"] = 0
     result_dict["unique_datatypes"] = 0
 
     datatype_dict = {}
     datatype_dict["datatypes"] = {}
-    datatype_dict["total_datatypes"] = 0
+    datatype_dict["total_accumulated_datatypes"] = 0
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_facets_and_datatypes.json"
+                                   + mode + "/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -318,19 +320,21 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode):
             if (datatype not in datatype_dict["datatypes"]):
                 datatype_dict["datatypes"][datatype] = \
                         summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                datatype_dict["total_datatypes"] += 1
+                datatype_dict["total_accumulated_datatypes"] += \
+                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
                 datatype_dict["unique_datatypes"] += 1
             else:
                 datatype_dict["datatypes"][datatype] += \
                         summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                datatype_dict["total_datatypes"] += 1
+                datatype_dict["total_accumulated_datatypes"] += \
+                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
 
         result_dict["unique_datatypes"] = datatype_dict["unique_datatypes"]
-        result_dict["total_datatypes"] = datatype_dict["total_datatypes"]
+        result_dict["total_accumulated_datatypes"] = datatype_dict["total_accumulated_datatypes"]
 
         path_to_facet_stat_information = \
             "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "_accumulated_datatypes.json"
+            + mode + "/accumulated_datatypes/accumulated_datatypes.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(datatype_dict, result_data)
@@ -358,8 +362,8 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode):
         summarized_data.close()
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"\
-        + "top_" + str(x) + "_" + mode + "_accumulated_datatypes.json"
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + \
+        "/accumulated_datatypes/top_" + str(x) + "_accumulated_datatypes.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)

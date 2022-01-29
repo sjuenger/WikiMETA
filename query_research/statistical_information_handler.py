@@ -181,8 +181,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata):
         # .. about the metadata is stored (on the current timeframe)
 
         path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
-                                            "/statistical_information/" + metadata + ".json"
-        path_to_stat_information_timeframe = "data/statistical_information/" + metadata + ".json"
+                                            "/statistical_information/" + metadata + "/" + metadata + ".json"
+        path_to_stat_information_timeframe = "data/statistical_information/" + metadata + "/" + metadata +".json"
 
         # extract the statistical information
         with open(path_to_stat_information_metadata, "r") as json_data:
@@ -270,7 +270,7 @@ def summarize_statistical_information_about_counted_properties(TIMEFRAMES, mode)
     for location in TIMEFRAMES:
 
         path_to_timeframe_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_counted.json"
+                                   + mode + "/properties/properties_counted.json"
         with open(path_to_timeframe_stat_information, "r") as timeframe_data:
             timeframe_dict = json.load(timeframe_data)
 
@@ -346,7 +346,7 @@ def get_top_x_counted_properties_timeframe(location, x, mode):
     result_dict = {}
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "_properties_counted.json"
+                                   + mode + "/properties/properties_counted.json"
 
     with open(path_to_stat_information, "r") as raw_data:
         raw_dict = json.load(raw_data)
@@ -373,8 +373,8 @@ def get_top_x_counted_properties_timeframe(location, x, mode):
         raw_data.close()
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"\
-        + "top_" + str(x) + "_" + mode + "_properties_counted.json"
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode +\
+        "/properties/top_" + str(x) + "_" + mode + "_properties_counted.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)
