@@ -3,6 +3,7 @@ import json
 # create a list of the extracted properties and combine their facets to them -> using the property_dictionary.json
 # .. from the wikidata_research
 # .. per timeframe
+#
 def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(location, mode):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
         error_message = "Not supported mode."
@@ -14,7 +15,7 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
     result_dict["false_wikidata_properties"] = {}
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/properties/properties_counted.json"
+                                   + mode + "/raw_counted_properties/properties/properties_counted.json"
     path_to_wikidata_property_dict = "data/property_dictionary.json"
 
     with open(path_to_stat_information, "r") as stat_info_file:
@@ -42,17 +43,25 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
                     result_dict["real_wikidata_properties"][PID]["occurences"] = stat_info["properties"][PID]
                     result_dict["real_wikidata_properties"][PID]["facets"] = wikidata_props[PID]["facet_of"]
                     result_dict["real_wikidata_properties"][PID]["datatype"] = wikidata_props[PID]["datatype"]
+                    result_dict["real_wikidata_properties"][PID]["is_reference"] = wikidata_props[PID]["is_reference"]
+                    result_dict["real_wikidata_properties"][PID]["qualifier_class"] = wikidata_props[PID]["qualifier_class"]
 
 
     path_to_output = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/properties_facets_and_datatypes.json"
+                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_output, "w") as result_data:
         json.dump(result_dict, result_data)
 
 
 # get the top x counted facets in the counted properties list for references / qualifiers in the current timeframe
-def get_top_x_counted_facets_timeframe(location, x, mode):
+# .. and, if each property is recommended by Wikidata as a qualifier/reference property (depending on the 'mode')
+# -- > which means, if the property is defined by Wikidata to be used as a property (see: 'Wikidata -> Proprties List')
+# the data will be seperated by "recommended" properties, "non_recommended" properties and "overall" properties
+#
+# In the data, these recommendations will be visible through the information in the dict under "is_reference" or
+# ..  if the "qualifier_class" contains any information
+def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
         error_message = "Not supported mode."
         raise Exception(error_message)
@@ -71,29 +80,74 @@ def get_top_x_counted_facets_timeframe(location, x, mode):
     facet_dict["unique_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/properties_facets_and_datatypes.json"
+                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
 
         # create a facet dictionary
         for PID in summarized_dict["real_wikidata_properties"]:
-            for facet in summarized_dict["real_wikidata_properties"][PID]["facets"]:
 
-                if (facet not in facet_dict["facets"]):
-                    facet_dict["facets"][facet] = 1
-                    facet_dict["total_facets"] += 1
-                    facet_dict["unique_facets"] += 1
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended == True:
+                if mode == "reference_metadata":
+                    recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
+                elif mode == "qualifier_metadata":
+                    recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
                 else:
-                    facet_dict["facets"][facet] += 1
-                    facet_dict["total_facets"] += 1
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+
+                for facet in summarized_dict["real_wikidata_properties"][PID]["facets"]:
+
+                    if (facet not in facet_dict["facets"]):
+                        facet_dict["facets"][facet] = 1
+                        facet_dict["total_facets"] += 1
+                        facet_dict["unique_facets"] += 1
+                    else:
+                        facet_dict["facets"][facet] += 1
+                        facet_dict["total_facets"] += 1
 
         result_dict["unique_facets"] = facet_dict["unique_facets"]
         result_dict["total_facet"] = facet_dict["total_facets"]
 
+        if recommended:
+            tmp_string = "/recommended"
+        elif recommended is not None:
+            tmp_string = "/non_recommended"
+        else:
+            tmp_string = "/all"
+
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "/facets/facets.json"
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode   \
+            + tmp_string + "/facets/facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(facet_dict, result_data)
@@ -120,8 +174,15 @@ def get_top_x_counted_facets_timeframe(location, x, mode):
 
         summarized_data.close()
 
+    if recommended:
+        tmp_string = "/recommended"
+    elif recommended is not None:
+        tmp_string = "/non_recommended"
+    else:
+        tmp_string = "/all"
+
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + "/facets/"\
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + "/facets/"\
         + "top_" + str(x) + "_facets.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
@@ -129,7 +190,9 @@ def get_top_x_counted_facets_timeframe(location, x, mode):
 
 
 # get the top x counted datytypes in the counted properties list for references / qualifiers in the current timeframe
-def get_top_x_counted_datatypes_timeframe(location, x, mode):
+#
+# usage of 'recommended' as see above
+def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
         error_message = "Not supported mode."
         raise Exception(error_message)
@@ -148,29 +211,74 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode):
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/properties_facets_and_datatypes.json"
+                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
 
         # create a datatypes dictionary
         for PID in summarized_dict["real_wikidata_properties"]:
-            datatype = summarized_dict["real_wikidata_properties"][PID]["datatype"]
 
-            if (datatype not in datatype_dict["datatypes"]):
-                datatype_dict["datatypes"][datatype] = 1
-                datatype_dict["total_datatypes"] += 1
-                datatype_dict["unique_datatypes"] += 1
-            else:
-                datatype_dict["datatypes"][datatype] += 1
-                datatype_dict["total_datatypes"] += 1
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended == True:
+                if mode == "reference_metadata":
+                    recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
+                elif mode == "qualifier_metadata":
+                    recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
+                else:
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+
+                datatype = summarized_dict["real_wikidata_properties"][PID]["datatype"]
+
+                if (datatype not in datatype_dict["datatypes"]):
+                    datatype_dict["datatypes"][datatype] = 1
+                    datatype_dict["total_datatypes"] += 1
+                    datatype_dict["unique_datatypes"] += 1
+                else:
+                    datatype_dict["datatypes"][datatype] += 1
+                    datatype_dict["total_datatypes"] += 1
 
         result_dict["unique_datatypes"] = datatype_dict["unique_datatypes"]
         result_dict["total_datatypes"] = datatype_dict["total_datatypes"]
 
+        if recommended:
+            tmp_string = "/recommended"
+        elif recommended is not None:
+            tmp_string = "/non_recommended"
+        else:
+            tmp_string = "/all"
+
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "/datatypes/datatypes.json"
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode  \
+            + tmp_string + "/datatypes/datatypes.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(datatype_dict, result_data)
@@ -197,8 +305,15 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode):
 
         summarized_data.close()
 
+    if recommended:
+        tmp_string = "/recommended"
+    elif recommended is not None:
+        tmp_string = "/non_recommended"
+    else:
+        tmp_string = "/all"
+
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/"+ mode + \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + \
         "/datatypes/top_" + str(x) + "_datatypes.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
@@ -207,7 +322,9 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode):
 
 # get the top x accumulated facets in the counted properties list for references / qualifiers
 # .. in the current timeframe
-def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
+#
+# usage of 'recommended' as explained above
+def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommended = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
         error_message = "Not supported mode."
         raise Exception(error_message)
@@ -226,33 +343,78 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
     facet_dict["unique_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/properties_facets_and_datatypes.json"
+                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
 
         # create a facet dictionary
         for PID in summarized_dict["real_wikidata_properties"]:
-            for facet in summarized_dict["real_wikidata_properties"][PID]["facets"]:
 
-                if (facet not in facet_dict["facets"]):
-                    facet_dict["facets"][facet] = \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                    facet_dict["total_accumulated_facets"] += \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                    facet_dict["unique_facets"] += 1
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended == True:
+                if mode == "reference_metadata":
+                    recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
+                elif mode == "qualifier_metadata":
+                    recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
                 else:
-                    facet_dict["facets"][facet] += \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                    facet_dict["total_accumulated_facets"] += \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                        or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+
+                for facet in summarized_dict["real_wikidata_properties"][PID]["facets"]:
+
+                    if (facet not in facet_dict["facets"]):
+                        facet_dict["facets"][facet] = \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                        facet_dict["total_accumulated_facets"] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                        facet_dict["unique_facets"] += 1
+                    else:
+                        facet_dict["facets"][facet] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                        facet_dict["total_accumulated_facets"] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
 
         result_dict["unique_facets"] = facet_dict["unique_facets"]
         result_dict["total_accumulated_facet"] = facet_dict["total_accumulated_facets"]
 
+        if recommended:
+            tmp_string = "/recommended"
+        elif recommended is not None:
+            tmp_string = "/non_recommended"
+        else:
+            tmp_string = "/all"
+
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "/accumulated_facets/accumulated_facets.json"
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode \
+            + tmp_string + "/accumulated_facets/accumulated_facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(facet_dict, result_data)
@@ -279,8 +441,15 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
 
         summarized_data.close()
 
+        if recommended:
+            tmp_string = "/recommended"
+        elif recommended is not None:
+            tmp_string = "/non_recommended"
+        else:
+            tmp_string = "/all"
+
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode +\
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string +\
         "/accumulated_facets/top_" + str(x) + "_accumulated_facets.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
@@ -289,7 +458,9 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode):
 
 # get the top x accumulated datytypes in the counted properties list for references / qualifiers
 # .. in the current timeframe
-def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode):
+#
+# usage of 'recommended' as described above
+def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recommended = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
         error_message = "Not supported mode."
         raise Exception(error_message)
@@ -308,33 +479,83 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode):
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/properties_facets_and_datatypes.json"
+                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
 
         # create a datatypes dictionary
         for PID in summarized_dict["real_wikidata_properties"]:
-            datatype = summarized_dict["real_wikidata_properties"][PID]["datatype"]
 
-            if (datatype not in datatype_dict["datatypes"]):
-                datatype_dict["datatypes"][datatype] = \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                datatype_dict["total_accumulated_datatypes"] += \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                datatype_dict["unique_datatypes"] += 1
-            else:
-                datatype_dict["datatypes"][datatype] += \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                datatype_dict["total_accumulated_datatypes"] += \
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]
+            # create a facet dictionary
+            for PID in summarized_dict["real_wikidata_properties"]:
+
+                # check, if the property is /is not a recommended reference/qualifier by Wikidata
+                recommended_bool = True
+
+                if recommended == True:
+                    if mode == "reference_metadata":
+                        recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
+                    elif mode == "qualifier_metadata":
+                        recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
+                    else:
+                        recommended_bool = False
+
+                elif recommended == False:
+                    # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                    if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                            and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
+                        recommended_bool = True
+                    # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                    elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                            and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
+                        recommended_bool = True
+                    else:
+                        recommended_bool = False
+
+                elif recommended is None:
+                    # just exclude those, who either aren't a recommended qualifier/reference property
+                    # .. or are never used as a reference / qualifier
+                    if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                                                or bool(
+                                summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
+                        recommended_bool = True
+                    elif mode == "qualifier_metadata" and (
+                            int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                            or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
+                        recommended_bool = True
+                    else:
+                        recommended_bool = False
+
+                if recommended_bool:
+
+                    datatype = summarized_dict["real_wikidata_properties"][PID]["datatype"]
+
+                    if (datatype not in datatype_dict["datatypes"]):
+                        datatype_dict["datatypes"][datatype] = \
+                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                        datatype_dict["total_accumulated_datatypes"] += \
+                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                        datatype_dict["unique_datatypes"] += 1
+                    else:
+                        datatype_dict["datatypes"][datatype] += \
+                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                        datatype_dict["total_accumulated_datatypes"] += \
+                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
 
         result_dict["unique_datatypes"] = datatype_dict["unique_datatypes"]
         result_dict["total_accumulated_datatypes"] = datatype_dict["total_accumulated_datatypes"]
 
+        if recommended:
+            tmp_string = "/recommended"
+        elif recommended is not None:
+            tmp_string = "/non_recommended"
+        else:
+            tmp_string = "/all"
+
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-            + mode + "/accumulated_datatypes/accumulated_datatypes.json"
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode \
+            + tmp_string + "/accumulated_datatypes/accumulated_datatypes.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
             json.dump(datatype_dict, result_data)
@@ -361,8 +582,15 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode):
 
         summarized_data.close()
 
+        if recommended:
+            tmp_string = "/recommended"
+        elif recommended is not None:
+            tmp_string = "/non_recommended"
+        else:
+            tmp_string = "/all"
+
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + \
         "/accumulated_datatypes/top_" + str(x) + "_accumulated_datatypes.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:

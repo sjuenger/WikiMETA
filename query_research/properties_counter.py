@@ -54,7 +54,7 @@ def count_property_in(location, mode, DATATYPES):
                         search_list_deep_for_multiple_metadata_properties  \
                             (where_part, "http://www.wikidata.org/prop/qualifier/P", result_dict)
 
-    with open(path_to_stat_information + "/properties/properties_counted.json", "w") as result_data:
+    with open(path_to_stat_information + "/raw_counted_properties/properties/properties_counted.json", "w") as result_data:
         json.dump(result_dict, result_data)
 
     return
