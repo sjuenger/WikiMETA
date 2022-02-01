@@ -92,9 +92,9 @@ directory_structure_handler.create_dir_structure_of_data(TIMEFRAMES)
 #       scenario_detection_unit.detect_scenarios(TIMEFRAME, DATA_TYPE)
 #    print("\n\n")
 
-for TIMEFRAME in TIMEFRAMES:
-    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
-    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
+#for TIMEFRAME in TIMEFRAMES:
+#    properties_counter.count_property_in(TIMEFRAME, "reference_metadata", DATA_TYPES_REFERENCE)
+#    properties_counter.count_property_in(TIMEFRAME, "qualifier_metadata", DATA_TYPES_QUALIFIER)
 
 #if not os.path.isfile("data/property_dictionary.json"):
 #    txt_to_dict.get_dict()
@@ -124,26 +124,17 @@ for TIMEFRAME in TIMEFRAMES:
 #    summarize_statistical_information_about_timeframes(TIMEFRAMES,
 #                                                       "rank_metadata")
 
-statistical_information_handler.\
-    summarize_statistical_information_about_counted_properties(TIMEFRAMES, "qualifier_metadata")
-statistical_information_handler.\
-    summarize_statistical_information_about_counted_properties(TIMEFRAMES, "reference_metadata")
-statistical_information_handler.\
-    get_top_x_counted_properties_overall(10, "qualifier_metadata")
-statistical_information_handler.\
-    get_top_x_counted_properties_overall(10, "reference_metadata")
+#statistical_information_handler.\
+#    summarize_statistical_information_about_counted_properties(TIMEFRAMES, "qualifier_metadata")
+#statistical_information_handler.\
+#    summarize_statistical_information_about_counted_properties(TIMEFRAMES, "reference_metadata")
+#statistical_information_handler.\
+#    get_top_x_counted_properties_overall(10, "qualifier_metadata")
+#statistical_information_handler.\
+#    get_top_x_counted_properties_overall(10, "reference_metadata")
 
-for timeframe in TIMEFRAMES:
-    statistical_information_handler.\
-        get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata")
-    statistical_information_handler.\
-        get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata")
-    statistical_information_handler.\
-        get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata")
-    statistical_information_handler.\
-        get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata")
 
-for timeframe in TIMEFRAMES:
+"""for timeframe in TIMEFRAMES:
         wikidata_dictionary_and_found_query_properties.\
             create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(\
             timeframe, "qualifier_metadata")
@@ -151,6 +142,11 @@ for timeframe in TIMEFRAMES:
             create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(\
             timeframe, "reference_metadata")
 
+        wikidata_dictionary_and_found_query_properties. \
+            get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata")
+        wikidata_dictionary_and_found_query_properties. \
+            get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata")
+
         wikidata_dictionary_and_found_query_properties.\
             get_top_x_counted_facets_timeframe(\
             timeframe, 10, "qualifier_metadata")
@@ -183,6 +179,10 @@ for timeframe in TIMEFRAMES:
 
 
 
+        wikidata_dictionary_and_found_query_properties. \
+            get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata", True)
+        wikidata_dictionary_and_found_query_properties. \
+            get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata", True)
 
         wikidata_dictionary_and_found_query_properties.\
             get_top_x_counted_facets_timeframe(\
@@ -216,6 +216,10 @@ for timeframe in TIMEFRAMES:
 
 
 
+        wikidata_dictionary_and_found_query_properties. \
+            get_top_x_counted_properties_timeframe(timeframe, 10, "qualifier_metadata", False)
+        wikidata_dictionary_and_found_query_properties. \
+            get_top_x_counted_properties_timeframe(timeframe, 10, "reference_metadata", False)
 
         wikidata_dictionary_and_found_query_properties.\
             get_top_x_counted_facets_timeframe(\
@@ -244,15 +248,25 @@ for timeframe in TIMEFRAMES:
             timeframe, 10, "qualifier_metadata", False)
         wikidata_dictionary_and_found_query_properties.\
             get_top_x_counted_accumulated_datatypes_timeframe(\
-            timeframe, 10, "reference_metadata", False)
+            timeframe, 10, "reference_metadata", False)"""
 
 
-
+        # TODO: Add properties to the recommended / non-recommended thing
+        # TODO: Summarize the query information per timeframe to a property information over all timeframes
+        # TODO: move the code of the WIKIDATA....module to the statistical_information_handler
+        #
+        # TODO: Try th redundant detection
+        # TODO: Divide the query_research data even more into "with_redundancies" and "without_redundancies"
+        #
         # TODO: get the 'total datatypes and facets' right -> also accumulatenthem
 
-#for timeframe in TIMEFRAMES:
-    #for location in DATA_TYPES_REFERENCE:
-        #redundant_detection.delete_redundant_queries(timeframe, location)
+for timeframe in TIMEFRAMES:
+    for location in DATA_TYPES_REFERENCE:
+        redundant_detection.delete_redundant_queries(timeframe, location)
+    for location in DATA_TYPES_QUALIFIER:
+        redundant_detection.delete_redundant_queries(timeframe, location)
+    for location in DATA_TYPES_RANKS:
+        redundant_detection.delete_redundant_queries(timeframe, location)
 
 
 

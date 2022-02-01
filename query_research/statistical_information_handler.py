@@ -2,8 +2,9 @@ import glob
 import json
 
 
-# the purpose of this module is to summarize the many different statistical informations at different stages
+# the purpose of this module is to summarize the many different statistical information at different stages
 # .. in the /data folder to one for every 'hierarchy step'
+# e.g. -> summarize the information in the different timeframes to the overall ones
 
 # summarize the statistical information about the different "sub-metadata" e.g. 'derived_+_reference_property'
 # .. to one .json file for the entire metadata
@@ -330,51 +331,5 @@ def get_top_x_counted_properties_overall(x, mode):
 
     path_to_top_x_stat_information = \
         "data/statistical_information/query_research/" + "top_" + str(x) + "_" + mode + "_properties_counted.json"
-    with open(path_to_top_x_stat_information, "w") as result_data:
-        json.dump(result_dict, result_data)
-
-
-# get the top x counted properties in the counted properties list for references / qualifiers in the current timeframe
-def get_top_x_counted_properties_timeframe(location, x, mode):
-    if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
-        raise Exception(error_message)
-    if x < 1:
-        error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
-        raise Exception(error_message)
-
-    result_dict = {}
-
-    path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties/properties_counted.json"
-
-    with open(path_to_stat_information, "r") as raw_data:
-        raw_dict = json.load(raw_data)
-
-        for PID in raw_dict["properties"]:
-
-            if len(result_dict) < x:
-                result_dict[PID] = raw_dict["properties"][PID]
-            else:
-                # get the smallest element out of the result_dict
-                smallest_ID = None
-                for test_PID in result_dict:
-                    if smallest_ID is None:
-                        smallest_ID = test_PID
-                    elif result_dict[test_PID] < result_dict[smallest_ID]:
-                        smallest_ID = test_PID
-
-                # if the current element of the raw_dict is greater than the smallest element of the result_dict
-                # .. -> swap them in the result_dict
-                if result_dict[smallest_ID] < raw_dict["properties"][PID]:
-                    result_dict.pop(smallest_ID)
-                    result_dict[PID] = raw_dict["properties"][PID]
-
-        raw_data.close()
-
-    path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode +\
-        "/raw_counted_properties/properties/top_" + str(x) + "_" + mode + "_properties_counted.json"
-
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)

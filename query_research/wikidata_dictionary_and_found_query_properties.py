@@ -54,6 +54,147 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
         json.dump(result_dict, result_data)
 
 
+# get the top x counted properties in the counted properties list for references / qualifiers in the current timeframe
+# .. from the 'raw' counted properties
+#
+# .. and, if each property is recommended by Wikidata as a qualifier/reference property (depending on the 'mode')
+# -- > which means, if the property is defined by Wikidata to be used as a property (see: 'Wikidata -> Proprties List')
+# the data will be seperated by "recommended" properties, "non_recommended" properties and "overall" properties
+#
+# In the data, these recommendations will be visible through the information in the dict under "is_reference" or
+# ..  if the "qualifier_class" contains any information
+def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None):
+    if mode not in ["qualifier_metadata", "reference_metadata"]:
+        error_message = "Not supported mode."
+        raise Exception(error_message)
+    if x < 1:
+        error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+
+    result_dict = {}
+    result_dict["properties"] = {}
+    result_dict["total_properties"] = 0
+    result_dict["unique_properties"] = 0
+
+    props_dict = {}
+    props_dict["properties"] = {}
+    props_dict["total_properties"] = 0
+    props_dict["unique_properties"] = 0
+
+    path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
+                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+
+    with open(path_to_stat_information, "r") as summarized_data:
+        summarized_dict = json.load(summarized_data)
+
+        for PID in summarized_dict["real_wikidata_properties"]:
+
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
+
+            if recommended == True:
+                if mode == "reference_metadata":
+                    recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
+                elif mode == "qualifier_metadata":
+                    recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
+                else:
+                    recommended_bool = False
+
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference_metadata" and int(
+                        summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier_metadata" and int(
+                        summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference_metadata" and (
+                        int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier_metadata" and (
+                        int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
+
+            if recommended_bool:
+
+                props_dict["properties"][PID] = \
+                    summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                props_dict["total_properties"] += \
+                    summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                props_dict["unique_properties"] += 1
+
+    summarized_data.close()
+
+    result_dict["unique_properties"] = props_dict["unique_properties"]
+    result_dict["total_properties"] = props_dict["total_properties"]
+
+    if recommended:
+        tmp_string = "/recommended"
+    elif recommended is not None:
+        tmp_string = "/non_recommended"
+    else:
+        tmp_string = "/all"
+
+    path_to_properties_stat_information = \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode \
+        + tmp_string + "/properties/properties.json"
+
+    with open(path_to_properties_stat_information, "w") as result_data:
+        json.dump(props_dict, result_data)
+
+    # get the top x properties in the dictionary
+    for property in props_dict["properties"]:
+
+        if len(result_dict["properties"]) < x:
+            result_dict["properties"][property] = props_dict["properties"][property]
+        else:
+            # get the smallest element out of the result_dict
+            smallest_ID = None
+            for test_PID in result_dict["properties"]:
+                if smallest_ID is None:
+                    smallest_ID = test_PID
+                elif result_dict["properties"][test_PID] < result_dict["properties"][smallest_ID]:
+                    smallest_ID = test_PID
+
+            # if the current element of the raw_dict is greater than the smallest element of the result_dict
+            # .. -> swap them in the result_dict
+            if result_dict["properties"][smallest_ID] < props_dict["properties"][property]:
+                result_dict["properties"].pop(smallest_ID)
+                result_dict["properties"][property] = props_dict["properties"][property]
+
+    result_data.close()
+
+
+    if recommended:
+        tmp_string = "/recommended"
+    elif recommended is not None:
+        tmp_string = "/non_recommended"
+    else:
+        tmp_string = "/all"
+
+    path_to_top_x_stat_information = \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + "/properties/"\
+        + "top_" + str(x) + "_properties.json"
+
+
+    with open(path_to_top_x_stat_information, "w") as result_data:
+        json.dump(result_dict, result_data)
+
+
+
 # get the top x counted facets in the counted properties list for references / qualifiers in the current timeframe
 # .. and, if each property is recommended by Wikidata as a qualifier/reference property (depending on the 'mode')
 # -- > which means, if the property is defined by Wikidata to be used as a property (see: 'Wikidata -> Proprties List')
@@ -487,61 +628,58 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
         # create a datatypes dictionary
         for PID in summarized_dict["real_wikidata_properties"]:
 
-            # create a facet dictionary
-            for PID in summarized_dict["real_wikidata_properties"]:
+            # check, if the property is /is not a recommended reference/qualifier by Wikidata
+            recommended_bool = True
 
-                # check, if the property is /is not a recommended reference/qualifier by Wikidata
-                recommended_bool = True
+            if recommended == True:
+                if mode == "reference_metadata":
+                    recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
+                elif mode == "qualifier_metadata":
+                    recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
+                else:
+                    recommended_bool = False
 
-                if recommended == True:
-                    if mode == "reference_metadata":
-                        recommended_bool = bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])
-                    elif mode == "qualifier_metadata":
-                        recommended_bool = summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""
-                    else:
-                        recommended_bool = False
+            elif recommended == False:
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
+                    recommended_bool = True
+                # --> but they are min. 1x times used as a reference/qualifier, but not recommended
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
 
-                elif recommended == False:
-                    # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                    if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
-                            and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
-                        recommended_bool = True
-                    # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                    elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
-                            and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == "":
-                        recommended_bool = True
-                    else:
-                        recommended_bool = False
+            elif recommended is None:
+                # just exclude those, who either aren't a recommended qualifier/reference property
+                # .. or are never used as a reference / qualifier
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                                            or bool(
+                            summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
+                    recommended_bool = True
+                elif mode == "qualifier_metadata" and (
+                        int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
+                    recommended_bool = True
+                else:
+                    recommended_bool = False
 
-                elif recommended is None:
-                    # just exclude those, who either aren't a recommended qualifier/reference property
-                    # .. or are never used as a reference / qualifier
-                    if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
-                                                or bool(
-                                summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
-                        recommended_bool = True
-                    elif mode == "qualifier_metadata" and (
-                            int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
-                            or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != ""):
-                        recommended_bool = True
-                    else:
-                        recommended_bool = False
+            if recommended_bool:
 
-                if recommended_bool:
+                datatype = summarized_dict["real_wikidata_properties"][PID]["datatype"]
 
-                    datatype = summarized_dict["real_wikidata_properties"][PID]["datatype"]
-
-                    if (datatype not in datatype_dict["datatypes"]):
-                        datatype_dict["datatypes"][datatype] = \
-                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                        datatype_dict["total_accumulated_datatypes"] += \
-                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                        datatype_dict["unique_datatypes"] += 1
-                    else:
-                        datatype_dict["datatypes"][datatype] += \
-                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
-                        datatype_dict["total_accumulated_datatypes"] += \
-                                summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                if (datatype not in datatype_dict["datatypes"]):
+                    datatype_dict["datatypes"][datatype] = \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                    datatype_dict["total_accumulated_datatypes"] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                    datatype_dict["unique_datatypes"] += 1
+                else:
+                    datatype_dict["datatypes"][datatype] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                    datatype_dict["total_accumulated_datatypes"] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
 
         result_dict["unique_datatypes"] = datatype_dict["unique_datatypes"]
         result_dict["total_accumulated_datatypes"] = datatype_dict["total_accumulated_datatypes"]
