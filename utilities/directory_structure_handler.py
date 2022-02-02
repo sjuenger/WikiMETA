@@ -16,15 +16,52 @@ def create_dir_structure_of_data():
     data_dir = [
         "./data/statistical_information",
 
-        "./data/statistical_information/redundant",
-        "./data/statistical_information/non-redundant",
+        "./data/statistical_information/query_research",
+        "./data/statistical_information/query_research/redundant",
+        "./data/statistical_information/query_research/non-redundant",
 
-        "./data/statistical_information/redundant/query_research",
-        "./data/statistical_information/redundant/query_research/properties",
-        "./data/statistical_information/redundant/query_research/facets",
-        "./data/statistical_information/redundant/query_research/accumulated_facets",
-        "./data/statistical_information/redundant/query_research/datatypes",
-        "./data/statistical_information/redundant/query_research/accumulated_datatypes",
+
+
+        "./data/statistical_information/query_research/redundant/reference_metadata",
+        "./data/statistical_information/query_research/redundant/reference_metadata/raw_counted_properties",
+
+
+        "./data/statistical_information/query_research/redundant/reference_metadata/recommended",
+        "./data/statistical_information/query_research/redundant/reference_metadata/recommended/properties",
+        "./data/statistical_information/query_research/redundant/reference_metadata/recommended/facets",
+        "./data/statistical_information/query_research/redundant/reference_metadata/recommended/accumulated_facets",
+        "./data/statistical_information/query_research/redundant/reference_metadata/recommended/datatypes",
+        "./data/statistical_information/query_research/redundant/reference_metadata/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/redundant/reference_metadata/non_recommended",
+        "./data/statistical_information/query_research/redundant/reference_metadata/non_recommended/properties",
+        "./data/statistical_information/query_research/redundant/reference_metadata/non_recommended/facets",
+        "./data/statistical_information/query_research/redundant/reference_metadata/non_recommended/accumulated_facets",
+        "./data/statistical_information/query_research/redundant/reference_metadata/non_recommended/datatypes",
+        "./data/statistical_information/query_research/redundant/reference_metadata/non_recommended/accumulated_datatypes",
+        
+
+        "./data/statistical_information/query_research/redundant/qualifier_metadata",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/raw_counted_properties",
+
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/recommended",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/recommended/properties",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/recommended/facets",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/recommended/accumulated_facets",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/recommended/datatypes",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/non_recommended",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/non_recommended/properties",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/non_recommended/facets",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/non_recommended/accumulated_facets",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/non_recommended/datatypes",
+        "./data/statistical_information/query_research/redundant/qualifier_metadata/non_recommended/accumulated_datatypes",
+
+
+        "./data/statistical_information/query_research/redundant/rank_metadata",
+
+
 
         "./data/statistical_information/wikidata_research",
         "./data/statistical_information/wikidata_research/properties",
@@ -33,12 +70,47 @@ def create_dir_structure_of_data():
         "./data/statistical_information/wikidata_research/datatypes",
         "./data/statistical_information/wikidata_research/accumulated_datatypes",
 
-        "./data/statistical_information/non-redundant/query_research",
-        "./data/statistical_information/non-redundant/query_research/properties",
-        "./data/statistical_information/non-redundant/query_research/facets",
-        "./data/statistical_information/non-redundant/query_research/accumulated_facets",
-        "./data/statistical_information/non-redundant/query_research/datatypes",
-        "./data/statistical_information/non-redundant/query_research/accumulated_datatypes",
+
+
+        "./data/statistical_information/query_research/non_redundant/reference_metadata",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/raw_counted_properties",
+
+
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/recommended",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/recommended/properties",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/recommended/facets",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/recommended/accumulated_facets",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/recommended/datatypes",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/non_recommended",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/non_recommended/properties",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/non_recommended/facets",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/non_recommended/accumulated_facets",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/non_recommended/datatypes",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/non_recommended/accumulated_datatypes",
+
+
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/raw_counted_properties",
+
+
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/recommended",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/recommended/properties",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/recommended/facets",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/recommended/accumulated_facets",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/recommended/datatypes",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended/properties",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended/facets",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended/accumulated_facets",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended/datatypes",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended/accumulated_datatypes",
+
+
+        "./data/statistical_information/query_research/non_redundant/rank_metadata"
     ]
 
 
@@ -114,6 +186,8 @@ def create_dir_structure_of_data():
 
     # directory structure for the redundant / non-redundant information in the statistical information folder
     statistical_information_redundancy_dir = [
+        "rank_metadata",
+        
         "qualifier_metadata/raw_counted_properties",
         "qualifier_metadata/raw_counted_properties/properties",
         "reference_metadata/raw_counted_properties",

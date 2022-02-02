@@ -106,7 +106,7 @@ def get_top_x_metadata(x, mode, recommended = None):
         else:
             tmp_string = "_"
 
-        with open("data/statistical_information/wikidata_property_dictionary/properties/top_" + str(x) + tmp_string +
+        with open("data/statistical_information/wikidata_research/properties/top_" + str(x) + tmp_string +
                   "for_" + mode + ".json", "w") \
                 as result_json:
             json.dump(result_dictionary, result_json)
@@ -202,7 +202,7 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
             tmp_string = "_non_recommended_"
         else:
             tmp_string = "_"
-        with open("data/statistical_information/wikidata_property_dictionary/facets/top_" + str(x) + tmp_string +
+        with open("data/statistical_information/wikidata_research/facets/top_" + str(x) + tmp_string +
                   "for_" + mode + ".json", "w") \
                 as result_json:
             json.dump(result_facets_dictionary, result_json)
@@ -279,7 +279,7 @@ def get_datatypes_by_metadata(mode, recommended = None):
         else:
             tmp_string = "_"
 
-        with open("data/statistical_information/wikidata_property_dictionary/datatypes/" +
+        with open("data/statistical_information/wikidata_research/datatypes/" +
                   "for_" + mode + tmp_string + ".json", "w") \
                 as result_json:
             json.dump(datatypes_dictionary, result_json)
@@ -374,7 +374,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
             tmp_string = "_non_recommended_"
         else:
             tmp_string = "_"
-        with open("data/statistical_information/wikidata_property_dictionary/accumulated_facets/top_"
+        with open("data/statistical_information/wikidata_research/accumulated_facets/top_"
                   + str(x) + tmp_string + "for_" + mode + ".json", "w") \
                 as result_json:
             json.dump(result_facets_dictionary, result_json)
@@ -451,7 +451,7 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
         else:
             tmp_string = "_"
 
-        with open("data/statistical_information/wikidata_property_dictionary/accumulated_datatypes/" +
+        with open("data/statistical_information/wikidata_research/accumulated_datatypes/" +
                   "for_" + mode + tmp_string + ".json", "w") \
                 as result_json:
             json.dump(datatypes_dictionary, result_json)

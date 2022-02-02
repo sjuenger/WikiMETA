@@ -11,10 +11,14 @@
 import glob
 import json
 
-def count_property_in(location, mode, DATATYPES):
+def count_property_in(location, mode, DATATYPES, redundant_mode):
 
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported metadata mode: ", mode
+        raise Exception(error_message)
+
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -24,16 +28,26 @@ def count_property_in(location, mode, DATATYPES):
 
     # get the path to the folder, where the json file about the gathered statistical information
     # .. is stored
-    path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode
+    path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + \
+                               redundant_mode + "/" + mode
 
     for data_type in DATATYPES:
         # TODO: check, if the property dictionary already exists
         # if
         # TODO: change to only the files, that do contain a property
-        # Retrieve all files, ending with .json
-        files_json = glob.glob("data/" + location[:21] + "/" +
-                                 location[22:] + "/" + data_type + "/*.json")
-
+        # if redundant_mode == "redundant" -> retrieve all .json files
+        # if redundant_mode == "non_redundant" -> retrieve only non-marked files
+        #
+        # in any case, exclude the '...deletion_information.json' files --> [0-9] at the end
+        if redundant_mode == "redundant":
+            # Retrieve all files, ending with .json (also those, starting with a 'x')
+            files_json = glob.glob("data/" + location[:21] + "/" +
+                                   location[22:] + "/" + data_type + "/*[0-9].json")
+        else:
+            # Retrieve only the non-redundant files, ending with .json (not those, starting with a 'x')
+            # .. only those, starting with a digit
+            files_json = glob.glob("data/" + location[:21] + "/" +
+                                   location[22:] + "/" + data_type + "/[0-9]*[0-9].json")
 
 
         for query_file in files_json:

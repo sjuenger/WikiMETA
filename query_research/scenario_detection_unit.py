@@ -46,17 +46,33 @@ import query_research.scenarios.scenario_literal_detection as scenario_literal_d
 import query_research.scenarios.scenario_values_detection as scenario_values_detection
 import query_research.scenarios.scenario_service_detection as scenario_service_detection
 
-def detect_scenarios(location, data_type):
-    # Retrieve all files, ending with .json
-    files_json = glob.glob("data/" + location[:21] + "/" +
-                             location[22:] + "/" + data_type + "/*.json")
+def detect_scenarios(location, data_type, redundant_mode):
+
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
+        raise Exception(error_message)
+
+    # if redundant_mode == "redundant" -> retrieve all .json files
+    # if redundant_mode == "non_redundant" -> retrieve only non-marked files
+    #
+    # in any case, exclude the '...deletion_information.json' files --> [0-9] at the end
+    if redundant_mode == "redundant":
+        # Retrieve all files, ending with .json (also those, starting with a 'x')
+        files_json = glob.glob("data/" + location[:21] + "/" +
+                                 location[22:] + "/" + data_type + "/*[0-9].json")
+    else:
+        # Retrieve only the non-redundant files, ending with .json (not those, starting with a 'x')
+        # .. only those, starting with a digit
+        files_json = glob.glob("data/" + location[:21] + "/" +
+                                 location[22:] + "/" + data_type + "/[0-9]*[0-9].json")
+
     # get the path to the folder, where all scenarios are saved
     path_to_scenarios = "data/" + location[:21] + "/" + location[22:] + "/" + \
-                        data_type.split('/')[0] + "/scenarios"
+                        data_type.split('/')[0] + "/scenarios/" + redundant_mode
     # get the path to the folder, where the json file about the gathered statistical information
     # .. is stored
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/" + \
-                        data_type.split('/')[0] + "/statistical_information"
+                        data_type.split('/')[0] + "/statistical_information/" + redundant_mode
 
 
     total_SELECT_queries = 0
@@ -133,6 +149,9 @@ def detect_scenarios(location, data_type):
                         # -->
                         # Data/2017-06-12_2017-07-09/Organic/Reference_Metadata/Derived_+_Reference_Property/182150 2017-07-07 19:06:30.sparql
                         path_to_sparql_text_file = query_file[:-4]+"sparql"
+
+                        # in case, the query file was marked as redundant -> remove the "x "....
+                        path_to_sparql_text_file.replace("x ", "")
 
                         # to later check, if something changed in the list
                         # -> to detect, if a scenario did apply
@@ -444,7 +463,7 @@ def detect_scenarios(location, data_type):
     }
 
     # save the scneario_dict to a folder
-    with open(path_to_stat_information + "/" + data_type.split('/')[1] , "wt") as information_data:
+    with open(path_to_stat_information + "/" + data_type.split('/')[1], "wt") as information_data:
         json.dump(scenario_dict, information_data)
     information_data.close()
 
