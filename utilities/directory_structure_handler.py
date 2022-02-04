@@ -189,9 +189,7 @@ def create_dir_structure_of_data():
         "rank_metadata",
         
         "qualifier_metadata/raw_counted_properties",
-        "qualifier_metadata/raw_counted_properties/properties",
         "reference_metadata/raw_counted_properties",
-        "reference_metadata/raw_counted_properties/properties",
 
         "qualifier_metadata/recommended",
         "reference_metadata/recommended",

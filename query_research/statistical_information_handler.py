@@ -9,8 +9,16 @@ import json
 # summarize the statistical information about the different "sub-metadata" e.g. 'derived_+_reference_property'
 # .. to one .json file for the entire metadata
 # .. e.g. for References, Qualifiers, Ranks
-def summarize_statistical_information_about_scenarios(location, datatype_list, metadata):
+def summarize_statistical_information_about_scenarios(location, datatype_list, metadata, redundant_mode):
     # struct for the resulting .json object
+
+    if metadata not in ["qualifier_metadata", "reference_metadata"]:
+        error_message = "Not supported metadata mode: ", metadata
+        raise Exception(error_message)
+
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
+        raise Exception(error_message)
 
     dict_looking_for = {
         "looking_for": metadata,
@@ -55,11 +63,13 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
     for datatype in datatype_list:
         # get the path to the folder, where the json file about the gathered statistical information
         # .. about the scenarios is stored (on the current datatype)
+        # --> use the redundant / non redundant information here also
         path_to_stat_information_subtypes = "data/" + location[:21] + "/" + location[22:] + "/" + \
-                                            datatype.split('/')[0] + "/statistical_information/" + datatype.split('/')[
+                                            datatype.split('/')[0] + "/statistical_information/" + \
+                                            redundant_mode + "/" + datatype.split('/')[
                                                 1]
         path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
-                                            "/statistical_information/" + metadata + ".json"
+                                            "/statistical_information/" + redundant_mode + "/" + metadata + ".json"
 
         # extract the statistical information
         with open(path_to_stat_information_subtypes, "r") as json_data:
@@ -133,8 +143,16 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
 
 
 # summarize the statistical information about the different timeframes
-def summarize_statistical_information_about_timeframes(locations, metadata):
+def summarize_statistical_information_about_timeframes(locations, metadata, redundant_mode):
     # struct for the resulting .json object
+
+    if metadata not in ["qualifier_metadata", "reference_metadata"]:
+        error_message = "Not supported metadata mode: ", metadata
+        raise Exception(error_message)
+
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
+        raise Exception(error_message)
 
     dict_looking_for = {
         "looking_for": metadata,
@@ -182,8 +200,10 @@ def summarize_statistical_information_about_timeframes(locations, metadata):
         # .. about the metadata is stored (on the current timeframe)
 
         path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
-                                            "/statistical_information/" + metadata + "/" + metadata + ".json"
-        path_to_stat_information_timeframe = "data/statistical_information/" + metadata + "/" + metadata +".json"
+                                            "/statistical_information/" + redundant_mode + "/" \
+                                            + metadata + "/" + metadata + ".json"
+        path_to_stat_information_timeframe = "data/statistical_information/query_research/" + redundant_mode + "/"\
+                                             + metadata + "/" + metadata +".json"
 
         # extract the statistical information
         with open(path_to_stat_information_metadata, "r") as json_data:
@@ -258,10 +278,16 @@ def summarize_statistical_information_about_timeframes(locations, metadata):
 
 
 # summarize the counted properties for references / qualifiers in the timeframes to an overall one
-def summarize_statistical_information_about_counted_properties(TIMEFRAMES, mode):
+def summarize_statistical_information_about_counted_properties(TIMEFRAMES, mode, redundant_mode):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
         raise Exception(error_message)
+
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
+        raise Exception(error_message)
+
+
 
     result_dict = {}
     result_dict["properties"] = {}
@@ -271,7 +297,7 @@ def summarize_statistical_information_about_counted_properties(TIMEFRAMES, mode)
     for location in TIMEFRAMES:
 
         path_to_timeframe_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties/properties_counted.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_counted.json"
         with open(path_to_timeframe_stat_information, "r") as timeframe_data:
             timeframe_dict = json.load(timeframe_data)
 
@@ -287,13 +313,14 @@ def summarize_statistical_information_about_counted_properties(TIMEFRAMES, mode)
         timeframe_data.close()
 
     path_to_overall_stat_information = \
-        "data/statistical_information/query_research/" + mode + "_properties_counted.json"
+        "data/statistical_information/query_research/" + redundant_mode + "/" \
+        + mode + "/raw_counted_properties/properties_counted.json"
     with open(path_to_overall_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)
 
 
 # get the top x counted properties in the counted properties list for references / qualifiers
-def get_top_x_counted_properties_overall(x, mode):
+def get_top_x_counted_properties_overall(x, mode, redundant_mode):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
         error_message = "Not supported mode."
         raise Exception(error_message)
@@ -301,9 +328,15 @@ def get_top_x_counted_properties_overall(x, mode):
         error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
         raise Exception(error_message)
 
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
+        raise Exception(error_message)
+
     result_dict = {}
 
-    path_to_stat_information = "data/statistical_information/query_research/" + mode + "_properties_counted.json"
+    path_to_stat_information = \
+        "data/statistical_information/query_research/" + redundant_mode + "/" \
+        + mode + "/raw_counted_properties/properties_counted.json"
 
     with open(path_to_stat_information, "r") as raw_data:
         raw_dict = json.load(raw_data)
@@ -330,6 +363,7 @@ def get_top_x_counted_properties_overall(x, mode):
         raw_data.close()
 
     path_to_top_x_stat_information = \
-        "data/statistical_information/query_research/" + "top_" + str(x) + "_" + mode + "_properties_counted.json"
+        "data/statistical_information/query_research/" + redundant_mode + "/" + mode + "/raw_counted_properties/" \
+                                                                              + "top_" + str(x) + "_properties_counted.json"
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)

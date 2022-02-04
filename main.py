@@ -23,7 +23,7 @@ import query_research.transform_data.redundant_detection as redundant_detection
 
 
 directory_structure_handler.create_dir_structure_of_data()
-directory_structure_handler.delete_identified_scenarios()
+# directory_structure_handler.delete_identified_scenarios()
 
 def do_wikidata_research_stuff():
     # Wikidata Stuff

@@ -4,9 +4,12 @@ import json
 # .. from the wikidata_research
 # .. per timeframe
 #
-def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(location, mode):
+def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(location, mode, redundant_mode):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
+        raise Exception(error_message)
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -15,7 +18,7 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
     result_dict["false_wikidata_properties"] = {}
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties/properties_counted.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_counted.json"
     path_to_wikidata_property_dict = "data/property_dictionary.json"
 
     with open(path_to_stat_information, "r") as stat_info_file:
@@ -48,7 +51,7 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
 
 
     path_to_output = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_output, "w") as result_data:
         json.dump(result_dict, result_data)
@@ -63,10 +66,14 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
 #
 # In the data, these recommendations will be visible through the information in the dict under "is_reference" or
 # ..  if the "qualifier_class" contains any information
-def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None):
+def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None, redundant_mode = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
         raise Exception(error_message)
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
+        raise Exception(error_message)
+
     if x < 1:
         error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
         raise Exception(error_message)
@@ -82,7 +89,7 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
     props_dict["unique_properties"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -149,7 +156,7 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
         tmp_string = "/all"
 
     path_to_properties_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode \
         + tmp_string + "/properties/properties.json"
 
     with open(path_to_properties_stat_information, "w") as result_data:
@@ -186,7 +193,8 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
         tmp_string = "/all"
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + "/properties/"\
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" \
+        + mode + tmp_string + "/properties/"\
         + "top_" + str(x) + "_properties.json"
 
 
@@ -202,12 +210,15 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
 #
 # In the data, these recommendations will be visible through the information in the dict under "is_reference" or
 # ..  if the "qualifier_class" contains any information
-def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None):
+def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None, redundant_mode = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
         raise Exception(error_message)
     if x < 1:
         error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -221,7 +232,7 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None):
     facet_dict["unique_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -287,7 +298,7 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None):
             tmp_string = "/all"
 
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode   \
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode   \
             + tmp_string + "/facets/facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
@@ -323,7 +334,8 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None):
         tmp_string = "/all"
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + "/facets/"\
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" \
+        + mode + tmp_string + "/facets/"\
         + "top_" + str(x) + "_facets.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
@@ -333,12 +345,15 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None):
 # get the top x counted datytypes in the counted properties list for references / qualifiers in the current timeframe
 #
 # usage of 'recommended' as see above
-def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None):
+def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None, redundant_mode = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
         raise Exception(error_message)
     if x < 1:
         error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -352,7 +367,7 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None)
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -418,7 +433,7 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None)
             tmp_string = "/all"
 
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode  \
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode  \
             + tmp_string + "/datatypes/datatypes.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
@@ -454,7 +469,7 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None)
         tmp_string = "/all"
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode + tmp_string + \
         "/datatypes/top_" + str(x) + "_datatypes.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
@@ -465,12 +480,15 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None)
 # .. in the current timeframe
 #
 # usage of 'recommended' as explained above
-def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommended = None):
+def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommended = None, redundant_mode = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
         raise Exception(error_message)
     if x < 1:
         error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -484,7 +502,7 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
     facet_dict["unique_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -554,7 +572,7 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
             tmp_string = "/all"
 
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode \
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode \
             + tmp_string + "/accumulated_facets/accumulated_facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
@@ -590,7 +608,7 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
             tmp_string = "/all"
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string +\
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode + tmp_string +\
         "/accumulated_facets/top_" + str(x) + "_accumulated_facets.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:
@@ -601,12 +619,15 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
 # .. in the current timeframe
 #
 # usage of 'recommended' as described above
-def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recommended = None):
+def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recommended = None, redundant_mode = None):
     if mode not in ["qualifier_metadata", "reference_metadata"]:
-        error_message = "Not supported mode."
+        error_message = "Not supported mode: ", mode
         raise Exception(error_message)
     if x < 1:
         error_message = "x must be greater than 0 - can only get the top x elements for x > 0"
+        raise Exception(error_message)
+    if redundant_mode not in ["redundant", "non_redundant"]:
+        error_message = "Not supported redundancy mode: ", redundant_mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -620,7 +641,7 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/ +  mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
@@ -692,7 +713,7 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
             tmp_string = "/all"
 
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode \
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode \
             + tmp_string + "/accumulated_datatypes/accumulated_datatypes.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
@@ -728,7 +749,7 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
             tmp_string = "/all"
 
     path_to_top_x_stat_information = \
-        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + mode + tmp_string + \
+        "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode + tmp_string + \
         "/accumulated_datatypes/top_" + str(x) + "_accumulated_datatypes.json"
 
     with open(path_to_top_x_stat_information, "w") as result_data:

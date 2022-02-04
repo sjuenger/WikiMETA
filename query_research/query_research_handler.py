@@ -149,66 +149,30 @@ def start_research_of_query_data(args):
     if args[4] == 1:
 
         for timeframe in TIMEFRAMES:
-           statistical_information_handler. \
-               summarize_statistical_information_about_scenarios(timeframe,
-                                                                 DATA_TYPES_REFERENCE,
-                                                                 "reference_metadata", "redundant")
-           statistical_information_handler. \
-               summarize_statistical_information_about_scenarios(timeframe,
-                                                                 DATA_TYPES_REFERENCE,
-                                                                 "reference_metadata", "non_redundant")
-           statistical_information_handler. \
-              summarize_statistical_information_about_scenarios(timeframe,
-                                                                 DATA_TYPES_QUALIFIER,
-                                                                "qualifier_metadata", "redundant")
-           statistical_information_handler. \
-              summarize_statistical_information_about_scenarios(timeframe,
-                                                                 DATA_TYPES_QUALIFIER,
-                                                                "qualifier_metadata", "non_redundant")
-           statistical_information_handler. \
-              summarize_statistical_information_about_scenarios(timeframe,
-                                                                 DATA_TYPES_RANK,
-                                                                "rank_metadata", "redundant")
-           statistical_information_handler. \
-              summarize_statistical_information_about_scenarios(timeframe,
-                                                                 DATA_TYPES_RANK,
-                                                                "rank_metadata", "non_redundant")
 
-        statistical_information_handler. \
-          summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                             "reference_metadata", "redundant")
-        statistical_information_handler. \
-          summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                             "reference_metadata", "non_redundant")
+            for (metadata_mode, datatype) in [("qualifier_metadata", DATA_TYPES_QUALIFIER),
+                                              ("reference_metadata", DATA_TYPES_REFERENCE),
+                                              ("rank_metadata", DATA_TYPES_RANK)]:
 
-        statistical_information_handler. \
-          summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                             "qualifier_metadata", "redundant")
-        statistical_information_handler. \
-          summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                             "qualifier_metadata", "non_redundant")
+                for redundancy_mode in ["redundant", "non_redundant"]:
 
-        statistical_information_handler. \
-          summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                             "rank_metadata", "redundant")
-        statistical_information_handler. \
-          summarize_statistical_information_about_timeframes(TIMEFRAMES,
-                                                             "rank_metadata", "non_redundant")
+                        statistical_information_handler.\
+                            summarize_statistical_information_about_scenarios(timeframe,
+                                                                              datatype,
+                                                                              metadata_mode,
+                                                                              redundancy_mode)
 
-        statistical_information_handler.\
-          summarize_statistical_information_about_counted_properties(TIMEFRAMES, "qualifier_metadata", "redundant")
-        statistical_information_handler.\
-          summarize_statistical_information_about_counted_properties(TIMEFRAMES, "qualifier_metadata", "non_redundant")
-        statistical_information_handler.\
-          summarize_statistical_information_about_counted_properties(TIMEFRAMES, "reference_metadata", "redundant")
-        statistical_information_handler.\
-          summarize_statistical_information_about_counted_properties(TIMEFRAMES, "reference_metadata", "non_redundant")
 
-        statistical_information_handler.\
-          get_top_x_counted_properties_overall(10, "qualifier_metadata", "redundant")
-        statistical_information_handler.\
-          get_top_x_counted_properties_overall(10, "qualifier_metadata", "non_redundant")
-        statistical_information_handler.\
-          get_top_x_counted_properties_overall(10, "reference_metadata", "redundant")
-        statistical_information_handler.\
-          get_top_x_counted_properties_overall(10, "reference_metadata","non_redundant")
+        for redundancy_mode in ["redundant", "non_redundant"]:
+            for metadata_mode in ["qualifier_metadata", "reference_metadata", "rank_metadata"]:
+                statistical_information_handler.summarize_statistical_information_about_timeframes(TIMEFRAMES,
+                                                                                                   metadata_mode,
+                                                                                                   redundancy_mode)
+
+            for metadata_mode in ["qualifier_metadata", "reference_metadata"]:
+
+                statistical_information_handler.summarize_statistical_information_about_counted_properties(TIMEFRAMES,
+                                                                                                          metadata_mode,
+                                                                                                          redundancy_mode)
+                statistical_information_handler.\
+                    get_top_x_counted_properties_overall(10, metadata_mode, redundancy_mode)

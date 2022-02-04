@@ -18,7 +18,7 @@ def count_property_in(location, mode, DATATYPES, redundant_mode):
         raise Exception(error_message)
 
     if redundant_mode not in ["redundant", "non_redundant"]:
-        error_message = "Not supported redundancy mode: ", mode
+        error_message = "Not supported redundancy mode: ", redundant_mode
         raise Exception(error_message)
 
     result_dict = {}
@@ -68,7 +68,7 @@ def count_property_in(location, mode, DATATYPES, redundant_mode):
                         search_list_deep_for_multiple_metadata_properties  \
                             (where_part, "http://www.wikidata.org/prop/qualifier/P", result_dict)
 
-    with open(path_to_stat_information + "/raw_counted_properties/properties/properties_counted.json", "w") as result_data:
+    with open(path_to_stat_information + "/raw_counted_properties/properties_counted.json", "w") as result_data:
         json.dump(result_dict, result_data)
 
     return
