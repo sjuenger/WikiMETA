@@ -641,7 +641,7 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
     datatype_dict["unique_datatypes"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
-                                   + redundant_mode + "/ +  mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
+                                   + redundant_mode + "/" +  mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
