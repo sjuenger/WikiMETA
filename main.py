@@ -22,8 +22,10 @@ import query_research.transform_data.redundant_detection as redundant_detection
 # TODO: Add references a https://sqid.toolforge.org/#/ to the code
 
 
-directory_structure_handler.create_dir_structure_of_data()
-# directory_structure_handler.delete_identified_scenarios()
+def main():
+    directory_structure_handler.create_dir_structure_of_data()
+    # directory_structure_handler.delete_identified_scenarios()
+    do_query_research_stuff([0,0,1,0,0])
 
 def do_wikidata_research_stuff():
     # Wikidata Stuff
@@ -34,9 +36,9 @@ def do_wikidata_research_stuff():
     wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
 
 
-def do_query_research_stuff():
+def do_query_research_stuff(args):
 
-    query_research_handler.start_research_of_query_data()
+    query_research_handler.start_research_of_query_data(args)
 
             # TODO: Add properties to the recommended / non-recommended thing
             # TODO: Summarize the query information per timeframe to a property information over all timeframes
@@ -48,4 +50,5 @@ def do_query_research_stuff():
             # TODO: get the 'total datatypes and facets' right -> also accumulatenthem
 
 
-
+if __name__ == "__main__":
+    main()

@@ -3,6 +3,7 @@ import query_research.scenario_detection_unit as scenario_detection_unit
 import query_research.properties_counter as properties_counter
 import query_research.statistical_information_handler as statistical_information_handler
 import query_research.wikidata_dictionary_and_found_query_properties as wikidata_dictionary_and_found_query_properties
+import query_research.ranks_counter as ranks_counter
 
 TIMEFRAMES = [
     "2017-06-12_2017-07-09_organic",
@@ -70,15 +71,18 @@ def start_research_of_query_data(args):
               scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
               scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
-    # count the gathered properties
+    # count the gathered properties and ranks
     if args[2] == 1:
 
         for timeframe in TIMEFRAMES:
 
-           properties_counter.count_property_in(timeframe, "reference_metadata", DATA_TYPES_REFERENCE, "redundant")
-           properties_counter.count_property_in(timeframe, "reference_metadata", DATA_TYPES_REFERENCE, "non_redundant")
-           properties_counter.count_property_in(timeframe, "qualifier_metadata", DATA_TYPES_QUALIFIER, "redundant")
-           properties_counter.count_property_in(timeframe, "qualifier_metadata", DATA_TYPES_QUALIFIER, "non_redundant")
+            properties_counter.count_property_in(timeframe, "reference_metadata", DATA_TYPES_REFERENCE, "redundant")
+            properties_counter.count_property_in(timeframe, "reference_metadata", DATA_TYPES_REFERENCE, "non_redundant")
+            properties_counter.count_property_in(timeframe, "qualifier_metadata", DATA_TYPES_QUALIFIER, "redundant")
+            properties_counter.count_property_in(timeframe, "qualifier_metadata", DATA_TYPES_QUALIFIER, "non_redundant")
+
+            ranks_counter.count_ranks_in(timeframe, "rank_metadata", DATA_TYPES_RANK, "redundant")
+            ranks_counter.count_ranks_in(timeframe, "rank_metadata", DATA_TYPES_RANK, "non_redundant")
 
     # create the statistical information about the counted properties in relation to the gathered facets/datatypes
     # .. from Wikidata

@@ -367,3 +367,6 @@ def get_top_x_counted_properties_overall(x, mode, redundant_mode):
                                                                               + "top_" + str(x) + "_properties_counted.json"
     with open(path_to_top_x_stat_information, "w") as result_data:
         json.dump(result_dict, result_data)
+
+
+################# start here ---> count the best / default / deprecated ranks of the timeframes & overall
