@@ -61,12 +61,22 @@ def count_property_in(location, mode, DATATYPES, redundant_mode):
 
                     where_part = query_json["where"]
 
+                    # look for the "normal" properties, but also for the values and normalized values
                     if mode == "reference_metadata":
+                        search_list_deep_for_multiple_metadata_properties  \
+                            (where_part, "http://www.wikidata.org/prop/reference/value/P", result_dict)
+                        search_list_deep_for_multiple_metadata_properties  \
+                            (where_part, "http://www.wikidata.org/prop/reference/value-normalized/P", result_dict)
                         search_list_deep_for_multiple_metadata_properties  \
                             (where_part, "http://www.wikidata.org/prop/reference/P", result_dict)
                     else:
                         search_list_deep_for_multiple_metadata_properties  \
                             (where_part, "http://www.wikidata.org/prop/qualifier/P", result_dict)
+                        search_list_deep_for_multiple_metadata_properties  \
+                            (where_part, "http://www.wikidata.org/prop/qualifier/value/P", result_dict)
+                        search_list_deep_for_multiple_metadata_properties  \
+                            (where_part, "http://www.wikidata.org/prop/qualifier/value-normalized/P", result_dict)
+
 
     with open(path_to_stat_information + "/raw_counted_properties/properties_counted.json", "w") as result_data:
         json.dump(result_dict, result_data)
@@ -91,9 +101,11 @@ def search_dict_deep_for_multiple_metadata_properties(current_dict, look_for, fo
             if look_for in str(current_dict[element]):
                 # get the property PID
                 # e.g. "http://www.wikidata.org/prop/reference/P31" -> "P31"
+                # e.g. "http://www.wikidata.org/prop/reference/value/P31" -> "P31"
+                # e.g. "http://www.wikidata.org/prop/reference/value-normalized/P31" -> "P31"
                 split_property_string = current_dict[element].split("/")
 
-                if len(split_property_string) == 6:
+                if len(split_property_string) >= 6:
                     PID = split_property_string[len(split_property_string)-1]
                 else:
                     raise Exception
@@ -126,9 +138,11 @@ def search_list_deep_for_multiple_metadata_properties(current_list, look_for, fo
             if look_for in str(element):
                 # get the property PID
                 # e.g. "http://www.wikidata.org/prop/reference/P31" -> "P31"
+                # e.g. "http://www.wikidata.org/prop/reference/value/P31" -> "P31"
+                # e.g. "http://www.wikidata.org/prop/reference/value-normalized/P31" -> "P31"
                 split_property_string = element.split("/")
 
-                if len(split_property_string) == 6:
+                if len(split_property_string) >= 6:
                     PID = split_property_string[len(split_property_string)-1]
                 else:
                     raise Exception

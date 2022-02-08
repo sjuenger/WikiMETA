@@ -12,7 +12,7 @@ import json
 def summarize_statistical_information_about_scenarios(location, datatype_list, metadata, redundant_mode):
     # struct for the resulting .json object
 
-    if metadata not in ["qualifier_metadata", "reference_metadata"]:
+    if metadata not in ["qualifier_metadata", "reference_metadata", "rank_metadata"]:
         error_message = "Not supported metadata mode: ", metadata
         raise Exception(error_message)
 
@@ -44,7 +44,6 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         "blank_node": 0,
         "minus": 0,
         "subselect": 0,
-        "ref_value": 0,
         "literal": 0,
         "values": 0,
         "service": 0,
@@ -69,7 +68,8 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                                             redundant_mode + "/" + datatype.split('/')[
                                                 1]
         path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
-                                            "/statistical_information/" + redundant_mode + "/" + metadata + ".json"
+                                            "/statistical_information/" + redundant_mode + "/" + metadata + "/" \
+                                            + metadata + ".json"
 
         # extract the statistical information
         with open(path_to_stat_information_subtypes, "r") as json_data:
@@ -125,8 +125,6 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["optional"]
                 metadata_dict["found_scenarios"]["prop_path"] += \
                     elem["prop_path"]
-                metadata_dict["found_scenarios"]["ref_value"] += \
-                    elem["ref_value"]
                 metadata_dict["found_scenarios"]["service"] += \
                     elem["service"]
                 metadata_dict["found_scenarios"]["subselect"] = \
@@ -146,7 +144,7 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
 def summarize_statistical_information_about_timeframes(locations, metadata, redundant_mode):
     # struct for the resulting .json object
 
-    if metadata not in ["qualifier_metadata", "reference_metadata"]:
+    if metadata not in ["qualifier_metadata", "reference_metadata", "rank_metadata"]:
         error_message = "Not supported metadata mode: ", metadata
         raise Exception(error_message)
 
@@ -178,7 +176,6 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
         "blank_node": 0,
         "minus": 0,
         "subselect": 0,
-        "ref_value": 0,
         "literal": 0,
         "values": 0,
         "service": 0,
@@ -260,8 +257,6 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
                 elem["optional"]
             metadata_dict["found_scenarios"]["prop_path"] += \
                 elem["prop_path"]
-            metadata_dict["found_scenarios"]["ref_value"] += \
-                elem["ref_value"]
             metadata_dict["found_scenarios"]["service"] += \
                 elem["service"]
             metadata_dict["found_scenarios"]["subselect"] = \

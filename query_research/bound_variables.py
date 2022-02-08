@@ -26,7 +26,7 @@ def find_bound_variables(json_object):
     bound_variables = []
     for where_part in where:
         if where_part["type"] == "bind":
-            print(where_part)
+            #print(where_part)
 
             if "termType" in where_part["expression"]:
                 if where_part["expression"]["termType"] == "NamedNode":

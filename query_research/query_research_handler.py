@@ -91,62 +91,52 @@ def start_research_of_query_data(args):
         for timeframe in TIMEFRAMES:
             for metadata_mode in ["qualifier_metadata", "reference_metadata"]:
                 for redundancy_mode in ["redundant", "non_redundant"]:
-                    
+
                     wikidata_dictionary_and_found_query_properties.\
                         create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(
                         timeframe, metadata_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode, redundancy_mode)
+                    for recommended_mode in [True, False]:
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_facets_timeframe(
-                        timeframe, 10, metadata_mode, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties. \
+                            get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode,
+                                                                   recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_datatypes_timeframe(
-                        timeframe, 10, metadata_mode, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_facets_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_accumulated_facets_timeframe(
-                        timeframe, 10, metadata_mode, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_datatypes_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_accumulated_datatypes_timeframe(
-                        timeframe, 10, metadata_mode, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_accumulated_facets_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode, True, redundancy_mode)
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode, False, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_accumulated_datatypes_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_facets_timeframe(
-                        timeframe, 10, metadata_mode, True, redundancy_mode)
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_facets_timeframe(
-                        timeframe, 10, metadata_mode, False, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties. \
+                            get_top_x_counted_properties_timeframe(timeframe, 10,
+                                                                   metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_datatypes_timeframe(
-                        timeframe, 10, metadata_mode, True, redundancy_mode)
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_datatypes_timeframe(
-                        timeframe, 10, metadata_mode, False, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_facets_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_accumulated_facets_timeframe(
-                        timeframe, 10, metadata_mode, True, redundancy_mode)
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_accumulated_facets_timeframe(
-                        timeframe, 10, metadata_mode, False, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_datatypes_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                    wikidata_dictionary_and_found_query_properties.\
-                        get_top_x_counted_accumulated_datatypes_timeframe(
-                        timeframe, 10, metadata_mode, True, redundancy_mode)
-                    wikidata_dictionary_and_found_query_properties. \
-                        get_top_x_counted_accumulated_datatypes_timeframe(
-                        timeframe, 10, metadata_mode, False, redundancy_mode)
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_accumulated_facets_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+
+                        wikidata_dictionary_and_found_query_properties.\
+                            get_top_x_counted_accumulated_datatypes_timeframe(
+                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
 
     # summarize the information about the timeframes

@@ -18,7 +18,7 @@ def create_dir_structure_of_data():
 
         "./data/statistical_information/query_research",
         "./data/statistical_information/query_research/redundant",
-        "./data/statistical_information/query_research/non-redundant",
+        "./data/statistical_information/query_research/non_redundant",
 
 
 
@@ -142,7 +142,7 @@ def create_dir_structure_of_data():
         "reference_node_+_reference_property",
         "scenarios",
         "statistical_information/redundant",
-        "statistical_information/non-redundant",
+        "statistical_information/non_redundant",
         "statistical_information"
     ]
     # directory structure for qualifier metadata
@@ -151,7 +151,7 @@ def create_dir_structure_of_data():
         "property_qualifier",
         "scenarios",
         "statistical_information/redundant",
-        "statistical_information/non-redundant",
+        "statistical_information/non_redundant",
         "statistical_information"
     ]
     # directory structure for rank metadata
@@ -160,7 +160,7 @@ def create_dir_structure_of_data():
         "scenarios",
         "statistical_information",
         "statistical_information/redundant",
-        "statistical_information/non-redundant",
+        "statistical_information/non_redundant",
         "rank_property",
         "best_rank_+_rank_property",
         "normal_rank_+_rank_property",
@@ -234,7 +234,7 @@ def create_dir_structure_of_data():
     # directory structure for scenarios
     scenarios_dir = [
         "redundant",
-        "non-redundant"
+        "non_redundant"
     ]
 
     # directory structure for scenarios
@@ -254,7 +254,6 @@ def create_dir_structure_of_data():
         "optional",
         "other",
         "prop_path",
-        "ref_value",
         "seven",
         "six",
         "subselect",
@@ -329,6 +328,13 @@ def create_dir_structure_of_data():
                                 if not os.path.isdir(tmp_directory):
                                     os.makedirs(tmp_directory)
 
+                                 # for the folders in the redundancies
+                                for directory_U_U_U_U in scenarios_redundancy_dir:
+                                    tmp_directory = directory + "/" + directory_U + "/" + directory_U_U + "/" + \
+                                                    directory_U_U_U + "/" + directory_U_U_U_U
+                                    if not os.path.isdir(tmp_directory):
+                                        os.makedirs(tmp_directory)
+
                 # path for qualifiers:
                 if directory_U == "organic/rank_metadata":
                     for directory_U_U in rank_dir:
@@ -343,6 +349,13 @@ def create_dir_structure_of_data():
                                 if not os.path.isdir(tmp_directory):
                                     os.makedirs(tmp_directory)
 
+                                 # for the folders in the redundancies
+                                for directory_U_U_U_U in scenarios_redundancy_dir:
+                                    tmp_directory = directory + "/" + directory_U + "/" + directory_U_U + "/" + \
+                                                    directory_U_U_U + "/" + directory_U_U_U_U
+                                    if not os.path.isdir(tmp_directory):
+                                        os.makedirs(tmp_directory)
+
         # add the statistical_information for the whole project to 'data'
         else:
             if not os.path.isdir(directory):
@@ -355,9 +368,15 @@ def is_already_extracted():
 
 # delete the identified scenarios in the specific folders of all the handed
 # .. over timeframes
-def delete_identified_scenarios(TIMEFRAMES):
+def delete_identified_scenarios():
     # directory structure for scenarios
     scenarios_dir = [
+        "redundant",
+        "non_redundant"
+    ]
+
+    # directory structure for scenarios
+    scenarios_redundancy_dir = [
         "bind",
         "blank_node",
         "eight",
@@ -373,7 +392,6 @@ def delete_identified_scenarios(TIMEFRAMES):
         "optional",
         "other",
         "prop_path",
-        "ref_value",
         "seven",
         "six",
         "subselect",
@@ -397,21 +415,23 @@ def delete_identified_scenarios(TIMEFRAMES):
 
         for scenario in scenarios_dir:
 
-            # iterate over all files
-            for file in os.listdir(tmp_path_to_reference_scenarios + scenario):
-                os.remove(tmp_path_to_reference_scenarios + scenario + "/" + file)
-            for file in os.listdir(tmp_path_to_qualifier_scenarios + scenario):
-                os.remove(tmp_path_to_qualifier_scenarios + scenario + "/" + file)
-            for file in os.listdir(tmp_path_to_rank_scenarios + scenario):
-                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + file)
+            for redundancy_scenario in scenarios_redundancy_dir:
 
-        # delete the found scenarios "inside" the bind scenarios
-        if os.path.isfile(tmp_path_to_rank_scenarios + "bind_statistical_information.json"):
-            os.remove(tmp_path_to_rank_scenarios + "bind_statistical_information.json")
-        if os.path.isfile(tmp_path_to_qualifier_scenarios + "bind_statistical_information.json"):
-            os.remove(tmp_path_to_qualifier_scenarios + "bind_statistical_information.json")
-        if os.path.isfile(tmp_path_to_reference_scenarios + "bind_statistical_information.json"):
-            os.remove(tmp_path_to_reference_scenarios + "bind_statistical_information.json")
+                # iterate over all files
+                for file in os.listdir(tmp_path_to_reference_scenarios + scenario + "/" + redundancy_scenario):
+                    os.remove(tmp_path_to_reference_scenarios + scenario  + "/" + redundancy_scenario + "/" + file)
+                for file in os.listdir(tmp_path_to_qualifier_scenarios + scenario  + "/" + redundancy_scenario):
+                    os.remove(tmp_path_to_qualifier_scenarios + scenario  + "/" + redundancy_scenario + "/" + file)
+                for file in os.listdir(tmp_path_to_rank_scenarios + scenario  + "/" + redundancy_scenario):
+                    os.remove(tmp_path_to_rank_scenarios + scenario  + "/" + redundancy_scenario + "/" + file)
+
+            # delete the found scenarios "inside" the bind scenarios
+            if os.path.isfile(tmp_path_to_rank_scenarios + scenario + "/" + "bind_statistical_information.json"):
+                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + "bind_statistical_information.json")
+            if os.path.isfile(tmp_path_to_qualifier_scenarios + scenario + "/" + "bind_statistical_information.json"):
+                os.remove(tmp_path_to_qualifier_scenarios + scenario + "/" + "bind_statistical_information.json")
+            if os.path.isfile(tmp_path_to_reference_scenarios + scenario + "/" + "bind_statistical_information.json"):
+                os.remove(tmp_path_to_reference_scenarios + scenario + "/" + "bind_statistical_information.json")
 
 
     return

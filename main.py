@@ -24,8 +24,10 @@ import query_research.transform_data.redundant_detection as redundant_detection
 
 def main():
     directory_structure_handler.create_dir_structure_of_data()
-    # directory_structure_handler.delete_identified_scenarios()
-    do_query_research_stuff([0,0,1,0,0])
+    directory_structure_handler.delete_identified_scenarios()
+    do_query_research_stuff([0,1,1,1,1])
+
+    # the ALL is missing with the recommmended / non_recommended things
 
 def do_wikidata_research_stuff():
     # Wikidata Stuff
