@@ -96,7 +96,7 @@ def start_research_of_query_data(args):
                         create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(
                         timeframe, metadata_mode, redundancy_mode)
 
-                    for recommended_mode in [True, False]:
+                    for recommended_mode in [True, False, None]:
 
                         wikidata_dictionary_and_found_query_properties. \
                             get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode,

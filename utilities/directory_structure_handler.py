@@ -110,7 +110,43 @@ def create_dir_structure_of_data():
         "./data/statistical_information/query_research/non_redundant/qualifier_metadata/non_recommended/accumulated_datatypes",
 
 
-        "./data/statistical_information/query_research/non_redundant/rank_metadata"
+        "./data/statistical_information/query_research/non_redundant/rank_metadata",
+
+        "./data/statistical_information/query_research/all/reference_metadata",
+        "./data/statistical_information/query_research/all/reference_metadata/raw_counted_properties",
+
+        "./data/statistical_information/query_research/all/reference_metadata/recommended",
+        "./data/statistical_information/query_research/all/reference_metadata/recommended/properties",
+        "./data/statistical_information/query_research/all/reference_metadata/recommended/facets",
+        "./data/statistical_information/query_research/all/reference_metadata/recommended/accumulated_facets",
+        "./data/statistical_information/query_research/all/reference_metadata/recommended/datatypes",
+        "./data/statistical_information/query_research/all/reference_metadata/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/all/reference_metadata/non_recommended",
+        "./data/statistical_information/query_research/all/reference_metadata/non_recommended/properties",
+        "./data/statistical_information/query_research/all/reference_metadata/non_recommended/facets",
+        "./data/statistical_information/query_research/all/reference_metadata/non_recommended/accumulated_facets",
+        "./data/statistical_information/query_research/all/reference_metadata/non_recommended/datatypes",
+        "./data/statistical_information/query_research/all/reference_metadata/non_recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/all/qualifier_metadata",
+        "./data/statistical_information/query_research/all/qualifier_metadata/raw_counted_properties",
+
+        "./data/statistical_information/query_research/all/qualifier_metadata/recommended",
+        "./data/statistical_information/query_research/all/qualifier_metadata/recommended/properties",
+        "./data/statistical_information/query_research/all/qualifier_metadata/recommended/facets",
+        "./data/statistical_information/query_research/all/qualifier_metadata/recommended/accumulated_facets",
+        "./data/statistical_information/query_research/all/qualifier_metadata/recommended/datatypes",
+        "./data/statistical_information/query_research/all/qualifier_metadata/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/all/qualifier_metadata/non_recommended",
+        "./data/statistical_information/query_research/all/qualifier_metadata/non_recommended/properties",
+        "./data/statistical_information/query_research/all/qualifier_metadata/non_recommended/facets",
+        "./data/statistical_information/query_research/all/qualifier_metadata/non_recommended/accumulated_facets",
+        "./data/statistical_information/query_research/all/qualifier_metadata/non_recommended/datatypes",
+        "./data/statistical_information/query_research/all/qualifier_metadata/non_recommended/accumulated_datatypes",
+
+        "./data/statistical_information/query_research/all/rank_metadata"
     ]
 
 

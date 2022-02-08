@@ -471,7 +471,7 @@ def detect_scenarios(location, data_type, redundant_mode):
     }
 
     # save the scneario_dict to a folder
-    with open(path_to_stat_information + "/" + data_type.split('/')[1], "wt") as information_data:
+    with open(path_to_stat_information + "/" + data_type.split('/')[1] + ".json", "wt") as information_data:
         json.dump(scenario_dict, information_data)
     information_data.close()
 

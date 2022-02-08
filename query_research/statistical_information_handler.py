@@ -66,7 +66,7 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         path_to_stat_information_subtypes = "data/" + location[:21] + "/" + location[22:] + "/" + \
                                             datatype.split('/')[0] + "/statistical_information/" + \
                                             redundant_mode + "/" + datatype.split('/')[
-                                                1]
+                                                1] + ".json"
         path_to_stat_information_metadata = "data/" + location[:21] + "/" + location[22:] + \
                                             "/statistical_information/" + redundant_mode + "/" + metadata + "/" \
                                             + metadata + ".json"
@@ -133,6 +133,8 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["union"]
                 metadata_dict["found_scenarios"]["values"] = \
                     elem["values"]
+                metadata_dict["found_scenarios"]["other"] = \
+                    elem["other"]
         json_data.close()
 
     with open(path_to_stat_information_metadata, "w") as json_result:
@@ -265,6 +267,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
                 elem["union"]
             metadata_dict["found_scenarios"]["values"] = \
                 elem["values"]
+            metadata_dict["found_scenarios"]["other"] = \
+                elem["other"]
         json_data.close()
 
     with open(path_to_stat_information_timeframe, "w") as json_result:
