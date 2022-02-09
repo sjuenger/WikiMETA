@@ -98,43 +98,43 @@ def start_research_of_query_data(args):
 
                     for recommended_mode in [True, False, None]:
 
-                        wikidata_dictionary_and_found_query_properties. \
+                        statistical_information_handler. \
                             get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode,
                                                                    recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_facets_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_datatypes_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_accumulated_facets_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_accumulated_datatypes_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties. \
+                        statistical_information_handler. \
                             get_top_x_counted_properties_timeframe(timeframe, 10,
                                                                    metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_facets_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_datatypes_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_accumulated_facets_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
-                        wikidata_dictionary_and_found_query_properties.\
+                        statistical_information_handler.\
                             get_top_x_counted_accumulated_datatypes_timeframe(
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
@@ -163,10 +163,50 @@ def start_research_of_query_data(args):
                                                                                                    metadata_mode,
                                                                                                    redundancy_mode)
 
+
+            for metadata_mode in ["rank_metadata"]:
+
+                statistical_information_handler.summarize_statistical_information_about_counted_ranks(TIMEFRAMES,
+                                                                                                          metadata_mode,
+                                                                                                          redundancy_mode)
+
+
             for metadata_mode in ["qualifier_metadata", "reference_metadata"]:
 
-                statistical_information_handler.summarize_statistical_information_about_counted_properties(TIMEFRAMES,
+                statistical_information_handler.summarize_statistical_information_about_counted_raw_properties(TIMEFRAMES,
                                                                                                           metadata_mode,
                                                                                                           redundancy_mode)
                 statistical_information_handler.\
-                    get_top_x_counted_properties_overall(10, metadata_mode, redundancy_mode)
+                    get_top_x_counted_raw_properties_overall(10, metadata_mode, redundancy_mode)
+
+                for recommended_mode in [True, False, None]:
+
+                    statistical_information_handler.\
+                        summarize_timeframe_information_about_properties_and_get_top_x(10,
+                                                                                       TIMEFRAMES,
+                                                                                       metadata_mode,
+                                                                                       recommended_mode,
+                                                                                       redundancy_mode)
+                    statistical_information_handler.\
+                        summarize_timeframe_information_about_facets_and_get_top_x(10,
+                                                                                       TIMEFRAMES,
+                                                                                       metadata_mode,
+                                                                                       recommended_mode,
+                                                                                       redundancy_mode)
+                    statistical_information_handler.\
+                        summarize_timeframe_information_about_datatypes(TIMEFRAMES,
+                                                                                   metadata_mode,
+                                                                                   recommended_mode,
+                                                                                   redundancy_mode)
+
+                    statistical_information_handler.\
+                        summarize_timeframe_information_about_accumulated_facets_and_get_top_x(10,
+                                                                                                   TIMEFRAMES,
+                                                                                                   metadata_mode,
+                                                                                                   recommended_mode,
+                                                                                                   redundancy_mode)
+                    statistical_information_handler.\
+                        summarize_timeframe_information_about_accumulated_datatypes(TIMEFRAMES,
+                                                                                               metadata_mode,
+                                                                                               recommended_mode,
+                                                                                               redundancy_mode)

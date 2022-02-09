@@ -24,15 +24,18 @@ import query_research.transform_data.redundant_detection as redundant_detection
 
 def main():
     directory_structure_handler.create_dir_structure_of_data()
-    directory_structure_handler.delete_identified_scenarios()
-    do_query_research_stuff([0,1,1,1,1])
+    #directory_structure_handler.delete_identified_scenarios()
+    do_query_research_stuff([0,0,1,1,1])
 
     # the ALL is missing with the recommmended / non_recommended things
 
+    # summarize the statistical information on the redundant queries
+    #
+
 def do_wikidata_research_stuff():
     # Wikidata Stuff
-    if not os.path.isfile("data/property_dictionary.json"):
-        txt_to_dict.get_dict()
+    #if not os.path.isfile("data/property_dictionary.json"):
+    #    txt_to_dict.get_dict()
 
     wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
     wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
@@ -41,6 +44,7 @@ def do_wikidata_research_stuff():
 def do_query_research_stuff(args):
 
     query_research_handler.start_research_of_query_data(args)
+    do_wikidata_research_stuff()
 
             # TODO: Add properties to the recommended / non-recommended thing
             # TODO: Summarize the query information per timeframe to a property information over all timeframes
@@ -50,6 +54,9 @@ def do_query_research_stuff(args):
             # TODO: Divide the query_research data even more into "with_redundancies" and "without_redundancies"
             #
             # TODO: get the 'total datatypes and facets' right -> also accumulatenthem
+
+def analyse_research_stuff():
+    return
 
 
 if __name__ == "__main__":
