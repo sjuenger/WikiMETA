@@ -8,6 +8,7 @@ import query_research.query_research_handler as query_research_handler
 
 import query_research.transform_data.redundant_detection as redundant_detection
 
+import graphical_analysis.graphical_analysis_handler as graphical_analysis_handler
 
 
 #: Wirte a script, which buils an directory structure fpr extractSPARQLtoJSON
@@ -23,9 +24,11 @@ import query_research.transform_data.redundant_detection as redundant_detection
 
 
 def main():
-    directory_structure_handler.create_dir_structure_of_data()
+    #directory_structure_handler.create_dir_structure_of_data()
     #directory_structure_handler.delete_identified_scenarios()
-    do_query_research_stuff([0,0,1,1,1])
+    #do_query_research_stuff([0,0,1,1,1])
+
+    analyse_research_stuff()
 
     # the ALL is missing with the recommmended / non_recommended things
 
@@ -56,7 +59,8 @@ def do_query_research_stuff(args):
             # TODO: get the 'total datatypes and facets' right -> also accumulatenthem
 
 def analyse_research_stuff():
-    return
+    graphical_analysis_handler.start_graphical_analysis()
+
 
 
 if __name__ == "__main__":
