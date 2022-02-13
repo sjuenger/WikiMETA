@@ -36,7 +36,8 @@ def plot_top_wikidata_research_properties():
                 # from this: {'P585': {'label': 'point in time', 'datatype': 'Time', 'statement_no': '833621',
 
                 dataframe_dict = {}
-                dataframe_dict["PID/label"] = []
+                #dataframe_dict["PID/label"] = []
+                dataframe_dict["label"] = []
                 dataframe_dict["qualifier_percentage"] = []
                 dataframe_dict["reference_percentage"] = []
                 dataframe_dict["qualifier_class"] = []
@@ -44,7 +45,8 @@ def plot_top_wikidata_research_properties():
 
                 for PID in whole_dict["properties"]:
 
-                    dataframe_dict["PID/label"].append(PID + " / " + whole_dict["properties"][PID]["label"])
+                    #dataframe_dict["PID/label"].append(PID + " / " + whole_dict["properties"][PID]["label"])
+                    dataframe_dict["label"].append(whole_dict["properties"][PID]["label"])
                     dataframe_dict["qualifier_percentage"].append( int(whole_dict["properties"][PID]["qualifier_no"]) / int(whole_dict[ "total_usages_of_" + metadata_mode ]) )
                     dataframe_dict["reference_percentage"].append( int(whole_dict["properties"][PID]["reference_no"]) / int(whole_dict[ "total_usages_of_" + metadata_mode ]) )
                     dataframe_dict["qualifier_class"].append(whole_dict["properties"][PID]["qualifier_class"])
@@ -56,10 +58,29 @@ def plot_top_wikidata_research_properties():
 
                 print(df)
 
-                #tmp = sns.catplot(y= "PID/label", x=metadata_mode + "_percentage" , hue="is_reference", kind="bar",  data=df)
-                tmp = sns.catplot(y= "PID/label", x=metadata_mode + "_percentage" , kind="bar",  data=df)
+                #tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage",
+                #                  hue="is_reference", kind="bar", dodge=False,
+                #                  data=df, height=4, aspect=1.5)
+                tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage",
+                                  hue="is_reference", kind="bar", dodge=False,
+                                  data=df)
+                #tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage" , kind="bar",  data=df, estimator=nm.median)
+
+                #plt.ylim(0,1)
+                #plt.xlim(0,0.3)
+
+                plt.xticks(rotation=-45)
+                #plt.tight_layout()
+
+                plt.gcf().autofmt_xdate()
+                #fig.autofmt_xdate()
+
+                #plt.figure(figsize=(5000,5000))
+                #plt.legend(bbox_to_anchor=(1, 1), loc=2)
 
                 tmp.savefig("tmp_" + metadata_mode + "_" + recommended_mode +".png")
+
+                # fix the % from ALL qualifiers / references
 
 
 
