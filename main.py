@@ -30,6 +30,8 @@ def main():
 
     analyse_research_stuff()
 
+    do_wikidata_research_stuff()
+
     # the ALL is missing with the recommmended / non_recommended things
 
     # summarize the statistical information on the redundant queries
