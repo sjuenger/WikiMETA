@@ -33,15 +33,24 @@ def is_qualifier(property_PID):
         prop_class = var['classLabel']['value']
         prop_classes.append(prop_class)
 
-    result = ""
+    result = []
+
+    # save all the queried qualifiers to a list.
+    # NOTE: in principal, every wikidata qualifier property is an instance of "Wikidata qualifier"
+    #
+    # But, to not create to much redundancy in the data, the "Wikidata qualifier" tag will only
+    # ..  be applied to a property, if it wasn't tagged with any of the other 4 qualifier options
+    # .. i.e. "restrictive-qualifier", "non-restrictive-qualifier", or "Wikidata property used as depicts...."
 
     if "restrictive qualifier" in prop_classes:
-        result += "restrictive qualifier"
-    elif "non-restrictive qualifier" in prop_classes:
-        result += "non-restrictive qualifier"
-    elif "Wikidata property used as \"depicts\" (P180) qualifier on Commons" in prop_classes:
-        result += "Wikidata property used as \"depicts\" (P180) qualifier on Commons"
-    elif "Wikidata qualifier" in prop_classes:
-        result += "Wikidata qualifier"
+        result.append("restrictive qualifier")
+    if "non-restrictive qualifier" in prop_classes:
+        result.append("non-restrictive qualifier")
+    if "Wikidata property used as \"depicts\" (P180) qualifier on Commons" in prop_classes:
+        result.append("Wikidata property used as \"depicts\" (P180) qualifier on Commons")
+
+    if len(result) == 0:
+        if "Wikidata qualifier" in prop_classes:
+            result.append("Wikidata qualifier")
 
     return result

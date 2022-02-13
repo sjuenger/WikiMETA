@@ -31,13 +31,6 @@ def get_top_x_metadata(x, mode, recommended = None):
         result_dictionary = {}
         result_dictionary["properties"] = {}
         result_dictionary["total_usages_of_" + mode] = 0
-
-        if recommended != None:
-            if recommended:
-                result_dictionary["total_usages_of_non_reommended_" + mode] = 0
-            else:
-                result_dictionary["total_usages_of_non_reommended_" + mode] = 0
-
         result_dictionary["total_unique_properties"] = 0
 
         for PID in property_dictionary:
@@ -66,7 +59,7 @@ def get_top_x_metadata(x, mode, recommended = None):
 
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
-                # .. or are never used as a reference / qualifier
+                # .. and are never used as a reference / qualifier
                 if (mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
                         or bool(property_dictionary[PID]["is_reference"]))):
                     recommended_bool = True
@@ -77,13 +70,11 @@ def get_top_x_metadata(x, mode, recommended = None):
                     recommended_bool = False
 
             if recommended_bool:
-                if recommended != None:
-                    result_dictionary["total_usages_of_" + recommended + "_" + mode] += \
-                        int(property_dictionary[PID][mode + "_no"])
-                else:
-                    result_dictionary["total_usages_of_" + mode] += \
-                        int(property_dictionary[PID][mode + "_no"])
+
+                result_dictionary["total_usages_of_" + mode] += \
+                    int(property_dictionary[PID][mode + "_no"])
                 result_dictionary["total_unique_properties"] += 1
+
                 # check, if the current property is smaller than any property in the result dictionary and swap them
                 # or, if the result dictionary has not yet got 'X' entries, just add the property
                 if len(result_dictionary["properties"]) < x:
@@ -108,11 +99,6 @@ def get_top_x_metadata(x, mode, recommended = None):
                             result_dictionary["properties"][PID] = property_dictionary[PID]
 
                             break
-
-            else:
-                if recommended != None:
-                    result_dictionary["total_usages_of_" + mode] += \
-                        int(property_dictionary[PID][mode + "_no"])
 
         # once all the top x entries are created, store them in a .json file
         if recommended:
@@ -168,7 +154,7 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
 
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
-                # .. or are never used as a reference / qualifier
+                # .. and are never used as a reference / qualifier
                 if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
@@ -265,7 +251,7 @@ def get_datatypes_by_metadata(mode, recommended = None):
 
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
-                # .. or are never used as a reference / qualifier
+                # .. and are never used as a reference / qualifier
                 if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
@@ -340,7 +326,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
 
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
-                # .. or are never used as a reference / qualifier
+                # .. and are never used as a reference / qualifier
                 if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
@@ -436,7 +422,7 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
 
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
-                # .. or are never used as a reference / qualifier
+                # .. and are never used as a reference / qualifier
                 if mode == "reference" and (int(property_dictionary[PID][mode + "_no"]) > 0\
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
