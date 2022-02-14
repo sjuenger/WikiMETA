@@ -41,7 +41,7 @@ def get_top_x_metadata(x, mode, recommended = None):
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != []
                 else:
                     recommended_bool = False
 
@@ -52,7 +52,7 @@ def get_top_x_metadata(x, mode, recommended = None):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
-                        and property_dictionary[PID]["qualifier_class"] == "":
+                        and property_dictionary[PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -64,7 +64,7 @@ def get_top_x_metadata(x, mode, recommended = None):
                         or bool(property_dictionary[PID]["is_reference"]))):
                     recommended_bool = True
                 elif (mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
-                        or property_dictionary[PID]["qualifier_class"] != "")):
+                        or property_dictionary[PID]["qualifier_class"] != [])):
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -136,7 +136,7 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != []
                 else:
                     recommended_bool = False
 
@@ -147,7 +147,7 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
-                        and property_dictionary[PID]["qualifier_class"] == "":
+                        and property_dictionary[PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -159,7 +159,7 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
                 elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
-                        or property_dictionary[PID]["qualifier_class"] != ""):
+                        or property_dictionary[PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -233,7 +233,7 @@ def get_datatypes_by_metadata(mode, recommended = None):
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != []
                 else:
                     recommended_bool = False
 
@@ -244,7 +244,7 @@ def get_datatypes_by_metadata(mode, recommended = None):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
-                        and property_dictionary[PID]["qualifier_class"] == "":
+                        and property_dictionary[PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -256,7 +256,7 @@ def get_datatypes_by_metadata(mode, recommended = None):
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
                 elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
-                        or property_dictionary[PID]["qualifier_class"] != ""):
+                        or property_dictionary[PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -308,7 +308,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != []
                 else:
                     recommended_bool = False
 
@@ -319,7 +319,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
-                        and property_dictionary[PID]["qualifier_class"] == "":
+                        and property_dictionary[PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -331,7 +331,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
                 elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
-                        or property_dictionary[PID]["qualifier_class"] != ""):
+                        or property_dictionary[PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -393,7 +393,7 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
         datatypes_dictionary["datatypes"] = {}
         # add a counter for the total amount of datatypes and properties
         datatypes_dictionary["total_properties"] = 0
-        datatypes_dictionary["total_accumulated_properties"] = 0
+        datatypes_dictionary["total_accumulated_datatypes"] = 0
 
 
         for PID in property_dictionary:
@@ -404,7 +404,7 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
                 if mode == "reference":
                     recommended_bool = bool(property_dictionary[PID]["is_reference"])
                 elif mode == "qualifier":
-                    recommended_bool = property_dictionary[PID]["qualifier_class"] != ""
+                    recommended_bool = property_dictionary[PID]["qualifier_class"] != []
                 else:
                     recommended_bool = False
 
@@ -415,7 +415,7 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 elif mode == "qualifier" and int(property_dictionary[PID][mode + "_no"]) > 0\
-                        and property_dictionary[PID]["qualifier_class"] == "":
+                        and property_dictionary[PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
                     recommended_bool = False
@@ -427,14 +427,14 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
                         or bool(property_dictionary[PID]["is_reference"])):
                     recommended_bool = True
                 elif mode == "qualifier" and (int(property_dictionary[PID][mode + "_no"]) > 0\
-                        or property_dictionary[PID]["qualifier_class"] != ""):
+                        or property_dictionary[PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
                     recommended_bool = False
 
             if recommended_bool:
                 datatypes_dictionary["total_properties"] += 1
-                datatypes_dictionary["total_accumulated_properties"] += int(property_dictionary[PID][mode + "_no"])
+                datatypes_dictionary["total_accumulated_datatypes"] += int(property_dictionary[PID][mode + "_no"])
                 current_datatype = property_dictionary[PID]["datatype"]
                 # add the datatype as a key to the dictionary, if it wasn't added before
                 if current_datatype not in datatypes_dictionary["datatypes"]:
@@ -447,11 +447,11 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
 
         # once all the top x entries are creaed, store them in a .json file
         if recommended:
-            tmp_string = "_recommended_"
+            tmp_string = "_recommended"
         elif recommended is not None:
-            tmp_string = "_non_recommended_"
+            tmp_string = "_non_recommended"
         else:
-            tmp_string = "_"
+            tmp_string = ""
 
         with open("data/statistical_information/wikidata_research/accumulated_datatypes/" +
                   "for_" + mode + tmp_string + ".json", "w") \

@@ -66,7 +66,7 @@ def get_dict():
 
                     # decide, whether the property is a qualifier or reference
                     # according to the recommended properties of Wikidata
-                    qualifier = property_is_qualifier.is_qualifier(PID)
+                    qualifiers = property_is_qualifier.is_qualifier(PID)
 
                     # if the property if a facet of "Wikipedia:Citing sources" ->
                     is_a_reference = facet_of.__contains__("Wikipedia:Citing sources")
@@ -85,7 +85,7 @@ def get_dict():
             values["qualifier_no"] = qualifiers_no
             values["reference_no"] = reference_no
             values["facet_of"] = facet_of
-            values["qualifier_class"] = qualifier
+            values["qualifier_class"] = qualifiers
             values["is_reference"] = is_a_reference
 
             # TODO: Think about doing a "Datatype" Analysis on the properties
@@ -96,13 +96,14 @@ def get_dict():
             i += 1
             if is_a_reference:
                 references_in_data += 1
-            if qualifier != "":
+            if qualifiers != []:
                 qualifiers_in_data += 1
 
             print("PID: ", PID)
             print("Label: ", label)
             print("Datatype: ", datatype)
             print("Facets found: ", facet_of)
+            print("Qualifier class: ", qualifiers)
             print("Total amount of references found: ", references_in_data)
             print("Total amount of qualifiers found: ", qualifiers_in_data)
             print("Total amount of properties: ", i)

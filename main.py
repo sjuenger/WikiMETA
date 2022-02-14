@@ -27,11 +27,11 @@ def main():
     #directory_structure_handler.create_dir_structure_of_data()
     #directory_structure_handler.delete_identified_scenarios()
 
-    do_wikidata_research_stuff()
+    #do_wikidata_research_stuff()
 
     #do_query_research_stuff([0,0,1,1,1])
 
-    #analyse_research_stuff()
+    analyse_research_stuff()
 
     # the ALL is missing with the recommmended / non_recommended things
 
@@ -43,8 +43,8 @@ def do_wikidata_research_stuff():
     if not os.path.isfile("data/property_dictionary.json"):
         txt_to_dict.get_dict()
 
-    #wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
-    #wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
+    wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
+    wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
 
 
 def do_query_research_stuff(args):
