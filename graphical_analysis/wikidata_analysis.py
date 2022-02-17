@@ -12,12 +12,13 @@ def plot_top_wikidata_research_properties():
 
     for metadata_mode in metadata_modes:
 
-        recommended_modes = ["_recommended_", "_non_recommended_", "_"]
+        recommended_modes = ["recommended", "non_recommended", "all"]
 
         for recommended_mode in recommended_modes:
 
-            files_json = glob.glob("data/statistical_information/wikidata_research/properties/" +
-                                   "top*[0-9]" + recommended_mode + "for_" + metadata_mode + ".json")
+            files_json = glob.glob("data/statistical_information/wikidata_research/" +
+                                   metadata_mode + "/" + recommended_mode +
+                                   "/properties/" + "top*" + ".json")
 
             # if the recommended option is set (i.e. not null), is it necessary to query the overall files
             # .. to get the number of both recommended / not recommended reference/qualifier property usages
@@ -27,8 +28,8 @@ def plot_top_wikidata_research_properties():
 
             overall_usages = 0
 
-            overall_json = glob.glob("data/statistical_information/wikidata_research/properties/" +
-                               "top*[0-9]_for_" + metadata_mode + ".json")
+            overall_json = glob.glob("data/statistical_information/wikidata_research/" +
+                                     metadata_mode + "/all/properties/top*.json")
             with open(overall_json[0], "r") as overall_json:
 
                 overall_dict = json.load(overall_json)
@@ -59,10 +60,8 @@ def plot_top_wikidata_research_properties():
                 dataframe_dict["reference_percentage"] = []
                 dataframe_dict["qualifier_class"] = []
                 dataframe_dict["is_reference"] = []
-                if recommended_mode == "_":
-                    dataframe_dict["recommended_mode"] = "all " + metadata_mode + "s"
-                else:
-                    dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + metadata_mode + "s"
+
+                dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
 
                 for PID in whole_dict["properties"]:
 
@@ -134,10 +133,11 @@ def plot_top_wikidata_research_properties():
                 #plt.figure(figsize=(5000,5000))
                 #plt.legend(bbox_to_anchor=(1, 1), loc=2)
 
-                tmp.savefig("data/statistical_information/wikidata_research/properties/" +
-                               metadata_mode + "_" + recommended_mode + ".png")
+                tmp.savefig("data/statistical_information/wikidata_research/" +
+                            metadata_mode + "/" + recommended_mode +
+                            "/properties/properties.png")
 
-                # fix the % from ALL qualifiers / references
+                plt.close()
 
 
 def plot_top_wikidata_research_accumulated_facets():
@@ -146,12 +146,13 @@ def plot_top_wikidata_research_accumulated_facets():
 
     for metadata_mode in metadata_modes:
 
-        recommended_modes = ["_recommended_", "_non_recommended_", "_"]
+        recommended_modes = ["recommended", "non_recommended", "all"]
 
         for recommended_mode in recommended_modes:
 
-            files_json = glob.glob("data/statistical_information/wikidata_research/accumulated_facets/" +
-                                   "top*[0-9]" + recommended_mode + "for_" + metadata_mode + ".json")
+            files_json = glob.glob("data/statistical_information/wikidata_research/" +
+                                   metadata_mode + "/" + recommended_mode + "/accumulated_facets/" +
+                                   "top*.json")
 
             # if the recommended option is set (i.e. not null), is it necessary to query the overall files
             # .. to get the number of both recommended / not recommended reference/qualifier facets usages
@@ -161,8 +162,9 @@ def plot_top_wikidata_research_accumulated_facets():
 
             overall_usages = 0
 
-            overall_json = glob.glob("data/statistical_information/wikidata_research/accumulated_facets/" +
-                               "top*[0-9]_for_" + metadata_mode + ".json")
+            overall_json = glob.glob("data/statistical_information/wikidata_research/" +
+                                     metadata_mode + "/all/accumulated_facets/accumulated_facets.json")
+
             with open(overall_json[0], "r") as overall_json:
 
                 overall_dict = json.load(overall_json)
@@ -186,10 +188,8 @@ def plot_top_wikidata_research_accumulated_facets():
                 dataframe_dict = {}
                 dataframe_dict["label"] = []
                 dataframe_dict["accumulated_facets_percentage"] = []
-                if recommended_mode == "_":
-                    dataframe_dict["recommended_mode"] = "all " + metadata_mode + "s"
-                else:
-                    dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + metadata_mode + "s"
+
+                dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
 
                 for ID in whole_dict["facets"]:
 
@@ -214,8 +214,11 @@ def plot_top_wikidata_research_accumulated_facets():
                 plt.gcf().autofmt_xdate()
 
 
-                tmp.savefig("data/statistical_information/wikidata_research/accumulated_facets/" +
-                               metadata_mode + "_" + recommended_mode + ".png")
+                tmp.savefig("data/statistical_information/wikidata_research/"+
+                            metadata_mode + "/" + recommended_mode +
+                            "/accumulated_facets/accumulated_facets.png")
+
+                plt.close()
 
 
 def plot_top_wikidata_research_accumulated_datatypes():
@@ -224,12 +227,13 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
     for metadata_mode in metadata_modes:
 
-        recommended_modes = ["_recommended", "_non_recommended", ""]
+        recommended_modes = ["recommended", "non_recommended", "all"]
 
         for recommended_mode in recommended_modes:
 
-            files_json = glob.glob("data/statistical_information/wikidata_research/accumulated_datatypes/" +
-                                   "for_" + metadata_mode + recommended_mode + ".json")
+            files_json = glob.glob("data/statistical_information/wikidata_research/" +
+                                   metadata_mode + "/" + recommended_mode +
+                                   "/accumulated_datatypes/accumulated_datatypes.json")
 
             # if the recommended option is set (i.e. not null), is it necessary to query the overall files
             # .. to get the number of both recommended / not recommended reference/qualifier datatypes usages
@@ -239,8 +243,8 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
             overall_usages = 0
 
-            overall_json = glob.glob("data/statistical_information/wikidata_research/accumulated_datatypes/" +
-                               "for_" + metadata_mode + ".json")
+            overall_json = glob.glob("data/statistical_information/wikidata_research/" +
+                                     metadata_mode + "/all/accumulated_datatypes/accumulated_datatypes.json")
             with open(overall_json[0], "r") as overall_json:
 
                 overall_dict = json.load(overall_json)
@@ -264,10 +268,8 @@ def plot_top_wikidata_research_accumulated_datatypes():
                 dataframe_dict = {}
                 dataframe_dict["label"] = []
                 dataframe_dict["accumulated_datatypes_percentage"] = []
-                if recommended_mode == "":
-                    dataframe_dict["recommended_mode"] = "all " + metadata_mode + "s"
-                else:
-                    dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
+
+                dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
 
                 for ID in whole_dict["datatypes"]:
 
@@ -286,14 +288,17 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
                 tmp = sns.catplot(x= "label", y="accumulated_datatypes_percentage", kind="bar",
                                   palette="tab10", dodge=False, col="recommended_mode",
-                                  data=df)
+                                  data=df, aspect=1.6)
 
 
                 plt.gcf().autofmt_xdate()
 
 
-                tmp.savefig("data/statistical_information/wikidata_research/accumulated_datatypes/" +
-                               metadata_mode + "_" + recommended_mode + ".png")
+                tmp.savefig("data/statistical_information/wikidata_research/" +
+                            metadata_mode + "/" + recommended_mode +
+                            "/accumulated_datatypes/accumulated_datatypes.png")
+
+                plt.close()
 
 
 

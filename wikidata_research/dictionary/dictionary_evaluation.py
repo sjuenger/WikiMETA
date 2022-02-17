@@ -28,6 +28,7 @@ def get_top_x_metadata(x, mode, recommended = None):
     with open(path_to_json_dictionary, "r") as dict_data:
         property_dictionary = json.load(dict_data)
 
+
         result_dictionary = {}
         result_dictionary["properties"] = {}
         result_dictionary["total_usages_of_" + mode] = 0
@@ -102,14 +103,14 @@ def get_top_x_metadata(x, mode, recommended = None):
 
         # once all the top x entries are created, store them in a .json file
         if recommended:
-            tmp_string = "_recommended_"
+            tmp_string = "recommended"
         elif recommended is not None:
-            tmp_string = "_non_recommended_"
+            tmp_string = "non_recommended"
         else:
-            tmp_string = "_"
+            tmp_string = "all"
 
-        with open("data/statistical_information/wikidata_research/properties/top_" + str(x) + tmp_string +
-                  "for_" + mode + ".json", "w") \
+        with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
+                  "/properties/top_" + str(x) + ".json", "w") \
                 as result_json:
             json.dump(result_dictionary, result_json)
 
@@ -176,6 +177,18 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
                     else:
                         facets_dictionary["facets"][facet] += 1
 
+        # store the facet dictionary
+        if recommended:
+            tmp_string = "recommended"
+        elif recommended is not None:
+            tmp_string = "non_recommended"
+        else:
+            tmp_string = "all"
+        with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
+                  "/facets/facets.json", "w") \
+                as result_json:
+            json.dump(facets_dictionary, result_json)
+
         # extract the top x facets by usages
         result_facets_dictionary = {"facets" : {}}
         result_facets_dictionary["total_facets"] = facets_dictionary["total_facets"]
@@ -199,13 +212,13 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
 
         # once all the top x entries are creaed, store them in a .json file
         if recommended:
-            tmp_string = "_recommended_"
+            tmp_string = "recommended"
         elif recommended is not None:
-            tmp_string = "_non_recommended_"
+            tmp_string = "non_recommended"
         else:
-            tmp_string = "_"
-        with open("data/statistical_information/wikidata_research/facets/top_" + str(x) + tmp_string +
-                  "for_" + mode + ".json", "w") \
+            tmp_string = "all"
+        with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
+                  "/facets/top_" + str(x) + ".json", "w") \
                 as result_json:
             json.dump(result_facets_dictionary, result_json)
 
@@ -275,14 +288,14 @@ def get_datatypes_by_metadata(mode, recommended = None):
 
         # once all the top x entries are creaed, store them in a .json file
         if recommended:
-            tmp_string = "_recommended_"
+            tmp_string = "recommended"
         elif recommended is not None:
-            tmp_string = "_non_recommended_"
+            tmp_string = "non_recommended"
         else:
-            tmp_string = "_"
+            tmp_string = "all"
 
-        with open("data/statistical_information/wikidata_research/datatypes/" +
-                  "for_" + mode + tmp_string + ".json", "w") \
+        with open("data/statistical_information/wikidata_research/" + mode + "/" +  tmp_string +
+                  "/datatypes/datatypes.json", "w") \
                 as result_json:
             json.dump(datatypes_dictionary, result_json)
 
@@ -354,6 +367,19 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
         result_facets_dictionary["total_accumulated_facets"] = facets_dictionary["total_accumulated_facets"]
         result_facets_dictionary["total_accumulated_properties"] = facets_dictionary["total_accumulated_properties"]
 
+        # store the dictionar< of accumulated facets
+        if recommended:
+            tmp_string = "recommended"
+        elif recommended is not None:
+            tmp_string = "non_recommended"
+        else:
+            tmp_string = "all"
+        with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
+                  "/accumulated_facets/accumulated_facets.json", "w") \
+                as result_json:
+            json.dump(result_facets_dictionary, result_json)
+
+
         for facet in facets_dictionary["facets"]:
             if len(result_facets_dictionary["facets"]) < x:
                 result_facets_dictionary["facets"][facet] = facets_dictionary["facets"][facet]
@@ -371,13 +397,13 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
 
         # once all the top x entries are creaed, store them in a .json file
         if recommended:
-            tmp_string = "_recommended_"
+            tmp_string = "recommended"
         elif recommended is not None:
-            tmp_string = "_non_recommended_"
+            tmp_string = "non_recommended"
         else:
-            tmp_string = "_"
-        with open("data/statistical_information/wikidata_research/accumulated_facets/top_"
-                  + str(x) + tmp_string + "for_" + mode + ".json", "w") \
+            tmp_string = "all"
+        with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
+                  "/accumulated_facets/top_" + str(x) + ".json", "w") \
                 as result_json:
             json.dump(result_facets_dictionary, result_json)
 
@@ -447,19 +473,19 @@ def get_datatypes_by_accumulated_properties(mode, recommended = None):
 
         # once all the top x entries are creaed, store them in a .json file
         if recommended:
-            tmp_string = "_recommended"
+            tmp_string = "recommended"
         elif recommended is not None:
-            tmp_string = "_non_recommended"
+            tmp_string = "non_recommended"
         else:
-            tmp_string = ""
+            tmp_string = "all"
 
-        with open("data/statistical_information/wikidata_research/accumulated_datatypes/" +
-                  "for_" + mode + tmp_string + ".json", "w") \
+        with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
+                  "/accumulated_datatypes/accumulated_datatypes.json", "w") \
                 as result_json:
             json.dump(datatypes_dictionary, result_json)
 
 
-# get the cummulated facets by occurences of a (recommended) property in Wikidata
+# get the acummulated facets by occurences of a (recommended) property in Wikidata
 def get_top_x_metadata_recommended_by_facet(x, mode):
     return
 

@@ -24,7 +24,7 @@ import graphical_analysis.graphical_analysis_handler as graphical_analysis_handl
 
 
 def main():
-    #directory_structure_handler.create_dir_structure_of_data()
+    directory_structure_handler.create_dir_structure_of_data()
     #directory_structure_handler.delete_identified_scenarios()
 
     #do_wikidata_research_stuff()

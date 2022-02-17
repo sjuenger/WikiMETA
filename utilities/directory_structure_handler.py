@@ -77,11 +77,55 @@ def create_dir_structure_of_data():
 
 
         "./data/statistical_information/wikidata_research",
-        "./data/statistical_information/wikidata_research/properties",
-        "./data/statistical_information/wikidata_research/facets",
-        "./data/statistical_information/wikidata_research/accumulated_facets",
-        "./data/statistical_information/wikidata_research/datatypes",
-        "./data/statistical_information/wikidata_research/accumulated_datatypes",
+        "./data/statistical_information/wikidata_research/qualifier",
+        "./data/statistical_information/wikidata_research/qualifier/all/properties",
+        "./data/statistical_information/wikidata_research/qualifier/all/facets",
+        "./data/statistical_information/wikidata_research/qualifier/all/accumulated_facets",
+        "./data/statistical_information/wikidata_research/qualifier/all/datatypes",
+        "./data/statistical_information/wikidata_research/qualifier/all/accumulated_datatypes",
+
+        "./data/statistical_information/wikidata_research",
+        "./data/statistical_information/wikidata_research/qualifier",
+        "./data/statistical_information/wikidata_research/qualifier/recommended/properties",
+        "./data/statistical_information/wikidata_research/qualifier/recommended/facets",
+        "./data/statistical_information/wikidata_research/qualifier/recommended/accumulated_facets",
+        "./data/statistical_information/wikidata_research/qualifier/recommended/datatypes",
+        "./data/statistical_information/wikidata_research/qualifier/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/wikidata_research",
+        "./data/statistical_information/wikidata_research/qualifier",
+        "./data/statistical_information/wikidata_research/qualifier/non_recommended/properties",
+        "./data/statistical_information/wikidata_research/qualifier/non_recommended/facets",
+        "./data/statistical_information/wikidata_research/qualifier/non_recommended/accumulated_facets",
+        "./data/statistical_information/wikidata_research/qualifier/non_recommended/datatypes",
+        "./data/statistical_information/wikidata_research/qualifier/non_recommended/accumulated_datatypes",
+
+
+
+
+        "./data/statistical_information/wikidata_research",
+        "./data/statistical_information/wikidata_research/reference",
+        "./data/statistical_information/wikidata_research/reference/all/properties",
+        "./data/statistical_information/wikidata_research/reference/all/facets",
+        "./data/statistical_information/wikidata_research/reference/all/accumulated_facets",
+        "./data/statistical_information/wikidata_research/reference/all/datatypes",
+        "./data/statistical_information/wikidata_research/reference/all/accumulated_datatypes",
+
+        "./data/statistical_information/wikidata_research",
+        "./data/statistical_information/wikidata_research/reference",
+        "./data/statistical_information/wikidata_research/reference/recommended/properties",
+        "./data/statistical_information/wikidata_research/reference/recommended/facets",
+        "./data/statistical_information/wikidata_research/reference/recommended/accumulated_facets",
+        "./data/statistical_information/wikidata_research/reference/recommended/datatypes",
+        "./data/statistical_information/wikidata_research/reference/recommended/accumulated_datatypes",
+
+        "./data/statistical_information/wikidata_research",
+        "./data/statistical_information/wikidata_research/reference",
+        "./data/statistical_information/wikidata_research/reference/non_recommended/properties",
+        "./data/statistical_information/wikidata_research/reference/non_recommended/facets",
+        "./data/statistical_information/wikidata_research/reference/non_recommended/accumulated_facets",
+        "./data/statistical_information/wikidata_research/reference/non_recommended/datatypes",
+        "./data/statistical_information/wikidata_research/reference/non_recommended/accumulated_datatypes",
 
 
 
@@ -135,7 +179,12 @@ def create_dir_structure_of_data():
         "./data/statistical_information/query_research/non_redundant/qualifier_metadata/all/datatypes",
         "./data/statistical_information/query_research/non_redundant/qualifier_metadata/all/accumulated_datatypes",
 
-        "./data/statistical_information/query_research/non_redundant/rank_metadata"
+        "./data/statistical_information/query_research/non_redundant/rank_metadata",
+
+        "./data/statistical_information/redundant_detection/",
+        "./data/statistical_information/redundant_detection/qualifier_metadata",
+        "./data/statistical_information/redundant_detection/rank_metadata",
+        "./data/statistical_information/redundant_detection/reference_metadata"
 
     ]
 
