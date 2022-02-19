@@ -110,6 +110,7 @@ def detect_scenarios(location, data_type, redundant_mode):
         dict_looking_for = {
             "looking_for": str(looking_for_list),
             "total_occurrences": 0,
+            "total_scenarios": 0,
             "one": 0,
             "two": 0,
             "three": 0,
@@ -171,203 +172,256 @@ def detect_scenarios(location, data_type, redundant_mode):
                         # --> so, that this step is not necessary in every step
                         found_bound_variables = bound_variables.find_bound_variables(json_object)
 
+                        # variables for the currently found scenarios per looking for list
+                        occurrences_scenario_one = 0
+                        occurrences_scenario_two = 0
+                        occurrences_scenario_three = 0
+                        occurrences_scenario_four = 0
+                        occurrences_scenario_five = 0
+                        occurrences_scenario_six = 0
+                        occurrences_scenario_seven = 0
+                        occurrences_scenario_eight = 0
+                        occurrences_scenario_nine = 0
+                        occurrences_scenario_ten = 0
+                        occurrences_scenario_eleven = 0
+                        occurrences_scenario_twelve = 0
+                        occurrences_scenario_bind = 0
+                        occurrences_scenario_blank_node = 0
+                        occurrences_scenario_filter = 0
+                        occurrences_scenario_group = 0
+                        occurrences_scenario_literal = 0
+                        occurrences_scenario_minus = 0
+                        occurrences_scenario_optional = 0
+                        occurrences_scenario_prop_path = 0
+                        occurrences_scenario_subselect = 0
+                        occurrences_scenario_union = 0
+                        occurrences_scenario_values = 0
+                        occurrences_scenario_service = 0
+
                         for looking_for in looking_for_list:
 
+                            # variable to count the found scenarios
+                            scenario_count = 0
+
                             # scenario one
-                            occurrences_scenario_one = \
+                            tmp_occurrences = \
                                 scenario_one_detection.\
                                     scenario_one_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["one"] += occurrences_scenario_one
-                            if occurrences_scenario_one > 0:
+                            occurrences_scenario_one += tmp_occurrences
+                            dict_looking_for["one"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 # copy the corresponding sparql file (to the JSON file) to a specific folder for scenarios
                                 # .. used for debugging and review of the results
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/one")
 
                             # scenario two
-                            occurrences_scenario_two = \
+                            tmp_occurrences = \
                                 scenario_two_detection.\
                                     scenario_two_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["two"] += occurrences_scenario_two
-                            if occurrences_scenario_two > 0:
+                            occurrences_scenario_two += tmp_occurrences
+                            dict_looking_for["two"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/two")
 
                             # scenario three
-                            occurrences_scenario_three = \
+                            tmp_occurrences = \
                                 scenario_three_detection.\
                                     scenario_three_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["three"] += occurrences_scenario_three
-                            if occurrences_scenario_three > 0:
+                            occurrences_scenario_three += tmp_occurrences
+                            dict_looking_for["three"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/three")
 
                             # scenario four
-                            occurrences_scenario_four = \
+                            tmp_occurrences = \
                                 scenario_four_detection.\
                                     scenario_four_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["four"] += occurrences_scenario_four
-                            if occurrences_scenario_four > 0:
+                            occurrences_scenario_four += tmp_occurrences
+                            dict_looking_for["four"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/four")
 
                             # scenario five
-                            occurrences_scenario_five = \
+                            tmp_occurrences = \
                                 scenario_five_detection.\
                                     scenario_five_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["five"] += occurrences_scenario_five
-                            if occurrences_scenario_five > 0:
+                            occurrences_scenario_five += tmp_occurrences
+                            dict_looking_for["five"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/five")
 
                             # scenario six
-                            occurrences_scenario_six = \
+                            tmp_occurrences = \
                                 scenario_six_detection.\
                                     scenario_six_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["six"] += occurrences_scenario_six
-                            if occurrences_scenario_six > 0:
+                            occurrences_scenario_six += tmp_occurrences
+                            dict_looking_for["six"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/six")
 
                             # scenario seven
-                            occurrences_scenario_seven = \
+                            tmp_occurrences = \
                                 scenario_seven_detection.\
                                     scenario_seven_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["seven"] += occurrences_scenario_seven
-                            if occurrences_scenario_seven > 0:
+                            occurrences_scenario_seven += tmp_occurrences
+                            dict_looking_for["seven"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/seven")
 
                             # scenario eight
-                            occurrences_scenario_eight = \
+                            tmp_occurrences = \
                                 scenario_eight_detection.\
                                     scenario_eight_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["eight"] += occurrences_scenario_eight
-                            if occurrences_scenario_eight > 0:
+                            occurrences_scenario_eight += tmp_occurrences
+                            dict_looking_for["eight"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/eight")
 
                             # scenario nine
-                            occurrences_scenario_nine = \
+                            tmp_occurrences = \
                                 scenario_nine_detection.\
                                     scenario_nine_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["nine"] += occurrences_scenario_nine
-                            if occurrences_scenario_nine > 0:
+                            occurrences_scenario_nine += tmp_occurrences
+                            dict_looking_for["nine"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/nine")
 
                             # scenario ten
-                            occurrences_scenario_ten = \
+                            tmp_occurrences = \
                                 scenario_ten_detection.\
                                     scenario_ten_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["ten"] += occurrences_scenario_ten
-                            if occurrences_scenario_ten > 0:
+                            occurrences_scenario_ten += tmp_occurrences
+                            dict_looking_for["ten"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/ten")
 
                             # scenario eleven
-                            occurrences_scenario_eleven = \
+                            tmp_occurrences = \
                                 scenario_eleven_detection.\
                                     scenario_eleven_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["eleven"] += occurrences_scenario_eleven
-                            if occurrences_scenario_eleven > 0:
+                            occurrences_scenario_eleven += tmp_occurrences
+                            dict_looking_for["eleven"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/eleven")
 
                             # scenario twelve
-                            occurrences_scenario_twelve = \
+                            tmp_occurrences = \
                                 scenario_twelve_detection.\
                                     scenario_twelve_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["twelve"] += occurrences_scenario_twelve
-                            if occurrences_scenario_twelve > 0:
+                            occurrences_scenario_twelve += tmp_occurrences
+                            dict_looking_for["twelve"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/twelve")
 
                             # scenario filter
-                            occurrences_scenario_filter = \
+                            tmp_occurrences = \
                                 scenario_filter_detection.\
                                     scenario_filter_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["filter"] += occurrences_scenario_filter
-                            if occurrences_scenario_filter > 0:
+                            occurrences_scenario_filter += tmp_occurrences
+                            dict_looking_for["filter"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/filter")
 
                             # scenario optional
-                            occurrences_scenario_optional = \
+                            tmp_occurrences = \
                                 scenario_optional_detection.\
                                     scenario_optional_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["optional"] += occurrences_scenario_optional
-                            if occurrences_scenario_optional > 0:
+                            occurrences_scenario_optional += tmp_occurrences
+                            dict_looking_for["optional"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/optional")
 
                             # scenario union
-                            occurrences_scenario_union = \
+                            tmp_occurrences = \
                                 scenario_union_detection.\
                                     scenario_union_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["union"] += occurrences_scenario_union
-                            if occurrences_scenario_union > 0:
+                            occurrences_scenario_union += tmp_occurrences
+                            dict_looking_for["union"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/union")
 
                             # scenario property path
-                            occurrences_scenario_prop_path = \
+                            tmp_occurrences = \
                                 scenario_prop_path_detection.\
                                     scenario_prop_path_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["prop_path"] += occurrences_scenario_prop_path
-                            if occurrences_scenario_prop_path > 0:
+                            occurrences_scenario_prop_path += tmp_occurrences
+                            dict_looking_for["prop_path"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/prop_path")
 
                             # scenario group
-                            occurrences_scenario_group = \
+                            tmp_occurrences = \
                                 scenario_group_detection.\
                                     scenario_group_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["group"] += occurrences_scenario_group
-                            if occurrences_scenario_group > 0:
+                            occurrences_scenario_group += tmp_occurrences
+                            dict_looking_for["group"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/group")
 
                             # scenario bind
                             # additionally add the path to the scenario -> for the statistical information
                             # about the scenarios the found bound variables are in
-                            occurrences_scenario_bind = \
+                            tmp_occurrences = \
                                 scenario_bind_detection.\
                                     scenario_bind_occurrences(json_object, looking_for,
                                                               path_to_scenarios, found_bound_variables)
-                            dict_looking_for["bind"] += occurrences_scenario_bind
-                            if occurrences_scenario_bind > 0:
+                            occurrences_scenario_bind += tmp_occurrences
+                            dict_looking_for["bind"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/bind")
 
                             # scenario blank node
-                            occurrences_scenario_blank_node = \
+                            tmp_occurrences = \
                                 scenario_blank_node_detection.\
                                     scenario_blank_node_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["blank_node"] += occurrences_scenario_blank_node
-                            if occurrences_scenario_blank_node > 0:
+                            occurrences_scenario_blank_node += tmp_occurrences
+                            dict_looking_for["blank_node"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/blank_node")
 
                             # scenario minus
-                            occurrences_scenario_minus = \
+                            tmp_occurrences = \
                                 scenario_minus_detection.\
                                     scenario_minus_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["minus"] += occurrences_scenario_minus
-                            if occurrences_scenario_minus > 0:
+                            occurrences_scenario_minus += tmp_occurrences
+                            dict_looking_for["minus"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/minus")
 
                             # scenario subselect
-                            occurrences_scenario_subselect = \
+                            tmp_occurrences = \
                                 scenario_subselect_detection.\
                                     scenario_subselect_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["subselect"] += occurrences_scenario_subselect
-                            if occurrences_scenario_subselect > 0:
+                            occurrences_scenario_subselect += tmp_occurrences
+                            dict_looking_for["subselect"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/subselect")
 
                             # scenario literal
-                            occurrences_scenario_literal = \
+                            tmp_occurrences = \
                                 scenario_literal_detection.\
                                     scenario_literal_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["literal"] += occurrences_scenario_literal
-                            if occurrences_scenario_literal > 0:
+                            occurrences_scenario_literal += tmp_occurrences
+                            dict_looking_for["literal"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/literal")
 
                             # scenario values
-                            occurrences_scenario_values = \
+                            tmp_occurrences = \
                                 scenario_values_detection.\
                                     scenario_values_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["values"] += occurrences_scenario_values
-                            if occurrences_scenario_values > 0:
+                            occurrences_scenario_values += tmp_occurrences
+                            dict_looking_for["values"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/values")
 
                             # scenario service
-                            occurrences_scenario_service = \
+                            tmp_occurrences = \
                                 scenario_service_detection.\
                                     scenario_service_occurrences(json_object, looking_for, found_bound_variables)
-                            dict_looking_for["service"] += occurrences_scenario_service
-                            if occurrences_scenario_service > 0:
+                            occurrences_scenario_service += tmp_occurrences
+                            dict_looking_for["service"] += tmp_occurrences
+                            if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/service")
 
                             # check, if any scenario did apply
@@ -379,20 +433,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # -> there may be multiple occurrences per query
                             dict_looking_for["total_occurrences"] += str(json_object).count(looking_for)
 
-
-
-                        occurrences_scenario_other = 0
-                        # check  if no scenario did apply
-                        if not metadata_of_looking_for_list_found:
-
-                            occurrences_scenario_other = 1
-                            dict_looking_for["other"] += 1
-                            shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/other")
-                            # with the "other" -> also copy the .json file
-                            # -> so, it is a bit easier to develop new filters
-                            shutil.copy(query_file, path_to_scenarios + "/other")
-
-                        tmp = \
+                        # count the found scenarios
+                        scenario_count += \
                             occurrences_scenario_one + \
                             occurrences_scenario_two + \
                             occurrences_scenario_three + \
@@ -416,43 +458,169 @@ def detect_scenarios(location, data_type, redundant_mode):
                             occurrences_scenario_subselect + \
                             occurrences_scenario_union + \
                             occurrences_scenario_values + \
-                            occurrences_scenario_service + \
-                            occurrences_scenario_other
+                            occurrences_scenario_service
+
+                        occurrences_scenario_other = 0
+                        # check  if no scenario did apply
+                        if not metadata_of_looking_for_list_found:
+
+                            # save one 'other' scenario
+                            occurrences_scenario_other = 1
+
+
+                            dict_looking_for["other"] += occurrences_scenario_other
+                            shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/other")
+                            # with the "other" -> also copy the .json file
+                            # -> so, it is a bit easier to develop new filters
+                            shutil.copy(query_file, path_to_scenarios + "/other")
+
+                        # save the total found scenarios PLUS the OTHER scenario
+                        scenario_count += occurrences_scenario_other
+                        dict_looking_for["total_scenarios"] += scenario_count
+
 
                         tmp_found_metadata = 0
                         for looking_for in looking_for_list:
-                            tmp_found_metadata = str(json_object).count(looking_for)
+                            tmp_found_metadata += str(json_object).count(looking_for)
 
-                        if (tmp_found_metadata  != tmp):
-                            print("Detected a difference between the number of detected scenarios and found metadata in"
-                                  " the query.")
-                            print("one: " , occurrences_scenario_one , \
-                            "two: " , occurrences_scenario_two , \
-                            "three: " , occurrences_scenario_three , \
-                            "4: " , occurrences_scenario_four , \
-                            "5: " , occurrences_scenario_five , \
-                            "6: " , occurrences_scenario_six , \
-                            "7: " , occurrences_scenario_seven , \
-                            "8: " , occurrences_scenario_eight , \
-                            "9: " , occurrences_scenario_nine , \
-                            "10: " , occurrences_scenario_ten , \
-                            "11: " , occurrences_scenario_eleven , \
-                            "12: " , occurrences_scenario_twelve , \
-                            "bind: " , occurrences_scenario_bind , \
-                            "blank: " , occurrences_scenario_blank_node , \
-                            "filter: " , occurrences_scenario_filter , \
-                            "group: " , occurrences_scenario_group , \
-                            "literal: " , occurrences_scenario_literal , \
-                            "minus: " , occurrences_scenario_minus , \
-                            "optional: " , occurrences_scenario_optional , \
-                            "prop_path: " , occurrences_scenario_prop_path , \
-                            "subselect: " , occurrences_scenario_subselect , \
-                            "union: " , occurrences_scenario_union, \
-                            "values: ", occurrences_scenario_values, \
-                            "service: ", occurrences_scenario_service, \
-                            "other: ", occurrences_scenario_other)
-                            print(tmp_found_metadata)
-                            print(json_data.name)
+
+                        if (tmp_found_metadata  != scenario_count):
+                            #if (occurrences_scenario_prop_path == 0):
+                            if(not(occurrences_scenario_one == 0 and
+                                occurrences_scenario_two == 0 and
+                                occurrences_scenario_three == 0 and
+                                occurrences_scenario_four == 0 and
+                                occurrences_scenario_five == 0 and
+                                occurrences_scenario_six == 0 and
+                                occurrences_scenario_seven == 0 and
+                                occurrences_scenario_eight == 0 and
+                                occurrences_scenario_nine == 0 and
+                                occurrences_scenario_ten == 0 and
+                                occurrences_scenario_eleven == 0 and
+                                occurrences_scenario_twelve == 0 and
+                                occurrences_scenario_bind == 0 and
+                                occurrences_scenario_blank_node != 0 and
+                                #occurrences_scenario_filter == 0 and
+                                #occurrences_scenario_group == 0 and
+                                occurrences_scenario_literal == 0 and
+                                occurrences_scenario_minus == 0 and
+                                #occurrences_scenario_optional == 0 and
+                                occurrences_scenario_prop_path != 0 and
+                                occurrences_scenario_subselect == 0 and
+                                #occurrences_scenario_union == 0 and
+                                occurrences_scenario_values == 0 and
+                                occurrences_scenario_service == 0 and
+                                occurrences_scenario_other == 0)
+                            and
+                                not(occurrences_scenario_one == 0 and
+                                     occurrences_scenario_two == 0 and
+                                     occurrences_scenario_three == 0 and
+                                     occurrences_scenario_four == 0 and
+                                     occurrences_scenario_five == 0 and
+                                     occurrences_scenario_six == 0 and
+                                     occurrences_scenario_seven == 0 and
+                                     occurrences_scenario_eight == 0 and
+                                     occurrences_scenario_nine == 0 and
+                                     occurrences_scenario_ten == 0 and
+                                     occurrences_scenario_eleven == 0 and
+                                     occurrences_scenario_twelve == 0 and
+                                     occurrences_scenario_bind == 0 and
+                                     occurrences_scenario_blank_node == 0 and
+                                     occurrences_scenario_filter == 0 and
+                                     occurrences_scenario_group == 0 and
+                                     occurrences_scenario_literal == 0 and
+                                     occurrences_scenario_minus == 0 and
+                                     occurrences_scenario_optional == 0 and
+                                     occurrences_scenario_prop_path == 0 and
+                                     occurrences_scenario_subselect == 0 and
+                                     occurrences_scenario_union == 0 and
+                                     occurrences_scenario_values == 0 and
+                                     occurrences_scenario_service == 0 and
+                                     occurrences_scenario_other != 0)
+                            and
+                                not (occurrences_scenario_one == 0 and
+                                     occurrences_scenario_two == 0 and
+                                     occurrences_scenario_three == 0 and
+                                     occurrences_scenario_four == 0 and
+                                     occurrences_scenario_five == 0 and
+                                     occurrences_scenario_six == 0 and
+                                     occurrences_scenario_seven == 0 and
+                                     occurrences_scenario_eight == 0 and
+                                     occurrences_scenario_nine == 0 and
+                                     occurrences_scenario_ten == 0 and
+                                     occurrences_scenario_eleven == 0 and
+                                     occurrences_scenario_twelve == 0 and
+                                     occurrences_scenario_bind == 0 and
+                                     occurrences_scenario_blank_node == 0 and
+                                     occurrences_scenario_filter == 0 and
+                                     occurrences_scenario_group == 0 and
+                                     occurrences_scenario_literal != 0 and
+                                     occurrences_scenario_minus == 0 and
+                                     occurrences_scenario_optional == 0 and
+                                     occurrences_scenario_prop_path != 0 and
+                                     occurrences_scenario_subselect == 0 and
+                                     occurrences_scenario_union == 0 and
+                                     occurrences_scenario_values == 0 and
+                                     occurrences_scenario_service == 0 and
+                                     occurrences_scenario_other == 0)
+                            and
+                                not (occurrences_scenario_one == 0 and
+                                     occurrences_scenario_two == 0 and
+                                     occurrences_scenario_three == 0 and
+                                     occurrences_scenario_four == 0 and
+                                     occurrences_scenario_five == 0 and
+                                     occurrences_scenario_six == 0 and
+                                     occurrences_scenario_seven == 0 and
+                                     occurrences_scenario_eight == 0 and
+                                     occurrences_scenario_nine == 0 and
+                                     occurrences_scenario_ten == 0 and
+                                     occurrences_scenario_eleven == 0 and
+                                     occurrences_scenario_twelve == 0 and
+                                     occurrences_scenario_bind == 0 and
+                                     occurrences_scenario_blank_node != 0 and
+                                     occurrences_scenario_filter == 0 and
+                                     occurrences_scenario_group == 0 and
+                                     occurrences_scenario_literal != 0 and
+                                     occurrences_scenario_minus == 0 and
+                                     #occurrences_scenario_optional == 0 and
+                                     occurrences_scenario_prop_path == 0 and
+                                     occurrences_scenario_subselect == 0 and
+                                     #occurrences_scenario_union == 0 and
+                                     occurrences_scenario_values == 0 and
+                                     occurrences_scenario_service == 0 and
+                                     occurrences_scenario_other == 0)
+                            ):
+
+                                print("Detected a difference between the number of detected scenarios and found metadata in"
+                                      " the query.")
+                                print("one: " , occurrences_scenario_one , \
+                                "two: " , occurrences_scenario_two , \
+                                "three: " , occurrences_scenario_three , \
+                                "4: " , occurrences_scenario_four , \
+                                "5: " , occurrences_scenario_five , \
+                                "6: " , occurrences_scenario_six , \
+                                "7: " , occurrences_scenario_seven , \
+                                "8: " , occurrences_scenario_eight , \
+                                "9: " , occurrences_scenario_nine , \
+                                "10: " , occurrences_scenario_ten , \
+                                "11: " , occurrences_scenario_eleven , \
+                                "12: " , occurrences_scenario_twelve , "\n", \
+                                "bind: " , occurrences_scenario_bind , \
+                                "blank: " , occurrences_scenario_blank_node , \
+                                "filter: " , occurrences_scenario_filter , \
+                                "group: " , occurrences_scenario_group , \
+                                "literal: " , occurrences_scenario_literal, "\n" , \
+                                "minus: " , occurrences_scenario_minus , \
+                                "optional: " , occurrences_scenario_optional , \
+                                "prop_path: " , occurrences_scenario_prop_path , \
+                                "subselect: " , occurrences_scenario_subselect , \
+                                "union: " , occurrences_scenario_union, \
+                                "values: ", occurrences_scenario_values, \
+                                "service: ", occurrences_scenario_service, \
+                                "other: ", occurrences_scenario_other)
+                                print(tmp_found_metadata)
+                                print(json_data.name)
+                                print("\n")
 
                     json_data.close()
 

@@ -69,23 +69,25 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables):
             if "args" in where_part["expression"]:
                 if look_for in str(where_part["expression"]["args"]):
                     if "operator" in where_part["expression"]:
-                        print("args " + where_part["expression"]["operator"])
+                        # print("args " + where_part["expression"]["operator"])
+                        pass
                     else:
-                        print("here")
-                        print(where_part)
+                        #print("here")
+                        #print(where_part)
+                        pass
                     # there may be more than one
                     result += str(where_part["expression"]["args"]).count(look_for)
 
             # if the bind operation is just an assignment to a variable
             # {'type': 'bind', 'variable': {'termType': 'Variable', 'value': 'var4'}, 'expression': {'termType': 'NamedNode', 'value': 'http://www.wikidata.org/prop/qualifier/P582'}}
             elif "termType" in where_part["expression"]:
-                print("termType")
+                #print("termType")
 
                 if look_for in str(where_part["expression"]["value"]):
 
                     # there may be more than one
                     result += str(where_part["expression"]["value"]).count(look_for)
-                    print(result)
+                    #print(result)
 
                     # TODO: if that happens -> detect the scenario, the resulting variable is in!
 
@@ -132,8 +134,8 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables):
 
                     #variable to look for
                     variable_look_for = str(where_part["variable"]["value"])
-                    print(variable_look_for)
-                    print(json_object)
+                    #print(variable_look_for)
+                    #print(json_object)
 
                     bind_statistical_information["total_found_bound_variables_to_metadata"] += 1
                     #
@@ -252,7 +254,7 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables):
                     with open(location + "/bind_statistical_information.json", "w") as json_data:
                         json.dump(bind_statistical_information, json_data)
                         json_data.close()
-                        print(bind_statistical_information)
+                        #print(bind_statistical_information)
 
             # for e.g. :
             # BIND(MIN( ?var15Label  ) AS  ?var7 ).

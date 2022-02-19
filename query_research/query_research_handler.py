@@ -210,3 +210,6 @@ def start_research_of_query_data(args):
                                                                                                metadata_mode,
                                                                                                recommended_mode,
                                                                                                redundancy_mode)
+
+                statistical_information_handler.save_total_of_queries_amount_per_timeframe(TIMEFRAMES)
+                statistical_information_handler.save_total_of_queries_amount_overall(TIMEFRAMES)

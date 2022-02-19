@@ -1,5 +1,8 @@
 import glob
 import json
+import gzip
+import csv
+from urllib.parse import unquote_plus
 
 
 # the purpose of this module is to summarize the many different statistical information at different stages
@@ -23,6 +26,7 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
     dict_looking_for = {
         "looking_for": metadata,
         "total_occurrences": 0,
+        "total_scenarios": 0,
         "one": 0,
         "two": 0,
         "three": 0,
@@ -85,6 +89,8 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
             for elem in metadata_subtype_dict["found_scenarios"]["list_per_search"]:
                 metadata_dict["found_scenarios"]["total_occurrences"] += \
                     elem["total_occurrences"]
+                metadata_dict["found_scenarios"]["total_scenarios"] += \
+                    elem["total_scenarios"]
                 metadata_dict["found_scenarios"]["one"] += \
                     elem["one"]
                 metadata_dict["found_scenarios"]["two"] += \
@@ -157,6 +163,7 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
     dict_looking_for = {
         "looking_for": metadata,
         "total_occurrences": 0,
+        "total_scenarios": 0,
         "one": 0,
         "two": 0,
         "three": 0,
@@ -219,6 +226,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
 
             metadata_dict["found_scenarios"]["total_occurrences"] += \
                 elem["total_occurrences"]
+            metadata_dict["found_scenarios"]["total_scenarios"] += \
+                elem["total_scenarios"]
             metadata_dict["found_scenarios"]["one"] += \
                 elem["one"]
             metadata_dict["found_scenarios"]["two"] += \
@@ -1576,3 +1585,55 @@ def summarize_timeframe_information_about_accumulated_datatypes(locations, mode,
         json.dump(datatypes_dict, result_data)
 
         result_data.close()
+
+
+def save_total_of_queries_amount_per_timeframe(locations):
+
+    for location in locations:
+
+        with gzip.open("data/" + location + ".tsv.gz", "rt") as raw_timeframe_data:
+
+            csv_data = csv.reader(raw_timeframe_data, delimiter="\t")
+
+
+            data_count = 0
+            for row in csv_data:
+                data_count += 1
+
+            data_count_dict = {}
+            data_count_dict["counted_queries"] = 0
+            data_count_dict["counted_queries"] = data_count
+
+            # save the counted queries
+            count_save_path = "data/" + location[:21]
+
+            with open(count_save_path + "/counted_queries.json", "w") as save_data:
+                json.dump(data_count_dict, save_data)
+
+
+def save_total_of_queries_amount_overall(locations):
+
+
+    data_count_dict = {}
+    data_count_dict["counted_queries"] = 0
+
+    for location in locations:
+
+        with gzip.open("data/" + location + ".tsv.gz", "rt") as raw_timeframe_data:
+
+            csv_data = csv.reader(raw_timeframe_data, delimiter="\t")
+
+            data_count = 0
+            for row in csv_data:
+                data_count += 1
+
+            data_count_dict["counted_queries"] += data_count
+
+
+    # save the counted queries
+    count_save_path = "data"
+
+
+    with open(count_save_path + "/counted_queries.json", "w") as save_data:
+        json.dump(data_count_dict, save_data)
+

@@ -17,7 +17,7 @@ def scenario_prop_path_occurrences(json_object, look_for, bound_variables):
 
     # find scenarios property path
 
-    result = False
+    result = 0
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
@@ -62,7 +62,7 @@ def scenario_prop_path_occurrences(json_object, look_for, bound_variables):
 
 
                             result += str(triple["predicate"]["items"]).count(look_for)
-                            print(str(triple["predicate"]["items"]))
+                            #print(str(triple["predicate"]["items"]))
 
                     else:
                         if look_for in str(where_part):

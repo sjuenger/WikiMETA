@@ -17,13 +17,14 @@ TIMEFRAMES = [
 ]
 
 DATA_TYPES_REFERENCE = [
-    "reference_metadata/all_three",
-    "reference_metadata/derived_+_reference_node",
-    "reference_metadata/derived_+_reference_property",
+
     "reference_metadata/only_derived",
     "reference_metadata/only_reference_node",
     "reference_metadata/only_reference_property",
-    "reference_metadata/reference_node_+_reference_property"
+    "reference_metadata/derived_+_reference_node",
+    "reference_metadata/derived_+_reference_property",
+    "reference_metadata/reference_node_+_reference_property",
+    "reference_metadata/all_three"
 ]
 
 DATA_TYPES_QUALIFIER = [

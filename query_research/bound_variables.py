@@ -33,8 +33,8 @@ def find_bound_variables(json_object):
                     if where_part["variable"]["termType"] == "Variable":
                         bound_variables.append(
                             (where_part["variable"]["value"], where_part["expression"]["value"]))
-                print("Bound Variables: ")
-                print(bound_variables)
+                #print("Bound Variables: ")
+                #print(bound_variables)
 
                 # TODO: Declare a reference in bound variables as an own scenario
                 # TODO: Change this bound variables tuple arry to a dictionary to get rid of the .__str__()
