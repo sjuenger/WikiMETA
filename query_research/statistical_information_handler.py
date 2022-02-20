@@ -1637,3 +1637,4 @@ def save_total_of_queries_amount_overall(locations):
     with open(count_save_path + "/counted_queries.json", "w") as save_data:
         json.dump(data_count_dict, save_data)
 
+
