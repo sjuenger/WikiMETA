@@ -4,6 +4,7 @@ import query_research.properties_counter as properties_counter
 import query_research.statistical_information_handler as statistical_information_handler
 import query_research.wikidata_dictionary_and_found_query_properties as wikidata_dictionary_and_found_query_properties
 import query_research.ranks_counter as ranks_counter
+import query_research.example_queries_in_data as example_queries_in_data
 
 TIMEFRAMES = [
     "2017-06-12_2017-07-09_organic",
@@ -53,7 +54,8 @@ def start_research_of_query_data(args):
 
     # generate the data
     if args[0] == 1:
-        transform_data_handler(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
+        transform_data_handler.\
+            start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
 
     # detect scenarios
     if args[1] == 1:
@@ -144,9 +146,20 @@ def start_research_of_query_data(args):
 
         for timeframe in TIMEFRAMES:
 
+
             for (metadata_mode, datatype) in [("qualifier_metadata", DATA_TYPES_QUALIFIER),
                                               ("reference_metadata", DATA_TYPES_REFERENCE),
                                               ("rank_metadata", DATA_TYPES_RANK)]:
+
+                # count the example queries from the Wikidata SPARQL Endpoint in ALL queries
+                example_queries_in_data.\
+                    count_example_queries_in_queries("Wikidata_Example_Queries",timeframe,
+                                                         metadata_mode, datatype, False)
+                # count the example queries from the Wikidata SPARQL Endpoint in
+                # .. the 'marked as redundant' queries
+                example_queries_in_data.\
+                    count_example_queries_in_queries("Wikidata_Example_Queries",timeframe,
+                                                         metadata_mode, datatype, True)
 
                 for redundancy_mode in ["redundant", "non_redundant"]:
 

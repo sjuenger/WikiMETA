@@ -24,14 +24,14 @@ import graphical_analysis.graphical_analysis_handler as graphical_analysis_handl
 
 
 def main():
-    directory_structure_handler.create_dir_structure_of_data()
-    directory_structure_handler.delete_identified_scenarios()
+    #directory_structure_handler.create_dir_structure_of_data()
+    #directory_structure_handler.delete_identified_scenarios()
 
     #do_wikidata_research_stuff()
 
-    do_query_research_stuff([0,1,1,1,1])
+    do_query_research_stuff([0,0,1,1,1])
 
-    analyse_research_stuff()
+    #analyse_research_stuff()
 
     # the ALL is missing with the recommmended / non_recommended things
 

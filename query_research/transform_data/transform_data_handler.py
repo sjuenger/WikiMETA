@@ -1,9 +1,12 @@
 import query_research.transform_data.redundant_detection as redundant_detection
 import query_research.transform_data.sparql_to_json_references as sparql_to_json_references
 import query_research.transform_data.sparql_to_json_qualifiers as sparql_to_json_qualifiers
-import  query_research.transform_data.sparql_to_json_ranks as sparql_to_json_ranks
+import query_research.transform_data.sparql_to_json_ranks as sparql_to_json_ranks
+import query_research.transform_data.sarql_to_json_example_queries as sparql_to_json_example_queries
 
 def start_creating_data(TIMEFRAMES, LOCATIONS):
+
+    sparql_to_json_example_queries.extract_example_queries("Wikidata_Example_Queries")
 
     for timeframe in TIMEFRAMES:
 
