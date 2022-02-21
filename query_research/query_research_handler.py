@@ -5,6 +5,7 @@ import query_research.statistical_information_handler as statistical_information
 import query_research.wikidata_dictionary_and_found_query_properties as wikidata_dictionary_and_found_query_properties
 import query_research.ranks_counter as ranks_counter
 import query_research.example_queries_in_data as example_queries_in_data
+import query_research.amount_of_queries as amount_of_queries
 
 TIMEFRAMES = [
     "2017-06-12_2017-07-09_organic",
@@ -57,8 +58,19 @@ def start_research_of_query_data(args):
         transform_data_handler.\
             start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
 
-    # detect scenarios
+    # count the amount of queries with and without metadata (overall & per timeframe)
     if args[1] == 1:
+        amount_of_queries.save_total_of_queries_amount_per_timeframe(TIMEFRAMES,
+                                                                               ["qualifier_metadata",
+                                                                                "reference_metadata",
+                                                                                "rank_metadata"])
+        amount_of_queries.save_total_of_queries_amount_overall(TIMEFRAMES,
+                                                                           ["qualifier_metadata",
+                                                                            "reference_metadata",
+                                                                            "rank_metadata"])
+
+    # detect scenarios
+    if args[2] == 1:
 
         for timeframe in TIMEFRAMES:
            for datatype in DATA_TYPES_REFERENCE:
@@ -74,7 +86,7 @@ def start_research_of_query_data(args):
               scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
     # count the gathered properties and ranks
-    if args[2] == 1:
+    if args[3] == 1:
 
         for timeframe in TIMEFRAMES:
 
@@ -88,7 +100,7 @@ def start_research_of_query_data(args):
 
     # create the statistical information about the counted properties in relation to the gathered facets/datatypes
     # .. from Wikidata
-    if args[3] == 1:
+    if args[4] == 1:
 
         for timeframe in TIMEFRAMES:
             for metadata_mode in ["qualifier_metadata", "reference_metadata"]:
@@ -141,8 +153,8 @@ def start_research_of_query_data(args):
                             timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
 
 
-    # summarize the information about the timeframes
-    if args[4] == 1:
+    # look for Wikidata Example Queries in the Query data
+    if args[5] == 1:
 
         for timeframe in TIMEFRAMES:
 
@@ -161,6 +173,16 @@ def start_research_of_query_data(args):
                     count_example_queries_in_queries("Wikidata_Example_Queries",timeframe,
                                                          metadata_mode, datatype, True)
 
+    # summarize the information about the timeframes
+    if args[6] == 1:
+
+        for timeframe in TIMEFRAMES:
+
+
+            for (metadata_mode, datatype) in [("qualifier_metadata", DATA_TYPES_QUALIFIER),
+                                              ("reference_metadata", DATA_TYPES_REFERENCE),
+                                              ("rank_metadata", DATA_TYPES_RANK)]:
+
                 for redundancy_mode in ["redundant", "non_redundant"]:
 
                         statistical_information_handler.\
@@ -168,6 +190,12 @@ def start_research_of_query_data(args):
                                                                               datatype,
                                                                               metadata_mode,
                                                                               redundancy_mode)
+
+        for datatype in [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK]:
+
+            # summarize the information about the detected / found Wikidata example queries in the data
+            example_queries_in_data.summarize_scenario_data_from_metadata_per_datatype_and_overall(TIMEFRAMES, datatype, True)
+            example_queries_in_data.summarize_scenario_data_from_metadata_per_datatype_and_overall(TIMEFRAMES, datatype, False)
 
 
         for redundancy_mode in ["redundant", "non_redundant"]:
@@ -224,5 +252,3 @@ def start_research_of_query_data(args):
                                                                                                recommended_mode,
                                                                                                redundancy_mode)
 
-                statistical_information_handler.save_total_of_queries_amount_per_timeframe(TIMEFRAMES)
-                statistical_information_handler.save_total_of_queries_amount_overall(TIMEFRAMES)

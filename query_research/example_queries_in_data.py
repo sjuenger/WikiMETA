@@ -99,7 +99,7 @@ def summarize_scenario_data_from_metadata_per_datatype_and_overall(timeframes, d
     for datatype in datatypes:
 
         datatype_dict = {}
-        datatype_dict["name"] = datatype.split("/")[-2]
+        datatype_dict["name"] = datatype.split("/")[-1]
         datatype_dict["total_queries"] = 0
         datatype_dict["example_queries"] = 0
 
@@ -127,9 +127,14 @@ def summarize_scenario_data_from_metadata_per_datatype_and_overall(timeframes, d
 
         result_dict["datatypes"].append(datatype_dict)
 
+    if only_marked:
+        tmp_str = "found_example_queries_in_marked_queries.json"
+    else:
+        tmp_str = "found_example_queries_in_all_queries.json"
+
     # path to save the information per metadata and per datatype
     result_path_datatype = "data/statistical_information/redundant_detection/" +\
-                            datatype.split("/")[-2] + "/" + "found_example_queries.json"
+                            datatype.split("/")[-2] + "/" + tmp_str
     with open(result_path_datatype, "w") as result_data:
         json.dump(result_dict, result_data)
 
