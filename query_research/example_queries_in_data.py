@@ -4,16 +4,16 @@ import re
 
 def count_example_queries_in_queries(example_location, timeframe, metadata, datatypes, only_marked):
 
-    redundant_example_queries_count = {}
-    redundant_example_queries_count["total_queries"] = 0
-    redundant_example_queries_count["example_queries"] = 0
-
     if metadata not in ["qualifier_metadata", "reference_metadata", "rank_metadata"]:
         error_message = "Not supported mode."
         raise Exception(error_message)
 
     # get one datatype out of the datatypes
     for datatype in datatypes:
+
+        redundant_example_queries_count = {}
+        redundant_example_queries_count["total_queries"] = 0
+        redundant_example_queries_count["example_queries"] = 0
 
         # all queries -> retrieve all .json files
         # in marked queries -> retrieve only marked files
