@@ -21,6 +21,7 @@ def display_percentage_queries_with_metadata():
     csv_ready_dict_overall["timeframe"] = []
     csv_ready_dict_overall["metadata_type"] = []
     csv_ready_dict_overall["counted_metadata_queries_percentage"] = []
+    csv_ready_dict_overall["counted_metadata_queries"] = []
     csv_ready_dict_overall["metadata_occurrences_per_overall_queries"] = []
     csv_ready_dict_overall["metadata_occurrences_per_matching_metadata_queries"] = []
 
@@ -39,6 +40,8 @@ def display_percentage_queries_with_metadata():
                 metadata_queries = timeframe_query_dict["counted_metadata_queries"][metadata + "_metadata"]
                 metadata_occurrences = timeframe_query_dict["counted_metadata_occurrences"][metadata + "_metadata"]
 
+                csv_ready_dict_overall["counted_metadata_queries"].append(metadata_queries)
+
                 csv_ready_dict_overall["counted_metadata_queries_percentage"].append(metadata_queries / overall_queries)
                 csv_ready_dict_overall["metadata_occurrences_per_overall_queries"].\
                     append(metadata_occurrences / overall_queries)
@@ -46,42 +49,56 @@ def display_percentage_queries_with_metadata():
                     append(metadata_occurrences / metadata_queries)
 
 
-    # plot the percentage data in a strip diagram
 
+    # plot the percentage data in a strip diagram
     df = pd.DataFrame(csv_ready_dict_overall)
-    tmp = sns.catplot(x="timeframe", y="counted_metadata_queries_percentage", kind="strip",
+    tmp = sns.catplot(x="timeframe", y="counted_metadata_queries_percentage", kind="point",
                       palette="tab10", hue="metadata_type",
                       dodge=True, data=df, ci=None)
 
     plt.gcf().autofmt_xdate()
 
-    tmp.savefig("data/counted_metadata_queries_percentage.png")
+    tmp.savefig("data/counted_metadata_queries_percentage_strip.png")
 
     plt.close()
 
     # plot the metadata per query data in a strip diagram
-
     df = pd.DataFrame(csv_ready_dict_overall)
-    tmp = sns.catplot(x="timeframe", y="metadata_occurrences_per_overall_queries", kind="strip",
+    tmp = sns.catplot(x="timeframe", y="metadata_occurrences_per_overall_queries", kind="point",
                       palette="tab10", hue="metadata_type",
                       dodge=True, data=df, ci=None)
 
     plt.gcf().autofmt_xdate()
 
-    tmp.savefig("data/metadata_occurrences_per_overall_queries.png")
+    tmp.savefig("data/metadata_occurrences_per_overall_queries_strip.png")
 
     plt.close()
 
     # plot the metadata per metadata query data in a strip diagram
-
     df = pd.DataFrame(csv_ready_dict_overall)
-    tmp = sns.catplot(x="timeframe", y="metadata_occurrences_per_matching_metadata_queries", kind="strip",
+    tmp = sns.catplot(x="timeframe", y="metadata_occurrences_per_matching_metadata_queries", kind="point",
                       palette="tab10", hue="metadata_type",
                       dodge=True, data=df, ci=None)
 
     plt.gcf().autofmt_xdate()
 
-    tmp.savefig("data/metadata_occurrences_per_matching_metadata_queries.png")
+    tmp.savefig("data/metadata_occurrences_per_matching_metadata_queries_strip.png")
 
     plt.close()
+
+
+    # plot the absolute amount of metadata queries
+    df = pd.DataFrame(csv_ready_dict_overall)
+    tmp = sns.catplot(x="metadata_type", y="counted_metadata_queries", kind="strip",
+                      palette="tab10",
+                      dodge=True, data=df, ci=None)
+
+    plt.gcf().autofmt_xdate()
+
+    tmp.savefig("data/counted_metadata_queries_strip.png")
+
+    plt.close()
+
+
+
 

@@ -62,6 +62,7 @@ def plot_redundant_detection_data_exact():
         csv_ready_dict_overall["total_amount_or_marked"] = []
         csv_ready_dict_overall["datatype"] = []
         csv_ready_dict_overall["metadata"] = []
+        csv_ready_dict_overall["timeframe"] = []
 
         # to summarize the data from the multiple reference and qualifier data
         csv_ready_dict_overall_one_type = {}
@@ -69,6 +70,7 @@ def plot_redundant_detection_data_exact():
         csv_ready_dict_overall_one_type["total_amount_or_marked"] = []
         csv_ready_dict_overall_one_type["datatype"] = []
         csv_ready_dict_overall_one_type["metadata"] = []
+        csv_ready_dict_overall_one_type["timeframe"] = []
 
         for location in TIMEFRAMES:
 
@@ -132,6 +134,9 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_overall["metadata"].append(metadata)
                         csv_ready_dict_overall["metadata"].append(metadata)
 
+                        csv_ready_dict_overall["timeframe"].append(location[:21])
+                        csv_ready_dict_overall["timeframe"].append(location[:21])
+
 
                     else:
                         csv_ready_dict_overall["queries"][i] += information_dict["Total queries: "]
@@ -145,6 +150,9 @@ def plot_redundant_detection_data_exact():
 
                         csv_ready_dict_overall["metadata"][i] = metadata
                         csv_ready_dict_overall["metadata"][i+1] = metadata
+
+                        csv_ready_dict_overall["timeframe"].append(location[:21])
+                        csv_ready_dict_overall["timeframe"].append(location[:21])
 
                     # update the overall dict to narrow it down to one type
                     if len(csv_ready_dict_overall_one_type["queries"]) == 0:
@@ -160,6 +168,9 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_overall_one_type["metadata"].append(metadata)
                         csv_ready_dict_overall_one_type["metadata"].append(metadata)
 
+                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
+                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
+
 
                     else:
                         csv_ready_dict_overall_one_type["queries"][0] += information_dict["Total queries: "]
@@ -173,6 +184,9 @@ def plot_redundant_detection_data_exact():
 
                         csv_ready_dict_overall_one_type["metadata"][0] = metadata
                         csv_ready_dict_overall_one_type["metadata"][1] = metadata
+
+                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
+                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
 
 
                     # update the overall dict to narrow it down to one type per timeframe
@@ -307,3 +321,25 @@ def plot_redundant_detection_data_exact():
                     + types[0].split("/")[0] + "/overall_redundant_information_exact.png")
 
         plt.close()
+
+
+
+
+
+        # plot with a aspect = 1.5 for the rank metadata and without vertical labels for the qualifiers
+        # test
+        tmp = sns.catplot(x="datatype", y="queries", kind="bar",
+                          palette="tab10", hue="total_amount_or_marked",
+                          dodge=True, col="metadata", aspect=1.5, data=df)
+
+        plt.gcf().autofmt_xdate()
+
+
+
+        tmp.savefig("data/statistical_information/redundant_detection/"
+                    + types[0].split("/")[0] + "/redundant_information_exact.png")
+
+        plt.close()
+
+
+
