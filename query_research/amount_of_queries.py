@@ -18,7 +18,7 @@ def save_total_of_queries_amount_per_timeframe(locations, list_of_metadata):
             data_count_dict = {}
             data_count_dict["counted_queries"] = data_count
             data_count_dict["counted_metadata_queries"] = {}
-            data_count_dict["counted_metadata_occurences"] = {}
+            data_count_dict["counted_metadata_occurrences"] = {}
 
             # count the queries with metadata
             for metadata in list_of_metadata:
@@ -33,7 +33,7 @@ def save_total_of_queries_amount_per_timeframe(locations, list_of_metadata):
                     metadata_information_dict = json.load(metadata_information)
                     data_count_dict["counted_metadata_queries"][metadata] = \
                         metadata_information_dict["total_queries"]
-                    data_count_dict["counted_metadata_occurences"][metadata] = \
+                    data_count_dict["counted_metadata_occurrences"][metadata] = \
                         metadata_information_dict["found_scenarios"]["total_occurrences"]
 
             # save the counted queries
@@ -48,7 +48,7 @@ def save_total_of_queries_amount_overall(locations, list_of_metadata):
     data_count_dict = {}
     data_count_dict["counted_queries"] = 0
     data_count_dict["counted_metadata_queries"] = {}
-    data_count_dict["counted_metadata_occurences"] = {}
+    data_count_dict["counted_metadata_occurrences"] = {}
 
     for location in locations:
 
@@ -70,14 +70,14 @@ def save_total_of_queries_amount_overall(locations, list_of_metadata):
 
                     data_count_dict["counted_metadata_queries"][metadata] = \
                         save_dict["counted_metadata_queries"][metadata]
-                    data_count_dict["counted_metadata_occurences"][metadata] = \
-                        save_dict["counted_metadata_occurences"][metadata]
+                    data_count_dict["counted_metadata_occurrences"][metadata] = \
+                        save_dict["counted_metadata_occurrences"][metadata]
                 else:
 
                     data_count_dict["counted_metadata_queries"][metadata] += \
                         save_dict["counted_metadata_queries"][metadata]
-                    data_count_dict["counted_metadata_occurences"][metadata] += \
-                        save_dict["counted_metadata_occurences"][metadata]
+                    data_count_dict["counted_metadata_occurrences"][metadata] += \
+                        save_dict["counted_metadata_occurrences"][metadata]
 
 
     # save the counted queries

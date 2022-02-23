@@ -29,9 +29,9 @@ def main():
 
     #do_wikidata_research_stuff()
 
-    do_query_research_stuff([0,1,0,1,1,0,1])
+    #do_query_research_stuff([0,1,0,1,1,0,1])
 
-    #analyse_research_stuff()
+    analyse_research_stuff()
 
     # the ALL is missing with the recommmended / non_recommended things
 
