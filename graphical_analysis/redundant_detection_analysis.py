@@ -62,7 +62,13 @@ def plot_redundant_detection_data_exact():
         csv_ready_dict_overall["total_amount_or_marked"] = []
         csv_ready_dict_overall["datatype"] = []
         csv_ready_dict_overall["metadata"] = []
-        csv_ready_dict_overall["timeframe"] = []
+
+        test = {}
+        test["queries"] = []
+        test["total_amount_or_marked"] = []
+        test["datatype"] = []
+        test["metadata"] = []
+        test["timeframe"] = []
 
         # to summarize the data from the multiple reference and qualifier data
         csv_ready_dict_overall_one_type = {}
@@ -70,7 +76,6 @@ def plot_redundant_detection_data_exact():
         csv_ready_dict_overall_one_type["total_amount_or_marked"] = []
         csv_ready_dict_overall_one_type["datatype"] = []
         csv_ready_dict_overall_one_type["metadata"] = []
-        csv_ready_dict_overall_one_type["timeframe"] = []
 
         for location in TIMEFRAMES:
 
@@ -106,6 +111,17 @@ def plot_redundant_detection_data_exact():
                     csv_ready_dict_timeframe["queries"].append(information_dict["Queries marked: "])
                     csv_ready_dict_timeframe["total_amount_or_marked"].append("Queries marked")
 
+
+                    test["queries"].append(information_dict["Total queries: "])
+                    test["total_amount_or_marked"].append("Total Queries")
+
+                    test["queries"].append(information_dict["Queries marked: "])
+                    test["total_amount_or_marked"].append("Queries marked")
+
+                    test["timeframe"].append(location[:21])
+                    test["timeframe"].append(location[:21])
+
+
                     # format the type a bit nicer
                     # e.g., rank_metadata/deprecated_rank_+_rank_property -> deprecated rank & rank property
                     nice_type = type.split("/")[1].replace("_", " ").replace("+", "&")
@@ -113,12 +129,18 @@ def plot_redundant_detection_data_exact():
                     csv_ready_dict_timeframe["datatype"].append(nice_type)
                     csv_ready_dict_timeframe["datatype"].append(nice_type)
 
+                    test["datatype"].append(nice_type)
+                    test["datatype"].append(nice_type)
+
                     # extract the metadata
                     # e.g., rank_metadata/deprecated_rank_+_rank_property -> rank metadata
                     metadata = type.split("/")[0].replace(" ", "")
 
                     csv_ready_dict_timeframe["metadata"].append(metadata)
                     csv_ready_dict_timeframe["metadata"].append(metadata)
+
+                    test["metadata"].append(metadata)
+                    test["metadata"].append(metadata)
 
                     # update the overall dict and summarize the timeframe values
                     if len(csv_ready_dict_overall["queries"]) <= 2*i:
@@ -134,9 +156,6 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_overall["metadata"].append(metadata)
                         csv_ready_dict_overall["metadata"].append(metadata)
 
-                        csv_ready_dict_overall["timeframe"].append(location[:21])
-                        csv_ready_dict_overall["timeframe"].append(location[:21])
-
 
                     else:
                         csv_ready_dict_overall["queries"][i] += information_dict["Total queries: "]
@@ -151,8 +170,6 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_overall["metadata"][i] = metadata
                         csv_ready_dict_overall["metadata"][i+1] = metadata
 
-                        csv_ready_dict_overall["timeframe"].append(location[:21])
-                        csv_ready_dict_overall["timeframe"].append(location[:21])
 
                     # update the overall dict to narrow it down to one type
                     if len(csv_ready_dict_overall_one_type["queries"]) == 0:
@@ -168,8 +185,6 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_overall_one_type["metadata"].append(metadata)
                         csv_ready_dict_overall_one_type["metadata"].append(metadata)
 
-                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
-                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
 
 
                     else:
@@ -185,8 +200,6 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_overall_one_type["metadata"][0] = metadata
                         csv_ready_dict_overall_one_type["metadata"][1] = metadata
 
-                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
-                        csv_ready_dict_overall_one_type["timeframe"].append(location[:21])
 
 
                     # update the overall dict to narrow it down to one type per timeframe
@@ -328,18 +341,45 @@ def plot_redundant_detection_data_exact():
 
         # plot with a aspect = 1.5 for the rank metadata and without vertical labels for the qualifiers
         # test
-        tmp = sns.catplot(x="datatype", y="queries", kind="bar",
-                          palette="tab10", hue="total_amount_or_marked",
-                          dodge=True, col="metadata", aspect=1.5, data=df)
+        tmp_dict = {}
+        tmp_dict["datatype"] = []
+        tmp_dict["timeframe"] = []
+        tmp_dict["queries"] = []
 
-        plt.gcf().autofmt_xdate()
+        print(test)
 
+        for i in range(len(test["metadata"])):
 
+            if "Total" in test["total_amount_or_marked"][i]:
 
-        tmp.savefig("data/statistical_information/redundant_detection/"
-                    + types[0].split("/")[0] + "/redundant_information_exact.png")
+                tmp_dict["datatype"].append(test["datatype"][i])
+                tmp_dict["timeframe"].append(test["timeframe"][i].replace("_", " -\n"))
+                tmp_dict["queries"].append(test["queries"][i])
 
-        plt.close()
+        if "reference_metadata" in types[0]:
+            df = pd.DataFrame(tmp_dict)
+
+            print(tmp_dict)
+            print(tmp_dict["datatype"])
+            print(tmp_dict["timeframe"])
+            print(tmp_dict["queries"])
+            print(len(tmp_dict["queries"]))
+
+            df = pd.pivot_table(data=df,
+                                index='datatype',
+                                values='queries',
+                                columns='timeframe')
+
+            fig, ax = plt.subplots(figsize=(10, 6))
+            tmp = sns.heatmap(df, ax=ax)
+            tmp.figure.tight_layout()
+            #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
+
+            plt.gcf().autofmt_xdate()
+
+            tmp.get_figure().savefig("data/test.png")
+
+            plt.close()
 
 
 
