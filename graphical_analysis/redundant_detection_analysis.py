@@ -248,7 +248,9 @@ def plot_redundant_detection_data_exact():
                             append(test["metadata_queries"][index] / csv_ready_dict_timeframe_one_type["queries"][0])
                     else:
                         test["percentage_on_total_metadata_queries"]. \
-                            append(test["metadata_queries"][index] / csv_ready_dict_timeframe_one_type["queries"][1])
+                            append((test["metadata_queries"][index-1] - test["metadata_queries"][index] )
+                                   / (csv_ready_dict_timeframe_one_type["queries"][0] -
+                                      csv_ready_dict_timeframe_one_type["queries"][1]))
 
 
             # save the dict for the timeframe
@@ -393,7 +395,7 @@ def plot_redundant_detection_data_exact():
                             columns='timeframe')
 
         fig, ax = plt.subplots(figsize=(10, 6))
-        tmp = sns.heatmap(df, ax=ax, vmin=0, vmax =1)
+        tmp = sns.heatmap(df, ax=ax, vmin=0, vmax =1, annot=True)
         tmp.figure.tight_layout()
         #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
 
