@@ -64,7 +64,8 @@ def plot_redundant_detection_data_exact():
         csv_ready_dict_overall["metadata"] = []
 
         test = {}
-        test["queries"] = []
+        test["metadata_queries"] = []
+        test["percentage_on_total_metadata_queries"] = []
         test["total_amount_or_marked"] = []
         test["datatype"] = []
         test["metadata"] = []
@@ -112,10 +113,14 @@ def plot_redundant_detection_data_exact():
                     csv_ready_dict_timeframe["total_amount_or_marked"].append("Queries marked")
 
 
-                    test["queries"].append(information_dict["Total queries: "])
+                    test["metadata_queries"].\
+                        append( information_dict["Total queries: "] )
+
                     test["total_amount_or_marked"].append("Total Queries")
 
-                    test["queries"].append(information_dict["Queries marked: "])
+                    test["metadata_queries"].\
+                        append( information_dict["Queries marked: "] )
+
                     test["total_amount_or_marked"].append("Queries marked")
 
                     test["timeframe"].append(location[:21])
@@ -230,7 +235,21 @@ def plot_redundant_detection_data_exact():
                         csv_ready_dict_timeframe_one_type["metadata"][0] = metadata
                         csv_ready_dict_timeframe_one_type["metadata"][1] = metadata
 
+
+
+
                 i += 2
+
+            # insert the percentage information for the test dict with the help of the dict per metadata per timeframe
+            for index in range(len(test["timeframe"])):
+                if test["timeframe"][index] == location[:21]:
+                    if index % 2 == 0:
+                        test["percentage_on_total_metadata_queries"]. \
+                            append(test["metadata_queries"][index] / csv_ready_dict_timeframe_one_type["queries"][0])
+                    else:
+                        test["percentage_on_total_metadata_queries"]. \
+                            append(test["metadata_queries"][index] / csv_ready_dict_timeframe_one_type["queries"][1])
+
 
             # save the dict for the timeframe
             timeframe_path = "data/statistical_information/redundant_detection/" + location[:21] \
@@ -345,6 +364,7 @@ def plot_redundant_detection_data_exact():
         tmp_dict["datatype"] = []
         tmp_dict["timeframe"] = []
         tmp_dict["queries"] = []
+        tmp_dict["percentage_on_total_metadata_queries"] = []
 
         print(test)
 
@@ -354,32 +374,86 @@ def plot_redundant_detection_data_exact():
 
                 tmp_dict["datatype"].append(test["datatype"][i])
                 tmp_dict["timeframe"].append(test["timeframe"][i].replace("_", " -\n"))
-                tmp_dict["queries"].append(test["queries"][i])
+                tmp_dict["queries"].append(test["metadata_queries"][i])
+                tmp_dict["percentage_on_total_metadata_queries"].append(test["percentage_on_total_metadata_queries"][i])
 
-        if "reference_metadata" in types[0]:
-            df = pd.DataFrame(tmp_dict)
 
-            print(tmp_dict)
-            print(tmp_dict["datatype"])
-            print(tmp_dict["timeframe"])
-            print(tmp_dict["queries"])
-            print(len(tmp_dict["queries"]))
+        df = pd.DataFrame(tmp_dict)
 
-            df = pd.pivot_table(data=df,
-                                index='datatype',
-                                values='queries',
-                                columns='timeframe')
+        print(tmp_dict)
+        print(tmp_dict["datatype"])
+        print(tmp_dict["timeframe"])
+        print(tmp_dict["queries"])
+        print(tmp_dict["percentage_on_total_metadata_queries"])
+        print(len(tmp_dict["queries"]))
 
-            fig, ax = plt.subplots(figsize=(10, 6))
-            tmp = sns.heatmap(df, ax=ax)
-            tmp.figure.tight_layout()
-            #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
+        df = pd.pivot_table(data=df,
+                            index='datatype',
+                            values='percentage_on_total_metadata_queries',
+                            columns='timeframe')
 
-            plt.gcf().autofmt_xdate()
+        fig, ax = plt.subplots(figsize=(10, 6))
+        tmp = sns.heatmap(df, ax=ax, vmin=0, vmax =1)
+        tmp.figure.tight_layout()
+        #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
 
-            tmp.get_figure().savefig("data/test.png")
+        plt.gcf().autofmt_xdate()
 
-            plt.close()
+        tmp.get_figure().savefig("data/test_" + "redundant_" +  types[0].split("/")[0] + ".png")
+
+        plt.close()
+
+
+
+
+
+
+
+
+        # plot with a aspect = 1.5 for the rank metadata and without vertical labels for the qualifiers
+        # test
+        tmp_dict = {}
+        tmp_dict["datatype"] = []
+        tmp_dict["timeframe"] = []
+        tmp_dict["queries"] = []
+        tmp_dict["percentage_on_total_metadata_queries"] = []
+
+        print(test)
+
+        for i in range(len(test["metadata"])):
+
+            if "marked" in test["total_amount_or_marked"][i]:
+
+                tmp_dict["datatype"].append(test["datatype"][i])
+                tmp_dict["timeframe"].append(test["timeframe"][i].replace("_", " -\n"))
+                tmp_dict["queries"].append(test["metadata_queries"][i])
+                tmp_dict["percentage_on_total_metadata_queries"].append(test["percentage_on_total_metadata_queries"][i])
+
+
+        df = pd.DataFrame(tmp_dict)
+
+        print(tmp_dict)
+        print(tmp_dict["datatype"])
+        print(tmp_dict["timeframe"])
+        print(tmp_dict["queries"])
+        print(tmp_dict["percentage_on_total_metadata_queries"])
+        print(len(tmp_dict["queries"]))
+
+        df = pd.pivot_table(data=df,
+                            index='datatype',
+                            values='percentage_on_total_metadata_queries',
+                            columns='timeframe')
+
+        fig, ax = plt.subplots(figsize=(10, 6))
+        tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1)
+        tmp.figure.tight_layout()
+        #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
+
+        plt.gcf().autofmt_xdate()
+
+        tmp.get_figure().savefig("data/test_" + "non-redundant_" + types[0].split("/")[0] + ".png")
+
+        plt.close()
 
 
 
