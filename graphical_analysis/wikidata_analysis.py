@@ -203,8 +203,6 @@ def plot_top_wikidata_research_accumulated_facets():
 
                 df = pd.DataFrame(dataframe_dict)
 
-                print(df)
-
 
                 tmp = sns.catplot(x= "label", y="accumulated_facets_percentage", kind="bar",
                                   palette="tab10", dodge=False, col="recommended_mode",
@@ -259,9 +257,6 @@ def plot_top_wikidata_research_accumulated_datatypes():
                 whole_dict = json.load(json_data)
 
                 tmp = collections.OrderedDict(sorted(whole_dict["datatypes"].items(), key=lambda item: int(item[1]) ))
-
-                print(whole_dict)
-                print(tmp)
 
                 whole_dict["datatypes"] = tmp
 
