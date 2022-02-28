@@ -40,11 +40,12 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
                 # .. effect on the results of my analysis
                 if(PID not in wikidata_props):
                     result_dict["false_wikidata_properties"][PID] = {}
-                    result_dict["false_wikidata_properties"][PID]["occurences"] = stat_info["properties"][PID]
+                    result_dict["false_wikidata_properties"][PID]["occurrences"] = stat_info["properties"][PID]
                 else:
                     result_dict["real_wikidata_properties"][PID] = {}
-                    result_dict["real_wikidata_properties"][PID]["occurences"] = stat_info["properties"][PID]
+                    result_dict["real_wikidata_properties"][PID]["occurrences"] = stat_info["properties"][PID]
                     result_dict["real_wikidata_properties"][PID]["facets"] = wikidata_props[PID]["facet_of"]
+                    result_dict["real_wikidata_properties"][PID]["label"] = wikidata_props[PID]["label"]
                     result_dict["real_wikidata_properties"][PID]["datatype"] = wikidata_props[PID]["datatype"]
                     result_dict["real_wikidata_properties"][PID]["is_reference"] = wikidata_props[PID]["is_reference"]
                     result_dict["real_wikidata_properties"][PID]["qualifier_class"] = wikidata_props[PID]["qualifier_class"]

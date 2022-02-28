@@ -2,6 +2,7 @@ import graphical_analysis.wikidata_analysis as wikidata_analysis
 import graphical_analysis.redundant_detection_analysis as redundant_detection_analysis
 import graphical_analysis.query_metadata_percentage as query_metadata_percentage
 import graphical_analysis.query_scenario_analysis as query_scenario_analysis
+import graphical_analysis.properties_analysis as properties_analysis
 
 
 TIMEFRAMES = [
@@ -61,6 +62,17 @@ def start_graphical_analysis():
 
     query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
         TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
+
+    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "reference_metadata")
+    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "qualifier_metadata")
+    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "rank_metadata")
+
+    for recommended_mode in ["recommended", "non_recommended", "all"]:
+        for metadata_mode in ["reference_metadata", "qualifier_metadata"]:
+
+            properties_analysis.plot_top_properties_timeframe(
+                TIMEFRAMES, metadata_mode, recommended_mode)
+            properties_analysis.plot_top_properties_overall(metadata_mode, recommended_mode)
 
 
 

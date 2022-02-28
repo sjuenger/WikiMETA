@@ -129,7 +129,8 @@ def create_dir_structure_of_data():
 
 
 
-        "./data/statistical_information/query_research/non_redundant/reference_metadata",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/",
+        "./data/statistical_information/query_research/non_redundant/reference_metadata/scenarios",
         "./data/statistical_information/query_research/non_redundant/reference_metadata/raw_counted_properties",
 
 
@@ -155,6 +156,7 @@ def create_dir_structure_of_data():
         "./data/statistical_information/query_research/non_redundant/reference_metadata/all/accumulated_datatypes",
 
         "./data/statistical_information/query_research/non_redundant/qualifier_metadata",
+        "./data/statistical_information/query_research/non_redundant/qualifier_metadata/scenarios",
         "./data/statistical_information/query_research/non_redundant/qualifier_metadata/raw_counted_properties",
 
 
@@ -180,6 +182,7 @@ def create_dir_structure_of_data():
         "./data/statistical_information/query_research/non_redundant/qualifier_metadata/all/accumulated_datatypes",
 
         "./data/statistical_information/query_research/non_redundant/rank_metadata",
+        "./data/statistical_information/query_research/non_redundant/rank_metadata/scenarios",
 
         "./data/statistical_information/redundant_detection/",
         "./data/statistical_information/redundant_detection/qualifier_metadata",

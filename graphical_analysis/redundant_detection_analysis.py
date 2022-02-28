@@ -296,7 +296,7 @@ def plot_redundant_detection_data_exact():
                 plt.gcf().autofmt_xdate()
 
             tmp.savefig("data/statistical_information/redundant_detection/" + location[:21]
-                        + "/" + type.split("/")[0] +  "/redundant_information_exact.png")
+                        + "/" + type.split("/")[0] + "/redundant_information_exact.png")
 
             plt.close()
 
@@ -400,7 +400,7 @@ def plot_redundant_detection_data_exact():
 
         plt.gcf().autofmt_xdate()
 
-        tmp.get_figure().savefig("data/test_" + "redundant_" +  types[0].split("/")[0] + ".png")
+        tmp.get_figure().savefig("data/redundant_" + types[0].split("/")[0] + ".png")
 
         plt.close()
 
@@ -443,7 +443,7 @@ def plot_redundant_detection_data_exact():
 
         plt.gcf().autofmt_xdate()
 
-        tmp.get_figure().savefig("data/test_" + "non-redundant_" + types[0].split("/")[0] + ".png")
+        tmp.get_figure().savefig("data/non-redundant_" + types[0].split("/")[0] + ".png")
 
         plt.close()
 

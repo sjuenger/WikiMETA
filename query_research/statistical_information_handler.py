@@ -477,12 +477,12 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
             elif recommended == False:
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 if mode == "reference_metadata" and int(
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
                 elif mode == "qualifier_metadata" and int(
-                        summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
@@ -492,11 +492,11 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
                 # just exclude those, who either aren't a recommended qualifier/reference property
                 # .. or are never used as a reference / qualifier
                 if mode == "reference_metadata" and (
-                        int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
                     recommended_bool = True
                 elif mode == "qualifier_metadata" and (
-                        int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
@@ -505,9 +505,9 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
             if recommended_bool:
 
                 props_dict["properties"][PID] = \
-                    summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                    summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                 props_dict["total_properties"] += \
-                    summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                    summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                 props_dict["unique_properties"] += 1
 
     summarized_data.close()
@@ -620,11 +620,11 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None, re
 
             elif recommended == False:
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
@@ -633,10 +633,10 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None, re
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
                 # .. or are never used as a reference / qualifier
-                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
                     recommended_bool = True
-                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
@@ -755,11 +755,11 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None,
 
             elif recommended == False:
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
@@ -768,10 +768,10 @@ def get_top_x_counted_datatypes_timeframe(location, x, mode, recommended = None,
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
                 # .. or are never used as a reference / qualifier
-                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
                     recommended_bool = True
-                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
@@ -890,11 +890,11 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
 
             elif recommended == False:
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
@@ -903,10 +903,10 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
                 # .. or are never used as a reference / qualifier
-                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         or bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
                     recommended_bool = True
-                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0\
+                elif mode == "qualifier_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0\
                         or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
@@ -918,15 +918,15 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
 
                     if (facet not in facet_dict["facets"]):
                         facet_dict["facets"][facet] = \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                         facet_dict["total_accumulated_facets"] += \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                         facet_dict["unique_facets"] += 1
                     else:
                         facet_dict["facets"][facet] += \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                         facet_dict["total_accumulated_facets"] += \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
 
         result_dict["unique_facets"] = facet_dict["unique_facets"]
         result_dict["total_accumulated_facet"] = facet_dict["total_accumulated_facets"]
@@ -1029,11 +1029,11 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
 
             elif recommended == False:
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                if mode == "reference_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         and not bool(summarized_dict["real_wikidata_properties"][PID]["is_reference"]):
                     recommended_bool = True
                 # --> but they are min. 1x times used as a reference/qualifier, but not recommended
-                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                elif mode == "qualifier_metadata" and int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         and summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] == []:
                     recommended_bool = True
                 else:
@@ -1042,12 +1042,12 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
             elif recommended is None:
                 # just exclude those, who either aren't a recommended qualifier/reference property
                 # .. or are never used as a reference / qualifier
-                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                if mode == "reference_metadata" and (int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                                             or bool(
                             summarized_dict["real_wikidata_properties"][PID]["is_reference"])):
                     recommended_bool = True
                 elif mode == "qualifier_metadata" and (
-                        int(summarized_dict["real_wikidata_properties"][PID]["occurences"]) > 0 \
+                        int(summarized_dict["real_wikidata_properties"][PID]["occurrences"]) > 0 \
                         or summarized_dict["real_wikidata_properties"][PID]["qualifier_class"] != []):
                     recommended_bool = True
                 else:
@@ -1059,15 +1059,15 @@ def get_top_x_counted_accumulated_datatypes_timeframe(location, x, mode, recomme
 
                 if (datatype not in datatype_dict["datatypes"]):
                     datatype_dict["datatypes"][datatype] = \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                     datatype_dict["total_accumulated_datatypes"] += \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                     datatype_dict["unique_datatypes"] += 1
                 else:
                     datatype_dict["datatypes"][datatype] += \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
                     datatype_dict["total_accumulated_datatypes"] += \
-                            summarized_dict["real_wikidata_properties"][PID]["occurences"]
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
 
         result_dict["unique_datatypes"] = datatype_dict["unique_datatypes"]
         result_dict["total_accumulated_datatypes"] = datatype_dict["total_accumulated_datatypes"]
