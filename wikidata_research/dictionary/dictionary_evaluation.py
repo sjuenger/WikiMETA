@@ -377,7 +377,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
         with open("data/statistical_information/wikidata_research/" + mode + "/" + tmp_string +
                   "/accumulated_facets/accumulated_facets.json", "w") \
                 as result_json:
-            json.dump(result_facets_dictionary, result_json)
+            json.dump(facets_dictionary, result_json)
 
 
         for facet in facets_dictionary["facets"]:

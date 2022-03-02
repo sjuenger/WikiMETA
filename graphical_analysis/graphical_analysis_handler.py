@@ -52,20 +52,20 @@ DATA_TYPES_RANK = [
 
 def start_graphical_analysis():
 
-    wikidata_analysis.plot_top_wikidata_research_properties()
-    wikidata_analysis.plot_top_wikidata_research_accumulated_facets()
-    wikidata_analysis.plot_top_wikidata_research_accumulated_datatypes()
+    #wikidata_analysis.plot_top_wikidata_research_properties()
+    #wikidata_analysis.plot_top_wikidata_research_accumulated_facets()
+    #wikidata_analysis.plot_top_wikidata_research_accumulated_datatypes()
 
     redundant_detection_analysis.plot_redundant_detection_data_exact()
 
-    query_metadata_percentage.display_percentage_queries_with_metadata()
+    #query_metadata_percentage.display_percentage_queries_with_metadata()
 
-    query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
-        TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
+    #query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
+    #    TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
 
-    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "reference_metadata")
-    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "qualifier_metadata")
-    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "rank_metadata")
+    #query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "reference_metadata")
+    #query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "qualifier_metadata")
+    #query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "rank_metadata")
 
     for recommended_mode in ["recommended", "non_recommended", "all"]:
         for metadata_mode in ["reference_metadata", "qualifier_metadata"]:
@@ -73,6 +73,8 @@ def start_graphical_analysis():
             properties_analysis.plot_top_properties_timeframe(
                 TIMEFRAMES, metadata_mode, recommended_mode)
             properties_analysis.plot_top_properties_overall(metadata_mode, recommended_mode)
+            properties_analysis.plot_top_properties_overall_percentage(
+                metadata_mode, recommended_mode)
 
 
 

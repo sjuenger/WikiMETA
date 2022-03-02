@@ -9,11 +9,14 @@ import collections
 
 def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
 
-    if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
+    if metadata_mode not in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
         raise Exception
 
     if recommended_mode not in ["recommended", "non_recommended", "all"]:
         raise Exception
+
+
+
 
     for timeframe in timeframes:
 
@@ -21,8 +24,6 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
         csv_ready_properties_dict["timeframe"] = []
         csv_ready_properties_dict["label"] = []
         csv_ready_properties_dict["properties"] = []
-        csv_ready_properties_dict["is_reference"] = []
-        csv_ready_properties_dict["qualifier_class"] = []
 
 
         timeframe_files = glob.glob("data/" + timeframe[:21] + "/" + timeframe[22:] + \
@@ -52,24 +53,14 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
                     csv_ready_properties_dict["properties"].append(
                         PID_to_facets_dict["real_wikidata_properties"][PID]["occurrences"])
 
-                    csv_ready_properties_dict["is_reference"].append(
-                        PID_to_facets_dict["real_wikidata_properties"][PID]["is_reference"])
-                    csv_ready_properties_dict["qualifier_class"].append(str(
-                        PID_to_facets_dict["real_wikidata_properties"][PID]["qualifier_class"]))
-
 
         df = pd.DataFrame(csv_ready_properties_dict)
 
         print(df)
 
-        if metadata_mode == "reference_metadata":
-            tmp = sns.catplot(x="label", y="properties", kind="bar",
-                              palette="Set2", dodge=False, col="timeframe",
-                              data=df, hue="is_reference")
-        elif metadata_mode == "qualifier_metadata":
-            tmp = sns.catplot(x="label", y="properties", kind="bar",
-                              palette="Set2", dodge=False, col="timeframe",
-                              data=df, hue="qualifier_class")
+        tmp = sns.catplot(x="label", y="properties", kind="bar",
+                          palette="tab10", dodge=True, col="timeframe",
+                          data=df, aspect=1.6)
 
         plt.gcf().autofmt_xdate()
 
@@ -92,8 +83,6 @@ def plot_top_properties_overall(metadata_mode ,recommended_mode):
     csv_ready_properties_dict = {}
     csv_ready_properties_dict["label"] = []
     csv_ready_properties_dict["properties"] = []
-    csv_ready_properties_dict["is_reference"] = []
-    csv_ready_properties_dict["qualifier_class"] = []
 
 
     timeframe_files = glob.glob("data/statistical_information/query_research/"
@@ -118,24 +107,14 @@ def plot_top_properties_overall(metadata_mode ,recommended_mode):
                 csv_ready_properties_dict["properties"].append(
                     timeframe_dict["properties"][PID])
 
-                csv_ready_properties_dict["is_reference"].append(
-                    PID_to_facets_dict[PID]["is_reference"])
-                csv_ready_properties_dict["qualifier_class"].append(str(
-                    PID_to_facets_dict[PID]["qualifier_class"]))
-
 
     df = pd.DataFrame(csv_ready_properties_dict)
 
     print(df)
 
-    if metadata_mode == "reference_metadata":
-        tmp = sns.catplot(x="label", y="properties", kind="bar",
-                          palette="Set2", dodge=False,
-                          data=df, hue="is_reference")
-    elif metadata_mode == "qualifier_metadata":
-        tmp = sns.catplot(x="label", y="properties", kind="bar",
-                          palette="Set2", dodge=False,
-                          data=df, hue="qualifier_class")
+    tmp = sns.catplot(x="label", y="properties", kind="bar",
+                      palette="tab10", dodge=True,
+                      data=df, aspect=1.6)
 
     plt.gcf().autofmt_xdate()
 
@@ -159,8 +138,6 @@ def plot_top_properties_overall_percentage(metadata_mode ,recommended_mode):
     csv_ready_properties_dict = {}
     csv_ready_properties_dict["label"] = []
     csv_ready_properties_dict["properties_percentages"] = []
-    csv_ready_properties_dict["is_reference"] = []
-    csv_ready_properties_dict["qualifier_class"] = []
 
 
     timeframe_files = glob.glob("data/statistical_information/query_research/"
@@ -185,24 +162,14 @@ def plot_top_properties_overall_percentage(metadata_mode ,recommended_mode):
                 csv_ready_properties_dict["properties_percentages"].append(
                     timeframe_dict["properties"][PID] / timeframe_dict["total_properties"])
 
-                csv_ready_properties_dict["is_reference"].append(
-                    PID_to_facets_dict[PID]["is_reference"])
-                csv_ready_properties_dict["qualifier_class"].append(str(
-                    PID_to_facets_dict[PID]["qualifier_class"]))
-
 
     df = pd.DataFrame(csv_ready_properties_dict)
 
     print(df)
 
-    if metadata_mode == "reference_metadata":
-        tmp = sns.catplot(x="label", y="properties_percentages", kind="bar",
-                          palette="Set2", dodge=False,
-                          data=df, hue="is_reference")
-    elif metadata_mode == "qualifier_metadata":
-        tmp = sns.catplot(x="label", y="properties_percentages", kind="bar",
-                          palette="Set2", dodge=False,
-                          data=df, hue="qualifier_class")
+    tmp = sns.catplot(x="label", y="properties_percentages", kind="bar",
+                      palette="tab10", dodge=True,
+                      data=df, aspect=1.6)
 
     plt.gcf().autofmt_xdate()
 

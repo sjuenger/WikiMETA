@@ -312,20 +312,26 @@ def plot_redundant_detection_data_exact():
 
         # plot with a aspect = 1.5 for the rank metadata and without vertical labels for the qualifiers
         if "rank_metadata" in types[0]:
+            color_list = sns.color_palette("Paired")
+            color_list = [color_list[3], color_list[2]]
             tmp = sns.catplot(x="datatype", y="queries", kind="bar",
-                              palette="tab10", hue="total_amount_or_marked",
+                              palette=color_list, hue="total_amount_or_marked",
                               dodge=True, col="metadata", aspect=1.5, data=df)
 
             plt.gcf().autofmt_xdate()
 
         elif "qualifier_metadata" in types[0]:
+            color_list = sns.color_palette("Paired")
+            color_list = [color_list[5], color_list[4]]
             tmp = sns.catplot(x="datatype", y="queries", kind="bar",
-                              palette="tab10", hue="total_amount_or_marked",
+                              palette=color_list, hue="total_amount_or_marked",
                               dodge=True, col="metadata", data=df)
 
         else:
+            color_list = sns.color_palette("Paired")
+            color_list = [color_list[7], color_list[6]]
             tmp = sns.catplot(x="datatype", y="queries", kind="bar",
-                              palette="tab10", hue="total_amount_or_marked",
+                              palette=color_list, hue="total_amount_or_marked",
                               dodge=True, col="metadata", data=df)
 
             plt.gcf().autofmt_xdate()
@@ -347,9 +353,12 @@ def plot_redundant_detection_data_exact():
         with open(overall_path, "w") as overall_data:
             json.dump(csv_ready_dict_overall, overall_data)
 
+        color_list = sns.color_palette("Paired")
+        color_list = [color_list[1], color_list[0]]
 
         tmp = sns.catplot(x="datatype", y="queries", kind="bar",
-                          palette="tab10", hue="total_amount_or_marked",
+                          palette=color_list,
+                          hue="total_amount_or_marked",
                           dodge=True, data=df, ci=None)
 
         tmp.savefig("data/statistical_information/redundant_detection/"
