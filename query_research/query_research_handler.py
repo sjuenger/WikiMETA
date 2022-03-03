@@ -49,7 +49,7 @@ DATA_TYPES_RANK = [
     "rank_metadata/all_ranks"
 ]
 
-def start_research_of_query_data(args):
+def start_research_of_query_data(args, x):
 
     # use a bit-like structure to tell the function, what actions to perform
 
@@ -113,44 +113,44 @@ def start_research_of_query_data(args):
                     for recommended_mode in [True, False, None]:
 
                         statistical_information_handler. \
-                            get_top_x_counted_properties_timeframe(timeframe, 10, metadata_mode,
+                            get_top_x_counted_properties_timeframe(timeframe, x, metadata_mode,
                                                                    recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_facets_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_datatypes_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_accumulated_facets_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_accumulated_datatypes_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler. \
-                            get_top_x_counted_properties_timeframe(timeframe, 10,
+                            get_top_x_counted_properties_timeframe(timeframe, x,
                                                                    metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_facets_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_datatypes_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_accumulated_facets_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
                         statistical_information_handler.\
                             get_top_x_counted_accumulated_datatypes_timeframe(
-                            timeframe, 10, metadata_mode, recommended_mode, redundancy_mode)
+                            timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
 
     # look for Wikidata Example Queries in the Query data
@@ -218,18 +218,18 @@ def start_research_of_query_data(args):
                                                                                                           metadata_mode,
                                                                                                           redundancy_mode)
                 statistical_information_handler.\
-                    get_top_x_counted_raw_properties_overall(10, metadata_mode, redundancy_mode)
+                    get_top_x_counted_raw_properties_overall(x, metadata_mode, redundancy_mode)
 
                 for recommended_mode in [True, False, None]:
 
                     statistical_information_handler.\
-                        summarize_timeframe_information_about_properties_and_get_top_x(10,
+                        summarize_timeframe_information_about_properties_and_get_top_x(x,
                                                                                        TIMEFRAMES,
                                                                                        metadata_mode,
                                                                                        recommended_mode,
                                                                                        redundancy_mode)
                     statistical_information_handler.\
-                        summarize_timeframe_information_about_facets_and_get_top_x(10,
+                        summarize_timeframe_information_about_facets_and_get_top_x(x,
                                                                                        TIMEFRAMES,
                                                                                        metadata_mode,
                                                                                        recommended_mode,
@@ -241,7 +241,7 @@ def start_research_of_query_data(args):
                                                                                    redundancy_mode)
 
                     statistical_information_handler.\
-                        summarize_timeframe_information_about_accumulated_facets_and_get_top_x(10,
+                        summarize_timeframe_information_about_accumulated_facets_and_get_top_x(x,
                                                                                                    TIMEFRAMES,
                                                                                                    metadata_mode,
                                                                                                    recommended_mode,

@@ -7,7 +7,7 @@ import collections
 
 # only plot the non_redundant data
 
-def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
+def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode, x):
 
     if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
         raise Exception
@@ -28,7 +28,8 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
 
         timeframe_files = glob.glob("data/" + timeframe[:21] + "/" + timeframe[22:] + \
                                     "/statistical_information/non_redundant/" + metadata_mode + "/" + \
-                                    recommended_mode + "/properties/top_*_properties.json")
+                                    recommended_mode +
+                                    "/properties/top_" + str(x) + "_properties.json")
         with open(timeframe_files[0], "r") as timeframe_data:
             timeframe_dict = json.load(timeframe_data)
 
@@ -55,8 +56,15 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
 
                     csv_ready_properties_dict["is_reference"].append(
                         PID_to_facets_dict["real_wikidata_properties"][PID]["is_reference"])
-                    csv_ready_properties_dict["qualifier_class"].append(str(
-                        PID_to_facets_dict["real_wikidata_properties"][PID]["qualifier_class"]))
+
+                    if PID_to_facets_dict["real_wikidata_properties"][PID]\
+                        ["qualifier_class"] != [] :
+                        csv_ready_properties_dict["qualifier_class"].append(str(
+                            PID_to_facets_dict["real_wikidata_properties"]
+                            [PID]["qualifier_class"]).replace(",", ",\n").replace(")", ")\n"))
+                    else:
+                        csv_ready_properties_dict["qualifier_class"].\
+                            append("- not a recommended qualifier -")
 
                     csv_ready_properties_dict["recommended_mode"].append(recommended_mode)
 
@@ -72,7 +80,17 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
         elif metadata_mode == "qualifier_metadata":
             tmp = sns.catplot(x="label", y="properties", kind="bar",
                               palette="Set2", dodge=False, col="timeframe",
-                              data=df, hue="qualifier_class")
+                              data=df, hue="qualifier_class",
+                              hue_order=["[\'Wikidata qualifier\']",
+                                         "[\'restrictive qualifier\']",
+                                         "[\'non-restrictive qualifier\']",
+                                         "[\'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                         "[\'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                         "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                         "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                         "- not a recommended qualifier -"
+                                         ]
+                              )
 
         plt.gcf().autofmt_xdate()
 
@@ -83,7 +101,7 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode):
         plt.close()
 
 
-def plot_top_properties_overall(metadata_mode ,recommended_mode):
+def plot_top_properties_overall(metadata_mode, recommended_mode, x):
 
     if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
         raise Exception
@@ -102,7 +120,7 @@ def plot_top_properties_overall(metadata_mode ,recommended_mode):
 
     timeframe_files = glob.glob("data/statistical_information/query_research/"
                                 "non_redundant/" + metadata_mode + "/" + \
-                                recommended_mode + "/properties/top_*_properties.json")
+                                recommended_mode + "/properties/top_" + str(x) + "_properties.json")
 
     with open(timeframe_files[0], "r") as timeframe_data:
         # order the timeframe dict, so that the most used properties are in front
@@ -124,8 +142,14 @@ def plot_top_properties_overall(metadata_mode ,recommended_mode):
 
                 csv_ready_properties_dict["is_reference"].append(
                     PID_to_facets_dict[PID]["is_reference"])
-                csv_ready_properties_dict["qualifier_class"].append(str(
-                    PID_to_facets_dict[PID]["qualifier_class"]))
+
+                if PID_to_facets_dict[PID] \
+                        ["qualifier_class"] != []:
+                    csv_ready_properties_dict["qualifier_class"].append(str(
+                        PID_to_facets_dict[PID]["qualifier_class"]).replace(",", ",\n").replace(")", ")\n"))
+                else:
+                    csv_ready_properties_dict["qualifier_class"]. \
+                        append("- not a recommended qualifier -")
 
                 csv_ready_properties_dict["recommended_mode"].append(recommended_mode)
 
@@ -140,7 +164,17 @@ def plot_top_properties_overall(metadata_mode ,recommended_mode):
     elif metadata_mode == "qualifier_metadata":
         tmp = sns.catplot(x="label", y="properties", kind="bar", col="recommended_mode",
                           palette="Set2", dodge=False,
-                          data=df, hue="qualifier_class")
+                          data=df, hue="qualifier_class",
+                          hue_order=["[\'Wikidata qualifier\']",
+                                     "[\'restrictive qualifier\']",
+                                     "[\'non-restrictive qualifier\']",
+                                     "[\'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "[\'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "- not a recommended qualifier -"
+                                     ]
+                          )
 
     plt.gcf().autofmt_xdate()
 
@@ -150,9 +184,7 @@ def plot_top_properties_overall(metadata_mode ,recommended_mode):
     plt.close()
 
 
-
-
-def plot_top_properties_overall_percentage(metadata_mode ,recommended_mode):
+def plot_top_properties_overall_percentage(metadata_mode, recommended_mode, x):
 
     if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
         raise Exception
@@ -171,7 +203,7 @@ def plot_top_properties_overall_percentage(metadata_mode ,recommended_mode):
 
     timeframe_files = glob.glob("data/statistical_information/query_research/"
                                 "non_redundant/" + metadata_mode + "/" + \
-                                recommended_mode + "/properties/top_*_properties.json")
+                                recommended_mode + "/properties/top_" + str(x) + "_properties.json")
 
     with open(timeframe_files[0], "r") as timeframe_data:
         # order the timeframe dict, so that the most used properties are in front
@@ -193,8 +225,14 @@ def plot_top_properties_overall_percentage(metadata_mode ,recommended_mode):
 
                 csv_ready_properties_dict["is_reference"].append(
                     PID_to_facets_dict[PID]["is_reference"])
-                csv_ready_properties_dict["qualifier_class"].append(str(
-                    PID_to_facets_dict[PID]["qualifier_class"]))
+
+                if PID_to_facets_dict[PID] \
+                        ["qualifier_class"] != []:
+                    csv_ready_properties_dict["qualifier_class"].append(str(
+                        PID_to_facets_dict[PID]["qualifier_class"]).replace(",", ",\n").replace(")", ")\n"))
+                else:
+                    csv_ready_properties_dict["qualifier_class"]. \
+                        append("- not a recommended qualifier -")
 
                 csv_ready_properties_dict["recommended_mode"].append(recommended_mode)
 
@@ -210,7 +248,17 @@ def plot_top_properties_overall_percentage(metadata_mode ,recommended_mode):
     elif metadata_mode == "qualifier_metadata":
         tmp = sns.catplot(x="label", y="properties_percentages", kind="bar",
                           palette="Set2", dodge=False, col="recommended_mode",
-                          data=df, hue="qualifier_class")
+                          data=df, hue="qualifier_class",
+                          hue_order=["[\'Wikidata qualifier\']",
+                                     "[\'restrictive qualifier\']",
+                                     "[\'non-restrictive qualifier\']",
+                                     "[\'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "[\'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                     "- not a recommended qualifier -"
+                                     ]
+                          )
 
     plt.gcf().autofmt_xdate()
 

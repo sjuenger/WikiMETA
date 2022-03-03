@@ -7,7 +7,7 @@ import collections
 
 # only plot the non_redundant data
 
-def plot_top_accumulated_facets_timeframe(timeframes,metadata_mode ,recommended_mode):
+def plot_top_accumulated_facets_timeframe(timeframes,metadata_mode ,recommended_mode, x):
 
     if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
         raise Exception
@@ -26,7 +26,7 @@ def plot_top_accumulated_facets_timeframe(timeframes,metadata_mode ,recommended_
         timeframe_files = glob.glob("data/" + timeframe[:21] + "/" + timeframe[22:] + \
                                     "/statistical_information/non_redundant/" + metadata_mode + "/" + \
                                     recommended_mode + "/accumulated_facets" +
-                                                       "/top_*_accumulated_facets.json")
+                                                       "/top_" + str(x) + "_accumulated_facets.json")
         with open(timeframe_files[0], "r") as timeframe_data:
             timeframe_dict = json.load(timeframe_data)
 
@@ -56,7 +56,7 @@ def plot_top_accumulated_facets_timeframe(timeframes,metadata_mode ,recommended_
         plt.close()
 
 
-def plot_top_accumulated_facets_overall(metadata_mode, recommended_mode):
+def plot_top_accumulated_facets_overall(metadata_mode, recommended_mode, x):
 
     if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
         raise Exception
@@ -74,7 +74,7 @@ def plot_top_accumulated_facets_overall(metadata_mode, recommended_mode):
     timeframe_files = glob.glob("data/statistical_information/query_research/"
                                 "non_redundant/" + metadata_mode + "/" + \
                                 recommended_mode + "/accumulated_facets" + \
-                                "/top_*_accumulated_facets.json")
+                                "/top_" + str(x) + "_accumulated_facets.json")
 
     with open(timeframe_files[0], "r") as timeframe_data:
         # order the timeframe dict, so that the most used facets are in front
@@ -106,7 +106,7 @@ def plot_top_accumulated_facets_overall(metadata_mode, recommended_mode):
 
 
 
-def plot_top_accumulated_facets_overall_percentage(metadata_mode ,recommended_mode):
+def plot_top_accumulated_facets_overall_percentage(metadata_mode ,recommended_mode, x):
 
     if metadata_mode not in ["reference_metadata", "qualifier_metadata"]:
         raise Exception
@@ -123,7 +123,7 @@ def plot_top_accumulated_facets_overall_percentage(metadata_mode ,recommended_mo
     timeframe_files = glob.glob("data/statistical_information/query_research/"
                                 "non_redundant/" + metadata_mode + "/" +
                                 recommended_mode + "/accumulated_facets" +
-                                "/top_*_accumulated_facets.json")
+                                "/top_" + str(x) + "_accumulated_facets.json")
 
     with open(timeframe_files[0], "r") as timeframe_data:
         # order the timeframe dict, so that the most used facets are in front

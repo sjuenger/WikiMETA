@@ -6,7 +6,7 @@ import glob
 import json
 import collections
 
-def plot_top_wikidata_research_properties():
+def plot_top_wikidata_research_properties(x):
 
     metadata_modes = ["qualifier", "reference"]
 
@@ -18,7 +18,7 @@ def plot_top_wikidata_research_properties():
 
             files_json = glob.glob("data/statistical_information/wikidata_research/" +
                                    metadata_mode + "/" + recommended_mode +
-                                   "/properties/" + "top*" + ".json")
+                                   "/properties/" + "top_" + str(x) + ".json")
 
             # if the recommended option is set (i.e. not null), is it necessary to query the overall files
             # .. to get the number of both recommended / not recommended reference/qualifier property usages
@@ -34,7 +34,7 @@ def plot_top_wikidata_research_properties():
 
                 overall_dict = json.load(overall_json)
 
-                overall_usages = int( overall_dict[ "total_usages_of_" + metadata_mode ] )
+                overall_usages = int( overall_dict["total_usages_of_" + metadata_mode])
 
 
             print(files_json)
@@ -79,7 +79,8 @@ def plot_top_wikidata_research_properties():
                             append("- not a recommended qualifier -")
                     else:
                         dataframe_dict["qualifier_class"].\
-                            append(str( whole_dict["properties"][PID]["qualifier_class"]))
+                            append(str(whole_dict["properties"][PID]["qualifier_class"]).
+                                   replace(",", ",\n").replace(")", ")\n"))
                         print(str( whole_dict["properties"][PID]["qualifier_class"]))
                     dataframe_dict["is_reference"].\
                         append(whole_dict["properties"][PID]["is_reference"])
@@ -108,10 +109,10 @@ def plot_top_wikidata_research_properties():
                                       hue_order=["[\'Wikidata qualifier\']",
                                                  "[\'restrictive qualifier\']",
                                                  "[\'non-restrictive qualifier\']",
-                                                 "[\'Wikidata property used as \"depicts\" (P180) qualifier on Commons\']",
-                                                 "[\'non-restrictive qualifier\', \'Wikidata property used as \"depicts\" (P180) qualifier on Commons\']",
-                                                 "[\'restrictive qualifier\', \'Wikidata property used as \"depicts\" (P180) qualifier on Commons\']",
-                                                 "[\'restrictive qualifier\', \'non-restrictive qualifier\', \'Wikidata property used as \"depicts\" (P180) qualifier on Commons\']",
+                                                 "[\'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                                 "[\'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                                 "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
+                                                 "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                                  "- not a recommended qualifier -"
                                       ],
                                       kind="bar", dodge=False, col="recommended_mode",
@@ -140,7 +141,7 @@ def plot_top_wikidata_research_properties():
                 plt.close()
 
 
-def plot_top_wikidata_research_accumulated_facets():
+def plot_top_wikidata_research_accumulated_facets(x):
 
     metadata_modes = ["qualifier", "reference"]
 
@@ -152,7 +153,7 @@ def plot_top_wikidata_research_accumulated_facets():
 
             files_json = glob.glob("data/statistical_information/wikidata_research/" +
                                    metadata_mode + "/" + recommended_mode + "/accumulated_facets/" +
-                                   "top*.json")
+                                   "top_" + str(x) + ".json")
 
             # if the recommended option is set (i.e. not null), is it necessary to query the overall files
             # .. to get the number of both recommended / not recommended reference/qualifier facets usages

@@ -27,30 +27,29 @@ def main():
     #directory_structure_handler.create_dir_structure_of_data()
     #directory_structure_handler.delete_identified_scenarios()
 
-    #do_wikidata_research_stuff()
+    #do_wikidata_research_stuff(15)
 
-    #do_query_research_stuff([0,1,0,1,1,0,1])
+    #do_query_research_stuff([0,1,0,1,1,0,1], 15)
 
-    analyse_research_stuff()
+    analyse_research_stuff(15)
 
     # the ALL is missing with the recommmended / non_recommended things
 
     # summarize the statistical information on the redundant queries
     #
 
-def do_wikidata_research_stuff():
+def do_wikidata_research_stuff(x):
     # Wikidata Stuff
     if not os.path.isfile("data/property_dictionary.json"):
         txt_to_dict.get_dict()
 
-    wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "reference")
-    wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(10, "qualifier")
+    wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(x, "reference")
+    wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(x, "qualifier")
 
 
-def do_query_research_stuff(args):
+def do_query_research_stuff(args, x):
 
-    query_research_handler.start_research_of_query_data(args)
-    do_wikidata_research_stuff()
+    query_research_handler.start_research_of_query_data(args, x)
 
             # TODO: Add properties to the recommended / non-recommended thing
             # TODO: Summarize the query information per timeframe to a property information over all timeframes
@@ -61,8 +60,8 @@ def do_query_research_stuff(args):
             #
             # TODO: get the 'total datatypes and facets' right -> also accumulatenthem
 
-def analyse_research_stuff():
-    graphical_analysis_handler.start_graphical_analysis()
+def analyse_research_stuff(x):
+    graphical_analysis_handler.start_graphical_analysis(x)
 
 
 
