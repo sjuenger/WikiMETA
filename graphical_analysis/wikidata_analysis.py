@@ -100,7 +100,7 @@ def plot_top_wikidata_research_properties(x):
                     tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage",
                                       hue="is_reference", hue_order=[True, False], kind="bar",
                                       palette="tab10", dodge=False, col="recommended_mode",
-                                      data=df)
+                                      data=df, aspect=1.6)
 
                 else:
 
@@ -116,7 +116,7 @@ def plot_top_wikidata_research_properties(x):
                                                  "- not a recommended qualifier -"
                                       ],
                                       kind="bar", dodge=False, col="recommended_mode",
-                                      data=df)
+                                      data=df, aspect=1.4)
                     # kind = point for the timeframes !
 
                 #tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage" , kind="bar",  data=df, estimator=nm.median)
@@ -206,7 +206,7 @@ def plot_top_wikidata_research_accumulated_facets(x):
 
 
                 tmp = sns.catplot(x= "label", y="accumulated_facets_percentage", kind="bar",
-                                  palette="tab10", dodge=False, col="recommended_mode",
+                                  palette="tab10", dodge=False, col="recommended_mode", aspect=1.4,
                                   data=df)
 
 
@@ -284,7 +284,7 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
                 tmp = sns.catplot(x= "label", y="accumulated_datatypes_percentage", kind="bar",
                                   palette="tab10", dodge=False, col="recommended_mode",
-                                  data=df, aspect=1.6)
+                                  data=df, aspect=1.4)
 
 
                 plt.gcf().autofmt_xdate()

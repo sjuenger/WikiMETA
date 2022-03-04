@@ -56,9 +56,9 @@ DATA_TYPES_RANK = [
 
 def start_graphical_analysis(x):
 
-    #wikidata_analysis.plot_top_wikidata_research_properties(x)
-    #wikidata_analysis.plot_top_wikidata_research_accumulated_facets(x)
-    #wikidata_analysis.plot_top_wikidata_research_accumulated_datatypes()
+    wikidata_analysis.plot_top_wikidata_research_properties(x)
+    wikidata_analysis.plot_top_wikidata_research_accumulated_facets(x)
+    wikidata_analysis.plot_top_wikidata_research_accumulated_datatypes()
 
     #redundant_detection_analysis.plot_redundant_detection_data_exact()
 

@@ -400,7 +400,7 @@ def plot_redundant_detection_data_exact():
         df = pd.pivot_table(data=df,
                             index='datatype',
                             values='percentage_on_total_metadata_queries',
-                            columns='timeframe')
+                            columns='timeframe', sort = False)
 
         fig, ax = plt.subplots(figsize=(10, 6))
         tmp = sns.heatmap(df, ax=ax, vmin=0, vmax =1, annot=True)
@@ -443,7 +443,7 @@ def plot_redundant_detection_data_exact():
         df = pd.pivot_table(data=df,
                             index='datatype',
                             values='percentage_on_total_metadata_queries',
-                            columns='timeframe')
+                            columns='timeframe', sort = False)
 
         fig, ax = plt.subplots(figsize=(10, 6))
         tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1)

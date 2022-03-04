@@ -45,7 +45,7 @@ def plot_top_accumulated_datatypes_timeframe(timeframes,metadata_mode ,recommend
 
         tmp = sns.catplot(x="labels", y="datatypes", kind="bar",
                           palette="Set2", dodge=False, hue="timeframe", col="recommended_mode",
-                          data=df)
+                          data=df, aspect=1.4)
 
         plt.gcf().autofmt_xdate()
 
@@ -92,7 +92,7 @@ def plot_top_accumulated_datatypes_overall(metadata_mode, recommended_mode):
 
     tmp = sns.catplot(x="labels", y="datatypes", kind="bar",
                       palette="Set2", dodge=False, col="recommended_mode",
-                      data=df)
+                      data=df, aspect=1.4)
 
 
     plt.gcf().autofmt_xdate()
@@ -143,7 +143,7 @@ def plot_top_accumulated_datatypes_overall_percentage(metadata_mode ,recommended
 
     tmp = sns.catplot(x="labels", y="datatypes_percentages", kind="bar",
                       palette="Set2", dodge=False, col="recommended_mode",
-                      data=df)
+                      data=df, aspect=1.4)
 
     plt.gcf().autofmt_xdate()
 

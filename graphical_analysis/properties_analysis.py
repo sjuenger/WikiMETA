@@ -76,7 +76,7 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode, x)
         if metadata_mode == "reference_metadata":
             tmp = sns.catplot(x="label", y="properties", kind="bar",
                               palette="Set2", dodge=False, col="timeframe",
-                              data=df, hue="is_reference")
+                              data=df, hue="is_reference", aspect=1.4)
         elif metadata_mode == "qualifier_metadata":
             tmp = sns.catplot(x="label", y="properties", kind="bar",
                               palette="Set2", dodge=False, col="timeframe",
@@ -89,7 +89,7 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode, x)
                                          "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                          "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                          "- not a recommended qualifier -"
-                                         ]
+                                         ], aspect=1.4
                               )
 
         plt.gcf().autofmt_xdate()
@@ -160,7 +160,7 @@ def plot_top_properties_overall(metadata_mode, recommended_mode, x):
     if metadata_mode == "reference_metadata":
         tmp = sns.catplot(x="label", y="properties", kind="bar", col="recommended_mode",
                           palette="Set2", dodge=False,
-                          data=df, hue="is_reference")
+                          data=df, hue="is_reference", aspect=1.4)
     elif metadata_mode == "qualifier_metadata":
         tmp = sns.catplot(x="label", y="properties", kind="bar", col="recommended_mode",
                           palette="Set2", dodge=False,
@@ -173,7 +173,7 @@ def plot_top_properties_overall(metadata_mode, recommended_mode, x):
                                      "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                      "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                      "- not a recommended qualifier -"
-                                     ]
+                                     ], aspect=1.4
                           )
 
     plt.gcf().autofmt_xdate()
@@ -244,7 +244,7 @@ def plot_top_properties_overall_percentage(metadata_mode, recommended_mode, x):
     if metadata_mode == "reference_metadata":
         tmp = sns.catplot(x="label", y="properties_percentages", kind="bar",
                           palette="Set2", dodge=False, col="recommended_mode",
-                          data=df, hue="is_reference")
+                          data=df, hue="is_reference", aspect=1.4)
     elif metadata_mode == "qualifier_metadata":
         tmp = sns.catplot(x="label", y="properties_percentages", kind="bar",
                           palette="Set2", dodge=False, col="recommended_mode",
@@ -257,7 +257,7 @@ def plot_top_properties_overall_percentage(metadata_mode, recommended_mode, x):
                                      "[\'restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                      "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                      "- not a recommended qualifier -"
-                                     ]
+                                     ], aspect=1.4
                           )
 
     plt.gcf().autofmt_xdate()

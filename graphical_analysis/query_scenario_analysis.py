@@ -92,12 +92,13 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
                 df = pd.pivot_table(data=df,
                                     index='scenario_name',
                                     values='scenario_percentage',
-                                    columns='timeframe')
+                                    columns='timeframe', sort=False)
 
                 mask = (df == 0)
-                fig, ax = plt.subplots(figsize=(16, 10))
+                fig, ax = plt.subplots(figsize=(12, 10))
                 tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0,
-                                  vmax = 1, mask=mask, cmap="YlGnBu", linewidths=.5)
+                                  vmax = 1, mask=mask, cmap="YlGnBu",
+                                  linewidths=.5)
                 tmp.figure.tight_layout()
                 #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
 
@@ -289,11 +290,12 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
     df = pd.pivot_table(data=df,
                         index='scenario_name',
                         values='scenario_percentage',
-                        columns='timeframe')
+                        columns='timeframe', sort=False)
 
     mask = (df == 0)
-    fig, ax = plt.subplots(figsize=(16, 10)) # 16 10
-    tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="YlGnBu", linewidths=.5)
+    fig, ax = plt.subplots(figsize=(12, 10)) # 16 10
+    tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="YlGnBu",
+                      linewidths=.5)
     tmp.figure.tight_layout()
     #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
 
