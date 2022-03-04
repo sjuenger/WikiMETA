@@ -36,7 +36,8 @@ def scenario_five_occurrences(json_object, look_for, bound_variables):
 
                             if (triple["object"]["termType"] == "NamedNode" and
                                 look_for in triple["object"]["value"]) \
-                                    or (look_for == triple["object"]["value"] and look_for in str(bound_variables)):
+                                    or (look_for == triple["object"]["value"] and look_for in str(bound_variables)
+                                        and triple["object"]["termType"] == "Variable"):
                                 result += 1
 
     return result

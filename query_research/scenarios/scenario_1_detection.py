@@ -37,7 +37,8 @@ def scenario_one_occurrences(json_object, look_for, bound_variables):
                         # .. so, there can't be e.g. a varaible named "http://www.wikidata.org/prop/reference/Pxxx"
                         if (triple["predicate"]["termType"] == "NamedNode" and
                                 look_for in triple["predicate"]["value"])\
-                                or (look_for == triple["predicate"]["value"] and look_for in str(bound_variables)):
+                                or (look_for == triple["predicate"]["value"] and look_for in str(bound_variables)
+                                    and triple["predicate"]["termType"] == "Variable"):
                             # -> if a 'var4' is bound to a item we are looking for
                             # e.g.
 

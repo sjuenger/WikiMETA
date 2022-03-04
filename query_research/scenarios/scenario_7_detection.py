@@ -27,7 +27,9 @@ def scenario_seven_occurrences(json_object, look_for, bound_variables):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "NamedNode") or ((triple["subject"]["value"])
-                                                                      in bound_variables.__str__()):
+                                                                      in bound_variables.__str__()
+                                                                        and triple["subject"]["termType"]
+                                                                            == "Variable"):
 
                     if ("termType" in triple["predicate"]):
                         # on property paths, there also could be no termType
@@ -36,7 +38,8 @@ def scenario_seven_occurrences(json_object, look_for, bound_variables):
 
                             if (triple["object"]["termType"] == "NamedNode" and
                                 look_for in triple["object"]["value"]) \
-                                    or (look_for == triple["object"]["value"] and look_for in str(bound_variables)):
+                                    or (look_for == triple["object"]["value"] and look_for in str(bound_variables)
+                                        and triple["object"]["termType"] == "Variable"):
                                 result += 1
 
     return result

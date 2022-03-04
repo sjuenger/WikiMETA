@@ -26,15 +26,19 @@ def scenario_four_occurrences(json_object, look_for, bound_variables):
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "NamedNode") or ((triple["subject"]["value"])
-                                                                     in bound_variables.__str__()):
+                                                                     in bound_variables.__str__()
+                                                                      and triple["subject"]["termType"]
+                                                                        == "Variable"):
                     # on property paths, there also could be no termType
                     if ("termType" in triple["predicate"]):
                         if (triple["predicate"]["termType"] == "NamedNode" and
                               look_for in triple["predicate"]["value"])\
-                                or (look_for == triple["predicate"]["value"] and look_for in str(bound_variables)):
+                                or (look_for == triple["predicate"]["value"] and look_for in str(bound_variables)
+                                    and triple["predicate"]["termType"] == "Variable"):
 
                             if (triple["object"]["termType"] == "NamedNode") or ((triple["object"]
-                            ["value"]) in bound_variables.__str__()):
+                            ["value"]) in bound_variables.__str__()
+                                and triple["object"]["termType"] == "Variable"):
 
                               result += 1
 
