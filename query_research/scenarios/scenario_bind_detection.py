@@ -61,7 +61,7 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
-        if where_part["type"] == "bind":
+        if "type" in where_part and where_part["type"] == "bind":
             # if the bind operation is not just an assignment to a variable
             # {'type': 'bind', 'variable': {'termType': 'Variable', 'value': 'var3'}, 'expression': {'type': 'operation', 'operator': 'exists', 'args': [{'type': 'bgp', 'triples': [{'subject': {'termType': 'Variable', 'value': 'var4'}, 'predicate': {'termType': 'NamedNode', 'value': 'http://www.w3.org/ns/prov#wasDerivedFrom'}, 'object': {'termType': 'Variable', 'value': 'var5'}}]}]}}
             # TODO: Which type of BIND? Exist, If, ...
@@ -209,10 +209,17 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         bind_statistical_information["variables_found_in_scenarios"]["blank_node"] += \
                             scenario_blank_node_detection.\
                                 scenario_blank_node_occurrences(json_object, variable_look_for, bound_variables)
+
+
+                        # if RE-USED in another FILTER - but in this case, do not go deeper into the tree
+                        #
+                        # Do not look for another RE-USE in a FILTER.
                         # scenario filter
                         bind_statistical_information["variables_found_in_scenarios"]["filter"] += \
-                            scenario_filter_detection.\
-                                scenario_filter_occurrences(json_object, variable_look_for, bound_variables)
+                            scenario_filter_detection. \
+                                scenario_filter_occurrences(json_object, look_for, location,
+                                                            bound_variables, False)
+
                         # scenario group
                         # check, if there are some group term types left
                         check_for_still_existing_group = \
@@ -230,7 +237,7 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         #
                         # Do not look for another RE-USE in a MINUS.
                         # scenario minus
-                        bind_statistical_information["variables_found_in_scenarios"]["union"] += \
+                        bind_statistical_information["variables_found_in_scenarios"]["minus"] += \
                             scenario_minus_detection. \
                                 scenario_minus_occurrences(json_object, look_for, location,
                                                            bound_variables, False)

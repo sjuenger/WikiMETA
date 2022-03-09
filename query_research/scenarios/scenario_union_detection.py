@@ -58,7 +58,7 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
-        if where_part["type"] == "union":
+        if "type" in where_part and where_part["type"] == "union":
             if (look_for not in str(where_part["patterns"])):
                 if look_for in str(where_part):
                     raise Exception
@@ -185,10 +185,18 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                     union_statistical_information["metadata_found_in_scenarios"]["blank_node"] += \
                         scenario_blank_node_detection. \
                             scenario_blank_node_occurrences({"where": where_part["patterns"]}, look_for, bound_variables)
+
+
+
+                    # if RE-USED in another FILTER - but in this case, do not go deeper into the tree
+                    #
+                    # Do not look for another RE-USE in a FILTER.
                     # scenario filter
                     union_statistical_information["metadata_found_in_scenarios"]["filter"] += \
                         scenario_filter_detection. \
-                            scenario_filter_occurrences({"where": where_part["patterns"]}, look_for, bound_variables)
+                            scenario_filter_occurrences({"where": where_part["patterns"]}, look_for, location,
+                                                       bound_variables, False)
+
 
                     # scenario group
                     # check, if there are some group term types left
@@ -208,7 +216,7 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                     #
                     # Do not look for another RE-USE in a MINUS.
                     # scenario minus
-                    union_statistical_information["metadata_found_in_scenarios"]["union"] += \
+                    union_statistical_information["metadata_found_in_scenarios"]["minus"] += \
                         scenario_minus_detection. \
                             scenario_minus_occurrences({"where": where_part["patterns"]}, look_for, location,
                                                        bound_variables, False)
@@ -265,7 +273,7 @@ def delete_and_join_all_GROUP_patterns_to_the_overall_UNION_patterns(group_type)
     patterns = group_type["patterns"]
 
     for pattern in patterns:
-        if pattern["type"] == "group":
+        if "type" in pattern and pattern["type"] == "group":
             group_type["patterns"].remove(pattern)
             group_type["patterns"] = group_type["patterns"] + pattern["patterns"]
             group_was_found = True

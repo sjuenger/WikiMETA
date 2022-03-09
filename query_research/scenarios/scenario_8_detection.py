@@ -23,7 +23,7 @@ def scenario_eight_occurrences(json_object, look_for, bound_variables):
     # multiple bgp (basic graph patterns)
     for where_part in where:
 
-        if where_part["type"] == "bgp":
+        if "type" in where_part and where_part["type"] == "bgp":
             for triple in where_part["triples"]:
 
                 if (triple["subject"]["termType"] == "NamedNode") or ((triple["subject"]["value"])

@@ -29,7 +29,7 @@ def scenario_values_occurrences(json_object, look_for, _):
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
-        if where_part["type"] == "values":
+        if "type" in where_part and where_part["type"] == "values":
             if (look_for in str(where_part["values"])):
                 # there may be more than one
                 result += str(where_part["values"]).count(look_for)

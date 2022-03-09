@@ -83,7 +83,7 @@ def scenario_minus_occurrences(json_object, look_for, location, bound_variables,
 
     # multiple bgp (basic graph patterns)
     for where_part in where:
-        if where_part["type"] == "minus":
+        if "type" in where_part and where_part["type"] == "minus":
             if (look_for not in str(where_part["patterns"])):
                 if look_for in str(where_part):
                     raise Exception
@@ -212,10 +212,17 @@ def scenario_minus_occurrences(json_object, look_for, location, bound_variables,
                     minus_statistical_information["metadata_found_in_scenarios"]["blank_node"] += \
                         scenario_blank_node_detection. \
                             scenario_blank_node_occurrences({"where": where_part["patterns"]}, look_for, bound_variables)
+
+
+                    # if RE-USED in another FILTER - but in this case, do not go deeper into the tree
+                    #
+                    # Do not look for another RE-USE in a FILTER.
                     # scenario filter
                     minus_statistical_information["metadata_found_in_scenarios"]["filter"] += \
                         scenario_filter_detection. \
-                            scenario_filter_occurrences({"where": where_part["patterns"]}, look_for, bound_variables)
+                            scenario_filter_occurrences({"where": where_part["patterns"]}, look_for, location,
+                                                       bound_variables, False)
+
 
                     # scenario group
                     # check, if there are some group term types left
@@ -235,7 +242,7 @@ def scenario_minus_occurrences(json_object, look_for, location, bound_variables,
                     #
                     # Do not look for another RE-USE in a MINUS.
                     # scenario minus
-                    minus_statistical_information["metadata_found_in_scenarios"]["union"] += \
+                    minus_statistical_information["metadata_found_in_scenarios"]["minus"] += \
                         scenario_minus_detection. \
                             scenario_minus_occurrences({"where": where_part["patterns"]}, look_for, location,
                                                        bound_variables, False)

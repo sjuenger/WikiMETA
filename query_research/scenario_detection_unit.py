@@ -214,7 +214,6 @@ def detect_scenarios(location, data_type, redundant_mode):
 
 
                         for looking_for in looking_for_list:
-
                             # variable to count the found scenarios
                             scenario_count = 0
 
@@ -331,7 +330,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # scenario filter
                             tmp_occurrences = \
                                 scenario_filter_detection.\
-                                    scenario_filter_occurrences(json_object, looking_for, found_bound_variables)
+                                    scenario_filter_occurrences(json_object, looking_for,
+                                                              path_to_scenarios, found_bound_variables, True)
                             occurrences_scenario_filter += tmp_occurrences
                             dict_looking_for["filter"] += tmp_occurrences
                             if tmp_occurrences > 0:
