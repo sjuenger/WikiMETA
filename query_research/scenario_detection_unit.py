@@ -400,7 +400,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # scenario minus
                             tmp_occurrences = \
                                 scenario_minus_detection.\
-                                    scenario_minus_occurrences(json_object, looking_for, found_bound_variables)
+                                    scenario_minus_occurrences(json_object, looking_for,
+                                                               path_to_scenarios, found_bound_variables, True)
                             occurrences_scenario_minus += tmp_occurrences
                             dict_looking_for["minus"] += tmp_occurrences
                             if tmp_occurrences > 0:

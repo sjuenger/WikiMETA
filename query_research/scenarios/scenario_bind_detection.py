@@ -224,10 +224,18 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         bind_statistical_information["variables_found_in_scenarios"]["literal"] += \
                             scenario_literal_detection.\
                                 scenario_literal_occurrences(json_object, variable_look_for, bound_variables)
+
+
+                        # if RE-USED in another MINUS - but in this case, do not go deeper into the tree
+                        #
+                        # Do not look for another RE-USE in a MINUS.
                         # scenario minus
-                        bind_statistical_information["variables_found_in_scenarios"]["minus"] += \
-                            scenario_minus_detection.\
-                                scenario_minus_occurrences(json_object, variable_look_for, bound_variables)
+                        bind_statistical_information["variables_found_in_scenarios"]["union"] += \
+                            scenario_minus_detection. \
+                                scenario_minus_occurrences(json_object, look_for, location,
+                                                           bound_variables, False)
+
+
                         # scenario optional
                         bind_statistical_information["variables_found_in_scenarios"]["optional"] += \
                             scenario_optional_detection.\

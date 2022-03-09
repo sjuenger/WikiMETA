@@ -119,9 +119,7 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
 
                     union_statistical_information["total_found_metadata"] += \
                         str(where_part["patterns"]).count(look_for)
-                    #
-                    # detect the scenario the found, bound variable might be in (it can also be not found in any other
-                    # .. expression)
+                    # detect the scenario on the 'additional' layer
 
                     tmp_dict = union_statistical_information["metadata_found_in_scenarios"].copy()
 
@@ -204,10 +202,18 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                     union_statistical_information["metadata_found_in_scenarios"]["literal"] += \
                         scenario_literal_detection. \
                             scenario_literal_occurrences({"where": where_part["patterns"]}, look_for, bound_variables)
+
+
+                    # if RE-USED in another MINUS - but in this case, do not go deeper into the tree
+                    #
+                    # Do not look for another RE-USE in a MINUS.
                     # scenario minus
-                    union_statistical_information["metadata_found_in_scenarios"]["minus"] += \
+                    union_statistical_information["metadata_found_in_scenarios"]["union"] += \
                         scenario_minus_detection. \
-                            scenario_minus_occurrences({"where": where_part["patterns"]}, look_for, bound_variables)
+                            scenario_minus_occurrences({"where": where_part["patterns"]}, look_for, location,
+                                                       bound_variables, False)
+
+
                     # scenario optional
                     union_statistical_information["metadata_found_in_scenarios"]["optional"] += \
                         scenario_optional_detection. \
