@@ -43,11 +43,11 @@ def scenario_subselect_occurrences(json_object, look_for, _):
     for where_part in where:
         if "queryType" in where_part:
             if where_part["queryType"] == "SELECT":
-                if (look_for in str(where_part["where"])):
+                if look_for in str(where_part["where"]):
                     # there may be more than one
                     result += str(where_part["where"]).count(look_for)
-                else:
-                    if look_for in str(where_part):
-                        raise Exception
+                #else:
+                #    if look_for in str(where_part):
+                #        raise Exception
 
     return result

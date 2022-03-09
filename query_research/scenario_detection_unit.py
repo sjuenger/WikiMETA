@@ -36,7 +36,6 @@ import query_research.scenarios.scenario_filter_detection as scenario_filter_det
 import query_research.scenarios.scenario_optional_detection as scenario_optional_detection
 import query_research.scenarios.scenario_union_detection as scenario_union_detection
 import query_research.scenarios.scenario_prop_path_detection as scenario_prop_path_detection
-import query_research.scenarios.scenario_group_detection as scenario_group_detection
 import query_research.scenarios.scenario_bind_detection as scenario_bind_detection
 import query_research.scenarios.scenario_blank_node_detection as scenario_blank_node_detection
 import query_research.scenarios.scenario_minus_detection as scenario_minus_detection
@@ -126,7 +125,6 @@ def detect_scenarios(location, data_type, redundant_mode):
             "optional": 0,
             "union": 0,
             "prop_path": 0,
-            "group": 0,
             "bind": 0,
             "blank_node": 0,
             "minus": 0,
@@ -187,7 +185,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                         occurrences_scenario_bind = 0
                         occurrences_scenario_blank_node = 0
                         occurrences_scenario_filter = 0
-                        occurrences_scenario_group = 0
                         occurrences_scenario_literal = 0
                         occurrences_scenario_minus = 0
                         occurrences_scenario_optional = 0
@@ -211,21 +208,9 @@ def detect_scenarios(location, data_type, redundant_mode):
                         # And insert them to the WHERE types in the query
                         # .. there might occur a double group, e.g. a group in a group
                         # .. but there wasn't a single case found in the data
-                        where = json_object["where"]
-                        for where_part in where:
-                            if where_part["type"] == "group":
-                                json_object["where"].remove(where_part)
-                                json_object["where"] = json_object["where"] + where_part["patterns"]
-                        where = json_object["where"]
-                        for where_part in where:
-                            if where_part["type"] == "group":
-                                json_object["where"].remove(where_part)
-                                json_object["where"] = json_object["where"] + where_part["patterns"]
-                        where = json_object["where"]
-                        for where_part in where:
-                            if where_part["type"] == "group":
-                                json_object["where"].remove(where_part)
-                                json_object["where"] = json_object["where"] + where_part["patterns"]
+
+                        delete_and_join_group(json_object)
+
 
 
                         for looking_for in looking_for_list:
@@ -364,7 +349,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # scenario union
                             tmp_occurrences = \
                                 scenario_union_detection.\
-                                    scenario_union_occurrences(json_object, looking_for, found_bound_variables)
+                                    scenario_union_occurrences(json_object, looking_for,
+                                                              path_to_scenarios, found_bound_variables, True)
                             occurrences_scenario_union += tmp_occurrences
                             dict_looking_for["union"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -379,22 +365,24 @@ def detect_scenarios(location, data_type, redundant_mode):
                             if tmp_occurrences > 0:
                                 shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/prop_path")
 
-                            # scenario group
-                            tmp_occurrences = \
-                                scenario_group_detection.\
-                                    scenario_group_occurrences(json_object, looking_for, found_bound_variables)
-                            occurrences_scenario_group += tmp_occurrences
-                            dict_looking_for["group"] += tmp_occurrences
-                            if tmp_occurrences > 0:
-                                shutil.copy(path_to_sparql_text_file, path_to_scenarios + "/group")
+                            # find, if a scenario group is still in the code
+                            group_where = json_object["where"]
+                            # find scenarios 'group'
+                            for group_where_part in group_where:
+                                if group_where_part["type"] == "group":
+                                    raise Exception
+
 
                             # scenario bind
                             # additionally add the path to the scenario -> for the statistical information
                             # about the scenarios the found bound variables are in
+                            #
+                            # and a boolean, that tells the script, to look for the scenarios, that the 'new' variables
+                            #   may be used in
                             tmp_occurrences = \
                                 scenario_bind_detection.\
                                     scenario_bind_occurrences(json_object, looking_for,
-                                                              path_to_scenarios, found_bound_variables)
+                                                              path_to_scenarios, found_bound_variables, True)
                             occurrences_scenario_bind += tmp_occurrences
                             dict_looking_for["bind"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -480,7 +468,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                             occurrences_scenario_bind + \
                             occurrences_scenario_blank_node + \
                             occurrences_scenario_filter + \
-                            occurrences_scenario_group + \
                             occurrences_scenario_literal + \
                             occurrences_scenario_minus + \
                             occurrences_scenario_optional + \
@@ -531,7 +518,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                                 occurrences_scenario_bind == 0 and
                                 occurrences_scenario_blank_node != 0 and
                                 #occurrences_scenario_filter == 0 and
-                                #occurrences_scenario_group == 0 and
                                 occurrences_scenario_literal == 0 and
                                 occurrences_scenario_minus == 0 and
                                 #occurrences_scenario_optional == 0 and
@@ -557,7 +543,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                                      occurrences_scenario_bind == 0 and
                                      occurrences_scenario_blank_node == 0 and
                                      occurrences_scenario_filter == 0 and
-                                     occurrences_scenario_group == 0 and
                                      occurrences_scenario_literal == 0 and
                                      occurrences_scenario_minus == 0 and
                                      occurrences_scenario_optional == 0 and
@@ -583,7 +568,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                                      occurrences_scenario_bind == 0 and
                                      occurrences_scenario_blank_node == 0 and
                                      occurrences_scenario_filter == 0 and
-                                     occurrences_scenario_group == 0 and
                                      occurrences_scenario_literal != 0 and
                                      occurrences_scenario_minus == 0 and
                                      occurrences_scenario_optional == 0 and
@@ -609,7 +593,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                                      occurrences_scenario_bind == 0 and
                                      occurrences_scenario_blank_node != 0 and
                                      occurrences_scenario_filter == 0 and
-                                     occurrences_scenario_group == 0 and
                                      occurrences_scenario_literal != 0 and
                                      occurrences_scenario_minus == 0 and
                                      #occurrences_scenario_optional == 0 and
@@ -638,7 +621,6 @@ def detect_scenarios(location, data_type, redundant_mode):
                                 "bind: " , occurrences_scenario_bind , \
                                 "blank: " , occurrences_scenario_blank_node , \
                                 "filter: " , occurrences_scenario_filter , \
-                                "group: " , occurrences_scenario_group , \
                                 "literal: " , occurrences_scenario_literal, "\n" , \
                                 "minus: " , occurrences_scenario_minus , \
                                 "optional: " , occurrences_scenario_optional , \
@@ -676,6 +658,26 @@ def detect_scenarios(location, data_type, redundant_mode):
     # test the bind variables
 
     return
+
+
+def delete_and_join_group(json_object):
+    # recursive fun
+    group_was_found = False
+
+    where = json_object["where"]
+    for where_part in where:
+        if where_part["type"] == "group":
+            json_object["where"].remove(where_part)
+            json_object["where"] = json_object["where"] + where_part["patterns"]
+            group_was_found = True
+
+    if group_was_found:
+        # recursion start
+        delete_and_join_group(json_object)
+    else:
+        # recursion stop
+        return
+
 
 
 def get_mode(data_type):

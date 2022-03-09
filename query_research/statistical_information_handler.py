@@ -43,7 +43,6 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         "optional": 0,
         "union": 0,
         "prop_path": 0,
-        "group": 0,
         "bind": 0,
         "blank_node": 0,
         "minus": 0,
@@ -121,8 +120,6 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["blank_node"]
                 metadata_dict["found_scenarios"]["filter"] += \
                     elem["filter"]
-                metadata_dict["found_scenarios"]["group"] += \
-                    elem["group"]
                 metadata_dict["found_scenarios"]["literal"] += \
                     elem["literal"]
                 metadata_dict["found_scenarios"]["minus"] += \
@@ -180,7 +177,6 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
         "optional": 0,
         "union": 0,
         "prop_path": 0,
-        "group": 0,
         "bind": 0,
         "blank_node": 0,
         "minus": 0,
@@ -258,8 +254,6 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
                 elem["blank_node"]
             metadata_dict["found_scenarios"]["filter"] += \
                 elem["filter"]
-            metadata_dict["found_scenarios"]["group"] += \
-                elem["group"]
             metadata_dict["found_scenarios"]["literal"] += \
                 elem["literal"]
             metadata_dict["found_scenarios"]["minus"] += \

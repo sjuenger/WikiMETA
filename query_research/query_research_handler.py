@@ -55,23 +55,26 @@ def start_research_of_query_data(args, x):
 
     # generate the data
     if args[0] == 1:
-        transform_data_handler.\
+        print("Generate the query data.")
+        transform_data_handler. \
             start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
 
     # count the amount of queries with and without metadata (overall & per timeframe)
     if args[1] == 1:
+        print("Count the amount of queries with and without metadata (overall & per timeframe).")
         amount_of_queries.save_total_of_queries_amount_per_timeframe(TIMEFRAMES,
-                                                                               ["qualifier_metadata",
-                                                                                "reference_metadata",
-                                                                                "rank_metadata"])
+                                                                     ["qualifier_metadata",
+                                                                      "reference_metadata",
+                                                                      "rank_metadata"])
         amount_of_queries.save_total_of_queries_amount_overall(TIMEFRAMES,
-                                                                           ["qualifier_metadata",
-                                                                            "reference_metadata",
-                                                                            "rank_metadata"])
+                                                               ["qualifier_metadata",
+                                                                "reference_metadata",
+                                                                "rank_metadata"])
 
     # detect scenarios
     if args[2] == 1:
 
+        print("Detect the query scenarios.")
         for timeframe in TIMEFRAMES:
             print("Detecting the scenarios of: ", timeframe)
             for datatype in DATA_TYPES_REFERENCE:
@@ -89,6 +92,7 @@ def start_research_of_query_data(args, x):
     # count the gathered properties and ranks
     if args[3] == 1:
 
+        print("Count the gathered properties and ranks.")
         for timeframe in TIMEFRAMES:
 
             properties_counter.count_property_in(timeframe, "reference_metadata", DATA_TYPES_REFERENCE, "redundant")
@@ -103,11 +107,13 @@ def start_research_of_query_data(args, x):
     # .. from Wikidata
     if args[4] == 1:
 
+        print("Create the statistical information about the counted properties in relation to the gathered facets/datatypes"
+              "from Wikidata.")
         for timeframe in TIMEFRAMES:
             for metadata_mode in ["qualifier_metadata", "reference_metadata"]:
                 for redundancy_mode in ["redundant", "non_redundant"]:
 
-                    wikidata_dictionary_and_found_query_properties.\
+                    wikidata_dictionary_and_found_query_properties. \
                         create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_per_timeframe(
                         timeframe, metadata_mode, redundancy_mode)
 
@@ -117,19 +123,19 @@ def start_research_of_query_data(args, x):
                             get_top_x_counted_properties_timeframe(timeframe, x, metadata_mode,
                                                                    recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_facets_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_datatypes_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_accumulated_facets_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_accumulated_datatypes_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
@@ -137,19 +143,19 @@ def start_research_of_query_data(args, x):
                             get_top_x_counted_properties_timeframe(timeframe, x,
                                                                    metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_facets_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_datatypes_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_accumulated_facets_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
-                        statistical_information_handler.\
+                        statistical_information_handler. \
                             get_top_x_counted_accumulated_datatypes_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
@@ -157,6 +163,7 @@ def start_research_of_query_data(args, x):
     # look for Wikidata Example Queries in the Query data
     if args[5] == 1:
 
+        print("Look for Wikidata Example Queries in the Query data.")
         for timeframe in TIMEFRAMES:
 
 
@@ -165,18 +172,19 @@ def start_research_of_query_data(args, x):
                                               ("rank_metadata", DATA_TYPES_RANK)]:
 
                 # count the example queries from the Wikidata SPARQL Endpoint in ALL queries
-                example_queries_in_data.\
+                example_queries_in_data. \
                     count_example_queries_in_queries("Wikidata_Example_Queries",timeframe,
-                                                         metadata_mode, datatype, False)
+                                                     metadata_mode, datatype, False)
                 # count the example queries from the Wikidata SPARQL Endpoint in
                 # .. the 'marked as redundant' queries
-                example_queries_in_data.\
+                example_queries_in_data. \
                     count_example_queries_in_queries("Wikidata_Example_Queries",timeframe,
-                                                         metadata_mode, datatype, True)
+                                                     metadata_mode, datatype, True)
 
     # summarize the information about the timeframes
     if args[6] == 1:
 
+        print("Summarize the information (scenarios + properties + ranks) about the timeframes")
         for timeframe in TIMEFRAMES:
 
 
@@ -186,11 +194,11 @@ def start_research_of_query_data(args, x):
 
                 for redundancy_mode in ["redundant", "non_redundant"]:
 
-                        statistical_information_handler.\
-                            summarize_statistical_information_about_scenarios(timeframe,
-                                                                              datatype,
-                                                                              metadata_mode,
-                                                                              redundancy_mode)
+                    statistical_information_handler. \
+                        summarize_statistical_information_about_scenarios(timeframe,
+                                                                          datatype,
+                                                                          metadata_mode,
+                                                                          redundancy_mode)
 
         for datatype in [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK]:
 
@@ -209,47 +217,47 @@ def start_research_of_query_data(args, x):
             for metadata_mode in ["rank_metadata"]:
 
                 statistical_information_handler.summarize_statistical_information_about_counted_ranks(TIMEFRAMES,
-                                                                                                          metadata_mode,
-                                                                                                          redundancy_mode)
+                                                                                                      metadata_mode,
+                                                                                                      redundancy_mode)
 
 
             for metadata_mode in ["qualifier_metadata", "reference_metadata"]:
 
                 statistical_information_handler.summarize_statistical_information_about_counted_raw_properties(TIMEFRAMES,
-                                                                                                          metadata_mode,
-                                                                                                          redundancy_mode)
-                statistical_information_handler.\
+                                                                                                               metadata_mode,
+                                                                                                               redundancy_mode)
+                statistical_information_handler. \
                     get_top_x_counted_raw_properties_overall(x, metadata_mode, redundancy_mode)
 
                 for recommended_mode in [True, False, None]:
 
-                    statistical_information_handler.\
+                    statistical_information_handler. \
                         summarize_timeframe_information_about_properties_and_get_top_x(x,
                                                                                        TIMEFRAMES,
                                                                                        metadata_mode,
                                                                                        recommended_mode,
                                                                                        redundancy_mode)
-                    statistical_information_handler.\
+                    statistical_information_handler. \
                         summarize_timeframe_information_about_facets_and_get_top_x(x,
-                                                                                       TIMEFRAMES,
-                                                                                       metadata_mode,
-                                                                                       recommended_mode,
-                                                                                       redundancy_mode)
-                    statistical_information_handler.\
-                        summarize_timeframe_information_about_datatypes(TIMEFRAMES,
+                                                                                   TIMEFRAMES,
                                                                                    metadata_mode,
                                                                                    recommended_mode,
                                                                                    redundancy_mode)
+                    statistical_information_handler. \
+                        summarize_timeframe_information_about_datatypes(TIMEFRAMES,
+                                                                        metadata_mode,
+                                                                        recommended_mode,
+                                                                        redundancy_mode)
 
-                    statistical_information_handler.\
+                    statistical_information_handler. \
                         summarize_timeframe_information_about_accumulated_facets_and_get_top_x(x,
-                                                                                                   TIMEFRAMES,
-                                                                                                   metadata_mode,
-                                                                                                   recommended_mode,
-                                                                                                   redundancy_mode)
-                    statistical_information_handler.\
-                        summarize_timeframe_information_about_accumulated_datatypes(TIMEFRAMES,
+                                                                                               TIMEFRAMES,
                                                                                                metadata_mode,
                                                                                                recommended_mode,
                                                                                                redundancy_mode)
+                    statistical_information_handler. \
+                        summarize_timeframe_information_about_accumulated_datatypes(TIMEFRAMES,
+                                                                                    metadata_mode,
+                                                                                    recommended_mode,
+                                                                                    redundancy_mode)
 
