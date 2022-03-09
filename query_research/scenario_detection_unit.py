@@ -105,7 +105,6 @@ def detect_scenarios(location, data_type, redundant_mode):
 
     for looking_for_list in array_looking_for:
 
-
         # create a scenario per "looking for" , e.g. "wasDerivedFrom"
         dict_looking_for = {
             "looking_for": str(looking_for_list),
@@ -197,6 +196,37 @@ def detect_scenarios(location, data_type, redundant_mode):
                         occurrences_scenario_union = 0
                         occurrences_scenario_values = 0
                         occurrences_scenario_service = 0
+
+                        # delete all the 'first-class' found GROUP
+                        #SELECT(COUNT( ?var1  ) AS  ?var2  )
+                        #WHERE
+                        #{
+                        #?var1 < http: // www.w3.org / ns / prov
+                        ## wasDerivedFrom>  ?var3 .
+                        #{
+                        #?var3 < http: // www.wikidata.org / prop / reference / P248 > < http: // www.wikidata.org / entity / Q29583405 >.
+                        #}
+                        #}
+                        #
+                        # And insert them to the WHERE types in the query
+                        # .. there might occur a double group, e.g. a group in a group
+                        # .. but there wasn't a single case found in the data
+                        where = json_object["where"]
+                        for where_part in where:
+                            if where_part["type"] == "group":
+                                json_object["where"].remove(where_part)
+                                json_object["where"] = json_object["where"] + where_part["patterns"]
+                        where = json_object["where"]
+                        for where_part in where:
+                            if where_part["type"] == "group":
+                                json_object["where"].remove(where_part)
+                                json_object["where"] = json_object["where"] + where_part["patterns"]
+                        where = json_object["where"]
+                        for where_part in where:
+                            if where_part["type"] == "group":
+                                json_object["where"].remove(where_part)
+                                json_object["where"] = json_object["where"] + where_part["patterns"]
+
 
                         for looking_for in looking_for_list:
 

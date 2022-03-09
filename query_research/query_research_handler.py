@@ -73,17 +73,18 @@ def start_research_of_query_data(args, x):
     if args[2] == 1:
 
         for timeframe in TIMEFRAMES:
-           for datatype in DATA_TYPES_REFERENCE:
-               scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
-               scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
+            print("Detecting the scenarios of: ", timeframe)
+            for datatype in DATA_TYPES_REFERENCE:
+                scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
+                scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
-           for datatype in DATA_TYPES_QUALIFIER:
-              scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
-              scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
+            for datatype in DATA_TYPES_QUALIFIER:
+                scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
+                scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
-           for datatype in DATA_TYPES_RANK:
-              scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
-              scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
+            for datatype in DATA_TYPES_RANK:
+                scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
+                scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
     # count the gathered properties and ranks
     if args[3] == 1:

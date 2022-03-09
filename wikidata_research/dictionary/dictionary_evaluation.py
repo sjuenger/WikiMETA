@@ -117,6 +117,9 @@ def get_top_x_metadata(x, mode, recommended = None):
 
 # query the top facets (properties have) from qualifier / reference
 # .. of recommended / non-recommended / overall properties
+#
+# if a property has no facet -> count it "as" itself
+#
 def get_top_x_facets_by_metadata(x, mode, recommended = None):
 
     with open(path_to_json_dictionary, "r") as dict_data:
@@ -126,6 +129,7 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
         facets_dictionary["facets"] = {}
         # add a counter for the total amount of facets and properties
         facets_dictionary["total_facets"] = 0
+        facets_dictionary["total_properties_without_facets"] = 0
         facets_dictionary["total_properties"] = 0
 
 
@@ -169,6 +173,12 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
                 facets_dictionary["total_properties"] += 1
                 current_facet_list = property_dictionary[PID]["facet_of"]
 
+                # if no facet can be found for the property
+                #   -> count the property with its ID
+                if len(current_facet_list) == 0:
+                    facets_dictionary["total_properties_without_facets"] += 1
+                    facets_dictionary["facets"][PID] = 1
+
                 for facet in current_facet_list:
                     facets_dictionary["total_facets"] += 1
                     # add the facet as keys to a dictionary, if it wasn't added before
@@ -193,6 +203,8 @@ def get_top_x_facets_by_metadata(x, mode, recommended = None):
         result_facets_dictionary = {"facets" : {}}
         result_facets_dictionary["total_facets"] = facets_dictionary["total_facets"]
         result_facets_dictionary["total_properties"] = facets_dictionary["total_properties"]
+        result_facets_dictionary["total_properties_without_facet"] =\
+            facets_dictionary["total_properties_without_facets"]
         result_facets_dictionary["total_unique_facets"] = len(facets_dictionary["facets"])
 
         for facet in facets_dictionary["facets"]:
@@ -302,6 +314,9 @@ def get_datatypes_by_metadata(mode, recommended = None):
 
 # get the accumulated facets by occurences of a (recommended) property in Wikidata
 # so, e.g. if "Series Ordinal" occures as a reference 5Miox times in Wikidata, count all of his facets 5Miox times
+#
+# if a property has no facet -> count it "as" itself
+#
 def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
 
     with open(path_to_json_dictionary, "r") as dict_data:
@@ -311,6 +326,7 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
         facets_dictionary["facets"] = {}
         # add a counter for the total amount of facets and properties
         facets_dictionary["total_accumulated_facets"] = 0
+        facets_dictionary["total_accumulated_properties_without_facets"] = 0
         facets_dictionary["total_accumulated_properties"] = 0
 
         for PID in property_dictionary:
@@ -355,6 +371,15 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
                 facets_dictionary["total_accumulated_facets"] += \
                     len(current_facet_list) * int(property_dictionary[PID][mode + "_no"])
 
+
+                # if no facet can be found for the property
+                #   -> count the property with its ID
+                if len(current_facet_list) == 0:
+                    facets_dictionary["total_accumulated_properties_without_facets"] += \
+                        int(property_dictionary[PID][mode + "_no"])
+                    facets_dictionary["facets"][PID] = int(property_dictionary[PID][mode + "_no"])
+
+
                 for facet in current_facet_list:
                     # add the facet as keys to a dictionary, if it wasn't added before
                     if facet not in facets_dictionary["facets"]:
@@ -366,6 +391,8 @@ def get_top_x_facets_by_accumulated_properties(x, mode, recommended = None):
         result_facets_dictionary = {"facets": {}}
         result_facets_dictionary["total_accumulated_facets"] = facets_dictionary["total_accumulated_facets"]
         result_facets_dictionary["total_accumulated_properties"] = facets_dictionary["total_accumulated_properties"]
+        result_facets_dictionary["total_accumulated_properties_without_facets"] =\
+            facets_dictionary["total_accumulated_properties_without_facets"]
 
         # store the dictionar< of accumulated facets
         if recommended:

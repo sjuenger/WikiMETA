@@ -25,11 +25,11 @@ import graphical_analysis.graphical_analysis_handler as graphical_analysis_handl
 
 def main():
     #directory_structure_handler.create_dir_structure_of_data()
-    #directory_structure_handler.delete_identified_scenarios()
+    directory_structure_handler.delete_identified_scenarios()
 
     #do_wikidata_research_stuff(15)
 
-    #do_query_research_stuff([0,1,1,1,1,0,1], 15)
+    do_query_research_stuff([0,1,1,1,1,0,1], 15)
 
     analyse_research_stuff(15)
 
@@ -40,8 +40,8 @@ def main():
 
 def do_wikidata_research_stuff(x):
     # Wikidata Stuff
-    if not os.path.isfile("data/property_dictionary.json"):
-        txt_to_dict.get_dict()
+    #if not os.path.isfile("data/property_dictionary.json"):
+    #    txt_to_dict.get_dict()
 
     wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(x, "reference")
     wikidata_property_dictionary_evaluation_handler.generate_information_of_property_dictionary(x, "qualifier")

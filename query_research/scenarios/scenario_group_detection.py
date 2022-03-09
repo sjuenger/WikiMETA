@@ -30,6 +30,7 @@ def scenario_group_occurrences(json_object, look_for, _):
     # multiple bgp (basic graph patterns)
     for where_part in where:
         if where_part["type"] == "group":
+            print("Group in the query found")
             if (look_for in str(where_part["patterns"])):
                 # there may be more than one
                 result += str(where_part["patterns"]).count(look_for)
