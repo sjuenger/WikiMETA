@@ -49,7 +49,7 @@ import os
 import json
 
 
-def scenario_bind_occurrences(json_object, look_for, location, bound_variables, look_for_additional_layer):
+def scenario_bind_occurrences(json_object, look_for, location, bound_variables, look_for_additional_layer, data_type):
     # 'location' is the path to the current 'scenarios' folder
     # -> for the statistical information, in which scenario the found
     # bound "looking for ITEM" is used afterwards
@@ -202,7 +202,7 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         # Do not look for another RE-USE of this new variable in a BIND.
                         bind_statistical_information["variables_found_in_scenarios"]["bind"] += \
                             scenario_bind_occurrences(json_object, variable_look_for,
-                                                          location, bound_variables, False)
+                                                          location, bound_variables, False, data_type)
 
 
                         # scenario blank_mode
@@ -218,7 +218,7 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         bind_statistical_information["variables_found_in_scenarios"]["filter"] += \
                             scenario_filter_detection. \
                                 scenario_filter_occurrences(json_object, look_for, location,
-                                                            bound_variables, False)
+                                                            bound_variables, False, data_type)
 
                         # scenario group
                         # check, if there are some group term types left
@@ -240,25 +240,43 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         bind_statistical_information["variables_found_in_scenarios"]["minus"] += \
                             scenario_minus_detection. \
                                 scenario_minus_occurrences(json_object, look_for, location,
-                                                           bound_variables, False)
+                                                           bound_variables, False, data_type)
 
 
+                        # if RE-USED in another OPTIONAL - but in this case, do not go deeper into the tree
+                        #
+                        # Do not look for another RE-USE in a OPTIONAL.
                         # scenario optional
                         bind_statistical_information["variables_found_in_scenarios"]["optional"] += \
-                            scenario_optional_detection.\
-                                scenario_optional_occurrences(json_object, variable_look_for, bound_variables)
+                            scenario_optional_detection. \
+                                scenario_optional_occurrences(json_object, look_for, location,
+                                                              bound_variables, False, data_type)
+
                         # scenario prop_path
                         bind_statistical_information["variables_found_in_scenarios"]["prop_path"] += \
                             scenario_prop_path_detection.\
-                                scenario_prop_path_occurrences(json_object, variable_look_for, bound_variables)
+                                scenario_prop_path_occurrences(json_object, look_for,
+                                                            location,
+                                                            bound_variables, False, data_type)
+
                         # scenario service
                         bind_statistical_information["variables_found_in_scenarios"]["service"] += \
                             scenario_service_detection.\
                                 scenario_service_occurrences(json_object, variable_look_for, bound_variables)
+
+
+                        # if RE-USED in another SUBSELECT - but in this case, do not go deeper into the tree
+                        #
+                        # Do not look for another RE-USE in a SUBSELECT.
                         # scenario subselect
                         bind_statistical_information["variables_found_in_scenarios"]["subselect"] += \
-                            scenario_subselect_detection.\
-                                scenario_subselect_occurrences(json_object, variable_look_for, bound_variables)
+                            scenario_subselect_detection. \
+                                scenario_subselect_occurrences(json_object, look_for,
+                                                            location,
+                                                            bound_variables, False, data_type)
+
+
+
 
                         # if RE-USED in another UNION - but in this case, do not go deeper into the tree
                         #
@@ -267,7 +285,7 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         bind_statistical_information["variables_found_in_scenarios"]["union"] += \
                             scenario_union_detection. \
                                 scenario_union_occurrences(json_object, look_for, location,
-                                                           bound_variables, False)
+                                                           bound_variables, False, data_type)
 
 
                         # scenario values

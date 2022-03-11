@@ -535,6 +535,41 @@ def delete_identified_scenarios():
             if os.path.isfile(tmp_path_to_reference_scenarios + scenario + "/" + "filter_statistical_information.json"):
                 os.remove(tmp_path_to_reference_scenarios + scenario + "/" + "filter_statistical_information.json")
 
+            # delete the found scenarios "inside" the subselect scenarios
+            if os.path.isfile(tmp_path_to_rank_scenarios + scenario + "/" + "subselect_statistical_information.json"):
+                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + "subselect_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "subselect_statistical_information.json"):
+                os.remove(tmp_path_to_qualifier_scenarios + scenario + "/" + "subselect_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "subselect_statistical_information.json"):
+                os.remove(tmp_path_to_reference_scenarios + scenario + "/" + "subselect_statistical_information.json")
+
+            # delete the found scenarios "inside" the prop_path scenarios
+            if os.path.isfile(
+                    tmp_path_to_rank_scenarios + scenario + "/" + "prop_path_statistical_information.json"):
+                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + "prop_path_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "prop_path_statistical_information.json"):
+                os.remove(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "prop_path_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "prop_path_statistical_information.json"):
+                os.remove(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "prop_path_statistical_information.json")
+                
+            # delete the found scenarios "inside" the optional scenarios
+            if os.path.isfile(
+                    tmp_path_to_rank_scenarios + scenario + "/" + "optional_statistical_information.json"):
+                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + "optional_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "optional_statistical_information.json"):
+                os.remove(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "optional_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "optional_statistical_information.json"):
+                os.remove(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "optional_statistical_information.json")
 
     return
 # Maybe a class here?

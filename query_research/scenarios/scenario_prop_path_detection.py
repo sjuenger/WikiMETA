@@ -11,8 +11,10 @@
 #
 # look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
+import json
+import os
 
-def scenario_prop_path_occurrences(json_object, look_for, bound_variables):
+def scenario_prop_path_occurrences(json_object, look_for, location, bound_variables, look_for_additional_layer, data_type):
     where = json_object["where"]
 
     # find scenarios property path
@@ -62,7 +64,60 @@ def scenario_prop_path_occurrences(json_object, look_for, bound_variables):
 
 
                             result += str(triple["predicate"]["items"]).count(look_for)
-                            #print(str(triple["predicate"]["items"]))
+
+                            # also look for the kind of the proppath and save it
+                            # but ONLY do that, if the 'look_for_aditional_layer boolean is set to true
+                            # (to prevent re-iteration)
+                            if look_for_additional_layer:
+
+                                # look, if there already exists a 'prop_path_operator_information'
+                                if os.path.isfile(location + "/prop_path_statistical_information.json"):
+                                    with open(location + "/prop_path_statistical_information.json", "r") as json_data:
+                                        prop_path_statistical_information = json.load(json_data)
+                                        json_data.close()
+                                else:
+                                    prop_path_statistical_information = \
+                                        {
+                                            "total_found_operators": 0,
+                                            "found_operators_overall": {}}
+
+
+
+                                # -> detect the operator of the prop_path
+                                #
+                                # e.g. "!", "/", aso.
+
+                                if triple["predicate"]["pathType"] in prop_path_statistical_information[
+                                    "found_operators_overall"]:
+                                    prop_path_statistical_information["found_operators_overall"][
+                                        triple["predicate"]["pathType"]] += 1
+                                else:
+                                    prop_path_statistical_information["found_operators_overall"][
+                                        triple["predicate"]["pathType"]] = 1
+                                prop_path_statistical_information["total_found_operators"] += 1
+
+                                # do the same thing again -> but now, also for the datatypes
+                                if data_type in prop_path_statistical_information:
+
+                                    if triple["predicate"]["pathType"] in prop_path_statistical_information[
+                                        data_type]:
+                                        prop_path_statistical_information[data_type][
+                                            triple["predicate"]["pathType"]] += 1
+                                    else:
+                                        prop_path_statistical_information[data_type][
+                                            triple["predicate"]["pathType"]] = 1
+
+                                else:
+                                    prop_path_statistical_information[data_type] = {}
+                                    prop_path_statistical_information[data_type][
+                                        triple["predicate"]["pathType"]] = 1
+
+
+                                # save the json object
+                                with open(location + "/prop_path_statistical_information.json", "w") as json_data:
+                                    json.dump(prop_path_statistical_information, json_data)
+                                    json_data.close()
+                                    # print(prop_path_statistical_information)
 
                     else:
                         if look_for in str(where_part):

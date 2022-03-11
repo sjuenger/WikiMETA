@@ -331,7 +331,7 @@ def detect_scenarios(location, data_type, redundant_mode):
                             tmp_occurrences = \
                                 scenario_filter_detection.\
                                     scenario_filter_occurrences(json_object, looking_for,
-                                                              path_to_scenarios, found_bound_variables, True)
+                                                              path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_filter += tmp_occurrences
                             dict_looking_for["filter"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -340,7 +340,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # scenario optional
                             tmp_occurrences = \
                                 scenario_optional_detection.\
-                                    scenario_optional_occurrences(json_object, looking_for, found_bound_variables)
+                                    scenario_optional_occurrences(json_object, looking_for,
+                                                              path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_optional += tmp_occurrences
                             dict_looking_for["optional"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -350,7 +351,7 @@ def detect_scenarios(location, data_type, redundant_mode):
                             tmp_occurrences = \
                                 scenario_union_detection.\
                                     scenario_union_occurrences(json_object, looking_for,
-                                                              path_to_scenarios, found_bound_variables, True)
+                                                              path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_union += tmp_occurrences
                             dict_looking_for["union"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -359,7 +360,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # scenario property path
                             tmp_occurrences = \
                                 scenario_prop_path_detection.\
-                                    scenario_prop_path_occurrences(json_object, looking_for, found_bound_variables)
+                                    scenario_prop_path_occurrences(json_object, looking_for,
+                                                               path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_prop_path += tmp_occurrences
                             dict_looking_for["prop_path"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -382,7 +384,7 @@ def detect_scenarios(location, data_type, redundant_mode):
                             tmp_occurrences = \
                                 scenario_bind_detection.\
                                     scenario_bind_occurrences(json_object, looking_for,
-                                                              path_to_scenarios, found_bound_variables, True)
+                                                              path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_bind += tmp_occurrences
                             dict_looking_for["bind"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -401,7 +403,7 @@ def detect_scenarios(location, data_type, redundant_mode):
                             tmp_occurrences = \
                                 scenario_minus_detection.\
                                     scenario_minus_occurrences(json_object, looking_for,
-                                                               path_to_scenarios, found_bound_variables, True)
+                                                               path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_minus += tmp_occurrences
                             dict_looking_for["minus"] += tmp_occurrences
                             if tmp_occurrences > 0:
@@ -410,7 +412,8 @@ def detect_scenarios(location, data_type, redundant_mode):
                             # scenario subselect
                             tmp_occurrences = \
                                 scenario_subselect_detection.\
-                                    scenario_subselect_occurrences(json_object, looking_for, found_bound_variables)
+                                    scenario_subselect_occurrences(json_object, looking_for,
+                                                               path_to_scenarios, found_bound_variables, True, data_type)
                             occurrences_scenario_subselect += tmp_occurrences
                             dict_looking_for["subselect"] += tmp_occurrences
                             if tmp_occurrences > 0:

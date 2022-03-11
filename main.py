@@ -29,7 +29,7 @@ def main():
 
     #do_wikidata_research_stuff(15)
 
-    do_query_research_stuff([0,1,1,1,1,0,1], 15)
+    do_query_research_stuff([0,0,1,1,1,0,1], 15)
 
     #analyse_research_stuff(15)
 
