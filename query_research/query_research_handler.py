@@ -77,14 +77,17 @@ def start_research_of_query_data(args, x):
         print("Detect the query scenarios.")
         for timeframe in TIMEFRAMES:
             print("Detecting the scenarios of: ", timeframe)
+            print("Reference")
             for datatype in DATA_TYPES_REFERENCE:
                 scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
                 scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
+            print("Qualifier")
             for datatype in DATA_TYPES_QUALIFIER:
                 scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
                 scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")
 
+            print("Rank")
             for datatype in DATA_TYPES_RANK:
                 scenario_detection_unit.detect_scenarios(timeframe, datatype, "redundant")
                 scenario_detection_unit.detect_scenarios(timeframe, datatype, "non_redundant")

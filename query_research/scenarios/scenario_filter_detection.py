@@ -382,16 +382,32 @@ def scenario_filter_occurrences(json_object, look_for, location, bound_variables
 
 
 
-
                     # also -> detect the operator of the FILTER!
                     #
                     # e.g. EXISTS / NON-EXISTS
 
                     if where_part["expression"]["operator"] in filter_statistical_information["found_operators"]:
                         filter_statistical_information["found_operators"][where_part["expression"]["operator"]] += 1
+
                     else:
                         filter_statistical_information["found_operators"][where_part["expression"]["operator"]] = 1
+
                     filter_statistical_information["total_found_operators"] += 1
+
+                    if data_type in filter_statistical_information["found_operators_per_datatype"]:
+                        if where_part["expression"]["operator"] in \
+                                filter_statistical_information["found_operators_per_datatype"][data_type]:
+                            filter_statistical_information["found_operators_per_datatype"][data_type]\
+                                [where_part["expression"]["operator"]] += 1
+                        else:
+                            filter_statistical_information["found_operators_per_datatype"][data_type]\
+                                [where_part["expression"]["operator"]] = 1
+                    else:
+                        filter_statistical_information["found_operators_per_datatype"][data_type] = {}
+                        filter_statistical_information["found_operators_per_datatype"][data_type]\
+                            [where_part["expression"]["operator"]] = 1
+
+
 
                     # save the json object
                     with open(location + "/filter_statistical_information.json", "w") as json_data:

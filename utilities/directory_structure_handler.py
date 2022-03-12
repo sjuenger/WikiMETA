@@ -571,5 +571,18 @@ def delete_identified_scenarios():
                 os.remove(
                     tmp_path_to_reference_scenarios + scenario + "/" + "optional_statistical_information.json")
 
+            # delete the found scenarios "inside" the optinoal scenarios
+            if os.path.isfile(
+                    tmp_path_to_rank_scenarios + scenario + "/" + "optinoal_statistical_information.json"):
+                os.remove(tmp_path_to_rank_scenarios + scenario + "/" + "optinoal_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "optinoal_statistical_information.json"):
+                os.remove(
+                    tmp_path_to_qualifier_scenarios + scenario + "/" + "optinoal_statistical_information.json")
+            if os.path.isfile(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "optinoal_statistical_information.json"):
+                os.remove(
+                    tmp_path_to_reference_scenarios + scenario + "/" + "optinoal_statistical_information.json")
+
     return
 # Maybe a class here?
