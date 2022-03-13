@@ -121,7 +121,8 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                                 "metadata_found_in_scenarios": scenarios_dict,
                                 "scenarios_found_in_second_level_subselect": scenarios_dict.copy(),
                                 "metadata_per_datatype_found_in_scenarios": [],
-                                "scenarios_per_datatype_found_in_second_level_subselect": []}
+                                "scenarios_per_datatype_found_in_second_level_subselect": []
+                            }
 
                     # check for the datatypes
                     # or/and get the correct scenario dict for the current datatype

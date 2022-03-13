@@ -7,6 +7,8 @@ import graphical_analysis.query_properties_accumulated_facets_analysis as \
     query_properties_accumulated_facets_analysis
 import graphical_analysis.query_properties_accumulated_datatypes_analysis as \
     query_properties_accumulated_datatypes_analysis
+import graphical_analysis.query_scenario_additional_layer_analysis as \
+    query_scenario_additional_layer_analysis
 
 
 TIMEFRAMES = [
@@ -56,21 +58,26 @@ DATA_TYPES_RANK = [
 
 def start_graphical_analysis(x):
 
-    wikidata_analysis.plot_top_wikidata_research_properties(x)
-    wikidata_analysis.plot_top_wikidata_research_accumulated_facets(x)
-    wikidata_analysis.plot_top_wikidata_research_accumulated_datatypes()
+    #wikidata_analysis.plot_top_wikidata_research_properties(x)
+    #wikidata_analysis.plot_top_wikidata_research_accumulated_facets(x)
+    #wikidata_analysis.plot_top_wikidata_research_accumulated_datatypes()
 
-    redundant_detection_analysis.plot_redundant_detection_data_exact()
+    #redundant_detection_analysis.plot_redundant_detection_data_exact()
 
-    query_metadata_percentage.display_percentage_queries_with_metadata()
+    #query_metadata_percentage.display_percentage_queries_with_metadata()
 
-    query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
-        TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
+    #query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
+    #    TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
 
-    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "reference_metadata")
-    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "qualifier_metadata")
-    query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, "rank_metadata")
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, metadata)
 
+        for scenario in ["optional", "minus", "subselect", "union", "filter"]:
+            query_scenario_additional_layer_analysis.\
+                plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL_MINUS_SUBSELECT_UNION(
+                TIMEFRAMES, metadata, scenario)
+
+"""
     for recommended_mode in ["recommended", "non_recommended", "all"]:
         for metadata_mode in ["reference_metadata", "qualifier_metadata"]:
 
@@ -99,5 +106,5 @@ def start_graphical_analysis(x):
                 plot_top_accumulated_datatypes_overall(metadata_mode, recommended_mode)
             query_properties_accumulated_datatypes_analysis.\
                 plot_top_accumulated_datatypes_overall_percentage(metadata_mode,
-                                                                  recommended_mode)
+                                                                  recommended_mode) """
 

@@ -147,7 +147,10 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
                                 {
                                     "total_found_metadata": 0,
                                     "metadata_found_in_scenarios": scenarios_dict,
-                                    "metadata_per_datatype_found_in_scenarios": []}
+                                    "scenarios_found_in_second_level_union": scenarios_dict.copy(),
+                                    "metadata_per_datatype_found_in_scenarios": [],
+                                    "scenarios_per_datatype_found_in_second_level_union": []
+                                }
 
                         # check for the datatypes
                         # or/and get the correct scenario dict for the current datatype
@@ -158,13 +161,24 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
 
                                 current_datatype_dict = test_dict
 
+                                # look for the current datatype dict for the operators
+                                for test_dict in subselect_statistical_information[
+                                    "scenarios_per_datatype_found_in_second_level_union"]:
+                                    if test_dict["datatype"] == data_type:
+                                        current_datatype_dict_subselect_layer = test_dict
+
                         if not already_inserted:
                             scenarios_dict_datatype = scenarios_dict.copy()
                             scenarios_dict_datatype["datatype"] = data_type
                             subselect_statistical_information["metadata_per_datatype_found_in_scenarios"]. \
                                 append(scenarios_dict_datatype)
+                            scenarios_dict_datatype_operator = scenarios_dict_datatype.copy()
+                            subselect_statistical_information["scenarios_per_datatype_found_in_second_level_union"]. \
+                                append(scenarios_dict_datatype_operator)
 
                             current_datatype_dict = scenarios_dict_datatype
+                            current_datatype_dict_subselect_layer = scenarios_dict_datatype_operator
+                            
 
 
                         subselect_statistical_information["total_found_metadata"] += \
@@ -380,13 +394,13 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
                         #
                         # Do not look for another RE-USE in a UNION.
                         # scenario union
-                        tmp_occurrences = \
+                        tmp_occurrences_union = \
                             scenario_union_detection. \
                                 scenario_union_occurrences(where_part, look_for,
                                                            location,
                                                            bound_variables, False, data_type)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["union"] += tmp_occurrences
-                        current_datatype_dict["union"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["union"] += tmp_occurrences_union
+                        current_datatype_dict["union"] += tmp_occurrences_union
 
                         # scenario values
                         tmp_occurrences = \
@@ -401,7 +415,307 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
                             subselect_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += 1
                             current_datatype_dict["not_found_in_patterns"] += 1
 
-                        
+                        # -----------------------------------------------------------------------------------------------------------------------
+                        #
+                        # because the results of this little analysis often show, that ~80% of the found scenarios
+                        #   are UNIONs -> detect here also the third layer of scenarios
+                        #
+                        # -----------------------------------------------------------------------------------------------------------------------
+
+                        # detect the scenario of yet another 'additional' layer to the additional layer,
+                        #   but only for the UNION scenarios, e.g. where a UNION was find -> and only
+                        #   for the UNION parts in this queries
+                        if tmp_occurrences_union > 0:
+
+                            # for every pattern in patterns
+                            # multiple bgp (basic graph patterns)
+                            for pattern in where_part["where"]:
+                                if "type" in pattern:
+                                    if pattern["type"] == "union":
+                                        if look_for not in str(pattern["patterns"]):
+
+                                            if look_for in str(pattern):
+                                                raise Exception
+                                        else:
+
+                                            tmp_dict = subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"].copy()
+                                            # scenario one
+                                            tmp_occurrences = \
+                                                scenario_one_detection. \
+                                                    scenario_one_occurrences({"where": pattern["patterns"]},
+                                                                             look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "one"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["one"] += tmp_occurrences
+
+                                            # scenario two
+                                            tmp_occurrences = \
+                                                scenario_two_detection. \
+                                                    scenario_two_occurrences({"where": pattern["patterns"]},
+                                                                             look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "two"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["two"] += tmp_occurrences
+
+                                            # scenario three
+                                            tmp_occurrences = \
+                                                scenario_three_detection. \
+                                                    scenario_three_occurrences({"where": pattern["patterns"]},
+                                                                               look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "three"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["three"] += tmp_occurrences
+
+                                            # scenario four
+                                            tmp_occurrences = \
+                                                scenario_four_detection. \
+                                                    scenario_four_occurrences({"where": pattern["patterns"]},
+                                                                              look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "four"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["four"] += tmp_occurrences
+
+                                            # scenario five
+                                            tmp_occurrences = \
+                                                scenario_five_detection. \
+                                                    scenario_five_occurrences({"where": pattern["patterns"]},
+                                                                              look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "five"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["five"] += tmp_occurrences
+
+                                            # scenario six
+                                            tmp_occurrences = \
+                                                scenario_six_detection. \
+                                                    scenario_six_occurrences({"where": pattern["patterns"]},
+                                                                             look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "six"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["six"] += tmp_occurrences
+
+                                            # scenario seven
+                                            tmp_occurrences = \
+                                                scenario_seven_detection. \
+                                                    scenario_seven_occurrences({"where": pattern["patterns"]},
+                                                                               look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "seven"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["seven"] += tmp_occurrences
+
+                                            # scenario eight
+                                            tmp_occurrences = \
+                                                scenario_eight_detection. \
+                                                    scenario_eight_occurrences({"where": pattern["patterns"]},
+                                                                               look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "eight"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["eight"] += tmp_occurrences
+
+                                            # scenario nine
+                                            tmp_occurrences = \
+                                                scenario_nine_detection. \
+                                                    scenario_nine_occurrences({"where": pattern["patterns"]},
+                                                                              look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "nine"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["nine"] += tmp_occurrences
+
+                                            # scenario tne
+                                            tmp_occurrences = \
+                                                scenario_ten_detection. \
+                                                    scenario_ten_occurrences({"where": pattern["patterns"]},
+                                                                             look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "ten"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["ten"] += tmp_occurrences
+
+                                            # scenario eleven
+                                            tmp_occurrences = \
+                                                scenario_eleven_detection. \
+                                                    scenario_eleven_occurrences({"where": pattern["patterns"]},
+                                                                                look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "eleven"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["eleven"] += tmp_occurrences
+
+                                            # scenario twelve
+                                            tmp_occurrences = \
+                                                scenario_twelve_detection. \
+                                                    scenario_twelve_occurrences({"where": pattern["patterns"]},
+                                                                                look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "twelve"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["twelve"] += tmp_occurrences
+
+                                            # scenario bind
+                                            # if a variable is RE-USED in another BIND - but in this case, do not go deeper into the tree
+                                            #
+                                            # Do not look for another RE-USE of this new variable in a BIND.
+                                            tmp_occurrences = \
+                                                scenario_bind_detection. \
+                                                    scenario_bind_occurrences({"where": pattern["patterns"]},
+                                                                              look_for,
+                                                                              location, bound_variables, False,
+                                                                              data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "bind"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["bind"] += tmp_occurrences
+
+                                            # scenario blank_mode
+                                            tmp_occurrences = \
+                                                scenario_blank_node_detection. \
+                                                    scenario_blank_node_occurrences(
+                                                    {"where": pattern["patterns"]}, look_for,
+                                                    bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "blank_node"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["blank_node"] += tmp_occurrences
+
+                                            # if RE-USED in another FILTER - but in this case, do not go deeper into the tree
+                                            #
+                                            # Do not look for another RE-USE in a FILTER.
+
+                                            # scenario filter
+                                            tmp_occurrences = \
+                                                scenario_filter_detection. \
+                                                    scenario_filter_occurrences({"where": pattern["patterns"]},
+                                                                                look_for, location,
+                                                                                bound_variables, False, data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "filter"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["filter"] += tmp_occurrences
+
+                                            # scenario group
+                                            # check, if there are some group term types left
+                                            check_for_still_existing_group = \
+                                                scenario_group_detection. \
+                                                    scenario_group_occurrences({"where": pattern["patterns"]},
+                                                                               look_for, bound_variables)
+                                            if check_for_still_existing_group > 0:
+                                                raise Exception
+
+                                            # scenario literal
+                                            tmp_occurrences = \
+                                                scenario_literal_detection. \
+                                                    scenario_literal_occurrences(
+                                                    {"where": pattern["patterns"]}, look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "literal"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["literal"] += tmp_occurrences
+
+                                            # if RE-USED in another MINUS - but in this case, do not go deeper into the tree
+                                            #
+                                            # Do not look for another RE-USE in a MINUS.
+                                            # scenario minus
+                                            tmp_occurrences = \
+                                                scenario_minus_detection. \
+                                                    scenario_minus_occurrences({"where": pattern["patterns"]},
+                                                                               look_for, location,
+                                                                               bound_variables, False, data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "minus"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["minus"] += tmp_occurrences
+
+                                            # if RE-USED in another OPTIONAL - but in this case, do not go deeper into the tree
+                                            #
+                                            # Do not look for another RE-USE in a OPTIONAL.
+                                            # scenario optional
+                                            tmp_occurrences = \
+                                                scenario_optional_detection. \
+                                                    scenario_optional_occurrences(
+                                                    {"where": pattern["patterns"]}, look_for, location,
+                                                    bound_variables, False, data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "optional"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["optional"] += tmp_occurrences
+
+                                            # scenario prop_path
+                                            tmp_occurrences = \
+                                                scenario_prop_path_detection. \
+                                                    scenario_prop_path_occurrences(
+                                                    {"where": pattern["patterns"]}, look_for, location,
+                                                    bound_variables, False, data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "prop_path"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["prop_path"] += tmp_occurrences
+
+                                            # scenario service
+                                            tmp_occurrences = \
+                                                scenario_service_detection. \
+                                                    scenario_service_occurrences(
+                                                    {"where": pattern["patterns"]}, look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "service"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["service"] += tmp_occurrences
+
+                                            # if RE-USED in another SUBSELECT - but in this case, do not go deeper into the tree
+                                            #
+                                            # Do not look for another RE-USE in a SUBSELECT.
+                                            # scenario subselect
+                                            tmp_occurrences = \
+                                                scenario_subselect_detection. \
+                                                    scenario_subselect_occurrences(
+                                                    {"where": pattern["patterns"]}, look_for,
+                                                    location,
+                                                    bound_variables, False, data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "subselect"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["subselect"] += tmp_occurrences
+
+                                            # if RE-USED in another UNION - but in this case, do not go deeper into the tree
+                                            #
+                                            # Do not look for another RE-USE in a UNION.
+                                            # scenario union
+                                            tmp_occurrences = \
+                                                scenario_union_detection. \
+                                                    scenario_union_occurrences({"where": pattern["patterns"]},
+                                                                               look_for, location,
+                                                                               bound_variables, False, data_type)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "union"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["union"] += tmp_occurrences
+
+                                            # scenario values
+                                            tmp_occurrences = \
+                                                scenario_values_detection. \
+                                                    scenario_values_occurrences({"where": pattern["patterns"]},
+                                                                                look_for, bound_variables)
+                                            subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"][
+                                                "values"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["values"] += tmp_occurrences
+
+                                            # if the variable could not be found in the patterns of the UNION
+                                            if subselect_statistical_information[
+                                                "scenarios_found_in_second_level_union"] == tmp_dict:
+                                                subselect_statistical_information[
+                                                    "scenarios_found_in_second_level_union"][
+                                                    "not_found_in_patterns"] += 1
+                                                current_datatype_dict_subselect_layer["not_found_in_patterns"] += 1
+
                         # save the json object
                         with open(location + "/subselect_statistical_information.json", "w") as json_data:
                             json.dump(subselect_statistical_information, json_data)
