@@ -31,7 +31,7 @@ def scenario_prop_path_occurrences(json_object, look_for, location, bound_variab
                     # on "normal" properties, there is only a 'termType' and no 'type'
                     if (triple["predicate"]["type"] == "path") :
                         if look_for in str(triple["predicate"]["items"]):
-                            # TODO: add the bind variables here ?
+                            #TODO: add the bind variables here ?
                             #
                             # there may be more than one found item to look for
                             # e.g.
@@ -98,7 +98,7 @@ def scenario_prop_path_occurrences(json_object, look_for, location, bound_variab
                                 prop_path_statistical_information["total_found_operators"] += 1
 
                                 # do the same thing again -> but now, also for the datatypes
-                                if data_type in prop_path_statistical_information:
+                                if data_type in prop_path_statistical_information["found_operators_per_datatype"]:
 
                                     if triple["predicate"]["pathType"] in prop_path_statistical_information["found_operators_per_datatype"][
                                         data_type]:

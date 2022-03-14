@@ -1586,42 +1586,42 @@ def summarize_timeframe_information_about_accumulated_datatypes(locations, mode,
 def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
     for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
         for redundant_mode in ["non_redundant"]:
-            for timeframe in TIMEFRAMES:
-                scenarios_dict = \
-                    {
-                        "one": 0,
-                        "two": 0,
-                        "three": 0,
-                        "four": 0,
-                        "five": 0,
-                        "six": 0,
-                        "seven": 0,
-                        "eight": 0,
-                        "nine": 0,
-                        "ten": 0,
-                        "eleven": 0,
-                        "twelve": 0,
-                        "filter": 0,
-                        "optional": 0,
-                        "union": 0,
-                        "prop_path": 0,
-                        "bind": 0,
-                        "blank_node": 0,
-                        "minus": 0,
-                        "union": 0,
-                        "ref_value": 0,
-                        "literal": 0,
-                        "values": 0,
-                        "service": 0,
-                        "not_found_in_query": 0}
+            scenarios_dict = \
+                {
+                    "one": 0,
+                    "two": 0,
+                    "three": 0,
+                    "four": 0,
+                    "five": 0,
+                    "six": 0,
+                    "seven": 0,
+                    "eight": 0,
+                    "nine": 0,
+                    "ten": 0,
+                    "eleven": 0,
+                    "twelve": 0,
+                    "filter": 0,
+                    "optional": 0,
+                    "union": 0,
+                    "prop_path": 0,
+                    "bind": 0,
+                    "blank_node": 0,
+                    "minus": 0,
+                    "union": 0,
+                    "ref_value": 0,
+                    "literal": 0,
+                    "values": 0,
+                    "service": 0,
+                    "not_found_in_query": 0}
 
-                result_dict = \
-                    {
-                        "total_found_bound_variables_to_metadata": 0,
-                        "variables_found_in_scenarios": scenarios_dict}
+            result_dict = \
+                {
+                    "total_found_bound_variables_to_metadata": 0,
+                    "variables_found_in_scenarios": scenarios_dict}
+            for timeframe in TIMEFRAMES:
 
                 path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
-                    "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
                                       "/bind_statistical_information.json"
                 if os.path.isfile(path_to_information):
                     with open(path_to_information, "r") as timeframe_data:
@@ -1635,7 +1635,7 @@ def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
                                 timeframe_dict["variables_found_in_scenarios"][scenario]
 
                 path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
-                    "/" + metadata + "/scenarios/additional_layer/bind_statistical_information.json"
+                                 "/" + metadata + "/scenarios/additional_layer/bind_statistical_information.json"
                 with open(path_to_result, "w") as result_data:
                     json.dump(result_dict, result_data)
 
@@ -1644,16 +1644,16 @@ def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
 def summarize_additional_scenario_information_about_PROP_PATH(TIMEFRAMES):
     for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
         for redundant_mode in ["non_redundant"]:
+            result_dict = \
+                {
+                    "total_found_operators": 0,
+                    "found_operators_overall": {},
+                    "found_operators_per_datatype": {}}
             for timeframe in TIMEFRAMES:
 
-                result_dict = \
-                    {
-                        "total_found_operators": 0,
-                        "found_operators_overall": {},
-                        "found_operators_per_datatype": {}}
 
                 path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
-                    "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
                                       "/prop_path_statistical_information.json"
 
                 if os.path.isfile(path_to_information):
@@ -1689,7 +1689,7 @@ def summarize_additional_scenario_information_about_PROP_PATH(TIMEFRAMES):
 
 
                 path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
-                    "/" + metadata + "/scenarios/additional_layer/prop_path_statistical_information.json"
+                                 "/" + metadata + "/scenarios/additional_layer/prop_path_statistical_information.json"
                 with open(path_to_result, "w") as result_data:
                     json.dump(result_dict, result_data)
 
