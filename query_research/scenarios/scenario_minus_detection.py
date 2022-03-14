@@ -130,8 +130,7 @@ def scenario_minus_occurrences(json_object, look_for, location, bound_variables,
                             "literal": 0,
                             "values": 0,
                             "service": 0,
-                            "not_found_in_patterns": 0,
-                            "datatype": "total"}
+                            "not_found_in_patterns": 0}
 
                     # look, if there already exists a 'minus_scenarios_information'
                     if os.path.isfile(location + "/minus_statistical_information.json"):
@@ -144,21 +143,21 @@ def scenario_minus_occurrences(json_object, look_for, location, bound_variables,
                             {
                                 "total_found_metadata": 0,
                                 "metadata_found_in_scenarios": scenarios_dict,
-                                "metadata_per_datatype_found_in_scenarios": []}
+                                "metadata_per_datatype_found_in_scenarios": {}}
 
                     # check for the datatypes
                     already_inserted = False
-                    for test_dict in minus_statistical_information["metadata_per_datatype_found_in_scenarios"]:
-                        if test_dict["datatype"] == data_type:
+                    for test_dict_datatype in minus_statistical_information["metadata_per_datatype_found_in_scenarios"]:
+                        if test_dict_datatype == data_type:
                             already_inserted = True
 
-                            current_datatype_dict = test_dict
+                            current_datatype_dict = minus_statistical_information[
+                                "metadata_per_datatype_found_in_scenarios"][data_type]
 
                     if not already_inserted:
                         scenarios_dict_datatype = scenarios_dict.copy()
-                        scenarios_dict_datatype["datatype"] = data_type
-                        minus_statistical_information["metadata_per_datatype_found_in_scenarios"]. \
-                            append(scenarios_dict_datatype)
+                        minus_statistical_information["metadata_per_datatype_found_in_scenarios"][data_type] = \
+                            scenarios_dict_datatype
 
                         current_datatype_dict = scenarios_dict_datatype
 
@@ -386,8 +385,12 @@ def scenario_minus_occurrences(json_object, look_for, location, bound_variables,
 
                     # if the variable could not be found in the patterns of the MINUS
                     if minus_statistical_information["metadata_found_in_scenarios"] == tmp_dict:
-                        minus_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += 1
-                        current_datatype_dict["not_found_in_patterns"] += 1
+                        # could be more than one
+                        minus_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += \
+                            str(where_part["patterns"]).count(look_for)
+                        current_datatype_dict["not_found_in_patterns"] += \
+                            str(where_part["patterns"]).count(look_for)
+
 
                     # save the json object
                     with open(location + "/minus_statistical_information.json", "w") as json_data:

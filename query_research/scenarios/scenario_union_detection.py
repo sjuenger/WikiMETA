@@ -105,8 +105,7 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                             "literal": 0,
                             "values": 0,
                             "service": 0,
-                            "not_found_in_patterns": 0,
-                            "datatype": "total"}
+                            "not_found_in_patterns": 0}
 
                     # look, if there already exists a 'union_scenarios_information'
                     if os.path.isfile(location + "/union_statistical_information.json"):
@@ -120,32 +119,35 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                                 "total_found_metadata": 0,
                                 "metadata_found_in_scenarios": scenarios_dict,
                                 "scenarios_found_in_second_level_subselect": scenarios_dict.copy(),
-                                "metadata_per_datatype_found_in_scenarios": [],
-                                "scenarios_per_datatype_found_in_second_level_subselect": []
+                                "metadata_per_datatype_found_in_scenarios": {},
+                                "scenarios_per_datatype_found_in_second_level_subselect": {}
                             }
 
                     # check for the datatypes
                     # or/and get the correct scenario dict for the current datatype
                     already_inserted = False
-                    for test_dict in union_statistical_information["metadata_per_datatype_found_in_scenarios"]:
-                        if test_dict["datatype"] == data_type:
+                    for test_dict_datatype in union_statistical_information["metadata_per_datatype_found_in_scenarios"]:
+                        if test_dict_datatype == data_type:
                             already_inserted = True
 
-                            current_datatype_dict = test_dict
+                            current_datatype_dict = union_statistical_information[
+                                "metadata_per_datatype_found_in_scenarios"][data_type]
 
                             # look for the current datatype dict for the operators
-                            for test_dict in union_statistical_information["scenarios_per_datatype_found_in_second_level_subselect"]:
-                                if test_dict["datatype"] == data_type:
-                                    current_datatype_dict_subselect_layer = test_dict
+                            for test_dict_datatype in union_statistical_information[
+                                "scenarios_per_datatype_found_in_second_level_subselect"]:
+                                if test_dict_datatype == data_type:
+                                    current_datatype_dict_subselect_layer = union_statistical_information[
+                                        "scenarios_per_datatype_found_in_second_level_subselect"][data_type]
 
                     if not already_inserted:
                         scenarios_dict_datatype = scenarios_dict.copy()
-                        scenarios_dict_datatype["datatype"] = data_type
-                        union_statistical_information["metadata_per_datatype_found_in_scenarios"]. \
-                            append(scenarios_dict_datatype)
+
+                        union_statistical_information["metadata_per_datatype_found_in_scenarios"][data_type] = \
+                            scenarios_dict_datatype
                         scenarios_dict_datatype_operator = scenarios_dict_datatype.copy()
-                        union_statistical_information["scenarios_per_datatype_found_in_second_level_subselect"]. \
-                            append(scenarios_dict_datatype_operator)
+                        union_statistical_information["scenarios_per_datatype_found_in_second_level_subselect"][
+                            data_type] = scenarios_dict_datatype_operator
 
                         current_datatype_dict = scenarios_dict_datatype
                         current_datatype_dict_subselect_layer = scenarios_dict_datatype_operator
@@ -378,12 +380,11 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
 
                     # if the variable could not be found in the patterns of the FILTER
                     if union_statistical_information["metadata_found_in_scenarios"] == tmp_dict:
-                        union_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += 1
-                        current_datatype_dict["not_found_in_patterns"] += 1
+                        union_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += \
+                            str(where_part["patterns"]).count(look_for)
+                        current_datatype_dict["not_found_in_patterns"] += \
+                            str(where_part["patterns"]).count(look_for)
 
-                    # if the variable could not be found in the patterns of the UNION
-                    if union_statistical_information["metadata_found_in_scenarios"] == tmp_dict:
-                        union_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += 1
 
                     #-----------------------------------------------------------------------------------------------------------------------
                     #
@@ -671,8 +672,10 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                                         # if the variable could not be found in the patterns of the UNION
                                         if union_statistical_information["scenarios_found_in_second_level_subselect"] == tmp_dict:
                                             union_statistical_information["scenarios_found_in_second_level_subselect"][
-                                                "not_found_in_patterns"] += 1
-                                            current_datatype_dict_subselect_layer["not_found_in_patterns"] += 1
+                                                "not_found_in_patterns"] += \
+                                                    str(pattern).count(look_for)
+                                            current_datatype_dict_subselect_layer["not_found_in_patterns"] += \
+                                                    str(pattern).count(look_for)
 
                 
 

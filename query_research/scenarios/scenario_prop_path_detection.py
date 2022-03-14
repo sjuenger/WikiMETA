@@ -79,7 +79,8 @@ def scenario_prop_path_occurrences(json_object, look_for, location, bound_variab
                                     prop_path_statistical_information = \
                                         {
                                             "total_found_operators": 0,
-                                            "found_operators_overall": {}}
+                                            "found_operators_overall": {},
+                                            "found_operators_per_datatype": {}}
 
 
 
@@ -99,17 +100,17 @@ def scenario_prop_path_occurrences(json_object, look_for, location, bound_variab
                                 # do the same thing again -> but now, also for the datatypes
                                 if data_type in prop_path_statistical_information:
 
-                                    if triple["predicate"]["pathType"] in prop_path_statistical_information[
+                                    if triple["predicate"]["pathType"] in prop_path_statistical_information["found_operators_per_datatype"][
                                         data_type]:
-                                        prop_path_statistical_information[data_type][
+                                        prop_path_statistical_information["found_operators_per_datatype"][data_type][
                                             triple["predicate"]["pathType"]] += 1
                                     else:
-                                        prop_path_statistical_information[data_type][
+                                        prop_path_statistical_information["found_operators_per_datatype"][data_type][
                                             triple["predicate"]["pathType"]] = 1
 
                                 else:
-                                    prop_path_statistical_information[data_type] = {}
-                                    prop_path_statistical_information[data_type][
+                                    prop_path_statistical_information["found_operators_per_datatype"][data_type] = {}
+                                    prop_path_statistical_information["found_operators_per_datatype"][data_type][
                                         triple["predicate"]["pathType"]] = 1
 
 

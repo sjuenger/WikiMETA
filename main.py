@@ -11,27 +11,22 @@ import query_research.transform_data.redundant_detection as redundant_detection
 import graphical_analysis.graphical_analysis_handler as graphical_analysis_handler
 
 
-#: Wirte a script, which buils an directory structure fpr extractSPARQLtoJSON
-
-# TODO: Add some modi here, like "Extraction",
-#  "redundant_detection", "sitaution detection"...
-
 # TODO: Add a method, that automatically extracts the entries from SQID + the 5 missing properties from Wikidata Property Talk
 # + stated IN, Retrieved, Reference URL, instance of, series ordinal ! .... fehlen in SQID
 # TODO: Also add in that method, to automatically download the data from the SAPRQL logs
-# TODO: Add a GUI for the project
 # TODO: Add references a https://sqid.toolforge.org/#/ to the code
 
 
 def main():
-    directory_structure_handler.create_dir_structure_of_data()
-    directory_structure_handler.delete_identified_scenarios()
+    #directory_structure_handler.create_dir_structure_of_data()
+    #directory_structure_handler.delete_identified_scenarios()
 
     #do_wikidata_research_stuff(15)
 
-    do_query_research_stuff([0,0,1,1,1,0,1], 15)
+    #do_query_research_stuff([0,0,1,1,1,0,1], 15)
+    #do_query_research_stuff([0,0,0,0,1,0,0], 15)
 
-    #analyse_research_stuff(15)
+    analyse_research_stuff(15)
 
     # the ALL is missing with the recommmended / non_recommended things
 

@@ -9,6 +9,7 @@ import graphical_analysis.query_properties_accumulated_datatypes_analysis as \
     query_properties_accumulated_datatypes_analysis
 import graphical_analysis.query_scenario_additional_layer_analysis as \
     query_scenario_additional_layer_analysis
+import graphical_analysis.query_scenario_operators_analysis as query_scenario_operators_analysis
 
 
 TIMEFRAMES = [
@@ -74,7 +75,17 @@ def start_graphical_analysis(x):
 
         for scenario in ["optional", "minus", "subselect", "union", "filter"]:
             query_scenario_additional_layer_analysis.\
-                plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL_MINUS_SUBSELECT_UNION(
+                plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL_MINUS_SUBSELECT_UNION_FILTER(
+                TIMEFRAMES, metadata, scenario)
+
+        for scenario in ["subselect", "union"]:
+            query_scenario_additional_layer_analysis.\
+                plot_additional_additional_layer_information_about_scenarios_per_timeframe_for_SUBSELECT_UNION(
+                TIMEFRAMES, metadata, scenario)
+
+        for scenario in ["filter", "prop_path"]:
+            query_scenario_operators_analysis.\
+                plot_additional_operator_information_about_scenarios_per_timeframe_for_FILTER_PROPPATH(
                 TIMEFRAMES, metadata, scenario)
 
 """

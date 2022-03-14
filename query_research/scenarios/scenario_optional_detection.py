@@ -101,8 +101,7 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                             "literal": 0,
                             "values": 0,
                             "service": 0,
-                            "not_found_in_patterns": 0,
-                            "datatype": "total"}
+                            "not_found_in_patterns": 0}
 
                     # look, if there already exists a 'optional_scenarios_information'
                     if os.path.isfile(location + "/optional_statistical_information.json"):
@@ -115,22 +114,22 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                             {
                                 "total_found_metadata": 0,
                                 "metadata_found_in_scenarios": scenarios_dict,
-                                "metadata_per_datatype_found_in_scenarios": []}
+                                "metadata_per_datatype_found_in_scenarios": {}}
 
                     # check for the datatypes
                     # or/and get the correct scenario dict for the current datatype
                     already_inserted = False
-                    for test_dict in optional_statistical_information["metadata_per_datatype_found_in_scenarios"]:
-                        if test_dict["datatype"] == data_type:
+                    for test_dict_datatype in optional_statistical_information["metadata_per_datatype_found_in_scenarios"]:
+                        if test_dict_datatype == data_type:
                             already_inserted = True
 
-                            current_datatype_dict = test_dict
+                            current_datatype_dict = optional_statistical_information[
+                                "metadata_per_datatype_found_in_scenarios"][data_type]
 
                     if not already_inserted:
                         scenarios_dict_datatype = scenarios_dict.copy()
-                        scenarios_dict_datatype["datatype"] = data_type
-                        optional_statistical_information["metadata_per_datatype_found_in_scenarios"]. \
-                            append(scenarios_dict_datatype)
+                        optional_statistical_information["metadata_per_datatype_found_in_scenarios"][data_type] = \
+                            scenarios_dict_datatype
 
                         current_datatype_dict = scenarios_dict_datatype
                         
@@ -358,8 +357,10 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
 
                     # if the variable could not be found in the patterns of the OPTIONAL
                     if optional_statistical_information["metadata_found_in_scenarios"] == tmp_dict:
-                        optional_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += 1
-                        current_datatype_dict["not_found_in_patterns"] += 1
+                        optional_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += \
+                            str(where_part["patterns"]).count(look_for)
+                        current_datatype_dict["not_found_in_patterns"] += \
+                            str(where_part["patterns"]).count(look_for)
 
                     # save the json object
                     with open(location + "/optional_statistical_information.json", "w") as json_data:

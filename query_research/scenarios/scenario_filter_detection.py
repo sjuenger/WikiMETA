@@ -103,8 +103,7 @@ def scenario_filter_occurrences(json_object, look_for, location, bound_variables
                             "literal": 0,
                             "values": 0,
                             "service": 0,
-                            "not_found_in_patterns": 0,
-                            "datatype": "total"}
+                            "not_found_in_patterns": 0}
 
                     # look, if there already exists a 'filter_scenarios_information'
                     if os.path.isfile(location + "/filter_statistical_information.json"):
@@ -117,25 +116,25 @@ def scenario_filter_occurrences(json_object, look_for, location, bound_variables
                             {
                                 "total_found_metadata": 0,
                                 "metadata_found_in_scenarios": scenarios_dict,
-                                "metadata_per_datatype_found_in_scenarios": [],
+                                "metadata_per_datatype_found_in_scenarios": {},
                                 "total_found_operators": 0,
-                                "found_operators": {},
+                                "found_operators_overall": {},
                                 "found_operators_per_datatype": {}}
 
                     # check for the datatypes
                     # or/and get the correct scenario dict for the current datatype
                     already_inserted = False
-                    for test_dict in filter_statistical_information["metadata_per_datatype_found_in_scenarios"]:
-                        if test_dict["datatype"] == data_type:
+                    for test_dict_datatype in filter_statistical_information["metadata_per_datatype_found_in_scenarios"]:
+                        if test_dict_datatype == data_type:
                             already_inserted = True
                             
-                            current_datatype_dict = test_dict
+                            current_datatype_dict = filter_statistical_information[
+                                "metadata_per_datatype_found_in_scenarios"][data_type]
                     
                     if not already_inserted:
                         scenarios_dict_datatype = scenarios_dict.copy()
-                        scenarios_dict_datatype["datatype"] = data_type
-                        filter_statistical_information["metadata_per_datatype_found_in_scenarios"].\
-                            append(scenarios_dict_datatype)
+                        filter_statistical_information["metadata_per_datatype_found_in_scenarios"][data_type] =\
+                            scenarios_dict_datatype
                         
                         current_datatype_dict = scenarios_dict_datatype
                     
@@ -376,8 +375,11 @@ def scenario_filter_occurrences(json_object, look_for, location, bound_variables
 
                     # if the variable could not be found in the patterns of the FILTER
                     if filter_statistical_information["metadata_found_in_scenarios"] == tmp_dict:
-                        filter_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += 1
-                        current_datatype_dict["not_found_in_patterns"] += 1
+                        # could be more than one
+                        filter_statistical_information["metadata_found_in_scenarios"]["not_found_in_patterns"] += \
+                            str({"where": where_part["expression"]["args"]}).count(look_for)
+                        current_datatype_dict["not_found_in_patterns"] += \
+                            str(where_part["expression"]["args"]).count(look_for)
 
 
 
@@ -386,11 +388,11 @@ def scenario_filter_occurrences(json_object, look_for, location, bound_variables
                     #
                     # e.g. EXISTS / NON-EXISTS
 
-                    if where_part["expression"]["operator"] in filter_statistical_information["found_operators"]:
-                        filter_statistical_information["found_operators"][where_part["expression"]["operator"]] += 1
+                    if where_part["expression"]["operator"] in filter_statistical_information["found_operators_overall"]:
+                        filter_statistical_information["found_operators_overall"][where_part["expression"]["operator"]] += 1
 
                     else:
-                        filter_statistical_information["found_operators"][where_part["expression"]["operator"]] = 1
+                        filter_statistical_information["found_operators_overall"][where_part["expression"]["operator"]] = 1
 
                     filter_statistical_information["total_found_operators"] += 1
 

@@ -162,6 +162,14 @@ def start_research_of_query_data(args, x):
                             get_top_x_counted_accumulated_datatypes_timeframe(
                             timeframe, x, metadata_mode, recommended_mode, redundancy_mode)
 
+        statistical_information_handler.summarize_additional_scenario_information_about_BIND(TIMEFRAMES)
+        statistical_information_handler.summarize_additional_scenario_information_about_FILTER(TIMEFRAMES)
+        statistical_information_handler.summarize_additional_scenario_information_about_MINUS(TIMEFRAMES)
+        statistical_information_handler.summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES)
+        statistical_information_handler.summarize_additional_scenario_information_about_PROP_PATH(TIMEFRAMES)
+        statistical_information_handler.summarize_additional_scenario_information_about_SUBSELECT(TIMEFRAMES)
+        statistical_information_handler.summarize_additional_scenario_information_about_UNION(TIMEFRAMES)
+
 
     # look for Wikidata Example Queries in the Query data
     if args[5] == 1:

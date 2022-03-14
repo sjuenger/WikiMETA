@@ -1,5 +1,6 @@
 import glob
 import json
+import os
 import gzip
 import csv
 from urllib.parse import unquote_plus
@@ -46,7 +47,7 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         "bind": 0,
         "blank_node": 0,
         "minus": 0,
-        "subselect": 0,
+        "union": 0,
         "literal": 0,
         "values": 0,
         "service": 0,
@@ -130,8 +131,8 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["prop_path"]
                 metadata_dict["found_scenarios"]["service"] += \
                     elem["service"]
-                metadata_dict["found_scenarios"]["subselect"] += \
-                    elem["subselect"]
+                metadata_dict["found_scenarios"]["union"] += \
+                    elem["union"]
                 metadata_dict["found_scenarios"]["union"] += \
                     elem["union"]
                 metadata_dict["found_scenarios"]["values"] += \
@@ -180,7 +181,7 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
         "bind": 0,
         "blank_node": 0,
         "minus": 0,
-        "subselect": 0,
+        "union": 0,
         "literal": 0,
         "values": 0,
         "service": 0,
@@ -264,8 +265,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
                 elem["prop_path"]
             metadata_dict["found_scenarios"]["service"] += \
                 elem["service"]
-            metadata_dict["found_scenarios"]["subselect"] += \
-                elem["subselect"]
+            metadata_dict["found_scenarios"]["union"] += \
+                elem["union"]
             metadata_dict["found_scenarios"]["union"] += \
                 elem["union"]
             metadata_dict["found_scenarios"]["values"] += \
@@ -1580,4 +1581,590 @@ def summarize_timeframe_information_about_accumulated_datatypes(locations, mode,
 
         result_data.close()
 
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            for timeframe in TIMEFRAMES:
+                scenarios_dict = \
+                    {
+                        "one": 0,
+                        "two": 0,
+                        "three": 0,
+                        "four": 0,
+                        "five": 0,
+                        "six": 0,
+                        "seven": 0,
+                        "eight": 0,
+                        "nine": 0,
+                        "ten": 0,
+                        "eleven": 0,
+                        "twelve": 0,
+                        "filter": 0,
+                        "optional": 0,
+                        "union": 0,
+                        "prop_path": 0,
+                        "bind": 0,
+                        "blank_node": 0,
+                        "minus": 0,
+                        "union": 0,
+                        "ref_value": 0,
+                        "literal": 0,
+                        "values": 0,
+                        "service": 0,
+                        "not_found_in_query": 0}
+
+                result_dict = \
+                    {
+                        "total_found_bound_variables_to_metadata": 0,
+                        "variables_found_in_scenarios": scenarios_dict}
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                    "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/bind_statistical_information.json"
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summrize the timeframe data
+                        result_dict["total_found_bound_variables_to_metadata"] += \
+                            timeframe_dict["total_found_bound_variables_to_metadata"]
+                        for scenario in scenarios_dict:
+                            result_dict["variables_found_in_scenarios"][scenario] += \
+                                timeframe_dict["variables_found_in_scenarios"][scenario]
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                    "/" + metadata + "/scenarios/additional_layer/bind_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
+
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_PROP_PATH(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            for timeframe in TIMEFRAMES:
+
+                result_dict = \
+                    {
+                        "total_found_operators": 0,
+                        "found_operators_overall": {},
+                        "found_operators_per_datatype": {}}
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                    "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/prop_path_statistical_information.json"
+
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summarize the timeframe data
+                        result_dict["total_found_operators"] += \
+                            timeframe_dict["total_found_operators"]
+
+                        for operator in timeframe_dict["found_operators_overall"]:
+                            if operator in result_dict["found_operators_overall"]:
+
+                                result_dict["found_operators_overall"][operator] += \
+                                    timeframe_dict["found_operators_overall"][operator]
+                            else:
+                                result_dict["found_operators_overall"][operator] = \
+                                    timeframe_dict["found_operators_overall"][operator]
+
+                        for datatype in timeframe_dict["found_operators_per_datatype"]:
+                            if datatype in result_dict["found_operators_per_datatype"]:
+
+                                for operator in timeframe_dict["found_operators_per_datatype"][datatype]:
+                                    if operator in result_dict["found_operators_per_datatype"][datatype]:
+                                        result_dict["found_operators_per_datatype"][datatype][operator] += \
+                                            timeframe_dict["found_operators_per_datatype"][datatype][operator]
+                                    else:
+                                        result_dict["found_operators_per_datatype"][datatype][operator] = \
+                                            timeframe_dict["found_operators_per_datatype"][datatype][operator]
+                            else:
+                                result_dict["found_operators_per_datatype"][datatype] = \
+                                    timeframe_dict["found_operators_per_datatype"][datatype]
+
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                    "/" + metadata + "/scenarios/additional_layer/prop_path_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
+
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_FILTER(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            scenarios_dict = \
+                {
+                    "one": 0,
+                    "two": 0,
+                    "three": 0,
+                    "four": 0,
+                    "five": 0,
+                    "six": 0,
+                    "seven": 0,
+                    "eight": 0,
+                    "nine": 0,
+                    "ten": 0,
+                    "eleven": 0,
+                    "twelve": 0,
+                    "filter": 0,
+                    "optional": 0,
+                    "union": 0,
+                    "prop_path": 0,
+                    "bind": 0,
+                    "blank_node": 0,
+                    "minus": 0,
+                    "union": 0,
+                    "ref_value": 0,
+                    "literal": 0,
+                    "values": 0,
+                    "service": 0,
+                    "not_found_in_patterns": 0}
+
+
+            result_dict = \
+                {
+                    "total_found_metadata": 0,
+                    "metadata_found_in_scenarios": scenarios_dict,
+                    "metadata_per_datatype_found_in_scenarios": {},
+                    "total_found_operators": 0,
+                    "found_operators_overall": {},
+                    "found_operators_per_datatype": {}}
+
+            for timeframe in TIMEFRAMES:
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/filter_statistical_information.json"
+
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summarize the timeframe data
+                        result_dict["total_found_operators"] += \
+                            timeframe_dict["total_found_operators"]
+                        result_dict["total_found_metadata"] += \
+                            timeframe_dict["total_found_metadata"]
+
+                        for operator in timeframe_dict["found_operators_overall"]:
+                            if operator in result_dict["found_operators_overall"]:
+
+                                result_dict["found_operators_overall"][operator] += \
+                                    timeframe_dict["found_operators_overall"][operator]
+                            else:
+                                result_dict["found_operators_overall"][operator] = \
+                                    timeframe_dict["found_operators_overall"][operator]
+
+                        for datatype in timeframe_dict["found_operators_per_datatype"]:
+                            if datatype in result_dict["found_operators_per_datatype"]:
+
+                                for operator in timeframe_dict["found_operators_per_datatype"][datatype]:
+                                    if operator in result_dict["found_operators_per_datatype"][datatype]:
+                                        result_dict["found_operators_per_datatype"][datatype][operator] += \
+                                            timeframe_dict["found_operators_per_datatype"][datatype][operator]
+                                    else:
+                                        result_dict["found_operators_per_datatype"][datatype][operator] = \
+                                            timeframe_dict["found_operators_per_datatype"][datatype][operator]
+                            else:
+                                result_dict["found_operators_per_datatype"][datatype] = \
+                                    timeframe_dict["found_operators_per_datatype"][datatype]
+
+
+                        for scenario in timeframe_dict["metadata_found_in_scenarios"]:
+                            if scenario in result_dict["metadata_found_in_scenarios"]:
+
+                                result_dict["metadata_found_in_scenarios"][scenario] += \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+                            else:
+                                result_dict["metadata_found_in_scenarios"][scenario] = \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+
+                        for datatype in timeframe_dict["metadata_per_datatype_found_in_scenarios"]:
+                            if datatype in result_dict["metadata_per_datatype_found_in_scenarios"]:
+
+                                for scenario in timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]:
+                                    result_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario] += \
+                                        timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario]
+                            else:
+                                result_dict["metadata_per_datatype_found_in_scenarios"][datatype] = \
+                                    timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]
+
+
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                                 "/" + metadata + "/scenarios/additional_layer/filter_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
+
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_UNION(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            scenarios_dict = \
+                {
+                    "used_in_SELECT": 0,
+                    "one": 0,
+                    "two": 0,
+                    "three": 0,
+                    "four": 0,
+                    "five": 0,
+                    "six": 0,
+                    "seven": 0,
+                    "eight": 0,
+                    "nine": 0,
+                    "ten": 0,
+                    "eleven": 0,
+                    "twelve": 0,
+                    "filter": 0,
+                    "optional": 0,
+                    "union": 0,
+                    "prop_path": 0,
+                    "bind": 0,
+                    "blank_node": 0,
+                    "minus": 0,
+                    "union": 0,
+                    "ref_value": 0,
+                    "literal": 0,
+                    "values": 0,
+                    "service": 0,
+                    "not_found_in_patterns": 0}
+
+            result_dict = \
+                {
+                    "total_found_metadata": 0,
+                    "metadata_found_in_scenarios": scenarios_dict,
+                    "scenarios_found_in_second_level_subselect": scenarios_dict.copy(),
+                    "metadata_per_datatype_found_in_scenarios": {},
+                    "scenarios_per_datatype_found_in_second_level_subselect": {}
+                }
+            for timeframe in TIMEFRAMES:
+
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/union_statistical_information.json"
+
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summarize the timeframe data
+                        result_dict["total_found_metadata"] += \
+                            timeframe_dict["total_found_metadata"]
+
+                        for scenario in timeframe_dict["metadata_found_in_scenarios"]:
+                            if scenario in result_dict["metadata_found_in_scenarios"]:
+
+                                result_dict["metadata_found_in_scenarios"][scenario] += \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+                            else:
+                                result_dict["metadata_found_in_scenarios"][scenario] = \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+
+                        for datatype in timeframe_dict["metadata_per_datatype_found_in_scenarios"]:
+                            if datatype in result_dict["metadata_per_datatype_found_in_scenarios"]:
+
+                                for scenario in timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]:
+                                    result_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario] += \
+                                        timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario]
+                            else:
+                                result_dict["metadata_per_datatype_found_in_scenarios"][datatype] = \
+                                    timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]
+
+
+
+                        for scenario in timeframe_dict["scenarios_found_in_second_level_subselect"]:
+                            if scenario in result_dict["scenarios_found_in_second_level_subselect"]:
+
+                                result_dict["scenarios_found_in_second_level_subselect"][scenario] += \
+                                    timeframe_dict["scenarios_found_in_second_level_subselect"][scenario]
+                            else:
+                                result_dict["scenarios_found_in_second_level_subselect"][scenario] = \
+                                    timeframe_dict["scenarios_found_in_second_level_subselect"][scenario]
+
+                        for datatype in timeframe_dict["scenarios_per_datatype_found_in_second_level_subselect"]:
+                            if datatype in result_dict["scenarios_per_datatype_found_in_second_level_subselect"]:
+
+                                for scenario in timeframe_dict["scenarios_per_datatype_found_in_second_level_subselect"][
+                                    datatype]:
+                                    result_dict["scenarios_per_datatype_found_in_second_level_subselect"][datatype][
+                                        scenario] += \
+                                        timeframe_dict["scenarios_per_datatype_found_in_second_level_subselect"][datatype][
+                                            scenario]
+                            else:
+                                result_dict["scenarios_per_datatype_found_in_second_level_subselect"][datatype] = \
+                                    timeframe_dict["scenarios_per_datatype_found_in_second_level_subselect"][datatype]
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                                 "/" + metadata + "/scenarios/additional_layer/union_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
+
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_SUBSELECT(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            scenarios_dict = \
+                {
+                    "used_in_SELECT": 0,
+                    "one": 0,
+                    "two": 0,
+                    "three": 0,
+                    "four": 0,
+                    "five": 0,
+                    "six": 0,
+                    "seven": 0,
+                    "eight": 0,
+                    "nine": 0,
+                    "ten": 0,
+                    "eleven": 0,
+                    "twelve": 0,
+                    "filter": 0,
+                    "optional": 0,
+                    "union": 0,
+                    "prop_path": 0,
+                    "bind": 0,
+                    "blank_node": 0,
+                    "minus": 0,
+                    "union": 0,
+                    "ref_value": 0,
+                    "literal": 0,
+                    "values": 0,
+                    "service": 0,
+                    "not_found_in_patterns": 0}
+
+
+            result_dict = \
+                {
+                    "total_found_metadata": 0,
+                    "metadata_found_in_scenarios": scenarios_dict,
+                    "scenarios_found_in_second_level_union": scenarios_dict.copy(),
+                    "metadata_per_datatype_found_in_scenarios": {},
+                    "scenarios_per_datatype_found_in_second_level_union": {}
+                }
+        for timeframe in TIMEFRAMES:
+
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/subselect_statistical_information.json"
+
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summarize the timeframe data
+                        result_dict["total_found_metadata"] += \
+                            timeframe_dict["total_found_metadata"]
+
+                        for scenario in timeframe_dict["metadata_found_in_scenarios"]:
+                            if scenario in result_dict["metadata_found_in_scenarios"]:
+
+                                result_dict["metadata_found_in_scenarios"][scenario] += \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+                            else:
+                                result_dict["metadata_found_in_scenarios"][scenario] = \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+
+                        for datatype in timeframe_dict["metadata_per_datatype_found_in_scenarios"]:
+                            if datatype in result_dict["metadata_per_datatype_found_in_scenarios"]:
+
+                                for scenario in timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]:
+                                    result_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario] += \
+                                        timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario]
+                            else:
+                                result_dict["metadata_per_datatype_found_in_scenarios"][datatype] = \
+                                    timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]
+
+
+
+                        for scenario in timeframe_dict["scenarios_found_in_second_level_union"]:
+                            if scenario in result_dict["scenarios_found_in_second_level_union"]:
+
+                                result_dict["scenarios_found_in_second_level_union"][scenario] += \
+                                    timeframe_dict["scenarios_found_in_second_level_union"][scenario]
+                            else:
+                                result_dict["scenarios_found_in_second_level_union"][scenario] = \
+                                    timeframe_dict["scenarios_found_in_second_level_union"][scenario]
+
+                        for datatype in timeframe_dict["scenarios_per_datatype_found_in_second_level_union"]:
+                            if datatype in result_dict["scenarios_per_datatype_found_in_second_level_union"]:
+
+                                for scenario in timeframe_dict["scenarios_per_datatype_found_in_second_level_union"][
+                                    datatype]:
+                                    result_dict["scenarios_per_datatype_found_in_second_level_union"][datatype][
+                                        scenario] += \
+                                        timeframe_dict["scenarios_per_datatype_found_in_second_level_union"][datatype][
+                                            scenario]
+                            else:
+                                result_dict["scenarios_per_datatype_found_in_second_level_union"][datatype] = \
+                                    timeframe_dict["scenarios_per_datatype_found_in_second_level_union"][datatype]
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                                 "/" + metadata + "/scenarios/additional_layer/subselect_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
+
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_MINUS(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            scenarios_dict = \
+                {
+                    "one": 0,
+                    "two": 0,
+                    "three": 0,
+                    "four": 0,
+                    "five": 0,
+                    "six": 0,
+                    "seven": 0,
+                    "eight": 0,
+                    "nine": 0,
+                    "ten": 0,
+                    "eleven": 0,
+                    "twelve": 0,
+                    "filter": 0,
+                    "optional": 0,
+                    "union": 0,
+                    "prop_path": 0,
+                    "bind": 0,
+                    "blank_node": 0,
+                    "minus": 0,
+                    "subselect": 0,
+                    "ref_value": 0,
+                    "literal": 0,
+                    "values": 0,
+                    "service": 0,
+                    "not_found_in_patterns": 0}
+
+            result_dict = \
+                {
+                    "total_found_metadata": 0,
+                    "metadata_found_in_scenarios": scenarios_dict,
+                    "metadata_per_datatype_found_in_scenarios": {}}
+            for timeframe in TIMEFRAMES:
+
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/minus_statistical_information.json"
+
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summarize the timeframe data
+                        result_dict["total_found_metadata"] += \
+                            timeframe_dict["total_found_metadata"]
+
+                        for scenario in timeframe_dict["metadata_found_in_scenarios"]:
+                            if scenario in result_dict["metadata_found_in_scenarios"]:
+
+                                result_dict["metadata_found_in_scenarios"][scenario] += \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+                            else:
+                                result_dict["metadata_found_in_scenarios"][scenario] = \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+
+                        for datatype in timeframe_dict["metadata_per_datatype_found_in_scenarios"]:
+                            if datatype in result_dict["metadata_per_datatype_found_in_scenarios"]:
+
+                                for scenario in timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]:
+                                    result_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario] += \
+                                        timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario]
+                            else:
+                                result_dict["metadata_per_datatype_found_in_scenarios"][datatype] = \
+                                    timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]
+
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                                 "/" + metadata + "/scenarios/additional_layer/minus_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
+
+
+# only plot the non_redundant data
+def summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES):
+    for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
+        for redundant_mode in ["non_redundant"]:
+            scenarios_dict = \
+                {
+                    "one": 0,
+                    "two": 0,
+                    "three": 0,
+                    "four": 0,
+                    "five": 0,
+                    "six": 0,
+                    "seven": 0,
+                    "eight": 0,
+                    "nine": 0,
+                    "ten": 0,
+                    "eleven": 0,
+                    "twelve": 0,
+                    "filter": 0,
+                    "optional": 0,
+                    "union": 0,
+                    "prop_path": 0,
+                    "bind": 0,
+                    "blank_node": 0,
+                    "minus": 0,
+                    "subselect": 0,
+                    "ref_value": 0,
+                    "literal": 0,
+                    "values": 0,
+                    "service": 0,
+                    "not_found_in_patterns": 0}
+
+            result_dict = \
+                {
+                    "total_found_metadata": 0,
+                    "metadata_found_in_scenarios": scenarios_dict,
+                    "metadata_per_datatype_found_in_scenarios": {}}
+            for timeframe in TIMEFRAMES:
+
+
+                path_to_information = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                                      "/" + metadata + "/scenarios/" + redundant_mode + \
+                                      "/optional_statistical_information.json"
+
+                if os.path.isfile(path_to_information):
+                    with open(path_to_information, "r") as timeframe_data:
+                        timeframe_dict = json.load(timeframe_data)
+
+                        # summarize the timeframe data
+                        result_dict["total_found_metadata"] += \
+                            timeframe_dict["total_found_metadata"]
+
+                        for scenario in timeframe_dict["metadata_found_in_scenarios"]:
+                            if scenario in result_dict["metadata_found_in_scenarios"]:
+
+                                result_dict["metadata_found_in_scenarios"][scenario] += \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+                            else:
+                                result_dict["metadata_found_in_scenarios"][scenario] = \
+                                    timeframe_dict["metadata_found_in_scenarios"][scenario]
+
+                        for datatype in timeframe_dict["metadata_per_datatype_found_in_scenarios"]:
+                            if datatype in result_dict["metadata_per_datatype_found_in_scenarios"]:
+
+                                for scenario in timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]:
+                                    result_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario] += \
+                                        timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype][scenario]
+                            else:
+                                result_dict["metadata_per_datatype_found_in_scenarios"][datatype] = \
+                                    timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]
+
+                path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
+                                 "/" + metadata + "/scenarios/additional_layer/optional_statistical_information.json"
+                with open(path_to_result, "w") as result_data:
+                    json.dump(result_dict, result_data)
 
