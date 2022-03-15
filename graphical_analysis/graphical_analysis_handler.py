@@ -65,7 +65,7 @@ def start_graphical_analysis(x):
 
     #redundant_detection_analysis.plot_redundant_detection_data_exact()
 
-    #query_metadata_percentage.display_percentage_queries_with_metadata()
+    query_metadata_percentage.display_percentage_queries_with_metadata()
 
     #query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
     #    TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])

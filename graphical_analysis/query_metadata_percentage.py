@@ -20,10 +20,17 @@ def display_percentage_queries_with_metadata():
     csv_ready_dict_overall = {}
     csv_ready_dict_overall["timeframe"] = []
     csv_ready_dict_overall["metadata_type"] = []
+
     csv_ready_dict_overall["counted_metadata_queries_percentage"] = []
     csv_ready_dict_overall["counted_metadata_queries"] = []
+
+    csv_ready_dict_overall["counted_non_redundant_metadata_queries"] = []
+
+
     csv_ready_dict_overall["metadata_occurrences_per_overall_queries"] = []
     csv_ready_dict_overall["metadata_occurrences_per_matching_metadata_queries"] = []
+
+    csv_ready_dict_overall["non_redundant_metadata_occurrences_per_matching_metadata_queries"] = []
 
     for timeframe in TIMEFRAMES:
         path_to_timeframe_overall_query_information = "data/"+ timeframe[:21] + "/counted_queries.json"
@@ -40,13 +47,22 @@ def display_percentage_queries_with_metadata():
                 metadata_queries = timeframe_query_dict["counted_metadata_queries"][metadata + "_metadata"]
                 metadata_occurrences = timeframe_query_dict["counted_metadata_occurrences"][metadata + "_metadata"]
 
+                non_redundant_metadata_queries = \
+                    timeframe_query_dict["counted_non_redundant_metadata_queries"][metadata + "_metadata"]
+                non_redundant_metadata_occurrences = \
+                    timeframe_query_dict["counted_non_redundant_metadata_occurrences"][metadata + "_metadata"]
+
                 csv_ready_dict_overall["counted_metadata_queries"].append(metadata_queries)
+                csv_ready_dict_overall["counted_non_redundant_metadata_queries"].append(non_redundant_metadata_queries)
 
                 csv_ready_dict_overall["counted_metadata_queries_percentage"].append(metadata_queries / overall_queries)
                 csv_ready_dict_overall["metadata_occurrences_per_overall_queries"].\
                     append(metadata_occurrences / overall_queries)
+
                 csv_ready_dict_overall["metadata_occurrences_per_matching_metadata_queries"].\
                     append(metadata_occurrences / metadata_queries)
+                csv_ready_dict_overall["non_redundant_metadata_occurrences_per_matching_metadata_queries"].\
+                    append(non_redundant_metadata_occurrences / non_redundant_metadata_queries)
 
 
 
@@ -74,7 +90,7 @@ def display_percentage_queries_with_metadata():
 
     plt.close()
 
-    # plot the metadata per metadata query data in a strip diagram
+    # plot the metadata per matching metadata query data in a strip diagram
     df = pd.DataFrame(csv_ready_dict_overall)
     tmp = sns.catplot(x="timeframe", y="metadata_occurrences_per_matching_metadata_queries", kind="point",
                       palette="tab10", hue="metadata_type",
@@ -83,6 +99,20 @@ def display_percentage_queries_with_metadata():
     plt.gcf().autofmt_xdate()
 
     tmp.savefig("data/metadata_occurrences_per_matching_metadata_queries_strip.png")
+
+    plt.close()
+
+
+    # plot the non_redundant metadata per non_redundant matching metadata query data in a strip diagram
+    df = pd.DataFrame(csv_ready_dict_overall)
+    tmp = sns.catplot(x="timeframe", y="non_redundant_metadata_occurrences_per_matching_metadata_queries",
+                      kind="point",
+                      palette="tab10", hue="metadata_type",
+                      dodge=True, data=df, ci=None)
+
+    plt.gcf().autofmt_xdate()
+
+    tmp.savefig("data/non_redundant_metadata_occurrences_per_matching_non_redundant_metadata_queries_strip.png")
 
     plt.close()
 

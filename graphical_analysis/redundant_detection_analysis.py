@@ -456,5 +456,3 @@ def plot_redundant_detection_data_exact():
 
         plt.close()
 
-
-
