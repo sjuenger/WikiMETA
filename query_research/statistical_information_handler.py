@@ -47,7 +47,7 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         "bind": 0,
         "blank_node": 0,
         "minus": 0,
-        "union": 0,
+        "subselect": 0,
         "literal": 0,
         "values": 0,
         "service": 0,
@@ -133,8 +133,8 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["service"]
                 metadata_dict["found_scenarios"]["union"] += \
                     elem["union"]
-                metadata_dict["found_scenarios"]["union"] += \
-                    elem["union"]
+                metadata_dict["found_scenarios"]["subselect"] += \
+                    elem["subselect"]
                 metadata_dict["found_scenarios"]["values"] += \
                     elem["values"]
                 metadata_dict["found_scenarios"]["other"] += \
@@ -181,7 +181,7 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
         "bind": 0,
         "blank_node": 0,
         "minus": 0,
-        "union": 0,
+        "subselect": 0,
         "literal": 0,
         "values": 0,
         "service": 0,
@@ -267,8 +267,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
                 elem["service"]
             metadata_dict["found_scenarios"]["union"] += \
                 elem["union"]
-            metadata_dict["found_scenarios"]["union"] += \
-                elem["union"]
+            metadata_dict["found_scenarios"]["subselect"] += \
+                elem["subselect"]
             metadata_dict["found_scenarios"]["values"] += \
                 elem["values"]
             metadata_dict["found_scenarios"]["other"] += \
@@ -1607,8 +1607,7 @@ def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
                     "bind": 0,
                     "blank_node": 0,
                     "minus": 0,
-                    "union": 0,
-                    "ref_value": 0,
+                    "subselect": 0,
                     "literal": 0,
                     "values": 0,
                     "service": 0,
@@ -1719,8 +1718,7 @@ def summarize_additional_scenario_information_about_FILTER(TIMEFRAMES):
                     "bind": 0,
                     "blank_node": 0,
                     "minus": 0,
-                    "union": 0,
-                    "ref_value": 0,
+                    "subselect": 0,
                     "literal": 0,
                     "values": 0,
                     "service": 0,
@@ -1829,8 +1827,7 @@ def summarize_additional_scenario_information_about_UNION(TIMEFRAMES):
                     "bind": 0,
                     "blank_node": 0,
                     "minus": 0,
-                    "union": 0,
-                    "ref_value": 0,
+                    "subselect": 0,
                     "literal": 0,
                     "values": 0,
                     "service": 0,
@@ -1934,8 +1931,7 @@ def summarize_additional_scenario_information_about_SUBSELECT(TIMEFRAMES):
                     "bind": 0,
                     "blank_node": 0,
                     "minus": 0,
-                    "union": 0,
-                    "ref_value": 0,
+                    "subselect": 0,
                     "literal": 0,
                     "values": 0,
                     "service": 0,
@@ -2040,7 +2036,6 @@ def summarize_additional_scenario_information_about_MINUS(TIMEFRAMES):
                     "blank_node": 0,
                     "minus": 0,
                     "subselect": 0,
-                    "ref_value": 0,
                     "literal": 0,
                     "values": 0,
                     "service": 0,
@@ -2118,7 +2113,6 @@ def summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES):
                     "blank_node": 0,
                     "minus": 0,
                     "subselect": 0,
-                    "ref_value": 0,
                     "literal": 0,
                     "values": 0,
                     "service": 0,

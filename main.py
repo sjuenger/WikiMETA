@@ -25,7 +25,11 @@ def main():
 
     #do_query_research_stuff([0,0,1,1,1,0,1], 15)
     #do_query_research_stuff([0,0,0,0,1,0,0], 15)
-    #do_query_research_stuff([0,1,0,0,0,0,0], 15)
+    #do_query_research_stuff([0,0,0,0,0,0,1], 15)
+
+    # TODO: Check the percentage basis of the graphical analysis! Do they use the overall QUERIES, OCCURRENCES OR SCNEARIOS
+    # Also, calculate the examples a bit up and down
+    # Define a common way for the value, like 0.000x
 
     analyse_research_stuff(15)
 

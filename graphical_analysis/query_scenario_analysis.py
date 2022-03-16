@@ -361,3 +361,121 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
     plt.close()
 
 
+
+
+
+# plot only the NON-redundant data
+def plot_metadata_distribution_per_datatype_overall(timeframes, datatypes_list):
+
+    for datatypes in datatypes_list:
+
+        csv_ready_scenario_per_datatype_dict = {}
+        csv_ready_scenario_per_datatype_dict["datatype"] = []
+        csv_ready_scenario_per_datatype_dict["scenario_name"] = []
+        csv_ready_scenario_per_datatype_dict["scenario_count"] = []
+        csv_ready_scenario_per_datatype_dict["scenario_percentage"] = []
+
+        for datatype in datatypes:
+
+            tmp_data_scenario_dict = {}
+
+
+            for timeframe in timeframes:
+
+                # get the path to the location information of the timeframe scenario data per
+                #   datatype
+                information_path = "data/" + timeframe[:21] + "/" + timeframe[22:] + \
+                                   "/" + datatype.split("/")[0] + \
+                                   "/statistical_information/non_redundant/" + \
+                                   datatype.split("/")[1] + ".json"
+
+                # also, get the overall number of detected scenario per metadata tpye to calculate
+                # the percentage of the datatypes on the overall numbers
+                path_to_overall = "data/statistical_information/query_research/non_redundant/" + \
+                                  datatype.split("/")[0] + "/" + datatype.split("/")[0] + ".json"
+
+
+                with open(information_path, "r") as stat_info_scenarios_data:
+                    stat_info_scenarios_dict = json.load(stat_info_scenarios_data)
+
+                    with open(path_to_overall, "r") as overall_data:
+                        overall_dict = json.load(overall_data)
+                        overall_scenario_count = overall_dict["found_scenarios"]["total_scenarios"]
+
+                        for dict in stat_info_scenarios_dict["found_scenarios"]["list_per_search"]:
+
+                            for PID in dict:
+                                if PID not in ["looking_for", "total_occurrences", "total_scenarios"]:
+
+                                    if PID in tmp_data_scenario_dict:
+                                        tmp_data_scenario_dict[PID] += dict[PID]
+                                    else:
+                                        tmp_data_scenario_dict[PID] = dict[PID]
+
+
+                                    """"csv_ready_scenario_per_datatype_dict["scenario_name"].append(PID)
+                                    csv_ready_scenario_per_datatype_dict["scenario_count"]. \
+                                        append(dict[PID])
+                                    if dict["total_occurrences"]>0:
+                                        csv_ready_scenario_per_datatype_dict["scenario_percentage"]. \
+                                            append(dict[PID] / overall_scenario_count)
+                                    else:
+                                        csv_ready_scenario_per_datatype_dict["scenario_percentage"]. \
+                                            append(0)
+
+                                    csv_ready_scenario_per_datatype_dict["datatype"].\
+                                        append(datatype.split("/")[1])"""
+
+            for scenario in tmp_data_scenario_dict:
+                csv_ready_scenario_per_datatype_dict["scenario_name"].append(scenario)
+                csv_ready_scenario_per_datatype_dict["scenario_count"]. \
+                    append(tmp_data_scenario_dict[scenario])
+                if tmp_data_scenario_dict[scenario] > 0:
+                    csv_ready_scenario_per_datatype_dict["scenario_percentage"]. \
+                        append(tmp_data_scenario_dict[scenario] / overall_scenario_count)
+                else:
+                    csv_ready_scenario_per_datatype_dict["scenario_percentage"]. \
+                        append(0)
+
+                csv_ready_scenario_per_datatype_dict["datatype"]. \
+                    append(datatype.split("/")[1])
+
+
+        tmp_dict = {}
+        tmp_dict["scenario_name"] = []
+        tmp_dict["datatype"] = []
+        tmp_dict["scenario_percentage"] = []
+
+        for i in range(len(csv_ready_scenario_per_datatype_dict["datatype"])):
+
+
+            tmp_dict["scenario_name"].append(csv_ready_scenario_per_datatype_dict["scenario_name"][i])
+            tmp_dict["datatype"].append(csv_ready_scenario_per_datatype_dict["datatype"][i])
+            tmp_dict["scenario_percentage"].append( \
+                csv_ready_scenario_per_datatype_dict["scenario_percentage"][i])
+
+        df = pd.DataFrame(tmp_dict)
+
+        df = pd.pivot_table(data=df,
+                            index='scenario_name',
+                            values='scenario_percentage',
+                            columns='datatype', sort=False)
+
+        mask = (df == 0)
+        fig, ax = plt.subplots(figsize=(12, 10))
+        tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0,
+                          vmax = 1, mask=mask, cmap="YlGnBu",
+                          linewidths=.5)
+        tmp.figure.tight_layout()
+        #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
+
+        plt.gcf().autofmt_xdate()
+        save_path = "data/statistical_information/query_research/non_redundant/" \
+                    + datatype.split("/")[0] + "/scenarios/" + \
+                    datatype.split("/")[0] + "_datatypes_overall.png"
+
+        tmp.get_figure().savefig(save_path)
+
+        plt.close()
+
+

@@ -97,7 +97,6 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                             "blank_node": 0,
                             "minus": 0,
                             "subselect": 0,
-                            "ref_value": 0,
                             "literal": 0,
                             "values": 0,
                             "service": 0,

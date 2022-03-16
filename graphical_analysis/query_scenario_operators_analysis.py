@@ -116,7 +116,7 @@ def plot_additional_operator_information_about_scenarios_per_timeframe_for_FILTE
     df = pd.pivot_table(data=df,
                         index='operator_name',
                         values='operator_percentage',
-                        columns='timeframe', sort=False)
+                        columns='timeframe', sort=True)
 
     mask = (df == 0)
 
@@ -225,14 +225,14 @@ def plot_additional_operator_information_about_scenarios_per_datatype_for_FILTER
     df = pd.pivot_table(data=df,
                         index='operator_name',
                         values='operator_percentage',
-                        columns='datatype', sort=False)
+                        columns='datatype', sort=True)
 
     mask = (df == 0)
 
     if scenario == "filter":
-        fig, ax = plt.subplots(figsize=(9, 6)) # 16 10
+        fig, ax = plt.subplots(figsize=(6, 6)) # 16 10
     elif scenario == "prop_path":
-        fig, ax = plt.subplots(figsize=(9, 6))
+        fig, ax = plt.subplots(figsize=(6, 6))
 
     tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="YlGn",
                       linewidths=.5)

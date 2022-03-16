@@ -67,8 +67,11 @@ def start_graphical_analysis(x):
 
     query_metadata_percentage.display_percentage_queries_with_metadata()
 
-    #query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
-    #    TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
+    query_scenario_analysis.plot_timeframe_metadata_distribution_per_datatype(
+        TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
+
+    query_scenario_analysis.plot_metadata_distribution_per_datatype_overall(
+        TIMEFRAMES, [DATA_TYPES_QUALIFIER, DATA_TYPES_REFERENCE, DATA_TYPES_RANK])
 
     for metadata in ["reference_metadata", "qualifier_metadata", "rank_metadata"]:
         query_scenario_analysis.plot_timeframe_metadata_distribution(TIMEFRAMES, metadata)
