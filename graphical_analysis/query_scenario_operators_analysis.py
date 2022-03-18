@@ -16,11 +16,11 @@ def plot_additional_operator_information_about_scenarios_per_timeframe_for_FILTE
     csv_ready_scenario_dict = {}
     csv_ready_scenario_dict["timeframe"] = []
     csv_ready_scenario_dict["datatype"] = []
-    csv_ready_scenario_dict["base_scenario"] = []
-    csv_ready_scenario_dict["operator_name"] = []
-    csv_ready_scenario_dict["operator_count"] = []
-    csv_ready_scenario_dict["operator_percentage"] = []
-    csv_ready_scenario_dict["total_operators"] = []
+    csv_ready_scenario_dict["base scenario"] = []
+    csv_ready_scenario_dict["operator name"] = []
+    csv_ready_scenario_dict["operator count"] = []
+    csv_ready_scenario_dict["operator percentage"] = []
+    csv_ready_scenario_dict["total operators"] = []
 
 
     for timeframe in timeframes:
@@ -38,30 +38,30 @@ def plot_additional_operator_information_about_scenarios_per_timeframe_for_FILTE
 
                 for operator in stat_info_scenarios_dict["found_operators_overall"]:
 
-                    csv_ready_scenario_dict["operator_name"].append(operator)
+                    csv_ready_scenario_dict["operator name"].append(operator)
 
 
-                    csv_ready_scenario_dict["operator_count"]. \
+                    csv_ready_scenario_dict["operator count"]. \
                         append(stat_info_scenarios_dict["found_operators_overall"][operator])
 
                     total_occurrences = stat_info_scenarios_dict["total_found_operators"]
 
                     if total_occurrences > 0:
-                        csv_ready_scenario_dict["operator_percentage"]. \
+                        csv_ready_scenario_dict["operator percentage"]. \
                             append(
                             int(stat_info_scenarios_dict["found_operators_overall"][operator]) /
                             total_occurrences)
                     else:
-                        csv_ready_scenario_dict["operator_percentage"]. \
+                        csv_ready_scenario_dict["operator percentage"]. \
                             append(0)
 
 
-                    csv_ready_scenario_dict["total_operators"].append(total_occurrences)
+                    csv_ready_scenario_dict["total operators"].append(total_occurrences)
                     csv_ready_scenario_dict["timeframe"]. \
                         append(timeframe[:21].replace("_", "-\n"))
                     csv_ready_scenario_dict["datatype"].append(metadata)
 
-                    csv_ready_scenario_dict["base_scenario"].append(scenario)
+                    csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
     # insert the total data
@@ -74,48 +74,48 @@ def plot_additional_operator_information_about_scenarios_per_timeframe_for_FILTE
 
         for operator in overall_dict["found_operators_overall"]:
 
-            csv_ready_scenario_dict["operator_name"].append(operator)
+            csv_ready_scenario_dict["operator name"].append(operator)
 
-            csv_ready_scenario_dict["operator_count"]. \
+            csv_ready_scenario_dict["operator count"]. \
                 append(overall_dict["found_operators_overall"][operator])
 
             total_occurrences = overall_dict["total_found_operators"]
 
             if total_occurrences > 0:
-                csv_ready_scenario_dict["operator_percentage"]. \
+                csv_ready_scenario_dict["operator percentage"]. \
                     append(
                     int(overall_dict["found_operators_overall"][operator]) /
                     total_occurrences)
             else:
-                csv_ready_scenario_dict["operator_percentage"]. \
+                csv_ready_scenario_dict["operator percentage"]. \
                     append(0)
 
-            csv_ready_scenario_dict["total_operators"].append(total_occurrences)
+            csv_ready_scenario_dict["total operators"].append(total_occurrences)
             csv_ready_scenario_dict["timeframe"]. \
                 append("total")
             csv_ready_scenario_dict["datatype"].append(metadata)
 
-            csv_ready_scenario_dict["base_scenario"].append(scenario)
+            csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
 
     # plot the data in a heatmap
     tmp_dict = {}
-    tmp_dict["operator_name"] = []
+    tmp_dict["operator name"] = []
     tmp_dict["timeframe"] = []
-    tmp_dict["operator_percentage"] = []
+    tmp_dict["operator percentage"] = []
 
     for i in range(len(csv_ready_scenario_dict["timeframe"])):
-        tmp_dict["operator_name"].append(csv_ready_scenario_dict["operator_name"][i])
+        tmp_dict["operator name"].append(csv_ready_scenario_dict["operator name"][i])
         tmp_dict["timeframe"].append(csv_ready_scenario_dict["timeframe"][i])
-        tmp_dict["operator_percentage"].append(\
-            csv_ready_scenario_dict["operator_percentage"][i])
+        tmp_dict["operator percentage"].append(\
+            csv_ready_scenario_dict["operator percentage"][i])
 
     df = pd.DataFrame(tmp_dict)
 
     df = pd.pivot_table(data=df,
-                        index='operator_name',
-                        values='operator_percentage',
+                        index='operator name',
+                        values='operator percentage',
                         columns='timeframe', sort=True)
 
     mask = (df == 0)
@@ -156,11 +156,11 @@ def plot_additional_operator_information_about_scenarios_per_datatype_for_FILTER
 
     csv_ready_scenario_dict = {}
     csv_ready_scenario_dict["datatype"] = []
-    csv_ready_scenario_dict["base_scenario"] = []
-    csv_ready_scenario_dict["operator_name"] = []
-    csv_ready_scenario_dict["operator_count"] = []
-    csv_ready_scenario_dict["operator_percentage"] = []
-    csv_ready_scenario_dict["total_operators"] = []
+    csv_ready_scenario_dict["base scenario"] = []
+    csv_ready_scenario_dict["operator name"] = []
+    csv_ready_scenario_dict["operator count"] = []
+    csv_ready_scenario_dict["operator percentage"] = []
+    csv_ready_scenario_dict["total operators"] = []
 
 
     for timeframe in timeframes:
@@ -181,50 +181,50 @@ def plot_additional_operator_information_about_scenarios_per_datatype_for_FILTER
 
         for datatype in overall_dict["found_operators_per_datatype"]:
             for operator in overall_dict["found_operators_per_datatype"][datatype]:
-                csv_ready_scenario_dict["operator_name"].append(operator)
+                csv_ready_scenario_dict["operator name"].append(operator)
 
-                csv_ready_scenario_dict["operator_count"]. \
+                csv_ready_scenario_dict["operator count"]. \
                     append(overall_dict["found_operators_per_datatype"][datatype][operator])
 
                 total_occurrences = overall_dict["total_found_operators"]
 
                 if total_occurrences > 0:
-                    csv_ready_scenario_dict["operator_percentage"]. \
+                    csv_ready_scenario_dict["operator percentage"]. \
                         append(
                         int(overall_dict["found_operators_per_datatype"][datatype][operator]) /
                         total_occurrences)
                 else:
-                    csv_ready_scenario_dict["operator_percentage"]. \
+                    csv_ready_scenario_dict["operator percentage"]. \
                         append(0)
 
-                csv_ready_scenario_dict["total_operators"].append(total_occurrences)
+                csv_ready_scenario_dict["total operators"].append(total_occurrences)
 
                 # e.g. reference_metadata/only_derived -> only_derived
                 csv_ready_scenario_dict["datatype"].append(datatype.split("/")[1].
                                                            replace("_+_", " +\n").
                                                            replace("e_", "e\n"))
 
-                csv_ready_scenario_dict["base_scenario"].append(scenario)
+                csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
 
     # plot the data in a heatmap
     tmp_dict = {}
-    tmp_dict["operator_name"] = []
+    tmp_dict["operator name"] = []
     tmp_dict["datatype"] = []
-    tmp_dict["operator_percentage"] = []
+    tmp_dict["operator percentage"] = []
 
     for i in range(len(csv_ready_scenario_dict["datatype"])):
-        tmp_dict["operator_name"].append(csv_ready_scenario_dict["operator_name"][i])
+        tmp_dict["operator name"].append(csv_ready_scenario_dict["operator name"][i])
         tmp_dict["datatype"].append(csv_ready_scenario_dict["datatype"][i])
-        tmp_dict["operator_percentage"].append(\
-            csv_ready_scenario_dict["operator_percentage"][i])
+        tmp_dict["operator percentage"].append(\
+            csv_ready_scenario_dict["operator percentage"][i])
 
     df = pd.DataFrame(tmp_dict)
 
     df = pd.pivot_table(data=df,
-                        index='operator_name',
-                        values='operator_percentage',
+                        index='operator name',
+                        values='operator percentage',
                         columns='datatype', sort=True)
 
     mask = (df == 0)

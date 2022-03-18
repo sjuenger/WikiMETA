@@ -56,33 +56,33 @@ def plot_top_wikidata_research_properties(x):
                 dataframe_dict = {}
                 #dataframe_dict["PID/label"] = []
                 dataframe_dict["label"] = []
-                dataframe_dict["qualifier_percentage"] = []
-                dataframe_dict["reference_percentage"] = []
-                dataframe_dict["qualifier_class"] = []
-                dataframe_dict["is_reference"] = []
+                dataframe_dict["qualifier percentage"] = []
+                dataframe_dict["reference percentage"] = []
+                dataframe_dict["qualifier class"] = []
+                dataframe_dict["is reference"] = []
 
-                dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
+                dataframe_dict["recommended mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
 
                 for PID in whole_dict["properties"]:
 
                     #dataframe_dict["PID/label"].append(PID + " / " + whole_dict["properties"][PID]["label"])
                     dataframe_dict["label"].\
                         append(whole_dict["properties"][PID]["label"])
-                    dataframe_dict["qualifier_percentage"].\
+                    dataframe_dict["qualifier percentage"].\
                         append( int(whole_dict["properties"][PID]["qualifier_no"]) / overall_usages)
-                    dataframe_dict["reference_percentage"].\
+                    dataframe_dict["reference percentage"].\
                         append( int(whole_dict["properties"][PID]["reference_no"]) / overall_usages )
 
                     # if the qualifier class is null -> insert: " - not a recommended qualifier - "
                     if whole_dict["properties"][PID]["qualifier_class"] == []:
-                        dataframe_dict["qualifier_class"]. \
+                        dataframe_dict["qualifier class"]. \
                             append("- not a recommended qualifier -")
                     else:
-                        dataframe_dict["qualifier_class"].\
+                        dataframe_dict["qualifier class"].\
                             append(str(whole_dict["properties"][PID]["qualifier_class"]).
                                    replace(",", ",\n").replace(")", ")\n"))
                         print(str( whole_dict["properties"][PID]["qualifier_class"]))
-                    dataframe_dict["is_reference"].\
+                    dataframe_dict["is reference"].\
                         append(whole_dict["properties"][PID]["is_reference"])
 
                 print(dataframe_dict)
@@ -97,15 +97,15 @@ def plot_top_wikidata_research_properties(x):
 
                 if (metadata_mode == "reference") :
 
-                    tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage",
-                                      hue="is_reference", hue_order=[True, False], kind="bar",
-                                      palette="tab10", dodge=False, col="recommended_mode",
+                    tmp = sns.catplot(x= "label", y=metadata_mode + " percentage",
+                                      hue="is reference", hue_order=[True, False], kind="bar",
+                                      palette="tab10", dodge=False, col="recommended mode",
                                       data=df, aspect=1.6)
 
                 else:
 
-                    tmp = sns.catplot(x= "label", y=metadata_mode + "_percentage",
-                                      hue="qualifier_class",
+                    tmp = sns.catplot(x= "label", y=metadata_mode + " percentage",
+                                      hue="qualifier class",
                                       hue_order=["[\'Wikidata qualifier\']",
                                                  "[\'restrictive qualifier\']",
                                                  "[\'non-restrictive qualifier\']",
@@ -115,7 +115,7 @@ def plot_top_wikidata_research_properties(x):
                                                  "[\'restrictive qualifier\',\n \'non-restrictive qualifier\',\n \'Wikidata property used as \"depicts\" (P180)\n qualifier on Commons\']",
                                                  "- not a recommended qualifier -"
                                       ],
-                                      kind="bar", dodge=False, col="recommended_mode",
+                                      kind="bar", dodge=False, col="recommended mode",
                                       data=df, aspect=1.4)
                     # kind = point for the timeframes !
 
@@ -188,15 +188,15 @@ def plot_top_wikidata_research_accumulated_facets(x):
 
                 dataframe_dict = {}
                 dataframe_dict["label"] = []
-                dataframe_dict["accumulated_facets_percentage"] = []
+                dataframe_dict["accumulated facets percentage"] = []
 
-                dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
+                dataframe_dict["recommended mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
 
                 for ID in whole_dict["facets"]:
 
                     dataframe_dict["label"].\
                         append(ID)
-                    dataframe_dict["accumulated_facets_percentage"].\
+                    dataframe_dict["accumulated facets percentage"].\
                         append( int(whole_dict["facets"][ID]) / overall_usages)
 
 
@@ -205,8 +205,8 @@ def plot_top_wikidata_research_accumulated_facets(x):
                 df = pd.DataFrame(dataframe_dict)
 
 
-                tmp = sns.catplot(x= "label", y="accumulated_facets_percentage", kind="bar",
-                                  palette="tab10", dodge=False, col="recommended_mode", aspect=1.4,
+                tmp = sns.catplot(x= "label", y="accumulated facets percentage", kind="bar",
+                                  palette="tab10", dodge=False, col="recommended mode", aspect=1.4,
                                   data=df)
 
 
@@ -248,7 +248,7 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
                 overall_dict = json.load(overall_json)
 
-                overall_usages = int( overall_dict["total_accumulated_datatypes"] )
+                overall_usages = int( overall_dict["total_accumulated_datatypes"])
 
 
             print(files_json)
@@ -263,15 +263,15 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
                 dataframe_dict = {}
                 dataframe_dict["label"] = []
-                dataframe_dict["accumulated_datatypes_percentage"] = []
+                dataframe_dict["accumulated datatypes percentage"] = []
 
-                dataframe_dict["recommended_mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
+                dataframe_dict["recommended mode"] = recommended_mode.replace("_", " ") + " " + metadata_mode + "s"
 
                 for ID in whole_dict["datatypes"]:
 
                     dataframe_dict["label"].\
                         append(ID)
-                    dataframe_dict["accumulated_datatypes_percentage"].\
+                    dataframe_dict["accumulated datatypes percentage"].\
                         append( int(whole_dict["datatypes"][ID]) / overall_usages)
 
 
@@ -282,8 +282,8 @@ def plot_top_wikidata_research_accumulated_datatypes():
                 print(df)
 
 
-                tmp = sns.catplot(x= "label", y="accumulated_datatypes_percentage", kind="bar",
-                                  palette="tab10", dodge=False, col="recommended_mode",
+                tmp = sns.catplot(x= "label", y="accumulated datatypes percentage", kind="bar",
+                                  palette="tab10", dodge=False, col="recommended mode",
                                   data=df, aspect=1.4)
 
 

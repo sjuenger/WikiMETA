@@ -21,7 +21,7 @@ def plot_top_accumulated_datatypes_timeframe(timeframes,metadata_mode ,recommend
         csv_ready_datatypes_dict["timeframe"] = []
         csv_ready_datatypes_dict["datatypes"] = []
         csv_ready_datatypes_dict["labels"] = []
-        csv_ready_datatypes_dict["recommended_mode"] = []
+        csv_ready_datatypes_dict["recommended mode"] = []
 
         timeframe_files = glob.glob("data/" + timeframe[:21] + "/" + timeframe[22:] + \
                                     "/statistical_information/non_redundant/" + metadata_mode + "/" + \
@@ -39,12 +39,12 @@ def plot_top_accumulated_datatypes_timeframe(timeframes,metadata_mode ,recommend
                 csv_ready_datatypes_dict["datatypes"].append(timeframe_dict["datatypes"][ID])
                 csv_ready_datatypes_dict["labels"].append(ID)
                 csv_ready_datatypes_dict["timeframe"].append(timeframe[:21])
-                csv_ready_datatypes_dict["recommended_mode"].append(recommended_mode)
+                csv_ready_datatypes_dict["recommended mode"].append(recommended_mode)
 
         df = pd.DataFrame(csv_ready_datatypes_dict)
 
         tmp = sns.catplot(x="labels", y="datatypes", kind="bar",
-                          palette="Set2", dodge=False, hue="timeframe", col="recommended_mode",
+                          palette="Set2", dodge=False, hue="timeframe", col="recommended mode",
                           data=df, aspect=1.4)
 
         plt.gcf().autofmt_xdate()
@@ -68,7 +68,7 @@ def plot_top_accumulated_datatypes_overall(metadata_mode, recommended_mode):
     csv_ready_datatypes_dict = {}
     csv_ready_datatypes_dict["datatypes"] = []
     csv_ready_datatypes_dict["labels"] = []
-    csv_ready_datatypes_dict["recommended_mode"] = []
+    csv_ready_datatypes_dict["recommended mode"] = []
 
 
     timeframe_files = glob.glob("data/statistical_information/query_research/"
@@ -86,12 +86,12 @@ def plot_top_accumulated_datatypes_overall(metadata_mode, recommended_mode):
         for ID in timeframe_dict["datatypes"]:
             csv_ready_datatypes_dict["datatypes"].append(timeframe_dict["datatypes"][ID])
             csv_ready_datatypes_dict["labels"].append(ID)
-            csv_ready_datatypes_dict["recommended_mode"].append(recommended_mode)
+            csv_ready_datatypes_dict["recommended mode"].append(recommended_mode)
 
     df = pd.DataFrame(csv_ready_datatypes_dict)
 
     tmp = sns.catplot(x="labels", y="datatypes", kind="bar",
-                      palette="Set2", dodge=False, col="recommended_mode",
+                      palette="Set2", dodge=False, col="recommended mode",
                       data=df, aspect=1.4)
 
 
@@ -116,9 +116,9 @@ def plot_top_accumulated_datatypes_overall_percentage(metadata_mode ,recommended
 
 
     csv_ready_datatypes_dict = {}
-    csv_ready_datatypes_dict["datatypes_percentages"] = []
+    csv_ready_datatypes_dict["datatypes percentages"] = []
     csv_ready_datatypes_dict["labels"] = []
-    csv_ready_datatypes_dict["recommended_mode"] = []
+    csv_ready_datatypes_dict["recommended mode"] = []
 
     timeframe_files = glob.glob("data/statistical_information/query_research/"
                                 "non_redundant/" + metadata_mode + "/" +
@@ -134,15 +134,15 @@ def plot_top_accumulated_datatypes_overall_percentage(metadata_mode ,recommended
 
         for ID in timeframe_dict["datatypes"]:
             csv_ready_datatypes_dict["labels"].append(ID)
-            csv_ready_datatypes_dict["datatypes_percentages"].append(
+            csv_ready_datatypes_dict["datatypes percentages"].append(
                 timeframe_dict["datatypes"][ID] / timeframe_dict["total_accumulated_datatypes"])
-            csv_ready_datatypes_dict["recommended_mode"].append(recommended_mode)
+            csv_ready_datatypes_dict["recommended mode"].append(recommended_mode)
 
 
     df = pd.DataFrame(csv_ready_datatypes_dict)
 
-    tmp = sns.catplot(x="labels", y="datatypes_percentages", kind="bar",
-                      palette="Set2", dodge=False, col="recommended_mode",
+    tmp = sns.catplot(x="labels", y="datatypes percentages", kind="bar",
+                      palette="Set2", dodge=False, col="recommended mode",
                       data=df, aspect=1.4)
 
     plt.gcf().autofmt_xdate()

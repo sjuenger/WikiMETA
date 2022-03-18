@@ -17,11 +17,11 @@ def plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL
     csv_ready_scenario_dict = {}
     csv_ready_scenario_dict["timeframe"] = []
     csv_ready_scenario_dict["datatype"] = []
-    csv_ready_scenario_dict["base_scenario"] = []
-    csv_ready_scenario_dict["scenario_name"] = []
-    csv_ready_scenario_dict["scenario_count"] = []
-    csv_ready_scenario_dict["scenario_percentage"] = []
-    csv_ready_scenario_dict["total_scenarios"] = []
+    csv_ready_scenario_dict["base scenario"] = []
+    csv_ready_scenario_dict["scenario name"] = []
+    csv_ready_scenario_dict["scenario count"] = []
+    csv_ready_scenario_dict["scenario percentage"] = []
+    csv_ready_scenario_dict["total scenarios"] = []
 
 
     for timeframe in timeframes:
@@ -42,26 +42,26 @@ def plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL
                     # to exclude the datatypes, e.g. 'total' or 'only_derived
                     if ID != "datatype":
 
-                        csv_ready_scenario_dict["scenario_name"].append(ID)
-                        csv_ready_scenario_dict["scenario_count"]. \
+                        csv_ready_scenario_dict["scenario name"].append(ID)
+                        csv_ready_scenario_dict["scenario count"]. \
                             append(stat_info_scenarios_dict["metadata_found_in_scenarios"][ID])
 
                         total_occurrences = stat_info_scenarios_dict["total_found_metadata"]
-                        csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                        csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
                         if total_occurrences > 0:
-                            csv_ready_scenario_dict["scenario_percentage"]. \
+                            csv_ready_scenario_dict["scenario percentage"]. \
                                 append(int(stat_info_scenarios_dict["metadata_found_in_scenarios"][ID]) /
                                         total_occurrences)
                         else:
-                            csv_ready_scenario_dict["scenario_percentage"]. \
+                            csv_ready_scenario_dict["scenario percentage"]. \
                                 append(0)
 
                         csv_ready_scenario_dict["timeframe"]. \
-                            append(timeframe[:21])
+                            append(timeframe[:21].replace("_", " - "))
                         csv_ready_scenario_dict["datatype"].append(metadata)
 
-                        csv_ready_scenario_dict["base_scenario"].append(scenario)
+                        csv_ready_scenario_dict["base scenario"].append(scenario)
 
     # insert the total data
     overall_information_path = "data/statistical_information/query_research/" + "non_redundant" + \
@@ -74,43 +74,43 @@ def plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL
         for ID in overall_dict["metadata_found_in_scenarios"]:
 
             csv_ready_scenario_dict["timeframe"].append("total")
-            csv_ready_scenario_dict["scenario_name"].append(ID)
-            csv_ready_scenario_dict["scenario_count"]. \
+            csv_ready_scenario_dict["scenario name"].append(ID)
+            csv_ready_scenario_dict["scenario count"]. \
                 append(overall_dict["metadata_found_in_scenarios"][ID])
 
             total_occurrences = overall_dict["total_found_metadata"]
-            csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+            csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
             if total_occurrences > 0:
-                csv_ready_scenario_dict["scenario_percentage"]. \
+                csv_ready_scenario_dict["scenario percentage"]. \
                     append(int(overall_dict["metadata_found_in_scenarios"][ID]) /
                            total_occurrences)
             else:
-                csv_ready_scenario_dict["scenario_percentage"]. \
+                csv_ready_scenario_dict["scenario percentage"]. \
                     append(0)
 
             csv_ready_scenario_dict["datatype"].append(metadata)
 
-            csv_ready_scenario_dict["base_scenario"].append(scenario)
+            csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
     # plot the data in a heatmap
     tmp_dict = {}
-    tmp_dict["scenario_name"] = []
+    tmp_dict["scenario name"] = []
     tmp_dict["timeframe"] = []
-    tmp_dict["scenario_percentage"] = []
+    tmp_dict["scenario percentage"] = []
 
     for i in range(len(csv_ready_scenario_dict["timeframe"])):
-        tmp_dict["scenario_name"].append(csv_ready_scenario_dict["scenario_name"][i])
+        tmp_dict["scenario name"].append(csv_ready_scenario_dict["scenario name"][i])
         tmp_dict["timeframe"].append(csv_ready_scenario_dict["timeframe"][i])
-        tmp_dict["scenario_percentage"].append(\
-            csv_ready_scenario_dict["scenario_percentage"][i])
+        tmp_dict["scenario percentage"].append(\
+            csv_ready_scenario_dict["scenario percentage"][i])
 
     df = pd.DataFrame(tmp_dict)
 
     df = pd.pivot_table(data=df,
-                        index='scenario_name',
-                        values='scenario_percentage',
+                        index='scenario name',
+                        values='scenario percentage',
                         columns='timeframe', sort=False)
 
     mask = (df == 0)
@@ -142,11 +142,11 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
     csv_ready_scenario_dict = {}
     csv_ready_scenario_dict["timeframe"] = []
     csv_ready_scenario_dict["datatype"] = []
-    csv_ready_scenario_dict["base_scenario"] = []
-    csv_ready_scenario_dict["scenario_name"] = []
-    csv_ready_scenario_dict["scenario_count"] = []
-    csv_ready_scenario_dict["scenario_percentage"] = []
-    csv_ready_scenario_dict["total_scenarios"] = []
+    csv_ready_scenario_dict["base scenario"] = []
+    csv_ready_scenario_dict["scenario name"] = []
+    csv_ready_scenario_dict["scenario count"] = []
+    csv_ready_scenario_dict["scenario percentage"] = []
+    csv_ready_scenario_dict["total scenarios"] = []
 
 
     for timeframe in timeframes:
@@ -172,51 +172,51 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
                     # to exclude the datatypes, e.g. 'total' or 'only_derived
                     if ID != "datatype":
 
-                        csv_ready_scenario_dict["scenario_name"].append(ID)
+                        csv_ready_scenario_dict["scenario name"].append(ID)
 
 
                         if scenario == "union":
-                            csv_ready_scenario_dict["scenario_count"]. \
+                            csv_ready_scenario_dict["scenario count"]. \
                                 append(stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID])
 
                             total_occurrences = stat_info_scenarios_dict["metadata_found_in_scenarios"]["subselect"]
 
                             if total_occurrences > 0:
-                                csv_ready_scenario_dict["scenario_percentage"]. \
+                                csv_ready_scenario_dict["scenario percentage"]. \
                                     append(
                                     int(stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID]) /
                                     total_occurrences)
                             else:
-                                csv_ready_scenario_dict["scenario_percentage"]. \
+                                csv_ready_scenario_dict["scenario percentage"]. \
                                     append(0)
 
-                            csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                            csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
 
 
 
                         elif scenario == "subselect":
-                            csv_ready_scenario_dict["scenario_count"]. \
+                            csv_ready_scenario_dict["scenario count"]. \
                                 append(stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID])
 
                             total_occurrences = stat_info_scenarios_dict["metadata_found_in_scenarios"]["union"]
 
                             if total_occurrences > 0:
-                                csv_ready_scenario_dict["scenario_percentage"]. \
+                                csv_ready_scenario_dict["scenario percentage"]. \
                                     append(
                                     int(stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID]) /
                                     total_occurrences)
                             else:
-                                csv_ready_scenario_dict["scenario_percentage"]. \
+                                csv_ready_scenario_dict["scenario percentage"]. \
                                     append(0)
 
-                            csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                            csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
                         csv_ready_scenario_dict["timeframe"]. \
-                            append(timeframe[:21])
+                            append(timeframe[:21].replace("_", " - "))
                         csv_ready_scenario_dict["datatype"].append(metadata)
 
-                        csv_ready_scenario_dict["base_scenario"].append(scenario)
+                        csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
 
@@ -235,66 +235,66 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
 
             for ID in overall_dict[tmpID]:
 
-                csv_ready_scenario_dict["scenario_name"].append(ID)
+                csv_ready_scenario_dict["scenario name"].append(ID)
 
                 if scenario == "union":
-                    csv_ready_scenario_dict["scenario_count"]. \
+                    csv_ready_scenario_dict["scenario count"]. \
                         append(overall_dict["scenarios_found_in_second_level_subselect"][ID])
 
                     total_occurrences = overall_dict["metadata_found_in_scenarios"]["subselect"]
 
                     if total_occurrences > 0:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(
                             int(overall_dict["scenarios_found_in_second_level_subselect"][ID]) /
                             total_occurrences)
                     else:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(0)
 
 
 
 
                 elif scenario == "subselect":
-                    csv_ready_scenario_dict["scenario_count"]. \
+                    csv_ready_scenario_dict["scenario count"]. \
                         append(overall_dict["scenarios_found_in_second_level_union"][ID])
 
                     total_occurrences = overall_dict["metadata_found_in_scenarios"]["union"]
 
                     if total_occurrences > 0:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(
                             int(overall_dict["scenarios_found_in_second_level_union"][ID]) /
                             total_occurrences)
                     else:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(0)
 
-                csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
                 csv_ready_scenario_dict["timeframe"]. \
                     append("total")
                 csv_ready_scenario_dict["datatype"].append(metadata)
 
-                csv_ready_scenario_dict["base_scenario"].append(scenario)
+                csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
     # plot the data in a heatmap
     tmp_dict = {}
-    tmp_dict["scenario_name"] = []
+    tmp_dict["scenario name"] = []
     tmp_dict["timeframe"] = []
-    tmp_dict["scenario_percentage"] = []
+    tmp_dict["scenario percentage"] = []
 
     for i in range(len(csv_ready_scenario_dict["timeframe"])):
-        tmp_dict["scenario_name"].append(csv_ready_scenario_dict["scenario_name"][i])
+        tmp_dict["scenario name"].append(csv_ready_scenario_dict["scenario name"][i])
         tmp_dict["timeframe"].append(csv_ready_scenario_dict["timeframe"][i])
-        tmp_dict["scenario_percentage"].append(\
-            csv_ready_scenario_dict["scenario_percentage"][i])
+        tmp_dict["scenario percentage"].append(\
+            csv_ready_scenario_dict["scenario percentage"][i])
 
     df = pd.DataFrame(tmp_dict)
 
     df = pd.pivot_table(data=df,
-                        index='scenario_name',
-                        values='scenario_percentage',
+                        index='scenario name',
+                        values='scenario percentage',
                         columns='timeframe', sort=False)
 
     mask = (df == 0)
@@ -333,11 +333,11 @@ def plot_additional_layer_information_about_scenarios_per_datatype_for_OPTIONAL_
 
     csv_ready_scenario_dict = {}
     csv_ready_scenario_dict["datatype"] = []
-    csv_ready_scenario_dict["base_scenario"] = []
-    csv_ready_scenario_dict["scenario_name"] = []
-    csv_ready_scenario_dict["scenario_count"] = []
-    csv_ready_scenario_dict["scenario_percentage"] = []
-    csv_ready_scenario_dict["total_scenarios"] = []
+    csv_ready_scenario_dict["base scenario"] = []
+    csv_ready_scenario_dict["scenario name"] = []
+    csv_ready_scenario_dict["scenario count"] = []
+    csv_ready_scenario_dict["scenario percentage"] = []
+    csv_ready_scenario_dict["total scenarios"] = []
 
 
     # insert the total data
@@ -352,44 +352,44 @@ def plot_additional_layer_information_about_scenarios_per_datatype_for_OPTIONAL_
 
             for ID in overall_dict["metadata_per_datatype_found_in_scenarios"][datatype]:
 
-                csv_ready_scenario_dict["scenario_name"].append(ID)
-                csv_ready_scenario_dict["scenario_count"]. \
+                csv_ready_scenario_dict["scenario name"].append(ID)
+                csv_ready_scenario_dict["scenario count"]. \
                     append(overall_dict["metadata_per_datatype_found_in_scenarios"][datatype][ID])
 
                 total_occurrences = overall_dict["total_found_metadata"]
-                csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
                 if total_occurrences > 0:
-                    csv_ready_scenario_dict["scenario_percentage"]. \
+                    csv_ready_scenario_dict["scenario percentage"]. \
                         append(int(overall_dict["metadata_per_datatype_found_in_scenarios"][datatype][ID]) /
                                total_occurrences)
                 else:
-                    csv_ready_scenario_dict["scenario_percentage"]. \
+                    csv_ready_scenario_dict["scenario percentage"]. \
                         append(0)
 
                 csv_ready_scenario_dict["datatype"].append(datatype.split("/")[1].
                                                            replace("_+_", " +\n").
                                                            replace("e_", "e\n"))
-                csv_ready_scenario_dict["base_scenario"].append(scenario)
+                csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
     # plot the data in a heatmap
     tmp_dict = {}
-    tmp_dict["scenario_name"] = []
+    tmp_dict["scenario name"] = []
     tmp_dict["datatype"] = []
-    tmp_dict["scenario_percentage"] = []
+    tmp_dict["scenario percentage"] = []
 
     for i in range(len(csv_ready_scenario_dict["datatype"])):
-        tmp_dict["scenario_name"].append(csv_ready_scenario_dict["scenario_name"][i])
+        tmp_dict["scenario name"].append(csv_ready_scenario_dict["scenario name"][i])
         tmp_dict["datatype"].append(csv_ready_scenario_dict["datatype"][i])
-        tmp_dict["scenario_percentage"].append(\
-            csv_ready_scenario_dict["scenario_percentage"][i])
+        tmp_dict["scenario percentage"].append(\
+            csv_ready_scenario_dict["scenario percentage"][i])
 
     df = pd.DataFrame(tmp_dict)
 
     df = pd.pivot_table(data=df,
-                        index='scenario_name',
-                        values='scenario_percentage',
+                        index='scenario name',
+                        values='scenario percentage',
                         columns='datatype', sort=False)
 
     mask = (df == 0)
@@ -421,11 +421,11 @@ def plot_additional_additional_layer_information_about_scenarios_per_datatype_fo
 
     csv_ready_scenario_dict = {}
     csv_ready_scenario_dict["datatype"] = []
-    csv_ready_scenario_dict["base_scenario"] = []
-    csv_ready_scenario_dict["scenario_name"] = []
-    csv_ready_scenario_dict["scenario_count"] = []
-    csv_ready_scenario_dict["scenario_percentage"] = []
-    csv_ready_scenario_dict["total_scenarios"] = []
+    csv_ready_scenario_dict["base scenario"] = []
+    csv_ready_scenario_dict["scenario name"] = []
+    csv_ready_scenario_dict["scenario count"] = []
+    csv_ready_scenario_dict["scenario percentage"] = []
+    csv_ready_scenario_dict["total scenarios"] = []
 
 
     # insert the total data
@@ -444,71 +444,71 @@ def plot_additional_additional_layer_information_about_scenarios_per_datatype_fo
         for datatype in overall_dict[tmpID]:
             for ID in overall_dict[tmpID][datatype]:
 
-                csv_ready_scenario_dict["scenario_name"].append(ID)
+                csv_ready_scenario_dict["scenario name"].append(ID)
 
                 if scenario == "union":
-                    csv_ready_scenario_dict["scenario_count"]. \
+                    csv_ready_scenario_dict["scenario count"]. \
                         append(overall_dict["scenarios_per_datatype_found_in_second_level_subselect"]\
                                                    [datatype][ID])
 
                     total_occurrences = overall_dict["metadata_found_in_scenarios"]["subselect"]
 
                     if total_occurrences > 0:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(
                             int(overall_dict["scenarios_per_datatype_found_in_second_level_subselect"]\
                                 [datatype][ID]) / total_occurrences)
                     else:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(0)
 
-                    csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                    csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
 
 
 
                 elif scenario == "subselect":
-                    csv_ready_scenario_dict["scenario_count"]. \
+                    csv_ready_scenario_dict["scenario count"]. \
                         append(overall_dict["scenarios_per_datatype_found_in_second_level_union"]\
                                                    [datatype][ID])
 
                     total_occurrences = overall_dict["metadata_found_in_scenarios"]["union"]
 
                     if total_occurrences > 0:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(
                             int(overall_dict["scenarios_per_datatype_found_in_second_level_union"]\
                                 [datatype][ID]) / total_occurrences)
                     else:
-                        csv_ready_scenario_dict["scenario_percentage"]. \
+                        csv_ready_scenario_dict["scenario percentage"]. \
                             append(0)
 
-                    csv_ready_scenario_dict["total_scenarios"].append(total_occurrences)
+                    csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
                 csv_ready_scenario_dict["datatype"].append(datatype.split("/")[1].
                                                            replace("_+_", " +\n").
                                                            replace("e_", "e\n"))
 
-                csv_ready_scenario_dict["base_scenario"].append(scenario)
+                csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
     # plot the data in a heatmap
     tmp_dict = {}
-    tmp_dict["scenario_name"] = []
+    tmp_dict["scenario name"] = []
     tmp_dict["datatype"] = []
-    tmp_dict["scenario_percentage"] = []
+    tmp_dict["scenario percentage"] = []
 
     for i in range(len(csv_ready_scenario_dict["datatype"])):
-        tmp_dict["scenario_name"].append(csv_ready_scenario_dict["scenario_name"][i])
+        tmp_dict["scenario name"].append(csv_ready_scenario_dict["scenario name"][i])
         tmp_dict["datatype"].append(csv_ready_scenario_dict["datatype"][i])
-        tmp_dict["scenario_percentage"].append(\
-            csv_ready_scenario_dict["scenario_percentage"][i])
+        tmp_dict["scenario percentage"].append(\
+            csv_ready_scenario_dict["scenario percentage"][i])
 
     df = pd.DataFrame(tmp_dict)
 
     df = pd.pivot_table(data=df,
-                        index='scenario_name',
-                        values='scenario_percentage',
+                        index='scenario name',
+                        values='scenario percentage',
                         columns='datatype', sort=False)
 
     mask = (df == 0)
