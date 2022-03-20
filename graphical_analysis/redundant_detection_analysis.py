@@ -56,6 +56,10 @@ def plot_redundant_detection_data_exact():
 
     for types in [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK]:
 
+        # the overall count of metadata queries
+        total_queries = 0
+        marked_queries = 0
+
         # generate .csv ready dataframe, through a formated dictionary for ALL timeframes overall
         csv_ready_dict_overall = {}
         csv_ready_dict_overall["queries"] = []
@@ -104,7 +108,8 @@ def plot_redundant_detection_data_exact():
 
                     information_dict = json.load(information_data)
 
-                    print(information_dict)
+                    total_queries += information_dict["Total queries: "]
+                    marked_queries += information_dict["Queries marked: "]
 
                     csv_ready_dict_timeframe["queries"].append(information_dict["Total queries: "])
                     csv_ready_dict_timeframe["total amount or marked"].append("Total Queries")
@@ -148,7 +153,7 @@ def plot_redundant_detection_data_exact():
                     csv_ready_timeframe_heatmap_dict["metadata"].append(metadata)
 
                     # update the overall dict and summarize the timeframe values
-                    if len(csv_ready_dict_overall["queries"]) <= 2*i:
+                    if nice_type not in csv_ready_dict_overall["datatype"]:
                         csv_ready_dict_overall["queries"].append(information_dict["Total queries: "])
                         csv_ready_dict_overall["total amount or marked"].append("Total Queries")
 
@@ -174,6 +179,7 @@ def plot_redundant_detection_data_exact():
 
                         csv_ready_dict_overall["metadata"][i] = metadata
                         csv_ready_dict_overall["metadata"][i+1] = metadata
+
 
 
                     # update the overall dict to narrow it down to one type
@@ -351,7 +357,7 @@ def plot_redundant_detection_data_exact():
         overall_path = "data/statistical_information/redundant_detection/" \
                        + types[0].split("/")[0] + "/overall_redundant_information_exact.json"
         with open(overall_path, "w") as overall_data:
-            json.dump(csv_ready_dict_overall, overall_data)
+            json.dump(csv_ready_dict_overall_one_type, overall_data)
 
         color_list = sns.color_palette("Paired")
         color_list = [color_list[1], color_list[0]]
@@ -367,6 +373,40 @@ def plot_redundant_detection_data_exact():
         plt.close()
 
 
+        # add the total overall data to the csv_ready_dict per timeframe
+        for index in range( len(csv_ready_dict_overall["datatype"])):
+
+            if index % 2 == 0:
+                csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"].append(
+                    csv_ready_dict_overall["queries"][index] /
+                    total_queries
+                )
+            else:
+                csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"].append(
+                    (csv_ready_dict_overall["queries"][index-1] - csv_ready_dict_overall["queries"][index] )/
+                    (total_queries-marked_queries)
+                )
+            csv_ready_timeframe_heatmap_dict["timeframe"].append("total")
+            csv_ready_timeframe_heatmap_dict["datatype"].append(csv_ready_dict_overall["datatype"][index])
+
+            csv_ready_timeframe_heatmap_dict["total amount or marked"].\
+                append(csv_ready_dict_overall["total amount or marked"][index])
+
+            csv_ready_timeframe_heatmap_dict["metadata"].append(csv_ready_dict_overall["metadata"][index])
+            csv_ready_timeframe_heatmap_dict["metadata queries"].\
+                append(csv_ready_dict_overall["queries"][index])
+
+            print("Data----------------------------------------------------")
+            print(csv_ready_dict_overall["metadata"][index])
+            print(csv_ready_dict_overall["queries"][index])
+            print(csv_ready_dict_overall["total amount or marked"][index])
+            print(csv_ready_dict_overall["datatype"][index])
+            print(total_queries)
+            print(marked_queries)
+            print(csv_ready_dict_overall["queries"][index] /
+                    total_queries)
+            print((csv_ready_dict_overall["queries"][index-1] - csv_ready_dict_overall["queries"][index] )/
+                    (total_queries-marked_queries))
 
 
 
@@ -374,18 +414,15 @@ def plot_redundant_detection_data_exact():
         tmp_dict = {}
         tmp_dict["datatype"] = []
         tmp_dict["timeframe"] = []
-        tmp_dict["queries"] = []
         tmp_dict["percentage on total metadata queries"] = []
 
         for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
-
-            if "Total" in csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
-
+            if "Total Queries" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
                 tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
                 tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
-                tmp_dict["queries"].append(csv_ready_timeframe_heatmap_dict["metadata queries"][i])
                 tmp_dict["percentage on total metadata queries"].\
                     append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
+
 
 
         df = pd.DataFrame(tmp_dict)
@@ -393,9 +430,7 @@ def plot_redundant_detection_data_exact():
         print(tmp_dict)
         print(tmp_dict["datatype"])
         print(tmp_dict["timeframe"])
-        print(tmp_dict["queries"])
         print(tmp_dict["percentage on total metadata queries"])
-        print(len(tmp_dict["queries"]))
 
         df = pd.pivot_table(data=df,
                             index='datatype',
@@ -414,21 +449,20 @@ def plot_redundant_detection_data_exact():
         plt.close()
 
 
-        # plot the heatmap of redundant occurrences of metadata per type
+        # plot the heatmap of non redundant occurrences of metadata per type
         tmp_dict = {}
         tmp_dict["datatype"] = []
         tmp_dict["timeframe"] = []
-        tmp_dict["queries"] = []
         tmp_dict["percentage on total metadata queries"] = []
 
         for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
 
-            if "marked" in csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
+            if "Queries marked" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
 
                 tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
                 tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
-                tmp_dict["queries"].append(csv_ready_timeframe_heatmap_dict["metadata queries"][i])
-                tmp_dict["percentage on total metadata queries"].append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
+                tmp_dict["percentage on total metadata queries"].\
+                    append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
 
 
         df = pd.DataFrame(tmp_dict)
@@ -436,9 +470,7 @@ def plot_redundant_detection_data_exact():
         print(tmp_dict)
         print(tmp_dict["datatype"])
         print(tmp_dict["timeframe"])
-        print(tmp_dict["queries"])
         print(tmp_dict["percentage on total metadata queries"])
-        print(len(tmp_dict["queries"]))
 
         df = pd.pivot_table(data=df,
                             index='datatype',
@@ -490,7 +522,7 @@ def plot_redundant_vs_non_redundant_metadata_queries_per_timeframe(timeframes):
     color_list = [color_list[5], color_list[4], color_list[3], color_list[2], color_list[1], color_list[0]]
 
     tmp = sns.catplot(x="timeframe", y="queries", kind="point",
-                      palette=color_list, hue = "type",
+                      palette=color_list, hue="type",
                       dodge=True, data=df, ci=None)
 
     plt.gcf().autofmt_xdate()
