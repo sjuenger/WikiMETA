@@ -22,6 +22,11 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
             csv_ready_scenario_per_datatype_dict["total queries"] = []
             csv_ready_scenario_per_datatype_dict["total scenarios"] = []
 
+            total_query_count_per_looking_for_per_scenario = {}
+            total_query_count_per_looking_for = {}
+            total_scenario_count_per_looking_for = {}
+            total_occurrences_count_per_looking_for = {}
+
 
             for timeframe in timeframes:
 
@@ -38,13 +43,42 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
 
                     for dict in stat_info_scenarios_dict["found_scenarios"]["list_per_search"]:
 
+                        if str(dict["looking_for"]).replace(" ", "\n") in total_query_count_per_looking_for:
+                            total_query_count_per_looking_for[str(dict["looking_for"]).replace(" ", "\n")]\
+                                += stat_info_scenarios_dict["total_queries"]
+                            total_occurrences_count_per_looking_for[str(dict["looking_for"]).replace(" ", "\n")]\
+                                += dict["total_occurrences"]
+                            total_scenario_count_per_looking_for[str(dict["looking_for"]).replace(" ", "\n")]\
+                                += dict["total_scenarios"]
+                        else:
+                            total_query_count_per_looking_for[str(dict["looking_for"]).replace(" ", "\n")]\
+                                = stat_info_scenarios_dict["total_queries"]
+                            total_occurrences_count_per_looking_for[str(dict["looking_for"]).replace(" ", "\n")]\
+                                = dict["total_occurrences"]
+                            total_scenario_count_per_looking_for[str(dict["looking_for"]).replace(" ", "\n")]\
+                                = dict["total_scenarios"]
+
+
                         for PID in dict:
                             if PID not in ["looking_for", "total_occurrences", "total_scenarios"]:
 
                                 csv_ready_scenario_per_datatype_dict["scenario name"].append(PID)
                                 csv_ready_scenario_per_datatype_dict["scenario count"].\
                                     append(dict[PID])
-                                if dict["total_occurrences"]>0:
+
+                                if str(dict["looking_for"]).replace(" ", "\n") not in total_query_count_per_looking_for_per_scenario:
+                                    total_query_count_per_looking_for_per_scenario[
+                                        str(dict["looking_for"]).replace(" ", "\n")] = {}
+
+                                if PID not in total_query_count_per_looking_for_per_scenario[
+                                        str(dict["looking_for"]).replace(" ", "\n")]:
+                                    total_query_count_per_looking_for_per_scenario[
+                                        str(dict["looking_for"]).replace(" ", "\n")][PID] = dict[PID]
+                                else:
+                                    total_query_count_per_looking_for_per_scenario[
+                                        str(dict["looking_for"]).replace(" ", "\n")][PID] += dict[PID]
+
+                                if dict["total_occurrences"] > 0:
                                     csv_ready_scenario_per_datatype_dict["scenario percentage"].\
                                         append(dict[PID] / dict["total_scenarios"])
                                 else:
@@ -65,6 +99,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
 
 
 
+
             # display the non-redundant scenario information per datatype and per timeframe in a heatmap
             for list_per_search in stat_info_scenarios_dict["found_scenarios"]["list_per_search"]:
 
@@ -73,6 +108,26 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
                 tmp_dict["timeframe"] = []
                 tmp_dict["scenario percentage"] = []
 
+                # add the total data
+                for scenario in total_query_count_per_looking_for_per_scenario[
+                        list_per_search["looking_for"].replace(" ", "\n")]:
+                    tmp_dict["scenario name"].append(scenario)
+
+
+                    tmp_dict["timeframe"].append("total")
+
+
+                    if total_query_count_per_looking_for_per_scenario[
+                            list_per_search["looking_for"].replace(" ", "\n")][scenario] > 0:
+                        tmp_dict["scenario percentage"]. \
+                            append(total_query_count_per_looking_for_per_scenario[
+                            list_per_search["looking_for"].replace(" ", "\n")][scenario] /
+                                   total_scenario_count_per_looking_for[list_per_search["looking_for"].replace(" ", "\n")])
+                    else:
+                        tmp_dict["scenario percentage"]. \
+                            append(0)
+
+                # add the timeframe data
                 for i in range(len(csv_ready_scenario_per_datatype_dict["timeframe"])):
                     if list_per_search["looking_for"].replace(" ", "\n") == \
                             csv_ready_scenario_per_datatype_dict["type looking for"][i]:
@@ -97,7 +152,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
                 mask = (df == 0)
                 fig, ax = plt.subplots(figsize=(12, 10))
                 tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0,
-                                  vmax = 1, mask=mask, cmap="YlGnBu",
+                                  vmax = 1, mask=mask, cmap="Greens",
                                   linewidths=.5)
                 tmp.figure.tight_layout()
                 #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
@@ -115,6 +170,35 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
                 tmp.get_figure().savefig(save_path)
 
                 plt.close()
+
+
+            for list_per_search in stat_info_scenarios_dict["found_scenarios"]["list_per_search"]:
+
+                csv_ready_scenario_per_datatype_dict["timeframe"].append("total")
+
+                csv_ready_scenario_per_datatype_dict["total occurrences"].append(
+                    total_occurrences_count_per_looking_for[
+                        list_per_search["looking_for"].replace(" ", "\n")]
+                )
+                csv_ready_scenario_per_datatype_dict["total scenarios"].append(
+                    total_scenario_count_per_looking_for[
+                        list_per_search["looking_for"].replace(" ", "\n")]
+                )
+                csv_ready_scenario_per_datatype_dict["total queries"].append(
+                    total_query_count_per_looking_for[
+                        list_per_search["looking_for"].replace(" ", "\n")]
+                )
+
+                csv_ready_scenario_per_datatype_dict["datatype"].append(None)
+                csv_ready_scenario_per_datatype_dict["scenario percentage"].append(None)
+
+                csv_ready_scenario_per_datatype_dict["type looking for"].append(
+                    list_per_search["looking_for"].replace(" ", "\n"))
+
+                csv_ready_scenario_per_datatype_dict["scenario name"].append(None)
+                csv_ready_scenario_per_datatype_dict["scenario count"] .append(None)
+
+
 
             # plot the overll numbers of found scenarios per datatype and per timeframe
             #   for the total scenarios
