@@ -409,7 +409,6 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                                             raise Exception
                                     else:
 
-
                                         tmp_dict = union_statistical_information["scenarios_found_in_second_level_subselect"].copy()
 
                                         # detect metadata inside the SELECT part
@@ -418,10 +417,14 @@ def scenario_union_occurrences(json_object, look_for, location, bound_variables,
                                             union_statistical_information["scenarios_found_in_second_level_subselect"][
                                                 "used_in_SELECT"] += \
                                                 str(pattern["variables"]).count(look_for)
+                                            current_datatype_dict_subselect_layer[
+                                                "used_in_SELECT"] += str(pattern["variables"]).count(look_for)
                                         else:
                                             union_statistical_information["scenarios_found_in_second_level_subselect"][
                                                 "used_in_SELECT"] = \
                                                 str(pattern["variables"]).count(look_for)
+                                            current_datatype_dict_subselect_layer[
+                                                "used_in_SELECT"] = str(pattern["variables"]).count(look_for)
 
 
                                         # scenario one

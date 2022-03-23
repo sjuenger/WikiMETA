@@ -113,7 +113,11 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                             {
                                 "total_found_metadata": 0,
                                 "metadata_found_in_scenarios": scenarios_dict,
-                                "metadata_per_datatype_found_in_scenarios": {}}
+                                "metadata_per_datatype_found_in_scenarios": {},
+                                "in_found_prop_path_total_found_operators": 0,
+                                "in_found_prop_path_found_operators_overall": {},
+                                "in_found_prop_path_found_operators_per_datatype": {}
+                            }
 
                     # check for the datatypes
                     # or/and get the correct scenario dict for the current datatype
@@ -125,12 +129,27 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                             current_datatype_dict = optional_statistical_information[
                                 "metadata_per_datatype_found_in_scenarios"][data_type]
 
+                            # look for the current datatype dict for the operators
+                            for test_dict_datatype in optional_statistical_information[
+                                "in_found_prop_path_found_operators_per_datatype"]:
+                                if test_dict_datatype == data_type:
+                                    current_datatype_dict_prop_path_operator = optional_statistical_information[
+                                "in_found_prop_path_found_operators_per_datatype"][data_type]
+
                     if not already_inserted:
                         scenarios_dict_datatype = scenarios_dict.copy()
                         optional_statistical_information["metadata_per_datatype_found_in_scenarios"][data_type] = \
                             scenarios_dict_datatype
 
                         current_datatype_dict = scenarios_dict_datatype
+
+
+                        scenarios_dict_datatype_operator = {}
+                        optional_statistical_information["in_found_prop_path_found_operators_per_datatype"][
+                            data_type] = scenarios_dict_datatype_operator
+
+                        current_datatype_dict_prop_path_operator = scenarios_dict_datatype_operator
+
                         
                     optional_statistical_information["total_found_metadata"] += \
                         str(where_part["patterns"]).count(look_for)
@@ -307,13 +326,13 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                     current_datatype_dict["optional"] += tmp_occurrences
 
                     # scenario prop_path
-                    tmp_occurrences = \
+                    tmp_occurrences_prop_path = \
                         scenario_prop_path_detection. \
                             scenario_prop_path_occurrences({"where": where_part["patterns"]}, look_for,
                                                            location,
                                                            bound_variables, False, data_type)
-                    optional_statistical_information["metadata_found_in_scenarios"]["prop_path"] += tmp_occurrences
-                    current_datatype_dict["prop_path"] += tmp_occurrences
+                    optional_statistical_information["metadata_found_in_scenarios"]["prop_path"] += tmp_occurrences_prop_path
+                    current_datatype_dict["prop_path"] += tmp_occurrences_prop_path
 
                     # scenario service
                     tmp_occurrences = \
@@ -360,6 +379,52 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                             str(where_part["patterns"]).count(look_for)
                         current_datatype_dict["not_found_in_patterns"] += \
                             str(where_part["patterns"]).count(look_for)
+
+                    #-----------------------------------------------------------------------------------------------------------------------
+                    #
+                    # because the results of this little analysis often show, that ~50% of the found scenarios (on References)
+                    #   are PROP_PATHSs -> detect here also the operator of these property paths
+                    #
+                    #-----------------------------------------------------------------------------------------------------------------------
+
+                    if tmp_occurrences_prop_path > 0:
+
+                        # for every pattern in patterns
+                        # multiple bgp (basic graph patterns)
+                        for pattern in where_part["patterns"]:
+
+                            if "type" in pattern and pattern["type"] == "bgp":
+                                for triple in pattern["triples"]:
+
+                                    if ("type" in triple["predicate"]):
+                                        # on "normal" properties, there is only a 'termType' and no 'type'
+                                        if (triple["predicate"]["type"] == "path"):
+                                            if look_for in str(triple["predicate"]["items"]):
+
+                                                # look for the kind of the proppath and save it
+                                                # -> detect the operator of the prop_path
+                                                #
+                                                # e.g. "!", "/", aso.
+
+                                                if triple["predicate"]["pathType"] in optional_statistical_information[
+                                                    "in_found_prop_path_found_operators_overall"]:
+                                                    optional_statistical_information["in_found_prop_path_found_operators_overall"][
+                                                        triple["predicate"]["pathType"]] += 1
+                                                else:
+                                                    optional_statistical_information["in_found_prop_path_found_operators_overall"][
+                                                        triple["predicate"]["pathType"]] = 1
+                                                optional_statistical_information["in_found_prop_path_total_found_operators"] += 1
+
+                                                # do the same thing again -> but now, also for the datatypes
+                                                if triple["predicate"]["pathType"] in \
+                                                        current_datatype_dict_prop_path_operator:
+                                                    current_datatype_dict_prop_path_operator[
+                                                        triple["predicate"]["pathType"]] += 1
+                                                else:
+                                                    current_datatype_dict_prop_path_operator[
+                                                        triple["predicate"]["pathType"]] = 1
+
+
 
                     # save the json object
                     with open(location + "/optional_statistical_information.json", "w") as json_data:

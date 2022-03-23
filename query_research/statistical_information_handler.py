@@ -2122,7 +2122,12 @@ def summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES):
                 {
                     "total_found_metadata": 0,
                     "metadata_found_in_scenarios": scenarios_dict,
-                    "metadata_per_datatype_found_in_scenarios": {}}
+                    "metadata_per_datatype_found_in_scenarios": {},
+                    "in_found_prop_path_total_found_operators": 0,
+                    "in_found_prop_path_found_operators_overall": {},
+                    "in_found_prop_path_found_operators_per_datatype": {}
+                }
+
             for timeframe in TIMEFRAMES:
 
 
@@ -2156,6 +2161,34 @@ def summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES):
                             else:
                                 result_dict["metadata_per_datatype_found_in_scenarios"][datatype] = \
                                     timeframe_dict["metadata_per_datatype_found_in_scenarios"][datatype]
+
+                        result_dict["in_found_prop_path_total_found_operators"] += \
+                            timeframe_dict["in_found_prop_path_total_found_operators"]
+
+                        for operator in timeframe_dict["in_found_prop_path_found_operators_overall"]:
+                            if operator in result_dict["in_found_prop_path_found_operators_overall"]:
+
+                                result_dict["in_found_prop_path_found_operators_overall"][operator] += \
+                                    timeframe_dict["in_found_prop_path_found_operators_overall"][operator]
+                            else:
+                                result_dict["in_found_prop_path_found_operators_overall"][operator] = \
+                                    timeframe_dict["in_found_prop_path_found_operators_overall"][operator]
+
+                        for datatype in timeframe_dict["in_found_prop_path_found_operators_per_datatype"]:
+                            if datatype in result_dict["in_found_prop_path_found_operators_per_datatype"]:
+
+                                for operator in timeframe_dict["in_found_prop_path_found_operators_per_datatype"][datatype]:
+                                    if operator in result_dict["in_found_prop_path_found_operators_per_datatype"][datatype]:
+                                        result_dict["in_found_prop_path_found_operators_per_datatype"][datatype][operator] += \
+                                            timeframe_dict["in_found_prop_path_found_operators_per_datatype"][datatype][operator]
+                                    else:
+                                        result_dict["in_found_prop_path_found_operators_per_datatype"][datatype][operator] = \
+                                            timeframe_dict["in_found_prop_path_found_operators_per_datatype"][datatype][operator]
+                            else:
+                                result_dict["in_found_prop_path_found_operators_per_datatype"][datatype] = \
+                                    timeframe_dict["in_found_prop_path_found_operators_per_datatype"][datatype]
+
+
 
                 path_to_result = "data/statistical_information/query_research/" + redundant_mode + \
                                  "/" + metadata + "/scenarios/additional_layer/optional_statistical_information.json"

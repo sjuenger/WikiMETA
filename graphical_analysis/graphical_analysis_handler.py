@@ -10,6 +10,7 @@ import graphical_analysis.query_properties_accumulated_datatypes_analysis as \
 import graphical_analysis.query_scenario_additional_layer_analysis as \
     query_scenario_additional_layer_analysis
 import graphical_analysis.query_scenario_operators_analysis as query_scenario_operators_analysis
+import graphical_analysis.query_scenario_additional_operators_analysis as query_scenario_additional_operators_analysis
 
 
 TIMEFRAMES = [
@@ -100,6 +101,13 @@ def start_graphical_analysis(x):
             query_scenario_operators_analysis.\
                 plot_additional_operator_information_about_scenarios_per_datatype_for_FILTER_PROPPATH(
                 TIMEFRAMES, metadata, scenario)
+
+        query_scenario_additional_operators_analysis.\
+            plot_additional_second_level_operator_information_about_scenarios_per_timeframe_for_OPTIONAL(
+            TIMEFRAMES, metadata, "optional")
+        query_scenario_additional_operators_analysis.\
+            plot_additional_second_level_operator_information_about_scenarios_per_datatype_for_OPTIONAL(
+            TIMEFRAMES, metadata, "optional")
 
 
     for recommended_mode in ["recommended", "non_recommended", "all"]:
