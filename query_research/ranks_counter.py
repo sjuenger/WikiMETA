@@ -16,6 +16,7 @@ def count_ranks_in(location, mode, DATATYPES, redundant_mode):
     result_dict = {}
     result_dict["ranks"] = {}
     result_dict["ranks"]["best_rank"] = 0
+    result_dict["ranks"]["preferred_rank"] = 0
     result_dict["ranks"]["normal_rank"] = 0
     result_dict["ranks"]["deprecated_rank"] = 0
     result_dict["total_ranks"] = 0
@@ -56,14 +57,17 @@ def count_ranks_in(location, mode, DATATYPES, redundant_mode):
                     where_part = query_json["where"]
 
                     best_ranks_no = str(where_part).count("http://wikiba.se/ontology#BestRank")
+                    preferred_ranks_no = str(where_part).count("http://wikiba.se/ontology#PreferredRank")
                     deprecated_ranks_no = str(where_part).count("http://wikiba.se/ontology#DeprecatedRank")
-                    normal_ranks_no = str(where_part).count("http://wikiba.se/ontology#NormaltRank")
+                    normal_ranks_no = str(where_part).count("http://wikiba.se/ontology#NormalRank")
 
                     result_dict["ranks"]["best_rank"] += best_ranks_no
+                    result_dict["ranks"]["preferred_rank"] += preferred_ranks_no
                     result_dict["ranks"]["normal_rank"] += normal_ranks_no
                     result_dict["ranks"]["deprecated_rank"] += deprecated_ranks_no
 
-                    result_dict["total_ranks"] += best_ranks_no + normal_ranks_no + deprecated_ranks_no
+                    result_dict["total_ranks"] += best_ranks_no + normal_ranks_no + deprecated_ranks_no + \
+                                                  preferred_ranks_no
 
 
     with open(path_to_stat_information + "/ranks_counted.json", "w") as result_data:

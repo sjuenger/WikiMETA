@@ -33,20 +33,36 @@ DATA_TYPES_QUALIFIER = [
 
 DATA_TYPES_RANK = [
     "rank_metadata/rank_property",
-    "rank_metadata/best_rank_+_rank_property",
+    "rank_metadata/preferred_rank_+_rank_property",
     "rank_metadata/normal_rank_+_rank_property",
     "rank_metadata/deprecated_rank_+_rank_property",
-    "rank_metadata/best_+_normal_rank_+_rank_property",
-    "rank_metadata/best_+_deprecated_rank_+_rank_property",
+    "rank_metadata/preferred_+_normal_rank_+_rank_property",
+    "rank_metadata/preferred_+_deprecated_rank_+_rank_property",
     "rank_metadata/normal_+_deprecated_rank_+_rank_property",
     "rank_metadata/all_ranks_+_rank_property",
     "rank_metadata/normal_rank",
     "rank_metadata/deprecated_rank",
-    "rank_metadata/best_rank",
-    "rank_metadata/best_+_normal_rank",
-    "rank_metadata/best_+_deprecated_rank",
+    "rank_metadata/preferred_rank",
+    "rank_metadata/preferred_+_normal_rank",
+    "rank_metadata/preferred_+_deprecated_rank",
     "rank_metadata/normal_+_deprecated_rank",
-    "rank_metadata/all_ranks"
+    "rank_metadata/all_ranks",
+    "rank_metadata/best_rank_property",
+    "rank_metadata/rank_property_+_best_rank_property",
+    "rank_metadata/preferred_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/normal_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/deprecated_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/preferred_+_normal_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/preferred_+_deprecated_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/normal_+_deprecated_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/all_ranks_+_rank_property_+_best_rank_property",
+    "rank_metadata/normal_rank_+_best_rank_property",
+    "rank_metadata/deprecated_rank_+_best_rank_property",
+    "rank_metadata/preferred_rank_+_best_rank_property",
+    "rank_metadata/preferred_+_normal_rank_+_best_rank_property",
+    "rank_metadata/preferred_+_deprecated_rank_+_best_rank_property",
+    "rank_metadata/normal_+_deprecated_rank_+_best_rank_property",
+    "rank_metadata/all_ranks_+_best_rank_property"
 ]
 
 def start_research_of_query_data(args, x):
@@ -56,8 +72,10 @@ def start_research_of_query_data(args, x):
     # generate the data
     if args[0] == 1:
         print("Generate the query data.")
+        #transform_data_handler. \
+        #    start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
         transform_data_handler. \
-            start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
+            start_creating_data(TIMEFRAMES, [DATA_TYPES_RANK])
 
     # count the amount of queries with and without metadata (overall & per timeframe)
     if args[1] == 1:

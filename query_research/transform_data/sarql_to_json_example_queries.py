@@ -30,8 +30,8 @@ def extract_example_queries(location):
                 print(e)
                 # // does not go in there !!
 
-            print(output_bytes)
-            print(sample_sparql)
+            #print(output_bytes)
+            #print(sample_sparql)
             if len(output_bytes) != 0:
                 output_str = output_bytes.decode("utf-8")
 

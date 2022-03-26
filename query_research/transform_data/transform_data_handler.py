@@ -10,9 +10,9 @@ def start_creating_data(TIMEFRAMES, LOCATIONS):
 
     for timeframe in TIMEFRAMES:
 
-        sparql_to_json_references(timeframe)
-        sparql_to_json_qualifiers(timeframe)
-        sparql_to_json_ranks(timeframe)
+        sparql_to_json_references.extract_SPARQL_to_JSON(timeframe)
+        sparql_to_json_qualifiers.extract_SPARQL_to_JSON(timeframe)
+        sparql_to_json_ranks.extract_SPARQL_to_JSON(timeframe)
 
         for LOCATIONS_PER_METADATA in LOCATIONS:
 

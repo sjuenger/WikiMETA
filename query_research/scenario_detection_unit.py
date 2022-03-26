@@ -714,39 +714,84 @@ def get_mode(data_type):
     # ranks
     elif data_type == "rank_metadata/rank_property":
         return [["http://wikiba.se/ontology#rank"]]
-    elif data_type == "rank_metadata/best_rank_+_rank_property":
-        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_rank_+_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"]]
     elif data_type == "rank_metadata/normal_rank_+_rank_property":
         return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#NormalRank"]]
     elif data_type == "rank_metadata/deprecated_rank_+_rank_property":
         return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#DeprecatedRank"]]
-    elif data_type == "rank_metadata/best_+_normal_rank_+_rank_property":
-        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#BestRank"],
+    elif data_type == "rank_metadata/preferred_+_normal_rank_+_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
                 ["http://wikiba.se/ontology#NormalRank"]]
-    elif data_type == "rank_metadata/best_+_deprecated_rank_+_rank_property":
-        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#BestRank"],
+    elif data_type == "rank_metadata/preferred_+_deprecated_rank_+_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
                 ["http://wikiba.se/ontology#DeprecatedRank"]]
     elif data_type == "rank_metadata/normal_+_deprecated_rank_+_rank_property":
         return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#NormalRank"],
                 ["http://wikiba.se/ontology#DeprecatedRank"]]
     elif data_type == "rank_metadata/all_ranks_+_rank_property":
-        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#BestRank"],
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
                 ["http://wikiba.se/ontology#NormalRank"], ["http://wikiba.se/ontology#DeprecatedRank"]]
     elif data_type == "rank_metadata/normal_rank":
         return [["http://wikiba.se/ontology#NormalRank"]]
     elif data_type == "rank_metadata/deprecated_rank":
         return [["http://wikiba.se/ontology#DeprecatedRank"]]
-    elif data_type == "rank_metadata/best_rank":
-        return [["http://wikiba.se/ontology#BestRank"]]
-    elif data_type == "rank_metadata/best_+_normal_rank":
-        return [["http://wikiba.se/ontology#BestRank"], ["http://wikiba.se/ontology#NormalRank"]]
-    elif data_type == "rank_metadata/best_+_deprecated_rank":
-        return [["http://wikiba.se/ontology#BestRank"], ["http://wikiba.se/ontology#DeprecatedRank"]]
+    elif data_type == "rank_metadata/preferred_rank":
+        return [["http://wikiba.se/ontology#PreferredRank"]]
+    elif data_type == "rank_metadata/preferred_+_normal_rank":
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#NormalRank"]]
+    elif data_type == "rank_metadata/preferred_+_deprecated_rank":
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#DeprecatedRank"]]
     elif data_type == "rank_metadata/normal_+_deprecated_rank":
         return [["http://wikiba.se/ontology#NormalRank"], ["http://wikiba.se/ontology#DeprecatedRank"]]
     elif data_type == "rank_metadata/all_ranks":
-        return [["http://wikiba.se/ontology#BestRank"], ["http://wikiba.se/ontology#NormalRank"],
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#NormalRank"],
                 ["http://wikiba.se/ontology#DeprecatedRank"]]
+
+    elif data_type == "rank_metadata/rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_rank_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/normal_rank_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#NormalRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/deprecated_rank_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#DeprecatedRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_+_normal_rank_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
+                ["http://wikiba.se/ontology#NormalRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_+_deprecated_rank_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
+                ["http://wikiba.se/ontology#DeprecatedRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/normal_+_deprecated_rank_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#NormalRank"],
+                ["http://wikiba.se/ontology#DeprecatedRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/all_ranks_+_rank_property_+_best_rank_property":
+        return [["http://wikiba.se/ontology#rank"], ["http://wikiba.se/ontology#PreferredRank"],
+                ["http://wikiba.se/ontology#NormalRank"], ["http://wikiba.se/ontology#DeprecatedRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/normal_rank_+_best_rank_property":
+        return [["http://wikiba.se/ontology#NormalRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/deprecated_rank_+_best_rank_property":
+        return [["http://wikiba.se/ontology#DeprecatedRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_rank_+_best_rank_property":
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_+_normal_rank_+_best_rank_property":
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#NormalRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/preferred_+_deprecated_rank_+_best_rank_property":
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#DeprecatedRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/normal_+_deprecated_rank_+_best_rank_property":
+        return [["http://wikiba.se/ontology#NormalRank"], ["http://wikiba.se/ontology#DeprecatedRank"],
+                ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/all_ranks_+_best_rank_property":
+        return [["http://wikiba.se/ontology#PreferredRank"], ["http://wikiba.se/ontology#NormalRank"],
+                ["http://wikiba.se/ontology#DeprecatedRank"], ["http://wikiba.se/ontology#BestRank"]]
+    elif data_type == "rank_metadata/best_rank_property":
+        return [["http://wikiba.se/ontology#BestRank"]]
 
     # qualifiers
     elif data_type == "qualifier_metadata/property_qualifier":

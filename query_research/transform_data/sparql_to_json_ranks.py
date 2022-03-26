@@ -19,65 +19,126 @@ def extract_SPARQL_to_JSON(location):
         k = 0
         for row in read_tsv:
             sample_sparql = unquote_plus(row[0])
-            print(k)
             k += 1
 
             # Information for the strings from https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format
 
             contains = "none"
 
-            if "<http://wikiba.se/ontology#rank>" in sample_sparql:
+            if "<http://wikiba.se/ontology#BestRank>" in sample_sparql:
 
-                if "<http://wikiba.se/ontology#BestRank>" in sample_sparql:
+                if "<http://wikiba.se/ontology#rank>" in sample_sparql:
+
+                    if "<http://wikiba.se/ontology#PreferredRank>" in sample_sparql:
+
+                        if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                            if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                                contains = "all_ranks_+_rank_property_+_best_rank_property"
+                            else:
+                                contains = "preferred_+_deprecated_rank_+_rank_property_+_best_rank_property"
+
+                        elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                            contains = "preferred_+_normal_rank_+_rank_property_+_best_rank_property"
+                        else:
+                            contains = "preferred_rank_+_rank_property_+_best_rank_property"
+
+                    elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                        if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                            contains = "normal_+_deprecated_rank_+_rank_property_+_best_rank_property"
+                        else:
+                            contains = "deprecated_rank_+_rank_property_+_best_rank_property"
+
+                    elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                        contains = "normal_rank_+_rank_property_+_best_rank_property"
+
+                    else:
+                        contains = "rank_property_+_best_rank_property"
+
+                elif "<http://wikiba.se/ontology#PreferredRank>" in sample_sparql:
 
                     if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
 
                         if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                            contains = "all_ranks_+_rank_property"
+                            contains = "all_ranks_+_best_rank_property"
                         else:
-                            contains = "best_+_deprecated_rank_+_rank_property"
+                            contains = "preferred_+_deprecated_rank_+_best_rank_property"
 
                     elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                        contains = "best_+_normal_rank_+_rank_property"
+                        contains = "preferred_+_normal_rank_+_best_rank_property"
                     else:
-                        contains = "best_rank_+_rank_property"
+                        contains = "preferred_rank_+_best_rank_property"
 
                 elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
 
                     if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                        contains = "normal_+_deprecated_rank_+_rank_property"
+                        contains = "normal_+_deprecated_rank_+_best_rank_property"
                     else:
-                        contains = "deprecated_rank_+_rank_property"
+                        contains = "deprecated_rank_+_best_rank_property"
 
                 elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                    contains = "normal_rank_+_rank_property"
+                    contains = "normal_rank_+_best_rank_property"
 
                 else:
-                    contains = "rank_property"
+                    contains = "best_rank_property"
 
-            elif "<http://wikiba.se/ontology#BestRank>" in sample_sparql:
+            else:
 
-                if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+                if "<http://wikiba.se/ontology#rank>" in sample_sparql:
+
+                    if "<http://wikiba.se/ontology#PreferredRank>" in sample_sparql:
+
+                        if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                            if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                                contains = "all_ranks_+_rank_property"
+                            else:
+                                contains = "preferred_+_deprecated_rank_+_rank_property"
+
+                        elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                            contains = "preferred_+_normal_rank_+_rank_property"
+                        else:
+                            contains = "preferred_rank_+_rank_property"
+
+                    elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                        if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                            contains = "normal_+_deprecated_rank_+_rank_property"
+                        else:
+                            contains = "deprecated_rank_+_rank_property"
+
+                    elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                        contains = "normal_rank_+_rank_property"
+
+                    else:
+                        contains = "rank_property"
+
+                elif "<http://wikiba.se/ontology#PreferredRank>" in sample_sparql:
+
+                    if "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
+
+                        if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                            contains = "all_ranks"
+                        else:
+                            contains = "preferred_+_deprecated_rank"
+
+                    elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
+                        contains = "preferred_+_normal_rank"
+                    else:
+                        contains = "preferred_rank"
+
+                elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
 
                     if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                        contains = "all_ranks"
+                        contains = "normal_+_deprecated_rank"
                     else:
-                        contains = "best_+_deprecated_rank"
+                        contains = "deprecated_rank"
 
                 elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                    contains = "best_+_normal_rank"
-                else:
-                    contains = "best_rank"
+                    contains = "normal_rank"
 
-            elif "<http://wikiba.se/ontology#DeprecatedRank>" in sample_sparql:
 
-                if "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                    contains = "normal_+_deprecated_rank"
-                else:
-                    contains = "deprecated_rank"
-
-            elif "<http://wikiba.se/ontology#NormalRank>" in sample_sparql:
-                contains = "normal_rank"
 
             if contains != "none":
                 i += 1

@@ -33,20 +33,36 @@ DATA_TYPES_QUALIFIER = [
 
 DATA_TYPES_RANK = [
     "rank_metadata/rank_property",
-    "rank_metadata/best_rank_+_rank_property",
+    "rank_metadata/preferred_rank_+_rank_property",
     "rank_metadata/normal_rank_+_rank_property",
     "rank_metadata/deprecated_rank_+_rank_property",
-    "rank_metadata/best_+_normal_rank_+_rank_property",
-    "rank_metadata/best_+_deprecated_rank_+_rank_property",
+    "rank_metadata/preferred_+_normal_rank_+_rank_property",
+    "rank_metadata/preferred_+_deprecated_rank_+_rank_property",
     "rank_metadata/normal_+_deprecated_rank_+_rank_property",
     "rank_metadata/all_ranks_+_rank_property",
     "rank_metadata/normal_rank",
     "rank_metadata/deprecated_rank",
-    "rank_metadata/best_rank",
-    "rank_metadata/best_+_normal_rank",
-    "rank_metadata/best_+_deprecated_rank",
+    "rank_metadata/preferred_rank",
+    "rank_metadata/preferred_+_normal_rank",
+    "rank_metadata/preferred_+_deprecated_rank",
     "rank_metadata/normal_+_deprecated_rank",
-    "rank_metadata/all_ranks"
+    "rank_metadata/all_ranks",
+    "rank_metadata/best_rank_property",
+    "rank_metadata/rank_property_+_best_rank_property",
+    "rank_metadata/preferred_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/normal_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/deprecated_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/preferred_+_normal_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/preferred_+_deprecated_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/normal_+_deprecated_rank_+_rank_property_+_best_rank_property",
+    "rank_metadata/all_ranks_+_rank_property_+_best_rank_property",
+    "rank_metadata/normal_rank_+_best_rank_property",
+    "rank_metadata/deprecated_rank_+_best_rank_property",
+    "rank_metadata/preferred_rank_+_best_rank_property",
+    "rank_metadata/preferred_+_normal_rank_+_best_rank_property",
+    "rank_metadata/preferred_+_deprecated_rank_+_best_rank_property",
+    "rank_metadata/normal_+_deprecated_rank_+_best_rank_property",
+    "rank_metadata/all_ranks_+_best_rank_property"
 ]
 
 

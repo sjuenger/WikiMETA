@@ -386,6 +386,7 @@ def summarize_statistical_information_about_counted_ranks(TIMEFRAMES, mode, redu
     result_dict = {}
     result_dict["ranks"] = {}
     result_dict["ranks"]["best_rank"] = 0
+    result_dict["ranks"]["preferred_rank"] = 0
     result_dict["ranks"]["normal_rank"] = 0
     result_dict["ranks"]["deprecated_rank"] = 0
     result_dict["total_ranks"] = 0
@@ -400,6 +401,7 @@ def summarize_statistical_information_about_counted_ranks(TIMEFRAMES, mode, redu
             result_dict["total_ranks"] += timeframe_dict["total_ranks"]
 
             result_dict["ranks"]["best_rank"] += timeframe_dict["ranks"]["best_rank"]
+            result_dict["ranks"]["preferred_rank"] += timeframe_dict["ranks"]["preferred_rank"]
             result_dict["ranks"]["normal_rank"] += timeframe_dict["ranks"]["normal_rank"]
             result_dict["ranks"]["deprecated_rank"] += timeframe_dict["ranks"]["deprecated_rank"]
 
