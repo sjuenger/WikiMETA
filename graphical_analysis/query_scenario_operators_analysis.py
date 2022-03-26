@@ -230,7 +230,10 @@ def plot_additional_operator_information_about_scenarios_per_datatype_for_FILTER
     mask = (df == 0)
 
     if scenario == "filter":
-        fig, ax = plt.subplots(figsize=(6, 6)) # 16 10
+        if metadata == "rank_metadata":
+            fig, ax = plt.subplots(figsize=(9, 6))  # 16 10
+        else:
+            fig, ax = plt.subplots(figsize=(6, 6)) # 16 10
     elif scenario == "prop_path":
         fig, ax = plt.subplots(figsize=(6, 6))
 

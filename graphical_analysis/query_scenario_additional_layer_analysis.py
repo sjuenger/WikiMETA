@@ -393,7 +393,12 @@ def plot_additional_layer_information_about_scenarios_per_datatype_for_OPTIONAL_
                         columns='datatype', sort=False)
 
     mask = (df == 0)
-    fig, ax = plt.subplots(figsize=(8, 10)) # 16 10
+
+    if metadata == "rank_metadata":
+        fig, ax = plt.subplots(figsize=(12, 10)) # 16 10
+    else:
+        fig, ax = plt.subplots(figsize=(8, 10)) # 16 10
+
     tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="BuPu",
                       linewidths=.5)
     tmp.figure.tight_layout()

@@ -432,12 +432,24 @@ def plot_redundant_detection_data_exact():
         tmp_dict["timeframe"] = []
         tmp_dict["percentage on total metadata queries"] = []
 
-        for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
-            if "Total Queries" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
-                tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
-                tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
-                tmp_dict["percentage on total metadata queries"].\
-                    append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
+        # for the RANKS, only display the datatypes, that actually carry a vlaue
+        # otherwise, the grahic would be very overloaded
+        if type.split("/")[0] == "rank_metadata":
+            for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
+                if "Total Queries" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i] and \
+                    float(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i]) > 0:
+                    tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
+                    tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
+                    tmp_dict["percentage on total metadata queries"].\
+                        append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
+        else:
+            for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
+                if "Total Queries" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
+                    tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
+                    tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
+                    tmp_dict["percentage on total metadata queries"].\
+                        append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
+
 
 
 
@@ -453,7 +465,7 @@ def plot_redundant_detection_data_exact():
                             values='percentage on total metadata queries',
                             columns='timeframe', sort = False)
 
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(11, 6))
         tmp = sns.heatmap(df, ax=ax, vmin=0, vmax =1, annot=True)
         tmp.figure.tight_layout()
         #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
@@ -471,15 +483,23 @@ def plot_redundant_detection_data_exact():
         tmp_dict["timeframe"] = []
         tmp_dict["percentage on total metadata queries"] = []
 
-        for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
-
-            if "Queries marked" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
-
-                tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
-                tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
-                tmp_dict["percentage on total metadata queries"].\
-                    append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
-
+        # for the RANKS, only display the datatypes, that actually carry a vlaue
+        # otherwise, the grahic would be very overloaded
+        if type.split("/")[0] == "rank_metadata":
+            for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
+                if "Queries marked" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i] and \
+                        csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i] > 0:
+                    tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
+                    tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
+                    tmp_dict["percentage on total metadata queries"].\
+                        append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
+        else:
+            for i in range(len(csv_ready_timeframe_heatmap_dict["metadata"])):
+                if "Queries marked" == csv_ready_timeframe_heatmap_dict["total amount or marked"][i]:
+                    tmp_dict["datatype"].append(csv_ready_timeframe_heatmap_dict["datatype"][i])
+                    tmp_dict["timeframe"].append(csv_ready_timeframe_heatmap_dict["timeframe"][i].replace(" - ", " -\n"))
+                    tmp_dict["percentage on total metadata queries"].\
+                        append(csv_ready_timeframe_heatmap_dict["percentage on total metadata queries"][i])
 
         df = pd.DataFrame(tmp_dict)
 
@@ -493,7 +513,7 @@ def plot_redundant_detection_data_exact():
                             values='percentage on total metadata queries',
                             columns='timeframe', sort = False)
 
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(11, 6))
         tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1)
         tmp.figure.tight_layout()
         #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
