@@ -72,10 +72,8 @@ def start_research_of_query_data(args, x):
     # generate the data
     if args[0] == 1:
         print("Generate the query data.")
-        #transform_data_handler. \
-        #    start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
         transform_data_handler. \
-            start_creating_data(TIMEFRAMES, [DATA_TYPES_RANK])
+            start_creating_data(TIMEFRAMES, [DATA_TYPES_REFERENCE, DATA_TYPES_QUALIFIER, DATA_TYPES_RANK])
 
     # count the amount of queries with and without metadata (overall & per timeframe)
     if args[1] == 1:

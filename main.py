@@ -1,5 +1,12 @@
 import os
 
+import subprocess
+import gzip
+import json
+import csv
+import time
+from urllib.parse import unquote_plus
+
 import wikidata_research.dictionary.txt_to_dict as txt_to_dict
 import wikidata_research.dictionary_evaluation_handler as wikidata_property_dictionary_evaluation_handler
 import utilities.directory_structure_handler as directory_structure_handler
@@ -16,7 +23,6 @@ import graphical_analysis.graphical_analysis_handler as graphical_analysis_handl
 # TODO: Also add in that method, to automatically download the data from the SAPRQL logs
 # TODO: Add references a https://sqid.toolforge.org/#/ to the code
 
-
 def main():
     #directory_structure_handler.create_dir_structure_of_data()
     #directory_structure_handler.delete_identified_scenarios()
@@ -27,6 +33,7 @@ def main():
     #do_query_research_stuff([0,0,0,0,1,0,0], 15)
     #do_query_research_stuff([0,0,0,0,0,0,1], 15)
     #do_query_research_stuff([0,0,1,1,0,1,1], 15)
+    #do_query_research_stuff([1,0,0,0,0,0,0], 15)
 
     # TODO: Check the percentage basis of the graphical analysis! Do they use the overall QUERIES, OCCURRENCES OR SCNEARIOS
     # Also, calculate the examples a bit up and down
@@ -63,7 +70,6 @@ def do_query_research_stuff(args, x):
 
 def analyse_research_stuff(x):
     graphical_analysis_handler.start_graphical_analysis(x)
-
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ import graphical_analysis.query_scenario_additional_layer_analysis as \
     query_scenario_additional_layer_analysis
 import graphical_analysis.query_scenario_operators_analysis as query_scenario_operators_analysis
 import graphical_analysis.query_scenario_additional_operators_analysis as query_scenario_additional_operators_analysis
+import graphical_analysis.WDT_vs_PS_analysis as WDT_as_PS_analysis
 
 
 TIMEFRAMES = [
@@ -76,6 +77,8 @@ DATA_TYPES_RANK = [
 
 
 def start_graphical_analysis(x):
+
+    WDT_as_PS_analysis.plot_WDT_usages_vs_PD_usages()
 
     wikidata_analysis.plot_top_wikidata_research_properties(x)
     wikidata_analysis.plot_top_wikidata_research_accumulated_facets(x)

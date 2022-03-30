@@ -3,8 +3,11 @@ import query_research.transform_data.sparql_to_json_references as sparql_to_json
 import query_research.transform_data.sparql_to_json_qualifiers as sparql_to_json_qualifiers
 import query_research.transform_data.sparql_to_json_ranks as sparql_to_json_ranks
 import query_research.transform_data.sarql_to_json_example_queries as sparql_to_json_example_queries
+import query_research.transform_data.WDT_vs_PS as WDT_vs_PS
 
 def start_creating_data(TIMEFRAMES, LOCATIONS):
+
+    WDT_vs_PS.count_WDT_usage_vs_PS_usage(TIMEFRAMES)
 
     sparql_to_json_example_queries.extract_example_queries("Wikidata_Example_Queries")
 
