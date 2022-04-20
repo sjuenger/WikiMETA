@@ -1,6 +1,6 @@
 import seaborn as sns
 import pandas as pd
-import numpy as nm
+import numpy as np
 import matplotlib.pyplot as plt
 import glob
 import json
@@ -124,143 +124,143 @@ def plot_redundant_detection_data_exact():
 
                     information_dict = json.load(information_data)
 
-                    total_queries += information_dict["Total queries: "]
-                    marked_queries += information_dict["Queries marked: "]
+                    # only include datatypes with at least one query
+                    if information_dict["Total queries: "] > 0:
 
-                    csv_ready_dict_timeframe["queries"].append(information_dict["Total queries: "])
-                    csv_ready_dict_timeframe["total amount or marked"].append("Total Queries")
+                        total_queries += information_dict["Total queries: "]
+                        marked_queries += information_dict["Queries marked: "]
 
-                    csv_ready_dict_timeframe["queries"].append(information_dict["Queries marked: "])
-                    csv_ready_dict_timeframe["total amount or marked"].append("Queries marked")
+                        csv_ready_dict_timeframe["queries"].append(information_dict["Total queries: "])
+                        csv_ready_dict_timeframe["total amount or marked"].append("Total Queries")
 
-
-                    csv_ready_timeframe_heatmap_dict["metadata queries"].\
-                        append( information_dict["Total queries: "] )
-
-                    csv_ready_timeframe_heatmap_dict["total amount or marked"].append("Total Queries")
-
-                    csv_ready_timeframe_heatmap_dict["metadata queries"].\
-                        append( information_dict["Queries marked: "] )
-
-                    csv_ready_timeframe_heatmap_dict["total amount or marked"].append("Queries marked")
-
-                    csv_ready_timeframe_heatmap_dict["timeframe"].append(location[:21].replace("_", " - "))
-                    csv_ready_timeframe_heatmap_dict["timeframe"].append(location[:21].replace("_", " - "))
+                        csv_ready_dict_timeframe["queries"].append(information_dict["Queries marked: "])
+                        csv_ready_dict_timeframe["total amount or marked"].append("Queries marked")
 
 
-                    # format the type a bit nicer
-                    # e.g., rank_metadata/deprecated_rank_+_rank_property -> deprecated rank & rank property
-                    nice_type = type.split("/")[1].replace("_", " ").replace("+", "&")
+                        csv_ready_timeframe_heatmap_dict["metadata queries"].\
+                            append( information_dict["Total queries: "] )
 
-                    csv_ready_dict_timeframe["datatype"].append(nice_type)
-                    csv_ready_dict_timeframe["datatype"].append(nice_type)
+                        csv_ready_timeframe_heatmap_dict["total amount or marked"].append("Total Queries")
 
-                    csv_ready_timeframe_heatmap_dict["datatype"].append(nice_type)
-                    csv_ready_timeframe_heatmap_dict["datatype"].append(nice_type)
+                        csv_ready_timeframe_heatmap_dict["metadata queries"].\
+                            append( information_dict["Queries marked: "] )
 
-                    # extract the metadata
-                    # e.g., rank_metadata/deprecated_rank_+_rank_property -> rank metadata
-                    metadata = type.split("/")[0].replace(" ", "")
+                        csv_ready_timeframe_heatmap_dict["total amount or marked"].append("Queries marked")
 
-                    csv_ready_dict_timeframe["metadata"].append(metadata)
-                    csv_ready_dict_timeframe["metadata"].append(metadata)
-
-                    csv_ready_timeframe_heatmap_dict["metadata"].append(metadata)
-                    csv_ready_timeframe_heatmap_dict["metadata"].append(metadata)
-
-                    # update the overall dict and summarize the timeframe values
-                    if nice_type not in csv_ready_dict_overall["datatype"]:
-                        csv_ready_dict_overall["queries"].append(information_dict["Total queries: "])
-                        csv_ready_dict_overall["total amount or marked"].append("Total Queries")
-
-                        csv_ready_dict_overall["queries"].append(information_dict["Queries marked: "])
-                        csv_ready_dict_overall["total amount or marked"].append("Queries marked")
-
-                        csv_ready_dict_overall["datatype"].append(nice_type)
-                        csv_ready_dict_overall["datatype"].append(nice_type)
-
-                        csv_ready_dict_overall["metadata"].append(metadata)
-                        csv_ready_dict_overall["metadata"].append(metadata)
+                        csv_ready_timeframe_heatmap_dict["timeframe"].append(location[:21].replace("_", " - "))
+                        csv_ready_timeframe_heatmap_dict["timeframe"].append(location[:21].replace("_", " - "))
 
 
-                    else:
-                        csv_ready_dict_overall["queries"][i] += information_dict["Total queries: "]
-                        csv_ready_dict_overall["total amount or marked"][i] = "Total Queries"
+                        # format the type a bit nicer
+                        # e.g., rank_metadata/deprecated_rank_+_rank_property -> deprecated rank & rank property
+                        nice_type = type.split("/")[1].replace("_", " ").replace("+", "&")
 
-                        csv_ready_dict_overall["queries"][i+1] += information_dict["Queries marked: "]
-                        csv_ready_dict_overall["total amount or marked"][i+1] = "Queries marked"
+                        csv_ready_dict_timeframe["datatype"].append(nice_type)
+                        csv_ready_dict_timeframe["datatype"].append(nice_type)
 
-                        csv_ready_dict_overall["datatype"][i] = nice_type
-                        csv_ready_dict_overall["datatype"][i+1] = nice_type
+                        csv_ready_timeframe_heatmap_dict["datatype"].append(nice_type)
+                        csv_ready_timeframe_heatmap_dict["datatype"].append(nice_type)
 
-                        csv_ready_dict_overall["metadata"][i] = metadata
-                        csv_ready_dict_overall["metadata"][i+1] = metadata
+                        # extract the metadata
+                        # e.g., rank_metadata/deprecated_rank_+_rank_property -> rank metadata
+                        metadata = type.split("/")[0].replace(" ", "")
+
+                        csv_ready_dict_timeframe["metadata"].append(metadata)
+                        csv_ready_dict_timeframe["metadata"].append(metadata)
+
+                        csv_ready_timeframe_heatmap_dict["metadata"].append(metadata)
+                        csv_ready_timeframe_heatmap_dict["metadata"].append(metadata)
+
+                        # update the overall dict and summarize the timeframe values
+                        if nice_type not in csv_ready_dict_overall["datatype"]:
+                            csv_ready_dict_overall["queries"].append(information_dict["Total queries: "])
+                            csv_ready_dict_overall["total amount or marked"].append("Total Queries")
+
+                            csv_ready_dict_overall["queries"].append(information_dict["Queries marked: "])
+                            csv_ready_dict_overall["total amount or marked"].append("Queries marked")
+
+                            csv_ready_dict_overall["datatype"].append(nice_type)
+                            csv_ready_dict_overall["datatype"].append(nice_type)
+
+                            csv_ready_dict_overall["metadata"].append(metadata)
+                            csv_ready_dict_overall["metadata"].append(metadata)
 
 
+                        else:
+                            csv_ready_dict_overall["queries"][i] += information_dict["Total queries: "]
+                            csv_ready_dict_overall["total amount or marked"][i] = "Total Queries"
 
-                    # update the overall dict to narrow it down to one type
-                    if len(csv_ready_dict_overall_one_type["queries"]) == 0:
-                        csv_ready_dict_overall_one_type["queries"].append(information_dict["Total queries: "])
-                        csv_ready_dict_overall_one_type["total amount or marked"].append("Total Queries")
+                            csv_ready_dict_overall["queries"][i+1] += information_dict["Queries marked: "]
+                            csv_ready_dict_overall["total amount or marked"][i+1] = "Queries marked"
 
-                        csv_ready_dict_overall_one_type["queries"].append(information_dict["Queries marked: "])
-                        csv_ready_dict_overall_one_type["total amount or marked"].append("Queries marked")
+                            csv_ready_dict_overall["datatype"][i] = nice_type
+                            csv_ready_dict_overall["datatype"][i+1] = nice_type
 
-                        csv_ready_dict_overall_one_type["datatype"].append(nice_type)
-                        csv_ready_dict_overall_one_type["datatype"].append(nice_type)
-
-                        csv_ready_dict_overall_one_type["metadata"].append(metadata)
-                        csv_ready_dict_overall_one_type["metadata"].append(metadata)
+                            csv_ready_dict_overall["metadata"][i] = metadata
+                            csv_ready_dict_overall["metadata"][i+1] = metadata
 
 
 
-                    else:
-                        csv_ready_dict_overall_one_type["queries"][0] += information_dict["Total queries: "]
-                        csv_ready_dict_overall_one_type["total amount or marked"][0] = "Total Queries"
+                        # update the overall dict to narrow it down to one type
+                        if len(csv_ready_dict_overall_one_type["queries"]) == 0:
+                            csv_ready_dict_overall_one_type["queries"].append(information_dict["Total queries: "])
+                            csv_ready_dict_overall_one_type["total amount or marked"].append("Total Queries")
 
-                        csv_ready_dict_overall_one_type["queries"][1] += information_dict["Queries marked: "]
-                        csv_ready_dict_overall_one_type["total amount or marked"][1] = "Queries marked"
+                            csv_ready_dict_overall_one_type["queries"].append(information_dict["Queries marked: "])
+                            csv_ready_dict_overall_one_type["total amount or marked"].append("Queries marked")
 
-                        csv_ready_dict_overall_one_type["datatype"][0] = metadata
-                        csv_ready_dict_overall_one_type["datatype"][1] = metadata
+                            csv_ready_dict_overall_one_type["datatype"].append(nice_type)
+                            csv_ready_dict_overall_one_type["datatype"].append(nice_type)
 
-                        csv_ready_dict_overall_one_type["metadata"][0] = metadata
-                        csv_ready_dict_overall_one_type["metadata"][1] = metadata
-
-
-
-                    # update the overall dict to narrow it down to one type per timeframe
-                    if len(csv_ready_dict_timeframe_one_type["queries"]) == 0:
-                        csv_ready_dict_timeframe_one_type["queries"].append(information_dict["Total queries: "])
-                        csv_ready_dict_timeframe_one_type["total amount or marked"].append("Total Queries")
-
-                        csv_ready_dict_timeframe_one_type["queries"].append(information_dict["Queries marked: "])
-                        csv_ready_dict_timeframe_one_type["total amount or marked"].append("Queries marked")
-
-                        csv_ready_dict_timeframe_one_type["datatype"].append(nice_type)
-                        csv_ready_dict_timeframe_one_type["datatype"].append(nice_type)
-
-                        csv_ready_dict_timeframe_one_type["metadata"].append(metadata)
-                        csv_ready_dict_timeframe_one_type["metadata"].append(metadata)
-
-
-                    else:
-                        csv_ready_dict_timeframe_one_type["queries"][0] += information_dict["Total queries: "]
-                        csv_ready_dict_timeframe_one_type["total amount or marked"][0] = "Total Queries"
-
-                        csv_ready_dict_timeframe_one_type["queries"][1] += information_dict["Queries marked: "]
-                        csv_ready_dict_timeframe_one_type["total amount or marked"][1] = "Queries marked"
-
-                        csv_ready_dict_timeframe_one_type["datatype"][0] = metadata
-                        csv_ready_dict_timeframe_one_type["datatype"][1] = metadata
-
-                        csv_ready_dict_timeframe_one_type["metadata"][0] = metadata
-                        csv_ready_dict_timeframe_one_type["metadata"][1] = metadata
+                            csv_ready_dict_overall_one_type["metadata"].append(metadata)
+                            csv_ready_dict_overall_one_type["metadata"].append(metadata)
 
 
 
+                        else:
+                            csv_ready_dict_overall_one_type["queries"][0] += information_dict["Total queries: "]
+                            csv_ready_dict_overall_one_type["total amount or marked"][0] = "Total Queries"
 
-                i += 2
+                            csv_ready_dict_overall_one_type["queries"][1] += information_dict["Queries marked: "]
+                            csv_ready_dict_overall_one_type["total amount or marked"][1] = "Queries marked"
+
+                            csv_ready_dict_overall_one_type["datatype"][0] = metadata
+                            csv_ready_dict_overall_one_type["datatype"][1] = metadata
+
+                            csv_ready_dict_overall_one_type["metadata"][0] = metadata
+                            csv_ready_dict_overall_one_type["metadata"][1] = metadata
+
+
+
+                        # update the overall dict to narrow it down to one type per timeframe
+                        if len(csv_ready_dict_timeframe_one_type["queries"]) == 0:
+                            csv_ready_dict_timeframe_one_type["queries"].append(information_dict["Total queries: "])
+                            csv_ready_dict_timeframe_one_type["total amount or marked"].append("Total Queries")
+
+                            csv_ready_dict_timeframe_one_type["queries"].append(information_dict["Queries marked: "])
+                            csv_ready_dict_timeframe_one_type["total amount or marked"].append("Queries marked")
+
+                            csv_ready_dict_timeframe_one_type["datatype"].append(nice_type)
+                            csv_ready_dict_timeframe_one_type["datatype"].append(nice_type)
+
+                            csv_ready_dict_timeframe_one_type["metadata"].append(metadata)
+                            csv_ready_dict_timeframe_one_type["metadata"].append(metadata)
+
+
+                        else:
+                            csv_ready_dict_timeframe_one_type["queries"][0] += information_dict["Total queries: "]
+                            csv_ready_dict_timeframe_one_type["total amount or marked"][0] = "Total Queries"
+
+                            csv_ready_dict_timeframe_one_type["queries"][1] += information_dict["Queries marked: "]
+                            csv_ready_dict_timeframe_one_type["total amount or marked"][1] = "Queries marked"
+
+                            csv_ready_dict_timeframe_one_type["datatype"][0] = metadata
+                            csv_ready_dict_timeframe_one_type["datatype"][1] = metadata
+
+                            csv_ready_dict_timeframe_one_type["metadata"][0] = metadata
+                            csv_ready_dict_timeframe_one_type["metadata"][1] = metadata
+
+                        i += 2
 
             # insert the percentage information for the test dict with the help of the dict per metadata per timeframe
             for index in range(len(csv_ready_timeframe_heatmap_dict["timeframe"])):
@@ -338,7 +338,7 @@ def plot_redundant_detection_data_exact():
             color_list = [color_list[3], color_list[2]]
             tmp = sns.catplot(x="datatype", y="queries", kind="bar",
                               palette=color_list, hue="total amount or marked",
-                              dodge=True, col="metadata", aspect=1.5, data=df)
+                              dodge=True, col="metadata", aspect=1.5, data=df, sharex=False, ci=None)
 
             plt.gcf().autofmt_xdate()
 
@@ -354,7 +354,7 @@ def plot_redundant_detection_data_exact():
             color_list = [color_list[7], color_list[6]]
             tmp = sns.catplot(x="datatype", y="queries", kind="bar",
                               palette=color_list, hue="total amount or marked",
-                              dodge=True, col="metadata", data=df)
+                              dodge=True, col="metadata", data=df, ci=None)
 
             plt.gcf().autofmt_xdate()
 
