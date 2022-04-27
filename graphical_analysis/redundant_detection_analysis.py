@@ -187,6 +187,8 @@ def plot_redundant_detection_data_exact():
 
 
                         else:
+                            i = csv_ready_dict_overall["datatype"].index(nice_type)
+
                             csv_ready_dict_overall["queries"][i] += information_dict["Total queries: "]
                             csv_ready_dict_overall["total amount or marked"][i] = "Total Queries"
 
@@ -260,7 +262,6 @@ def plot_redundant_detection_data_exact():
                             csv_ready_dict_timeframe_one_type["metadata"][0] = metadata
                             csv_ready_dict_timeframe_one_type["metadata"][1] = metadata
 
-                        i += 2
 
             # insert the percentage information for the test dict with the help of the dict per metadata per timeframe
             for index in range(len(csv_ready_timeframe_heatmap_dict["timeframe"])):
