@@ -14,8 +14,11 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
 
     result_dict = {}
     result_dict["real_wikidata_properties"] = {}
+    result_dict["total_real_wikidata_property_usages"] = 0
     # in case, someone used a property, e.g. "P969", which is not a property anywhere to be found in Wikidata
     result_dict["false_wikidata_properties"] = {}
+    result_dict["total_false_wikidata_property_usages"] = 0
+    result_dict["unique_false_wikidata_property_usages"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
                                    + redundant_mode + "/" + mode + "/raw_counted_properties/properties_counted.json"
@@ -34,13 +37,15 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
                 # ..  all of the properties, that could have been available at the time the query was prompted,
                 # .. because, the data from SQID was extracted in 2022 and the queries are from 2017-2018
                 #
-                # of cours, someone might just accidentally chose a property PID, that was false in 2017-2018
+                # of course, someone might just accidentally chose a property PID, that was false in 2017-2018
                 # .. but is in fact a property in 2022.
                 # But, as far as I see this case, this problem is too hard to solve and will not have any significant
                 # .. effect on the results of my analysis
                 if(PID not in wikidata_props):
                     result_dict["false_wikidata_properties"][PID] = {}
                     result_dict["false_wikidata_properties"][PID]["occurrences"] = stat_info["properties"][PID]
+                    result_dict["total_false_wikidata_property_usages"] += stat_info["properties"][PID]
+                    result_dict["unique_false_wikidata_property_usages"] += 1
                 else:
                     result_dict["real_wikidata_properties"][PID] = {}
                     result_dict["real_wikidata_properties"][PID]["occurrences"] = stat_info["properties"][PID]
@@ -49,6 +54,7 @@ def create_dict_based_on_properties_dict_timeframe_and_Wikidata_property_dict_pe
                     result_dict["real_wikidata_properties"][PID]["datatype"] = wikidata_props[PID]["datatype"]
                     result_dict["real_wikidata_properties"][PID]["is_reference"] = wikidata_props[PID]["is_reference"]
                     result_dict["real_wikidata_properties"][PID]["qualifier_class"] = wikidata_props[PID]["qualifier_class"]
+                    result_dict["total_real_wikidata_property_usages"] += stat_info["properties"][PID]
 
 
     path_to_output = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \

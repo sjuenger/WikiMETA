@@ -207,36 +207,44 @@ def plot_top_properties_overall_percentage(metadata_mode, recommended_mode, x):
                                 "non_redundant/" + metadata_mode + "/" + \
                                 recommended_mode + "/properties/top_" + str(x) + "_properties.json")
 
+    overall_query_numbers_path = "data/statistical_information/query_research/" + \
+                                "non_redundant/" + metadata_mode + "/" + \
+                                "all" + "/properties/top_" + str(x) + "_properties.json"
+
     with open(timeframe_files[0], "r") as timeframe_data:
-        # order the timeframe dict, so that the most used properties are in front
-        timeframe_dict = json.load(timeframe_data)
-        timeframe_dict["properties"] = \
-        collections.OrderedDict(
-            sorted(timeframe_dict["properties"].items(), key = lambda item: int(item[1])))
+        with open(overall_query_numbers_path, "r") as overall_query_data:
 
-        PID_to_facets_path = "data/property_dictionary.json"
+            overall_property_dict = json.load(overall_query_data)
 
-        with open(PID_to_facets_path, "r") as PID_to_facets_data:
-            PID_to_facets_dict = json.load(PID_to_facets_data)
+            # order the timeframe dict, so that the most used properties are in front
+            timeframe_dict = json.load(timeframe_data)
+            timeframe_dict["properties"] = \
+            collections.OrderedDict(
+                sorted(timeframe_dict["properties"].items(), key = lambda item: int(item[1])))
 
-            for PID in timeframe_dict["properties"]:
-                csv_ready_properties_dict["label"].append(
-                    PID_to_facets_dict[PID]["label"])
-                csv_ready_properties_dict["properties percentages"].append(
-                    timeframe_dict["properties"][PID] / timeframe_dict["total_properties"])
+            PID_to_facets_path = "data/property_dictionary.json"
 
-                csv_ready_properties_dict["is reference"].append(
-                    PID_to_facets_dict[PID]["is_reference"])
+            with open(PID_to_facets_path, "r") as PID_to_facets_data:
+                PID_to_facets_dict = json.load(PID_to_facets_data)
 
-                if PID_to_facets_dict[PID] \
-                        ["qualifier_class"] != []:
-                    csv_ready_properties_dict["qualifier class"].append(str(
-                        PID_to_facets_dict[PID]["qualifier_class"]).replace(",", ",\n").replace(")", ")\n"))
-                else:
-                    csv_ready_properties_dict["qualifier class"]. \
-                        append("- not a recommended qualifier -")
+                for PID in timeframe_dict["properties"]:
+                    csv_ready_properties_dict["label"].append(
+                        PID_to_facets_dict[PID]["label"])
+                    csv_ready_properties_dict["properties percentages"].append(
+                        timeframe_dict["properties"][PID] / overall_property_dict["total_properties"])
 
-                csv_ready_properties_dict["recommended mode"].append(recommended_mode)
+                    csv_ready_properties_dict["is reference"].append(
+                        PID_to_facets_dict[PID]["is_reference"])
+
+                    if PID_to_facets_dict[PID] \
+                            ["qualifier_class"] != []:
+                        csv_ready_properties_dict["qualifier class"].append(str(
+                            PID_to_facets_dict[PID]["qualifier_class"]).replace(",", ",\n").replace(")", ")\n"))
+                    else:
+                        csv_ready_properties_dict["qualifier class"]. \
+                            append("- not a recommended qualifier -")
+
+                    csv_ready_properties_dict["recommended mode"].append(recommended_mode)
 
 
     df = pd.DataFrame(csv_ready_properties_dict)

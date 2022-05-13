@@ -216,7 +216,7 @@ def plot_additional_second_level_operator_information_about_scenarios_per_dataty
                         columns='datatype', sort=True)
 
     mask = (df == 0)
-    fig, ax = plt.subplots(figsize=(6, 5))
+    fig, ax = plt.subplots(figsize=(6, 6))
 
     tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="Greys",
                       linewidths=.5)

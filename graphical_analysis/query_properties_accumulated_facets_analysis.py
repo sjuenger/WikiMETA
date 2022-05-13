@@ -125,18 +125,26 @@ def plot_top_accumulated_facets_overall_percentage(metadata_mode ,recommended_mo
                                 recommended_mode + "/accumulated_facets" +
                                 "/top_" + str(x) + "_accumulated_facets.json")
 
-    with open(timeframe_files[0], "r") as timeframe_data:
-        # order the timeframe dict, so that the most used facets are in front
-        timeframe_dict = json.load(timeframe_data)
-        timeframe_dict["facets"] = \
-        collections.OrderedDict(
-            sorted(timeframe_dict["facets"].items(), key = lambda item: int(item[1])))
+    overall_query_data_path = "data/statistical_information/query_research/" + \
+                                "non_redundant/" + metadata_mode + "/" + \
+                                "all" + "/accumulated_facets" + \
+                                "/top_" + str(x) + "_accumulated_facets.json"
 
-        for ID in timeframe_dict["facets"]:
-            csv_ready_facets_dict["labels"].append(ID)
-            csv_ready_facets_dict["facets percentages"].append(
-                timeframe_dict["facets"][ID] / timeframe_dict["total_accumulated_facets"])
-            csv_ready_facets_dict["recommended mode"].append(recommended_mode)
+    with open(timeframe_files[0], "r") as timeframe_data:
+        with open(overall_query_data_path, "r") as overall_query_data:
+            overall_query_dict = json.load(overall_query_data)
+
+            # order the timeframe dict, so that the most used facets are in front
+            timeframe_dict = json.load(timeframe_data)
+            timeframe_dict["facets"] = \
+            collections.OrderedDict(
+                sorted(timeframe_dict["facets"].items(), key = lambda item: int(item[1])))
+
+            for ID in timeframe_dict["facets"]:
+                csv_ready_facets_dict["labels"].append(ID)
+                csv_ready_facets_dict["facets percentages"].append(
+                    timeframe_dict["facets"][ID] / overall_query_dict["total_accumulated_facets"])
+                csv_ready_facets_dict["recommended mode"].append(recommended_mode)
 
 
     df = pd.DataFrame(csv_ready_facets_dict)

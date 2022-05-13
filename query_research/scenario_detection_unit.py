@@ -79,6 +79,8 @@ def detect_scenarios(location, data_type, redundant_mode):
     total_CONSTRUCT_queries = 0
     total_ASK_queries = 0
 
+    total_metadata_found_in_SELECT_SPARQL_expression = 0
+
     # a scenario fora non-recognized scenario
 
     # to check for the type of the SPARQL query (SELECT, DESCRIBE, ASK, CONSTRUCT)
@@ -146,6 +148,7 @@ def detect_scenarios(location, data_type, redundant_mode):
                     json_object = json.load(json_data)
                     # only apply the scenarios to SELECT queries
                     if json_object["queryType"] == "SELECT":
+
                         # the path to the sparql text file (corresponding to the json object
                         # to later be able to copy the sparql text file to a specific directors (for debugging)
                         # data/2017-06-12_2017-07-09/Organic/Reference_Metadata/Derived_+_Reference_Property/182150 2017-07-07 19:06:30.json
@@ -214,6 +217,12 @@ def detect_scenarios(location, data_type, redundant_mode):
 
 
                         for looking_for in looking_for_list:
+
+                            total_metadata_found_in_SELECT_SPARQL_expression += str(json_object["variables"]).count(looking_for)
+                            if str(json_object["variables"]).count(looking_for) > 0:
+                                print(json_data.name)
+
+
                             # variable to count the found scenarios
                             scenario_count = 0
 
@@ -643,6 +652,9 @@ def detect_scenarios(location, data_type, redundant_mode):
 
         # attach the dictionary for looking for to the dictionary for the whole data type
         dict_overview_looking_for["list_per_search"].append(dict_looking_for)
+
+    if total_metadata_found_in_SELECT_SPARQL_expression > 0:
+        print("Found metadata signs inside a SPARQL SELECT expressions: ", total_metadata_found_in_SELECT_SPARQL_expression)
 
     scenario_dict = {
         "data_type": data_type,

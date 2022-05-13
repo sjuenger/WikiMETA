@@ -447,16 +447,30 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
     result_dict["total_properties"] = 0
     result_dict["unique_properties"] = 0
 
+
     props_dict = {}
     props_dict["properties"] = {}
     props_dict["total_properties"] = 0
     props_dict["unique_properties"] = 0
+
+
+    if recommended is None:
+        result_dict["total_false_properties"] = 0
+        result_dict["unique_false_properties"] = 0
+        props_dict["total_false_properties"] = 0
+        props_dict["unique_false_properties"] = 0
+
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
                                    + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
 
     with open(path_to_stat_information, "r") as summarized_data:
         summarized_dict = json.load(summarized_data)
+
+        # only display the total false properties on the "ALL" properties
+        if recommended is None:
+            props_dict["total_false_properties"] = summarized_dict["total_false_wikidata_property_usages"]
+            props_dict["unique_false_properties"] = summarized_dict["unique_false_wikidata_property_usages"]
 
         for PID in summarized_dict["real_wikidata_properties"]:
 
@@ -511,6 +525,11 @@ def get_top_x_counted_properties_timeframe(location, x, mode, recommended = None
 
     result_dict["unique_properties"] = props_dict["unique_properties"]
     result_dict["total_properties"] = props_dict["total_properties"]
+
+    # only display the total false properties on the "ALL" properties
+    if recommended is None:
+        result_dict["total_false_properties"] = props_dict["total_false_properties"]
+        result_dict["unique_false_properties"] = props_dict["unique_false_properties"]
 
     if recommended:
         tmp_string = "/recommended"
@@ -589,11 +608,13 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None, re
     result_dict["facets"] = {}
     result_dict["total_facet"] = 0
     result_dict["unique_facets"] = 0
+    result_dict["properties_without_facets"] = 0
 
     facet_dict = {}
     facet_dict["facets"] = {}
     facet_dict["total_facets"] = 0
     facet_dict["unique_facets"] = 0
+    facet_dict["properties_without_facets"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
                                    + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
@@ -651,8 +672,19 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None, re
                         facet_dict["facets"][facet] += 1
                         facet_dict["total_facets"] += 1
 
+                # if the property does not have any facet superclasses, count the property usage by itself
+                if len(summarized_dict["real_wikidata_properties"][PID]["facets"]) == 0:
+
+                    if PID not in facet_dict["facets"]:
+                        facet_dict["facets"][PID] = 1
+                        facet_dict["properties_without_facets"] += 1
+                    else:
+                        facet_dict["facets"][PID] += 1
+                        facet_dict["properties_without_facets"] += 1
+
         result_dict["unique_facets"] = facet_dict["unique_facets"]
         result_dict["total_facet"] = facet_dict["total_facets"]
+        result_dict["properties_without_facets"] = facet_dict["properties_without_facets"]
 
         if recommended:
             tmp_string = "/recommended"
@@ -662,7 +694,7 @@ def get_top_x_counted_facets_timeframe(location, x, mode, recommended = None, re
             tmp_string = "/all"
 
         path_to_facet_stat_information = \
-            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode   \
+            "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" + redundant_mode + "/" + mode\
             + tmp_string + "/facets/facets.json"
 
         with open(path_to_facet_stat_information, "w") as result_data:
@@ -859,11 +891,15 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
     result_dict["facets"] = {}
     result_dict["total_accumulated_facet"] = 0
     result_dict["unique_facets"] = 0
+    result_dict["properties_without_facets"] = 0
+    result_dict["properties_without_facets_accumulated"] = 0
 
     facet_dict = {}
     facet_dict["facets"] = {}
     facet_dict["total_accumulated_facets"] = 0
     facet_dict["unique_facets"] = 0
+    facet_dict["properties_without_facets"] = 0
+    facet_dict["properties_without_facets_accumulated"] = 0
 
     path_to_stat_information = "data/" + location[:21] + "/" + location[22:] + "/statistical_information/" \
                                    + redundant_mode + "/" + mode + "/raw_counted_properties/properties_facets_and_datatypes.json"
@@ -925,8 +961,23 @@ def get_top_x_counted_accumulated_facets_timeframe(location, x, mode, recommende
                         facet_dict["total_accumulated_facets"] += \
                             summarized_dict["real_wikidata_properties"][PID]["occurrences"]
 
+                # if the property does not have any facet superclasses, count the property usage by itself
+                if len(summarized_dict["real_wikidata_properties"][PID]["facets"]) == 0:
+
+                    if PID not in facet_dict["facets"]:
+                        facet_dict["facets"][PID] = summarized_dict["real_wikidata_properties"][PID]["occurrences"]
+                        facet_dict["properties_without_facets"] += 1
+                        facet_dict["properties_without_facets_accumulated"] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
+                    else:
+                        facet_dict["facets"][PID] += summarized_dict["real_wikidata_properties"][PID]["occurrences"]
+                        facet_dict["properties_without_facets_accumulated"] += \
+                            summarized_dict["real_wikidata_properties"][PID]["occurrences"]
+
         result_dict["unique_facets"] = facet_dict["unique_facets"]
         result_dict["total_accumulated_facet"] = facet_dict["total_accumulated_facets"]
+        result_dict["properties_without_facets"] = facet_dict["properties_without_facets"]
+        result_dict["properties_without_facets_accumulated"] = facet_dict["properties_without_facets_accumulated"]
 
         if recommended:
             tmp_string = "/recommended"
@@ -1146,6 +1197,12 @@ def summarize_timeframe_information_about_properties_and_get_top_x(x, locations,
     result_dict["total_properties"] = 0
     result_dict["unique_properties"] = 0
 
+    # only display the total false properties on the "ALL" properties
+    if recommended_mode is None:
+        props_dict["total_false_properties"] = 0
+        result_dict["total_false_properties"] = 0
+
+
     for location in locations:
 
         if recommended_mode:
@@ -1164,6 +1221,10 @@ def summarize_timeframe_information_about_properties_and_get_top_x(x, locations,
             timeframe_dict = json.load(timeframe_data)
 
             props_dict["total_properties"] += timeframe_dict["total_properties"]
+
+            # only display the total false properties on the "ALL" properties
+            if recommended_mode is None:
+                props_dict["total_false_properties"] += timeframe_dict["total_false_properties"]
 
             for PID in timeframe_dict["properties"]:
 
@@ -1191,6 +1252,10 @@ def summarize_timeframe_information_about_properties_and_get_top_x(x, locations,
 
     result_dict["total_properties"] = props_dict["total_properties"]
     result_dict["unique_properties"] = props_dict["unique_properties"]
+
+    # only display the total false properties on the "ALL" properties
+    if recommended_mode is None:
+        result_dict["total_false_properties"] = props_dict["total_false_properties"]
 
     # get the top x properties in the ormer created dictionary
     for property in props_dict["properties"]:
@@ -1363,6 +1428,7 @@ def summarize_timeframe_information_about_datatypes(locations, mode, recommended
     result_dict["total_datatypes"] = 0
     result_dict["unique_datatypes"] = 0
 
+
     for location in locations:
 
         if recommended_mode:
@@ -1427,11 +1493,13 @@ def summarize_timeframe_information_about_accumulated_facets_and_get_top_x(x, lo
     facets_dict["facets"] = {}
     facets_dict["total_accumulated_facets"] = 0
     facets_dict["unique_facets"] = 0
+    facets_dict["properties_without_facets_accumulated"] = 0
 
     result_dict = {}
     result_dict["facets"] = {}
     result_dict["total_accumulated_facets"] = 0
     result_dict["unique_facets"] = 0
+    result_dict["properties_without_facets_accumulated"] = 0
 
     for location in locations:
 
@@ -1451,6 +1519,7 @@ def summarize_timeframe_information_about_accumulated_facets_and_get_top_x(x, lo
             timeframe_dict = json.load(timeframe_data)
 
             facets_dict["total_accumulated_facets"] += timeframe_dict["total_accumulated_facets"]
+            facets_dict["properties_without_facets_accumulated"] += timeframe_dict["properties_without_facets_accumulated"]
 
             for facet in timeframe_dict["facets"]:
 
@@ -1478,6 +1547,7 @@ def summarize_timeframe_information_about_accumulated_facets_and_get_top_x(x, lo
 
     result_dict["total_accumulated_facets"] = facets_dict["total_accumulated_facets"]
     result_dict["unique_facets"] = facets_dict["unique_facets"]
+    result_dict["properties_without_facets_accumulated"] = facets_dict["properties_without_facets_accumulated"]
 
     # get the top x accumulated facets in the former created dictionary
     for facet in facets_dict["facets"]:
