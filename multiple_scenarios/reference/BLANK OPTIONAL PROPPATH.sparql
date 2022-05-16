@@ -1,0 +1,24 @@
+SELECT ?var1 (  GROUP_CONCAT (  ?var2Label ; SEPARATOR =  " / " )  AS  ?var3  ) ?var4 (  GROUP_CONCAT (  ?var5Label ; SEPARATOR =  " / " )  AS  ?var6  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/P40>  [  <http://www.wikidata.org/prop/statement/P40>  ?var4 ;
+( <http://www.w3.org/ns/prov#wasDerivedFrom> / <http://www.wikidata.org/prop/reference/P248> /( <http://www.wikidata.org/prop/direct/P361> | <http://www.wikidata.org/prop/direct/P179> )+) <http://www.wikidata.org/entity/Q83367>  ] .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/P460>  [ ( <http://www.w3.org/ns/prov#wasDerivedFrom> / <http://www.wikidata.org/prop/reference/P248> / <http://www.wikidata.org/prop/direct/P50> ) <http://www.wikidata.org/entity/Q26456> ;
+ <http://www.wikidata.org/prop/statement/P460>  ?var2  ] .
+ }
+ OPTIONAL {
+  ?var1  <https://query.wikidata.org/bigdata/namespace/wdq/foo> ? ?var2 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "he".
+  }
+}
+GROUP BY  ?var1  ?var4 
+
+
+Detected a difference between the number of detected scenarios and found metadata in the query.
+one:  0 two:  0 three:  0 4:  0 5:  0 6:  0 7:  0 8:  0 9:  0 10:  0 11:  0 12:  0 
+ bind:  0 blank:  1 filter:  0 group:  0 literal:  0 
+ minus:  0 optional:  1 prop_path:  1 subselect:  0 union:  0 values:  0 service:  0 other:  0
+2
+data/2017-07-10_2017-08-06/organic/reference_metadata/derived_+_reference_property/x 52059 2017-07-18 02:55:39.json

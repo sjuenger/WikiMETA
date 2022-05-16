@@ -1,0 +1,34 @@
+SELECT ?var1  ?var2  ?var1Label 
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q11424> .
+  ?var1  <http://www.wikidata.org/prop/P577>  ?var3 .
+  ?var3 ( <http://www.wikidata.org/prop/statement/value/P577> / <http://wikiba.se/ontology#timePrecision> ) "11"^^<http://www.w3.org/2001/XMLSchema#integer> .
+  ?var3  <http://www.wikidata.org/prop/statement/P577>  ?var2 .
+ FILTER (  ( (  YEAR (  ?var2  )  = "2011"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+  ?var3  <http://www.wikidata.org/prop/qualifier/P291>  <http://www.wikidata.org/entity/Q183> .
+ FILTER (  (  NOT EXISTS  {
+   ?var3  <http://wikiba.se/ontology#rank>  <http://wikiba.se/ontology#DeprecatedRank> .
+ }
+ ) 
+) .
+ FILTER (  (  NOT EXISTS  {
+   ?var3  <http://www.wikidata.org/prop/qualifier/P400>  ?var4 .
+ }
+ ) 
+) .
+ FILTER (  (  NOT EXISTS  {
+   ?var3  <http://www.wikidata.org/prop/qualifier/P437>  ?var5 .
+ }
+ ) 
+) .
+ FILTER (  (  NOT EXISTS  {
+   ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q506240> .
+ }
+ ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "de".
+  }
+}
+ORDER BY ASC( ?var2 )ASC( ?var1Label )

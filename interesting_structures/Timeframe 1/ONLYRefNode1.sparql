@@ -1,0 +1,9 @@
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  ?var2  <http://www.wikidata.org/reference/0b1317d88f3e23f552ee804b79987760961819a0> .
+}
+
+Nachschauen, ob es ÜBREHAUPT andere hiervon gibt
+--> User Agent
+---> Timeframe
+--> Usw.

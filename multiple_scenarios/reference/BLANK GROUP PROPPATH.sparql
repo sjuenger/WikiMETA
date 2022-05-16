@@ -1,0 +1,34 @@
+SELECT ?var1 (  GROUP_CONCAT (  DISTINCT  ?var2Label ; SEPARATOR =  " / " )  AS  ?var1Label  ) ?var3 (  GROUP_CONCAT (  DISTINCT  ?var4Label ; SEPARATOR =  " / " )  AS  ?var3Label  )
+WHERE {
+  ?var5  <http://www.wikidata.org/prop/P40>  [  <http://www.wikidata.org/prop/statement/P40>  ?var6 ;
+( <http://www.w3.org/ns/prov#wasDerivedFrom> / <http://www.wikidata.org/prop/reference/P248> /( <http://www.wikidata.org/prop/direct/P361> | <http://www.wikidata.org/prop/direct/P179> )+) <http://www.wikidata.org/entity/Q83367>  ] .
+ {
+  {
+    BIND (  IF ( (  ?var7  >  ?var8  ), ?var4 , ?var6  )  AS  ?var3 ).
+    ?var6  <http://www.wikidata.org/prop/P460>  [ ( <http://www.w3.org/ns/prov#wasDerivedFrom> / <http://www.wikidata.org/prop/reference/P248> / <http://www.wikidata.org/prop/direct/P50> ) <http://www.wikidata.org/entity/Q26456> ;
+ <http://www.wikidata.org/prop/statement/P460>  ?var4  ] .
+    ?var6  <http://wikiba.se/ontology#sitelinks>  ?var8 .
+    ?var4  <http://wikiba.se/ontology#sitelinks>  ?var7 .
+    ?var4  <http://www.w3.org/2000/01/rdf-schema#label>  ?var4Label .
+ FILTER (    ( (  LANG (  ?var4Label  )  =  "he" ) ) 
+) .
+  }
+   UNION
+  {
+    ?var6  <https://query.wikidata.org/bigdata/namespace/wdq/foo> ? ?var3 .
+    ?var6  <http://www.w3.org/2000/01/rdf-schema#label>  ?var4Label .
+ FILTER (    ( (  LANG (  ?var4Label  )  =  "he" ) ) 
+) .
+  }
+ }
+}
+GROUP BY  ?var1  ?var3 
+
+
+Detected a difference between the number of detected scenarios and found metadata in the query.
+one:  0 two:  0 three:  0 4:  0 5:  0 6:  0 7:  0 8:  0 9:  0 10:  0 11:  0 12:  0 
+ bind:  0 blank:  1 filter:  0 group:  1 literal:  0 
+ minus:  0 optional:  0 prop_path:  1 subselect:  0 union:  0 values:  0 service:  0 other:  0
+2
+data/2017-07-10_2017-08-06/organic/reference_metadata/derived_+_reference_property/52209 2017-07-18 03:54:05.json
+

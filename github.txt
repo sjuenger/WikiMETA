@@ -1,0 +1,33 @@
+SQID Website: 9515
+(07.01.2022 -> based on Property data refresh	1/7/2022, 3:12:09 PM)
+Wikidata: 9520
+(07.01.2022)
+
+No "stated IN" in SQID
+No "retrieved"
+Missing:
+In References:
+stated in	P248	Item
+retrieved	P813	Point in time	date or point in time that information was retrieved from a database or website (for use in online sources)		-
+reference URL	P854	URL
+
+(neu)
+author name string	P2093	String
+
+in Qualifier List wurde >50 nicht gefunden auf SQID
+
+----> Idee: Es gibt die properties in der Liste nicht, die besonders of in statements oder als reference genutzt werden:)
+Qualifiers:
+instance of	P31	Item
+select (COUNT (?s) AS ?value)
+where {?s pq:P31 ?o}
+-----> 119662 (07.01.2022 15:38)
+series ordinal	P1545	String
+	
+Total	157,478,555	
+Main statement	147,366	<0.1% of uses
+Qualifier	157,330,228	>99.9% of uses
+Reference	961	<0.1% of uses
+von https://www.wikidata.org/wiki/Property_talk:P1545#Documentation
+
+YES :) Das war es. Jetzt nur noch herausfinden, welche Values die haben.

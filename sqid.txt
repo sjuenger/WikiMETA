@@ -1,0 +1,53 @@
+PID:  P248
+Label:  stated in
+Datatype:  WikibaseItem
+Facets found:  ['Wikipedia:Citing sources']
+Total amount of references found:  44
+Total amount of qualifiers found:  301
+Total amount of properties:  9543
+
+
+PID:  P813
+Label:  retrieved
+Datatype:  Time
+Facets found:  ['Wikipedia:Citing sources', 'chronology', 'time', 'duration']
+Total amount of references found:  45
+Total amount of qualifiers found:  301
+Total amount of properties:  9544
+
+
+PID:  P854
+Label:  reference URL
+Datatype:  URL
+Facets found:  ['Wikipedia:Citing sources']
+Total amount of references found:  46
+Total amount of qualifiers found:  301
+Total amount of properties:  9545
+
+
+PID:  P2093
+Label:  author name string
+Datatype:  String
+Facets found:  ['Wikipedia:Citing sources', 'work', 'version, edition, or translation']
+Total amount of references found:  47
+Total amount of qualifiers found:  301
+Total amount of properties:  9546
+
+
+PID:  P31
+Label:  instance of
+Datatype:  WikibaseItem
+Facets found:  ['semantics', 'causality', 'object', 'intellectual work', 'intellectual property', 'ontology', 'classification system', 'ontology language', 'Commons:Depicts']
+Total amount of references found:  47
+Total amount of qualifiers found:  302
+Total amount of properties:  9547
+
+
+PID:  P1545
+Label:  series ordinal
+Datatype:  String
+Facets found:  ['causality', 'intellectual work', 'unique identifier', 'Commons:Depicts']
+Total amount of references found:  47
+Total amount of qualifiers found:  303
+Total amount of properties:  9548
+

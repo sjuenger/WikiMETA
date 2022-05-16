@@ -17,20 +17,20 @@
 # look_for e.g. "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 import query_research.scenario_detection_unit as scenario_detection_unit
-import query_research.scenarios.scenario_1_detection as scenario_one_detection
-import query_research.scenarios.scenario_2_detection as scenario_two_detection
-import query_research.scenarios.scenario_3_detection as scenario_three_detection
-import query_research.scenarios.scenario_4_detection as scenario_four_detection
+import query_research.scenarios.scenario_prop_one_detection as scenario_prop_one_detection
+import query_research.scenarios.scenario_prop_three_detection as scenario_prop_three_detection
+import query_research.scenarios.scenario_prop_two_detection as scenario_prop_two_detection
+import query_research.scenarios.scenario_prop_four_detection as scenario_prop_four_detection
 
-import query_research.scenarios.scenario_5_detection as scenario_five_detection
-import query_research.scenarios.scenario_6_detection as scenario_six_detection
-import query_research.scenarios.scenario_7_detection as scenario_seven_detection
-import query_research.scenarios.scenario_8_detection as scenario_eight_detection
+import query_research.scenarios.scenario_obj_one_detection as scenario_obj_one_detection
+import query_research.scenarios.scenario_obj_two_detection as scenario_obj_two_detection
+import query_research.scenarios.scenario_obj_three_detection as scenario_obj_three_detection
+import query_research.scenarios.scenario_obj_four_detection as scenario_obj_four_detection
 
-import query_research.scenarios.scenario_9_detection as scenario_nine_detection
-import query_research.scenarios.scenario_10_detection as scenario_ten_detection
-import query_research.scenarios.scenario_11_detection as scenario_eleven_detection
-import query_research.scenarios.scenario_12_detection as scenario_twelve_detection
+import query_research.scenarios.scenario_sub_one_detection as scenario_sub_one_detection
+import query_research.scenarios.scenario_sub_two_detection as scenario_sub_two_detection
+import query_research.scenarios.scenario_sub_three_detection as scenario_sub_three_detection
+import query_research.scenarios.scenario_sub_four_detection as scenario_sub_four_detection
 
 import query_research.scenarios.scenario_filter_detection as scenario_filter_detection
 import query_research.scenarios.scenario_optional_detection as scenario_optional_detection
@@ -40,7 +40,6 @@ import query_research.scenarios.scenario_group_detection as scenario_group_detec
 import query_research.scenarios.scenario_blank_node_detection as scenario_blank_node_detection
 import query_research.scenarios.scenario_minus_detection as scenario_minus_detection
 import query_research.scenarios.scenario_subselect_detection as scenario_subselect_detection
-import query_research.scenarios.scenario_ref_value_detection as scenario_ref_value_detection
 import query_research.scenarios.scenario_literal_detection as scenario_literal_detection
 import query_research.scenarios.scenario_values_detection as scenario_values_detection
 import query_research.scenarios.scenario_service_detection as scenario_service_detection
@@ -101,18 +100,18 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
                         else:
                             scenarios_dict = \
                                 {
-                                    "one": 0,
-                                    "two": 0,
-                                    "three": 0,
-                                    "four": 0,
-                                    "five": 0,
-                                    "six": 0,
-                                    "seven": 0,
-                                    "eight": 0,
-                                    "nine": 0,
-                                    "ten": 0,
-                                    "eleven": 0,
-                                    "twelve": 0,
+                                    "prop_one": 0,
+                                    "prop_three": 0,
+                                    "prop_two": 0,
+                                    "prop_four": 0,
+                                    "obj_one": 0,
+                                    "obj_two": 0,
+                                    "obj_three": 0,
+                                    "obj_four": 0,
+                                    "sub_one": 0,
+                                    "sub_two": 0,
+                                    "sub_three": 0,
+                                    "sub_four": 0,
                                     "filter": 0,
                                     "optional": 0,
                                     "union": 0,
@@ -145,54 +144,54 @@ def scenario_bind_occurrences(json_object, look_for, location, bound_variables, 
 
                         tmp_dict = bind_statistical_information["variables_found_in_scenarios"].copy()
 
-                        # scenario one
-                        bind_statistical_information["variables_found_in_scenarios"]["one"] += \
-                            scenario_one_detection.\
-                                scenario_one_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario two
-                        bind_statistical_information["variables_found_in_scenarios"]["two"] += \
-                            scenario_two_detection.\
-                                scenario_two_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario three
-                        bind_statistical_information["variables_found_in_scenarios"]["three"] += \
-                            scenario_three_detection.\
-                                scenario_three_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario four
-                        bind_statistical_information["variables_found_in_scenarios"]["four"] += \
-                            scenario_four_detection.\
-                                scenario_four_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario five
-                        bind_statistical_information["variables_found_in_scenarios"]["five"] += \
-                            scenario_five_detection.\
-                                scenario_five_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario six
-                        bind_statistical_information["variables_found_in_scenarios"]["six"] += \
-                            scenario_six_detection.\
-                                scenario_six_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario seven
-                        bind_statistical_information["variables_found_in_scenarios"]["seven"] += \
-                            scenario_seven_detection.\
-                                scenario_seven_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario eight
-                        bind_statistical_information["variables_found_in_scenarios"]["eight"] += \
-                            scenario_eight_detection.\
-                                scenario_eight_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario nine
-                        bind_statistical_information["variables_found_in_scenarios"]["nine"] += \
-                            scenario_nine_detection.\
-                                scenario_nine_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario tne
-                        bind_statistical_information["variables_found_in_scenarios"]["ten"] += \
-                            scenario_ten_detection.\
-                                scenario_ten_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario eleven
-                        bind_statistical_information["variables_found_in_scenarios"]["eleven"] += \
-                            scenario_eleven_detection.\
-                                scenario_eleven_occurrences(json_object, variable_look_for, bound_variables)
-                        # scenario twelve
-                        bind_statistical_information["variables_found_in_scenarios"]["twelve"] += \
-                            scenario_twelve_detection.\
-                                scenario_twelve_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario prop_one
+                        bind_statistical_information["variables_found_in_scenarios"]["prop_one"] += \
+                            scenario_prop_one_detection.\
+                                scenario_prop_one_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario prop_three
+                        bind_statistical_information["variables_found_in_scenarios"]["prop_three"] += \
+                            scenario_prop_three_detection.\
+                                scenario_prop_three_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario prop_two
+                        bind_statistical_information["variables_found_in_scenarios"]["prop_two"] += \
+                            scenario_prop_two_detection.\
+                                scenario_prop_two_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario prop_four
+                        bind_statistical_information["variables_found_in_scenarios"]["prop_four"] += \
+                            scenario_prop_four_detection.\
+                                scenario_prop_four_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario obj_one
+                        bind_statistical_information["variables_found_in_scenarios"]["obj_one"] += \
+                            scenario_obj_one_detection.\
+                                scenario_obj_one_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario obj_two
+                        bind_statistical_information["variables_found_in_scenarios"]["obj_two"] += \
+                            scenario_obj_two_detection.\
+                                scenario_obj_two_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario obj_three
+                        bind_statistical_information["variables_found_in_scenarios"]["obj_three"] += \
+                            scenario_obj_three_detection.\
+                                scenario_obj_three_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario obj_four
+                        bind_statistical_information["variables_found_in_scenarios"]["obj_four"] += \
+                            scenario_obj_four_detection.\
+                                scenario_obj_four_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario sub_one
+                        bind_statistical_information["variables_found_in_scenarios"]["sub_one"] += \
+                            scenario_sub_one_detection.\
+                                scenario_sub_one_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario sub_two
+                        bind_statistical_information["variables_found_in_scenarios"]["sub_two"] += \
+                            scenario_sub_two_detection.\
+                                scenario_sub_two_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario sub_three
+                        bind_statistical_information["variables_found_in_scenarios"]["sub_three"] += \
+                            scenario_sub_three_detection.\
+                                scenario_sub_three_occurrences(json_object, variable_look_for, bound_variables)
+                        # scenario sub_four
+                        bind_statistical_information["variables_found_in_scenarios"]["sub_four"] += \
+                            scenario_sub_four_detection.\
+                                scenario_sub_four_occurrences(json_object, variable_look_for, bound_variables)
 
 
                         # scenario bind

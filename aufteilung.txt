@@ -1,0 +1,91 @@
+-----------------------------------------------------------------------------------------------------------
+
+BA - Analysing the usage of metadata in real-world Wikidata SPARQL queries
+
+
+- Title
+- Abstract
+- Acknowledgement (Thank supervisor, fellow students, and others who have helped with the work.)
+
+- Chapter Introduction: This is always the first chapter of the thesis. The chapter should be short (up to 5 pages). The chapter should feature sections as follows (where applicable):
+        -- Problem context (What is the broader context of this work?)  -> Motivation
+        -- Problem description (What is the specific problem or challenge addressed by this work?)
+        -- Research question(s) (What are the actual questions that should be answered by this research? Why are they interesting? To whom? Why is there no obvious answer? If this is getting too much, 			then details of discussion can be deferred until later, e.g., to the methodology section.)
+        -- Summary of results and contributions (What is the outcome of this work in simple terms?)
+        -- Structure of the thesis (Introduce briefly the remaining chapters.)
+
+- Chapter Background & Related Work: This chapter is needed, if the thesis requires background material on less established concepts, technologies, etc. or if the existing resources are not easily applicable to the problem of the thesis or need to integrated in one place. The chapter should be concise and refer to existing resources (publications, textbooks, etc.), whenever appropriate.
+	-- Wikidata
+		---- Wikidata metadata-- > derived / property qualifier/ .....
+	-- RDF ?
+		-> quellen verlinken 
+	-- SPRQL ? --> verlinken
+	---- Scenario Explanation ALL (evtl. metholodgy)
+	-- Wikidata Query Logs + Explanation about Robotic vs Organic; Anonymisation; etc.
+	-- SQID (Source of Wikidata Properties Data)
+	-- SPARQL Queries for facets  --> timeout problems
+    
+- Chapter Methodology: This chapter is needed specifically, if the work includes significant elements of empirical research. Most likely, the thesis would employ some methodology of empirical software 		engineering, e.g., an explorative study, a benchmarking study, a literature survey, or a controlled experiment. The specific details are to be described in the chapter so that the reported 		research becomes falsifiable, reproducible, and it can be eventually reviewed in terms of threats to validity. The methodology needs to be connected to the research questions, of course.
+	
+	-- Wikidata Research:
+		---- Property data from SQID
+		---- Statement and Rank data from Wikidata Grafana
+		---- Wikidata Queries facets
+		---- 
+	-- Query Research:
+		---- Queries -> (?Metadata inside) -> Metadata Queries
+		---- Metadata Queries -> (JS Script) -> JSON Queries
+	-- JS Script to form Queries to JSON objects?    --> brief
+		---- JSON Queries -> (Redundant Detection) -> Non redundant Queries
+		---- Non Redundant Queries -> (Scenario Detection) -> Scenarios for Reference/Qualifier/Rank
+
+		---- Non Redundant Queries -> (Properties Detection) -> Properties for Reference/Qualifier
+		---- Non Redundant Queries -> (Facets Detection) -> Facets for Reference/Qualifier   
+		---- Non Redundant Queries -> (Datatypes Detection) -> Datatypes for Reference/Qualifier  
+		---- (Non Redundant Queries -> (Extraction of Example Queries -> % of Example queries on non-redundant metadata queries)
+
+	-- Query vs Wikidata Metadata Usage
+		---- ? -> just Comparison 
+
+- ?? NO Chapter Requirements: This chapter is needed specifically, if the work is meant to design or implement some sort of software system. In good alignment with basic software engineering practice, the 		requirements for this system have to be developed systematically. Each requirement should have a short name, a short description, and some illustration. Additional elements are priorities (must, 		should, can), pointers to related work, and a discussion of the challenges involved.
+
+
+- ?? NO Chapter Design: This chapter is needed specifically, if the work is meant to design or implement some sort of software system. In good alignment with basic software engineering practice, the system's 		design is to be presented at a reasonable level of abstraction. Appropriate notations are to be identified, e.g., UML diagrams, pseudocode, formal specifications, or declarative programs may be 		appropriate.
+	
+
+- ?? NO Chapter Implementation: This chapter is needed specifically, if the work is meant to deliver an actual implementation of some software system. No low level details or extensive code fragments should 		be included, but non-trivial implementation issues are to be explained, if they could not be reasonable covered at the design level; see Chapter Design. Many thesis do not need an Implementation 		Chapter because implementation details can be deferred to software documentation or the appendix. Also, some illustrative details of implementation may be placed in other chapters.
+    
+
+- ?? NO Chapter Case study: This chapter is needed, if the work performs a case study in the sense of empirical software engineering. In this case, the chapter describes the design of the case study (if this 		was not already done in Chapter Methodology) as well as the execution of the case study.
+    
+	i.e. no case study done. Worked with all the accessible data
+
+NO (/Chapter Experiment:)
+
+- Chapter Analysis/Results: This chapter is needed, when results from the previous chapters need to be systematically discussed. This is the case, when an implementation needs to be assessed, or the 		results of a case study or an experiment need to be interpreted.
+    	Chapter Concluding remarks: This is always the first chapter of the thesis. The chapter should be short (up to 5 pages). The chapter should feature sections as follows (where applicable):
+        
+	-- Wikidata Research
+		---- Top 15 Reference Properties/Datatypes/Facets
+		---- Top 15 Qualifier Properties/Datatypes/Facets
+		---- & of Best/Normal/Deprecated Rank (i.e. only interesting the count of deprecated vs best)
+	-- Query Research
+		---- % of Metadata Queries in the Wikidata SPARQL Log
+		---- % of redundant queries in the Wikidata SPARQL Log
+		---- The % of datatypes for every metadata between non-redundant and redundant in a heatmap
+		---- The distribution of scenarios per timeframe per metadta (not for ranks!?) in a heatmap
+		---- The Top 15 used Reference Properties/Datatypes/Facets (!watch out - doubles on facets)
+		---- The top 15 used Qualifier Properties/Datatypes/facets
+		---- The % of normal vs best vs eprecated ranks --> TODO
+
+	-- Real-world Queries vs Wikidata Metadata usage
+		---- Top 15 Reference Properties/Datatypes/Facets --- Wikidata vs Queries
+		---- Top 15 Qualifier Properties/Datatypes/Facets --- Wikidata vs Queries
+		---- Used Normal/Best/Deprecated Ranks ---- Wikidata vs Queries
+		----- % of references Statements in Wikidata vs Queries
+		----- number of qualifiers per statement in wikidata vs Queries
+
+Summary (Summarize this work in an insightful manner, assuming that the reader has seen the rest.)
+        Limitations or threats to validity (Point out the limitations of this work. In the case of empirical research, discuss threats to validity in a systematic manner.)
+        Future work (Provide insightful advice on where this research should be taken next.)
+

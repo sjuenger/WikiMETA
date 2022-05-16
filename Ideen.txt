@@ -1,0 +1,25 @@
+Qualifiers / Statement im Vergleich zu Qualifiers pro Query
+References / Statement im Vergleich zu References in Queries
+.-.
+-.-
+Auch zu den Datatypes des Qualifiers beziehen.
+
+
+!! nach sich oft wiederholenden Queries / Patterns achten. Sowas kann man sehr schön ausschlachten in der Doku
+
+Diese Grafik von Grafana inbinden https://grafana.wikimedia.org/d/000000182/wikidata-datamodel-references?viewPanel=5&orgId=1&refresh=30m&from=now-5y&to=now
+-> zeigt den Struggle, einen Mittelwert zu finden für die Benutzung von manchen Properties
+z.B. stated in	P248	Item
+retrieved	P813	Point in time	date or point in time that information was retrieved from a database or website (for use in online sources)		-
+reference URL	P854
+
+
+---------------------------
+Why sqid - why not everything from wikidata property talks?
+-> easier to extract . Do not need to HTML-extract everything ("Semantic Web"... haha, no. Not really.)
+-_-> such examples show the imortance of the semantic web. Ironical, that I have to rely on something like this in a BA about a semantic topic
+----- working with one of the most famous semantic web websites
+
+----------------------------
+
+

@@ -35,20 +35,20 @@
 
 # PLUS, detect the scenario, the found metadata in the sub select is in
 
-import query_research.scenarios.scenario_1_detection as scenario_one_detection
-import query_research.scenarios.scenario_2_detection as scenario_two_detection
-import query_research.scenarios.scenario_3_detection as scenario_three_detection
-import query_research.scenarios.scenario_4_detection as scenario_four_detection
+import query_research.scenarios.scenario_prop_one_detection as scenario_prop_one_detection
+import query_research.scenarios.scenario_prop_three_detection as scenario_prop_three_detection
+import query_research.scenarios.scenario_prop_two_detection as scenario_prop_two_detection
+import query_research.scenarios.scenario_prop_four_detection as scenario_prop_four_detection
 
-import query_research.scenarios.scenario_5_detection as scenario_five_detection
-import query_research.scenarios.scenario_6_detection as scenario_six_detection
-import query_research.scenarios.scenario_7_detection as scenario_seven_detection
-import query_research.scenarios.scenario_8_detection as scenario_eight_detection
+import query_research.scenarios.scenario_obj_one_detection as scenario_obj_one_detection
+import query_research.scenarios.scenario_obj_two_detection as scenario_obj_two_detection
+import query_research.scenarios.scenario_obj_three_detection as scenario_obj_three_detection
+import query_research.scenarios.scenario_obj_four_detection as scenario_obj_four_detection
 
-import query_research.scenarios.scenario_9_detection as scenario_nine_detection
-import query_research.scenarios.scenario_10_detection as scenario_ten_detection
-import query_research.scenarios.scenario_11_detection as scenario_eleven_detection
-import query_research.scenarios.scenario_12_detection as scenario_twelve_detection
+import query_research.scenarios.scenario_sub_one_detection as scenario_sub_one_detection
+import query_research.scenarios.scenario_sub_two_detection as scenario_sub_two_detection
+import query_research.scenarios.scenario_sub_three_detection as scenario_sub_three_detection
+import query_research.scenarios.scenario_sub_four_detection as scenario_sub_four_detection
 
 import query_research.scenarios.scenario_filter_detection as scenario_filter_detection
 import query_research.scenarios.scenario_optional_detection as scenario_optional_detection
@@ -59,7 +59,6 @@ import query_research.scenarios.scenario_bind_detection as scenario_bind_detecti
 import query_research.scenarios.scenario_blank_node_detection as scenario_blank_node_detection
 import query_research.scenarios.scenario_minus_detection as scenario_minus_detection
 import query_research.scenarios.scenario_subselect_detection as scenario_subselect_detection
-import query_research.scenarios.scenario_ref_value_detection as scenario_ref_value_detection
 import query_research.scenarios.scenario_literal_detection as scenario_literal_detection
 import query_research.scenarios.scenario_values_detection as scenario_values_detection
 import query_research.scenarios.scenario_service_detection as scenario_service_detection
@@ -109,18 +108,18 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
                         scenarios_dict = \
                             {
                                 "used_in_SELECT": 0,
-                                "one": 0,
-                                "two": 0,
-                                "three": 0,
-                                "four": 0,
-                                "five": 0,
-                                "six": 0,
-                                "seven": 0,
-                                "eight": 0,
-                                "nine": 0,
-                                "ten": 0,
-                                "eleven": 0,
-                                "twelve": 0,
+                                "prop_one": 0,
+                                "prop_three": 0,
+                                "prop_two": 0,
+                                "prop_four": 0,
+                                "obj_one": 0,
+                                "obj_two": 0,
+                                "obj_three": 0,
+                                "obj_four": 0,
+                                "sub_one": 0,
+                                "sub_two": 0,
+                                "sub_three": 0,
+                                "sub_four": 0,
                                 "filter": 0,
                                 "optional": 0,
                                 "union": 0,
@@ -193,101 +192,101 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
                             str(where_part["variables"]).count(look_for)
                         current_datatype_dict["used_in_SELECT"] += str(where_part["variables"]).count(look_for)
 
-                        # scenario one
+                        # scenario prop_one
                         tmp_occurrences = \
-                            scenario_one_detection. \
-                                scenario_one_occurrences(where_part, look_for,
+                            scenario_prop_one_detection. \
+                                scenario_prop_one_occurrences(where_part, look_for,
                                                          bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["one"] += tmp_occurrences
-                        current_datatype_dict["one"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["prop_one"] += tmp_occurrences
+                        current_datatype_dict["prop_one"] += tmp_occurrences
 
-                        # scenario two
+                        # scenario prop_three
                         tmp_occurrences = \
-                            scenario_two_detection. \
-                                scenario_two_occurrences(where_part, look_for,
+                            scenario_prop_three_detection. \
+                                scenario_prop_three_occurrences(where_part, look_for,
                                                          bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["two"] += tmp_occurrences
-                        current_datatype_dict["two"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["prop_three"] += tmp_occurrences
+                        current_datatype_dict["prop_three"] += tmp_occurrences
 
-                        # scenario three
+                        # scenario prop_two
                         tmp_occurrences = \
-                            scenario_three_detection. \
-                                scenario_three_occurrences(where_part, look_for,
+                            scenario_prop_two_detection. \
+                                scenario_prop_two_occurrences(where_part, look_for,
                                                            bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["three"] += tmp_occurrences
-                        current_datatype_dict["three"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["prop_two"] += tmp_occurrences
+                        current_datatype_dict["prop_two"] += tmp_occurrences
 
-                        # scenario four
+                        # scenario prop_four
                         tmp_occurrences = \
-                            scenario_four_detection. \
-                                scenario_four_occurrences(where_part, look_for,
+                            scenario_prop_four_detection. \
+                                scenario_prop_four_occurrences(where_part, look_for,
                                                           bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["four"] += tmp_occurrences
-                        current_datatype_dict["four"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["prop_four"] += tmp_occurrences
+                        current_datatype_dict["prop_four"] += tmp_occurrences
 
-                        # scenario five
+                        # scenario obj_one
                         tmp_occurrences = \
-                            scenario_five_detection. \
-                                scenario_five_occurrences(where_part, look_for,
+                            scenario_obj_one_detection. \
+                                scenario_obj_one_occurrences(where_part, look_for,
                                                           bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["five"] += tmp_occurrences
-                        current_datatype_dict["five"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["obj_one"] += tmp_occurrences
+                        current_datatype_dict["obj_one"] += tmp_occurrences
 
-                        # scenario six
+                        # scenario obj_two
                         tmp_occurrences = \
-                            scenario_six_detection. \
-                                scenario_six_occurrences(where_part, look_for,
+                            scenario_obj_two_detection. \
+                                scenario_obj_two_occurrences(where_part, look_for,
                                                          bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["six"] += tmp_occurrences
-                        current_datatype_dict["six"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["obj_two"] += tmp_occurrences
+                        current_datatype_dict["obj_two"] += tmp_occurrences
 
-                        # scenario seven
+                        # scenario obj_three
                         tmp_occurrences = \
-                            scenario_seven_detection. \
-                                scenario_seven_occurrences(where_part, look_for,
+                            scenario_obj_three_detection. \
+                                scenario_obj_three_occurrences(where_part, look_for,
                                                            bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["seven"] += tmp_occurrences
-                        current_datatype_dict["seven"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["obj_three"] += tmp_occurrences
+                        current_datatype_dict["obj_three"] += tmp_occurrences
 
-                        # scenario eight
+                        # scenario obj_four
                         tmp_occurrences = \
-                            scenario_eight_detection. \
-                                scenario_eight_occurrences(where_part, look_for,
+                            scenario_obj_four_detection. \
+                                scenario_obj_four_occurrences(where_part, look_for,
                                                            bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["eight"] += tmp_occurrences
-                        current_datatype_dict["eight"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["obj_four"] += tmp_occurrences
+                        current_datatype_dict["obj_four"] += tmp_occurrences
 
-                        # scenario nine
+                        # scenario sub_one
                         tmp_occurrences = \
-                            scenario_nine_detection. \
-                                scenario_nine_occurrences(where_part, look_for,
+                            scenario_sub_one_detection. \
+                                scenario_sub_one_occurrences(where_part, look_for,
                                                           bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["nine"] += tmp_occurrences
-                        current_datatype_dict["nine"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["sub_one"] += tmp_occurrences
+                        current_datatype_dict["sub_one"] += tmp_occurrences
 
-                        # scenario tne
+                        # scenario sub_two
                         tmp_occurrences = \
-                            scenario_ten_detection. \
-                                scenario_ten_occurrences(where_part, look_for,
+                            scenario_sub_two_detection. \
+                                scenario_sub_two_occurrences(where_part, look_for,
                                                          bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["ten"] += tmp_occurrences
-                        current_datatype_dict["ten"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["sub_two"] += tmp_occurrences
+                        current_datatype_dict["sub_two"] += tmp_occurrences
 
-                        # scenario eleven
+                        # scenario sub_three
                         tmp_occurrences = \
-                            scenario_eleven_detection. \
-                                scenario_eleven_occurrences(where_part, look_for,
+                            scenario_sub_three_detection. \
+                                scenario_sub_three_occurrences(where_part, look_for,
                                                             bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["eleven"] += tmp_occurrences
-                        current_datatype_dict["eleven"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["sub_three"] += tmp_occurrences
+                        current_datatype_dict["sub_three"] += tmp_occurrences
 
-                        # scenario twelve
+                        # scenario sub_four
                         tmp_occurrences = \
-                            scenario_twelve_detection. \
-                                scenario_twelve_occurrences(where_part, look_for,
+                            scenario_sub_four_detection. \
+                                scenario_sub_four_occurrences(where_part, look_for,
                                                             bound_variables)
-                        subselect_statistical_information["metadata_found_in_scenarios"]["twelve"] += tmp_occurrences
-                        current_datatype_dict["twelve"] += tmp_occurrences
+                        subselect_statistical_information["metadata_found_in_scenarios"]["sub_four"] += tmp_occurrences
+                        current_datatype_dict["sub_four"] += tmp_occurrences
 
                         # scenario bind
                         # if a variable is RE-USED in another BIND - but in this case, do not go deeper into the tree
@@ -443,125 +442,125 @@ def scenario_subselect_occurrences(json_object, look_for, location, bound_variab
 
                                             tmp_dict = subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"].copy()
-                                            # scenario one
+                                            # scenario prop_one
                                             tmp_occurrences = \
-                                                scenario_one_detection. \
-                                                    scenario_one_occurrences({"where": pattern["patterns"]},
+                                                scenario_prop_one_detection. \
+                                                    scenario_prop_one_occurrences({"where": pattern["patterns"]},
                                                                              look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "one"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["one"] += tmp_occurrences
+                                                "prop_one"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["prop_one"] += tmp_occurrences
 
-                                            # scenario two
+                                            # scenario prop_three
                                             tmp_occurrences = \
-                                                scenario_two_detection. \
-                                                    scenario_two_occurrences({"where": pattern["patterns"]},
+                                                scenario_prop_three_detection. \
+                                                    scenario_prop_three_occurrences({"where": pattern["patterns"]},
                                                                              look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "two"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["two"] += tmp_occurrences
+                                                "prop_three"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["prop_three"] += tmp_occurrences
 
-                                            # scenario three
+                                            # scenario prop_two
                                             tmp_occurrences = \
-                                                scenario_three_detection. \
-                                                    scenario_three_occurrences({"where": pattern["patterns"]},
+                                                scenario_prop_two_detection. \
+                                                    scenario_prop_two_occurrences({"where": pattern["patterns"]},
                                                                                look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "three"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["three"] += tmp_occurrences
+                                                "prop_two"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["prop_two"] += tmp_occurrences
 
-                                            # scenario four
+                                            # scenario prop_four
                                             tmp_occurrences = \
-                                                scenario_four_detection. \
-                                                    scenario_four_occurrences({"where": pattern["patterns"]},
+                                                scenario_prop_four_detection. \
+                                                    scenario_prop_four_occurrences({"where": pattern["patterns"]},
                                                                               look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "four"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["four"] += tmp_occurrences
+                                                "prop_four"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["prop_four"] += tmp_occurrences
 
-                                            # scenario five
+                                            # scenario obj_one
                                             tmp_occurrences = \
-                                                scenario_five_detection. \
-                                                    scenario_five_occurrences({"where": pattern["patterns"]},
+                                                scenario_obj_one_detection. \
+                                                    scenario_obj_one_occurrences({"where": pattern["patterns"]},
                                                                               look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "five"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["five"] += tmp_occurrences
+                                                "obj_one"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["obj_one"] += tmp_occurrences
 
-                                            # scenario six
+                                            # scenario obj_two
                                             tmp_occurrences = \
-                                                scenario_six_detection. \
-                                                    scenario_six_occurrences({"where": pattern["patterns"]},
+                                                scenario_obj_two_detection. \
+                                                    scenario_obj_two_occurrences({"where": pattern["patterns"]},
                                                                              look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "six"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["six"] += tmp_occurrences
+                                                "obj_two"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["obj_two"] += tmp_occurrences
 
-                                            # scenario seven
+                                            # scenario obj_three
                                             tmp_occurrences = \
-                                                scenario_seven_detection. \
-                                                    scenario_seven_occurrences({"where": pattern["patterns"]},
+                                                scenario_obj_three_detection. \
+                                                    scenario_obj_three_occurrences({"where": pattern["patterns"]},
                                                                                look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "seven"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["seven"] += tmp_occurrences
+                                                "obj_three"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["obj_three"] += tmp_occurrences
 
-                                            # scenario eight
+                                            # scenario obj_four
                                             tmp_occurrences = \
-                                                scenario_eight_detection. \
-                                                    scenario_eight_occurrences({"where": pattern["patterns"]},
+                                                scenario_obj_four_detection. \
+                                                    scenario_obj_four_occurrences({"where": pattern["patterns"]},
                                                                                look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "eight"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["eight"] += tmp_occurrences
+                                                "obj_four"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["obj_four"] += tmp_occurrences
 
-                                            # scenario nine
+                                            # scenario sub_one
                                             tmp_occurrences = \
-                                                scenario_nine_detection. \
-                                                    scenario_nine_occurrences({"where": pattern["patterns"]},
+                                                scenario_sub_one_detection. \
+                                                    scenario_sub_one_occurrences({"where": pattern["patterns"]},
                                                                               look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "nine"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["nine"] += tmp_occurrences
+                                                "sub_one"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["sub_one"] += tmp_occurrences
 
-                                            # scenario tne
+                                            # scenario sub_two
                                             tmp_occurrences = \
-                                                scenario_ten_detection. \
-                                                    scenario_ten_occurrences({"where": pattern["patterns"]},
+                                                scenario_sub_two_detection. \
+                                                    scenario_sub_two_occurrences({"where": pattern["patterns"]},
                                                                              look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "ten"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["ten"] += tmp_occurrences
+                                                "sub_two"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["sub_two"] += tmp_occurrences
 
-                                            # scenario eleven
+                                            # scenario sub_three
                                             tmp_occurrences = \
-                                                scenario_eleven_detection. \
-                                                    scenario_eleven_occurrences({"where": pattern["patterns"]},
+                                                scenario_sub_three_detection. \
+                                                    scenario_sub_three_occurrences({"where": pattern["patterns"]},
                                                                                 look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "eleven"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["eleven"] += tmp_occurrences
+                                                "sub_three"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["sub_three"] += tmp_occurrences
 
-                                            # scenario twelve
+                                            # scenario sub_four
                                             tmp_occurrences = \
-                                                scenario_twelve_detection. \
-                                                    scenario_twelve_occurrences({"where": pattern["patterns"]},
+                                                scenario_sub_four_detection. \
+                                                    scenario_sub_four_occurrences({"where": pattern["patterns"]},
                                                                                 look_for, bound_variables)
                                             subselect_statistical_information[
                                                 "scenarios_found_in_second_level_union"][
-                                                "twelve"] += tmp_occurrences
-                                            current_datatype_dict_subselect_layer["twelve"] += tmp_occurrences
+                                                "sub_four"] += tmp_occurrences
+                                            current_datatype_dict_subselect_layer["sub_four"] += tmp_occurrences
 
                                             # scenario bind
                                             # if a variable is RE-USED in another BIND - but in this case, do not go deeper into the tree

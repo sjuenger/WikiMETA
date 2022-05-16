@@ -1,0 +1,40 @@
+SELECT ?var1  ?var2  ?var3  ?var4 
+WHERE {
+ {
+  SELECT(  <http://wikiba.se/ontology#statementProperty>  AS  ?var1  )( COUNT ( DISTINCT  ?var5  ) AS  ?var3  )( COUNT ( ?var6  ) AS  ?var4  )
+  WHERE   {
+    ?var5  <http://www.wikidata.org/prop/P3987>  ?var6 .
+  }
+ }
+  UNION
+ {
+  SELECT(  <http://wikiba.se/ontology#statementProperty>  AS  ?var1  )(  <http://wikiba.se/ontology#BestRank>  AS  ?var2  )( COUNT ( DISTINCT  ?var5  ) AS  ?var3  )( COUNT ( ?var7  ) AS  ?var4  )
+  WHERE   {
+    ?var5  <http://www.wikidata.org/prop/direct/P3987>  ?var7 .
+  }
+ }
+  UNION
+ {
+  SELECT(  <http://wikiba.se/ontology#statementProperty>  AS  ?var1  ) ?var2 ( COUNT ( DISTINCT  ?var5  ) AS  ?var3  )( COUNT ( ?var8  ) AS  ?var4  )
+  WHERE   {
+    ?var5  <http://www.wikidata.org/prop/P3987>  ?var8 .
+    ?var8  <http://wikiba.se/ontology#rank>  ?var2 .
+  }
+  GROUP BY  ?var2 
+ }
+  UNION
+ {
+  SELECT(  <http://wikiba.se/ontology#reference>  AS  ?var1  )( COUNT ( DISTINCT  ?var5  ) AS  ?var3  )( COUNT ( ?var6  ) AS  ?var4  )
+  WHERE   {
+    ?var5  <http://www.wikidata.org/prop/reference/P3987>  ?var6 .
+  }
+ }
+  UNION
+ {
+  SELECT(  <http://wikiba.se/ontology#qualifier>  AS  ?var1  )( COUNT ( DISTINCT  ?var5  ) AS  ?var3  )( COUNT ( ?var6  ) AS  ?var4  )
+  WHERE   {
+    ?var5  <http://www.wikidata.org/prop/qualifier/P3987>  ?var6 .
+  }
+ }
+}
+ORDER BY  DESC( ?var1 ) DESC( ?var3 )ASC( ?var2 )

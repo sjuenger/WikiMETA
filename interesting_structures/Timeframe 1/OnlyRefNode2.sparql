@@ -1,0 +1,4 @@
+SELECT ?var1  ?var2 
+WHERE {
+  <http://www.wikidata.org/reference/b3edb7d4d517ee28def49fd36714d1b6a73591b7>  ?var1  ?var2 .
+}

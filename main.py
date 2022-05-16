@@ -25,16 +25,16 @@ import graphical_analysis.graphical_analysis_handler as graphical_analysis_handl
 
 def main():
     #directory_structure_handler.create_dir_structure_of_data()
-    #directory_structure_handler.delete_identified_scenarios()
+    directory_structure_handler.delete_identified_scenarios()
 
     #do_wikidata_research_stuff(15)
 
     #do_query_research_stuff([0,0,1,1,1,0,1], 15)
-    #do_query_research_stuff([0,0,0,0,1,0,0], 15)
+    #do_query_research_stuff([0,0,1,0,0,0,0], 15)
     #do_query_research_stuff([0,0,0,0,0,0,1], 15)
     #do_query_research_stuff([0,0,1,1,0,1,1], 15)
     #do_query_research_stuff([1,0,0,0,0,0,0], 15)
-    #do_query_research_stuff([0,0,0,1,1,0,1], 15)
+    do_query_research_stuff([0,0,1,0,1,0,1], 15)
 
     # TODO: Check the percentage basis of the graphical analysis! Do they use the overall QUERIES, OCCURRENCES OR SCNEARIOS
     # Also, calculate the examples a bit up and down

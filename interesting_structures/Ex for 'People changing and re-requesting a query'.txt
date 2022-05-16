@@ -1,0 +1,136 @@
+
+
+93353 2017-06-25 08:53:24.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P1532>  [  <http://www.wikidata.org/prop/statement/P1532>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3 ( <http://www.wikidata.org/prop/reference/P143> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q10876391> .
+}
+
+93364 2017-06-25 08:54:22.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3 ( <http://www.wikidata.org/prop/reference/P143> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q10876391> .
+}
+
+93371 2017-06-25 08:55:37.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3 ( <http://www.wikidata.org/prop/reference/P143> / <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q10876391> .
+}
+
+93380 2017-06-25 08:56:52.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3  <http://www.wikidata.org/prop/reference/P143>  ?var4 .
+  ?var4 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q10876391> .
+}
+
+93387 2017-06-25 08:57:54.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3  <http://www.wikidata.org/prop/reference/P143>  ?var4 .
+  ?var4  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q10876391> .
+}
+
+93388 2017-06-25 08:58:09.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3  <http://www.wikidata.org/prop/reference/P143>  <http://www.wikidata.org/entity/Q11921> .
+}
+
+93401 2017-06-25 08:59:58.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var3  ] .
+  ?var3  <http://www.wikidata.org/prop/reference/P143>  [  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q10876391>  ] .
+}
+
+93746 2017-06-25 09:56:29.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  [  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q10876391>  ]  ]  ] .
+}
+
+93748 2017-06-25 09:56:49.sparql
+SELECT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  <http://www.wikidata.org/entity/Q11921>  ]  ] .
+}
+
+93752 2017-06-25 09:57:22.sparql
+SELECT ?var1  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  [  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  ?var3  ]  ] .
+}
+
+93760 2017-06-25 09:59:38.sparql
+SELECT ?var1  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  ?var4 .
+  ?var4  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  ?var3  ] .
+  ?var4  <http://www.w3.org/ns/prov#wasDerivedFrom>  [ !( <http://www.wikidata.org/prop/reference/P143> ) ?var5  ] .
+}
+
+93761 2017-06-25 09:59:45.sparql
+SELECT ?var1  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  ?var4 .
+  ?var4  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  ?var3  ] .
+  MINUS   {
+    ?var4  <http://www.w3.org/ns/prov#wasDerivedFrom>  [ !( <http://www.wikidata.org/prop/reference/P143> ) ?var5  ] .
+  }
+}
+
+93768 2017-06-25 10:02:16.sparql XXX
+SELECT ?var1  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  ?var4 .
+  ?var4  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  ?var3  ] .
+  MINUS   {
+    ?var4  <http://www.w3.org/ns/prov#wasDerivedFrom>  [ !( <http://www.wikidata.org/prop/reference/P143> ) ?var5  ] .
+  }
+}
+
+93772 2017-06-25 10:02:31.sparql XXX
+SELECT ?var1  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1440>  [] .
+  ?var1  <http://www.wikidata.org/prop/P569>  ?var4 .
+  ?var4  <http://www.wikidata.org/prop/statement/P569>  ?var2 ;
+ <http://www.w3.org/ns/prov#wasDerivedFrom>  [  <http://www.wikidata.org/prop/reference/P143>  ?var3  ] .
+  MINUS   {
+    ?var4  <http://www.w3.org/ns/prov#wasDerivedFrom>  [ !( <http://www.wikidata.org/prop/reference/P143> ) ?var5  ] .
+  }
+}

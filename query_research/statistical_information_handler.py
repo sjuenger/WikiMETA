@@ -28,18 +28,18 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         "looking_for": metadata,
         "total_occurrences": 0,
         "total_scenarios": 0,
-        "one": 0,
-        "two": 0,
-        "three": 0,
-        "four": 0,
-        "five": 0,
-        "six": 0,
-        "seven": 0,
-        "eight": 0,
-        "nine": 0,
-        "ten": 0,
-        "eleven": 0,
-        "twelve": 0,
+        "prop_one": 0,
+        "prop_three": 0,
+        "prop_two": 0,
+        "prop_four": 0,
+        "obj_one": 0,
+        "obj_two": 0,
+        "obj_three": 0,
+        "obj_four": 0,
+        "sub_one": 0,
+        "sub_two": 0,
+        "sub_three": 0,
+        "sub_four": 0,
         "filter": 0,
         "optional": 0,
         "union": 0,
@@ -91,30 +91,30 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
                     elem["total_occurrences"]
                 metadata_dict["found_scenarios"]["total_scenarios"] += \
                     elem["total_scenarios"]
-                metadata_dict["found_scenarios"]["one"] += \
-                    elem["one"]
-                metadata_dict["found_scenarios"]["two"] += \
-                    elem["two"]
-                metadata_dict["found_scenarios"]["three"] += \
-                    elem["three"]
-                metadata_dict["found_scenarios"]["four"] += \
-                    elem["four"]
-                metadata_dict["found_scenarios"]["five"] += \
-                    elem["five"]
-                metadata_dict["found_scenarios"]["six"] += \
-                    elem["six"]
-                metadata_dict["found_scenarios"]["seven"] += \
-                    elem["seven"]
-                metadata_dict["found_scenarios"]["eight"] += \
-                    elem["eight"]
-                metadata_dict["found_scenarios"]["nine"] += \
-                    elem["nine"]
-                metadata_dict["found_scenarios"]["ten"] += \
-                    elem["ten"]
-                metadata_dict["found_scenarios"]["eleven"] += \
-                    elem["eleven"]
-                metadata_dict["found_scenarios"]["twelve"] += \
-                    elem["twelve"]
+                metadata_dict["found_scenarios"]["prop_one"] += \
+                    elem["prop_one"]
+                metadata_dict["found_scenarios"]["prop_three"] += \
+                    elem["prop_three"]
+                metadata_dict["found_scenarios"]["prop_two"] += \
+                    elem["prop_two"]
+                metadata_dict["found_scenarios"]["prop_four"] += \
+                    elem["prop_four"]
+                metadata_dict["found_scenarios"]["obj_one"] += \
+                    elem["obj_one"]
+                metadata_dict["found_scenarios"]["obj_two"] += \
+                    elem["obj_two"]
+                metadata_dict["found_scenarios"]["obj_three"] += \
+                    elem["obj_three"]
+                metadata_dict["found_scenarios"]["obj_four"] += \
+                    elem["obj_four"]
+                metadata_dict["found_scenarios"]["sub_one"] += \
+                    elem["sub_one"]
+                metadata_dict["found_scenarios"]["sub_two"] += \
+                    elem["sub_two"]
+                metadata_dict["found_scenarios"]["sub_three"] += \
+                    elem["sub_three"]
+                metadata_dict["found_scenarios"]["sub_four"] += \
+                    elem["sub_four"]
                 metadata_dict["found_scenarios"]["bind"] += \
                     elem["bind"]
                 metadata_dict["found_scenarios"]["blank_node"] += \
@@ -162,18 +162,18 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
         "looking_for": metadata,
         "total_occurrences": 0,
         "total_scenarios": 0,
-        "one": 0,
-        "two": 0,
-        "three": 0,
-        "four": 0,
-        "five": 0,
-        "six": 0,
-        "seven": 0,
-        "eight": 0,
-        "nine": 0,
-        "ten": 0,
-        "eleven": 0,
-        "twelve": 0,
+        "prop_one": 0,
+        "prop_three": 0,
+        "prop_two": 0,
+        "prop_four": 0,
+        "obj_one": 0,
+        "obj_two": 0,
+        "obj_three": 0,
+        "obj_four": 0,
+        "sub_one": 0,
+        "sub_two": 0,
+        "sub_three": 0,
+        "sub_four": 0,
         "filter": 0,
         "optional": 0,
         "union": 0,
@@ -225,30 +225,30 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
                 elem["total_occurrences"]
             metadata_dict["found_scenarios"]["total_scenarios"] += \
                 elem["total_scenarios"]
-            metadata_dict["found_scenarios"]["one"] += \
-                elem["one"]
-            metadata_dict["found_scenarios"]["two"] += \
-                elem["two"]
-            metadata_dict["found_scenarios"]["three"] += \
-                elem["three"]
-            metadata_dict["found_scenarios"]["four"] += \
-                elem["four"]
-            metadata_dict["found_scenarios"]["five"] += \
-                elem["five"]
-            metadata_dict["found_scenarios"]["six"] += \
-                elem["six"]
-            metadata_dict["found_scenarios"]["seven"] += \
-                elem["seven"]
-            metadata_dict["found_scenarios"]["eight"] += \
-                elem["eight"]
-            metadata_dict["found_scenarios"]["nine"] += \
-                elem["nine"]
-            metadata_dict["found_scenarios"]["ten"] += \
-                elem["ten"]
-            metadata_dict["found_scenarios"]["eleven"] += \
-                elem["eleven"]
-            metadata_dict["found_scenarios"]["twelve"] += \
-                elem["twelve"]
+            metadata_dict["found_scenarios"]["prop_one"] += \
+                elem["prop_one"]
+            metadata_dict["found_scenarios"]["prop_three"] += \
+                elem["prop_three"]
+            metadata_dict["found_scenarios"]["prop_two"] += \
+                elem["prop_two"]
+            metadata_dict["found_scenarios"]["prop_four"] += \
+                elem["prop_four"]
+            metadata_dict["found_scenarios"]["obj_one"] += \
+                elem["obj_one"]
+            metadata_dict["found_scenarios"]["obj_two"] += \
+                elem["obj_two"]
+            metadata_dict["found_scenarios"]["obj_three"] += \
+                elem["obj_three"]
+            metadata_dict["found_scenarios"]["obj_four"] += \
+                elem["obj_four"]
+            metadata_dict["found_scenarios"]["sub_one"] += \
+                elem["sub_one"]
+            metadata_dict["found_scenarios"]["sub_two"] += \
+                elem["sub_two"]
+            metadata_dict["found_scenarios"]["sub_three"] += \
+                elem["sub_three"]
+            metadata_dict["found_scenarios"]["sub_four"] += \
+                elem["sub_four"]
             metadata_dict["found_scenarios"]["bind"] += \
                 elem["bind"]
             metadata_dict["found_scenarios"]["blank_node"] += \
@@ -1660,18 +1660,18 @@ def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
         for redundant_mode in ["non_redundant"]:
             scenarios_dict = \
                 {
-                    "one": 0,
-                    "two": 0,
-                    "three": 0,
-                    "four": 0,
-                    "five": 0,
-                    "six": 0,
-                    "seven": 0,
-                    "eight": 0,
-                    "nine": 0,
-                    "ten": 0,
-                    "eleven": 0,
-                    "twelve": 0,
+                    "prop_one": 0,
+                    "prop_three": 0,
+                    "prop_two": 0,
+                    "prop_four": 0,
+                    "obj_one": 0,
+                    "obj_two": 0,
+                    "obj_three": 0,
+                    "obj_four": 0,
+                    "sub_one": 0,
+                    "sub_two": 0,
+                    "sub_three": 0,
+                    "sub_four": 0,
                     "filter": 0,
                     "optional": 0,
                     "union": 0,
@@ -1771,18 +1771,18 @@ def summarize_additional_scenario_information_about_FILTER(TIMEFRAMES):
         for redundant_mode in ["non_redundant"]:
             scenarios_dict = \
                 {
-                    "one": 0,
-                    "two": 0,
-                    "three": 0,
-                    "four": 0,
-                    "five": 0,
-                    "six": 0,
-                    "seven": 0,
-                    "eight": 0,
-                    "nine": 0,
-                    "ten": 0,
-                    "eleven": 0,
-                    "twelve": 0,
+                    "prop_one": 0,
+                    "prop_three": 0,
+                    "prop_two": 0,
+                    "prop_four": 0,
+                    "obj_one": 0,
+                    "obj_two": 0,
+                    "obj_three": 0,
+                    "obj_four": 0,
+                    "sub_one": 0,
+                    "sub_two": 0,
+                    "sub_three": 0,
+                    "sub_four": 0,
                     "filter": 0,
                     "optional": 0,
                     "union": 0,
@@ -1880,18 +1880,18 @@ def summarize_additional_scenario_information_about_UNION(TIMEFRAMES):
             scenarios_dict = \
                 {
                     "used_in_SELECT": 0,
-                    "one": 0,
-                    "two": 0,
-                    "three": 0,
-                    "four": 0,
-                    "five": 0,
-                    "six": 0,
-                    "seven": 0,
-                    "eight": 0,
-                    "nine": 0,
-                    "ten": 0,
-                    "eleven": 0,
-                    "twelve": 0,
+                    "prop_one": 0,
+                    "prop_three": 0,
+                    "prop_two": 0,
+                    "prop_four": 0,
+                    "obj_one": 0,
+                    "obj_two": 0,
+                    "obj_three": 0,
+                    "obj_four": 0,
+                    "sub_one": 0,
+                    "sub_two": 0,
+                    "sub_three": 0,
+                    "sub_four": 0,
                     "filter": 0,
                     "optional": 0,
                     "union": 0,
@@ -1984,18 +1984,18 @@ def summarize_additional_scenario_information_about_SUBSELECT(TIMEFRAMES):
             scenarios_dict = \
                 {
                     "used_in_SELECT": 0,
-                    "one": 0,
-                    "two": 0,
-                    "three": 0,
-                    "four": 0,
-                    "five": 0,
-                    "six": 0,
-                    "seven": 0,
-                    "eight": 0,
-                    "nine": 0,
-                    "ten": 0,
-                    "eleven": 0,
-                    "twelve": 0,
+                    "prop_one": 0,
+                    "prop_three": 0,
+                    "prop_two": 0,
+                    "prop_four": 0,
+                    "obj_one": 0,
+                    "obj_two": 0,
+                    "obj_three": 0,
+                    "obj_four": 0,
+                    "sub_one": 0,
+                    "sub_two": 0,
+                    "sub_three": 0,
+                    "sub_four": 0,
                     "filter": 0,
                     "optional": 0,
                     "union": 0,
@@ -2088,18 +2088,18 @@ def summarize_additional_scenario_information_about_MINUS(TIMEFRAMES):
         for redundant_mode in ["non_redundant"]:
             scenarios_dict = \
                 {
-                    "one": 0,
-                    "two": 0,
-                    "three": 0,
-                    "four": 0,
-                    "five": 0,
-                    "six": 0,
-                    "seven": 0,
-                    "eight": 0,
-                    "nine": 0,
-                    "ten": 0,
-                    "eleven": 0,
-                    "twelve": 0,
+                    "prop_one": 0,
+                    "prop_three": 0,
+                    "prop_two": 0,
+                    "prop_four": 0,
+                    "obj_one": 0,
+                    "obj_two": 0,
+                    "obj_three": 0,
+                    "obj_four": 0,
+                    "sub_one": 0,
+                    "sub_two": 0,
+                    "sub_three": 0,
+                    "sub_four": 0,
                     "filter": 0,
                     "optional": 0,
                     "union": 0,
@@ -2165,18 +2165,18 @@ def summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES):
         for redundant_mode in ["non_redundant"]:
             scenarios_dict = \
                 {
-                    "one": 0,
-                    "two": 0,
-                    "three": 0,
-                    "four": 0,
-                    "five": 0,
-                    "six": 0,
-                    "seven": 0,
-                    "eight": 0,
-                    "nine": 0,
-                    "ten": 0,
-                    "eleven": 0,
-                    "twelve": 0,
+                    "prop_one": 0,
+                    "prop_three": 0,
+                    "prop_two": 0,
+                    "prop_four": 0,
+                    "obj_one": 0,
+                    "obj_two": 0,
+                    "obj_three": 0,
+                    "obj_four": 0,
+                    "sub_one": 0,
+                    "sub_two": 0,
+                    "sub_three": 0,
+                    "sub_four": 0,
                     "filter": 0,
                     "optional": 0,
                     "union": 0,
