@@ -1,3 +1,0 @@
-Man kann die Verteilung nach den Datatypes auch in dem Grafana Board nachvollziehen.
-
-HIER für fehlende Infos zu der Anzahl an Properties: https://www.wikidata.org/wiki/Property_talk:P248#Documentation
