@@ -77,8 +77,8 @@ def scenario_optional_occurrences(json_object, look_for, location, bound_variabl
                     scenarios_dict = \
                         {
                             "prop_one": 0,
-                            "prop_three": 0,
                             "prop_two": 0,
+                            "prop_three": 0,
                             "prop_four": 0,
                             "obj_one": 0,
                             "obj_two": 0,

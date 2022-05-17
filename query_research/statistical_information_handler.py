@@ -29,8 +29,8 @@ def summarize_statistical_information_about_scenarios(location, datatype_list, m
         "total_occurrences": 0,
         "total_scenarios": 0,
         "prop_one": 0,
-        "prop_three": 0,
         "prop_two": 0,
+        "prop_three": 0,
         "prop_four": 0,
         "obj_one": 0,
         "obj_two": 0,
@@ -163,8 +163,8 @@ def summarize_statistical_information_about_timeframes(locations, metadata, redu
         "total_occurrences": 0,
         "total_scenarios": 0,
         "prop_one": 0,
-        "prop_three": 0,
         "prop_two": 0,
+        "prop_three": 0,
         "prop_four": 0,
         "obj_one": 0,
         "obj_two": 0,
@@ -1661,8 +1661,8 @@ def summarize_additional_scenario_information_about_BIND(TIMEFRAMES):
             scenarios_dict = \
                 {
                     "prop_one": 0,
-                    "prop_three": 0,
                     "prop_two": 0,
+                    "prop_three": 0,
                     "prop_four": 0,
                     "obj_one": 0,
                     "obj_two": 0,
@@ -1772,8 +1772,8 @@ def summarize_additional_scenario_information_about_FILTER(TIMEFRAMES):
             scenarios_dict = \
                 {
                     "prop_one": 0,
-                    "prop_three": 0,
                     "prop_two": 0,
+                    "prop_three": 0,
                     "prop_four": 0,
                     "obj_one": 0,
                     "obj_two": 0,
@@ -1881,8 +1881,8 @@ def summarize_additional_scenario_information_about_UNION(TIMEFRAMES):
                 {
                     "used_in_SELECT": 0,
                     "prop_one": 0,
-                    "prop_three": 0,
                     "prop_two": 0,
+                    "prop_three": 0,
                     "prop_four": 0,
                     "obj_one": 0,
                     "obj_two": 0,
@@ -1985,8 +1985,8 @@ def summarize_additional_scenario_information_about_SUBSELECT(TIMEFRAMES):
                 {
                     "used_in_SELECT": 0,
                     "prop_one": 0,
-                    "prop_three": 0,
                     "prop_two": 0,
+                    "prop_three": 0,
                     "prop_four": 0,
                     "obj_one": 0,
                     "obj_two": 0,
@@ -2089,8 +2089,8 @@ def summarize_additional_scenario_information_about_MINUS(TIMEFRAMES):
             scenarios_dict = \
                 {
                     "prop_one": 0,
-                    "prop_three": 0,
                     "prop_two": 0,
+                    "prop_three": 0,
                     "prop_four": 0,
                     "obj_one": 0,
                     "obj_two": 0,
@@ -2166,8 +2166,8 @@ def summarize_additional_scenario_information_about_OPTIONAL(TIMEFRAMES):
             scenarios_dict = \
                 {
                     "prop_one": 0,
-                    "prop_three": 0,
                     "prop_two": 0,
+                    "prop_three": 0,
                     "prop_four": 0,
                     "obj_one": 0,
                     "obj_two": 0,

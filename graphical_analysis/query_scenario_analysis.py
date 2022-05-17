@@ -86,7 +86,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
                                         append(0)
 
                                 csv_ready_scenario_per_datatype_dict["timeframe"].\
-                                    append(timeframe[:21].replace("_", " - "))
+                                    append(timeframe[:21].replace("_", "-\n"))
                                 csv_ready_scenario_per_datatype_dict["datatype"].append(datatype.split("/")[0])
                                 csv_ready_scenario_per_datatype_dict["type looking for"]. \
                                     append(str(dict["looking_for"]).replace(" ", "\n"))
@@ -303,7 +303,7 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
                             append(0)
 
                     csv_ready_scenario_dict["timeframe"].\
-                        append(timeframe[:21].replace("_", " - "))
+                        append(timeframe[:21].replace("_", "-\n"))
                     csv_ready_scenario_dict["datatype"].append(metadata)
                     csv_ready_scenario_dict["type looking for"]. \
                         append(str(stat_info_scenarios_dict["found_scenarios"]["looking_for"]).

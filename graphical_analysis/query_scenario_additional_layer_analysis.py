@@ -58,7 +58,7 @@ def plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL
                                 append(0)
 
                         csv_ready_scenario_dict["timeframe"]. \
-                            append(timeframe[:21].replace("_", " - "))
+                            append(timeframe[:21].replace("_", "-\n"))
                         csv_ready_scenario_dict["datatype"].append(metadata)
 
                         csv_ready_scenario_dict["base scenario"].append(scenario)
@@ -114,7 +114,7 @@ def plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL
                         columns='timeframe', sort=False)
 
     mask = (df == 0)
-    fig, ax = plt.subplots(figsize=(8, 10)) # 16 10
+    fig, ax = plt.subplots(figsize=(9, 10)) # 16 10
     tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="YlOrRd",
                       linewidths=.5)
     tmp.figure.tight_layout()
@@ -172,51 +172,57 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
                     # to exclude the datatypes, e.g. 'total' or 'only_derived
                     if ID != "datatype":
 
-                        csv_ready_scenario_dict["scenario name"].append(ID)
+                        # only show scenarios in the data, that occur at least once
+                        # lazy evaluation
+                        if (scenario == "union" and stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID] > 0)\
+                                or\
+                            (scenario == "subselect" and stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID] > 0):
+
+                            csv_ready_scenario_dict["scenario name"].append(ID)
 
 
-                        if scenario == "union":
-                            csv_ready_scenario_dict["scenario count"]. \
-                                append(stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID])
+                            if scenario == "union":
+                                csv_ready_scenario_dict["scenario count"]. \
+                                    append(stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID])
 
-                            total_occurrences = stat_info_scenarios_dict["metadata_found_in_scenarios"]["subselect"]
+                                total_occurrences = stat_info_scenarios_dict["metadata_found_in_scenarios"]["subselect"]
 
-                            if total_occurrences > 0:
-                                csv_ready_scenario_dict["scenario percentage"]. \
-                                    append(
-                                    int(stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID]) /
-                                    total_occurrences)
-                            else:
-                                csv_ready_scenario_dict["scenario percentage"]. \
-                                    append(0)
+                                if total_occurrences > 0:
+                                    csv_ready_scenario_dict["scenario percentage"]. \
+                                        append(
+                                        int(stat_info_scenarios_dict["scenarios_found_in_second_level_subselect"][ID]) /
+                                        total_occurrences)
+                                else:
+                                    csv_ready_scenario_dict["scenario percentage"]. \
+                                        append(0)
 
-                            csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
-
-
+                                csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
 
 
-                        elif scenario == "subselect":
-                            csv_ready_scenario_dict["scenario count"]. \
-                                append(stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID])
 
-                            total_occurrences = stat_info_scenarios_dict["metadata_found_in_scenarios"]["union"]
 
-                            if total_occurrences > 0:
-                                csv_ready_scenario_dict["scenario percentage"]. \
-                                    append(
-                                    int(stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID]) /
-                                    total_occurrences)
-                            else:
-                                csv_ready_scenario_dict["scenario percentage"]. \
-                                    append(0)
+                            elif scenario == "subselect":
+                                csv_ready_scenario_dict["scenario count"]. \
+                                    append(stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID])
 
-                            csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
+                                total_occurrences = stat_info_scenarios_dict["metadata_found_in_scenarios"]["union"]
 
-                        csv_ready_scenario_dict["timeframe"]. \
-                            append(timeframe[:21].replace("_", " - "))
-                        csv_ready_scenario_dict["datatype"].append(metadata)
+                                if total_occurrences > 0:
+                                    csv_ready_scenario_dict["scenario percentage"]. \
+                                        append(
+                                        int(stat_info_scenarios_dict["scenarios_found_in_second_level_union"][ID]) /
+                                        total_occurrences)
+                                else:
+                                    csv_ready_scenario_dict["scenario percentage"]. \
+                                        append(0)
 
-                        csv_ready_scenario_dict["base scenario"].append(scenario)
+                                csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
+
+                            csv_ready_scenario_dict["timeframe"]. \
+                                append(timeframe[:21].replace("_", "-\n"))
+                            csv_ready_scenario_dict["datatype"].append(metadata)
+
+                            csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
 
@@ -235,47 +241,56 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
 
             for ID in overall_dict[tmpID]:
 
-                csv_ready_scenario_dict["scenario name"].append(ID)
-
-                if scenario == "union":
-                    csv_ready_scenario_dict["scenario count"]. \
-                        append(overall_dict["scenarios_found_in_second_level_subselect"][ID])
-
-                    total_occurrences = overall_dict["metadata_found_in_scenarios"]["subselect"]
-
-                    if total_occurrences > 0:
-                        csv_ready_scenario_dict["scenario percentage"]. \
-                            append(
-                            int(overall_dict["scenarios_found_in_second_level_subselect"][ID]) /
-                            total_occurrences)
-                    else:
-                        csv_ready_scenario_dict["scenario percentage"]. \
-                            append(0)
+                # only show scenarios in the data, that occur at least once
+                # lazy evaluation
+                if (scenario == "union" and overall_dict["scenarios_found_in_second_level_subselect"][
+                    ID] > 0) \
+                        or \
+                        (scenario == "subselect" and overall_dict["scenarios_found_in_second_level_union"][
+                            ID] > 0):
 
 
+                    csv_ready_scenario_dict["scenario name"].append(ID)
+
+                    if scenario == "union":
+                        csv_ready_scenario_dict["scenario count"]. \
+                            append(overall_dict["scenarios_found_in_second_level_subselect"][ID])
+
+                        total_occurrences = overall_dict["metadata_found_in_scenarios"]["subselect"]
+
+                        if total_occurrences > 0:
+                            csv_ready_scenario_dict["scenario percentage"]. \
+                                append(
+                                int(overall_dict["scenarios_found_in_second_level_subselect"][ID]) /
+                                total_occurrences)
+                        else:
+                            csv_ready_scenario_dict["scenario percentage"]. \
+                                append(0)
 
 
-                elif scenario == "subselect":
-                    csv_ready_scenario_dict["scenario count"]. \
-                        append(overall_dict["scenarios_found_in_second_level_union"][ID])
 
-                    total_occurrences = overall_dict["metadata_found_in_scenarios"]["union"]
 
-                    if total_occurrences > 0:
-                        csv_ready_scenario_dict["scenario percentage"]. \
-                            append(
-                            int(overall_dict["scenarios_found_in_second_level_union"][ID]) /
-                            total_occurrences)
-                    else:
-                        csv_ready_scenario_dict["scenario percentage"]. \
-                            append(0)
+                    elif scenario == "subselect":
+                        csv_ready_scenario_dict["scenario count"]. \
+                            append(overall_dict["scenarios_found_in_second_level_union"][ID])
 
-                csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
-                csv_ready_scenario_dict["timeframe"]. \
-                    append("total")
-                csv_ready_scenario_dict["datatype"].append(metadata)
+                        total_occurrences = overall_dict["metadata_found_in_scenarios"]["union"]
 
-                csv_ready_scenario_dict["base scenario"].append(scenario)
+                        if total_occurrences > 0:
+                            csv_ready_scenario_dict["scenario percentage"]. \
+                                append(
+                                int(overall_dict["scenarios_found_in_second_level_union"][ID]) /
+                                total_occurrences)
+                        else:
+                            csv_ready_scenario_dict["scenario percentage"]. \
+                                append(0)
+
+                    csv_ready_scenario_dict["total scenarios"].append(total_occurrences)
+                    csv_ready_scenario_dict["timeframe"]. \
+                        append("total")
+                    csv_ready_scenario_dict["datatype"].append(metadata)
+
+                    csv_ready_scenario_dict["base scenario"].append(scenario)
 
 
     # plot the data in a heatmap
@@ -298,9 +313,18 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
                         columns='timeframe', sort=False)
 
     mask = (df == 0)
-    fig, ax = plt.subplots(figsize=(8, 10)) # 16 10
-    tmp = sns.heatmap(df, ax=ax, annot=True, vmin = 0, vmax = 1, mask=mask, cmap="OrRd",
-                      linewidths=.5)
+    tmp = None
+
+    if scenario == "union":
+        fig, ax = plt.subplots(figsize=(9, 8))  # 16 10
+        tmp = sns.heatmap(df, ax=ax, annot=True, vmin=0, vmax=1, mask=mask, cmap="OrRd",
+                          linewidths=.5)
+    elif scenario == "subselect":
+        fig, ax = plt.subplots(figsize=(9, 6))  # 16 10
+        tmp = sns.heatmap(df, ax=ax, annot=True, vmin=0, vmax=1, mask=mask, cmap="OrRd",
+                          linewidths=.5)
+
+
     tmp.figure.tight_layout()
     #tmp.figure.subplots_adjust(left=0.45, bottom=0.6)
 
