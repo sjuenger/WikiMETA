@@ -290,7 +290,7 @@ def plot_redundant_detection_data_exact():
                               dodge=True,  data=df, ci=None)
 
             tmp.savefig( "data/statistical_information/redundant_detection/" + location[:21]
-                        + "/" + type.split("/")[0] +  "/overall_redundant_information_exact.png")
+                        + "/" + type.split("/")[0] +  "/overall_redundant_information_exact.pdf")
 
             plt.close()
 
@@ -319,7 +319,7 @@ def plot_redundant_detection_data_exact():
                 plt.gcf().autofmt_xdate()
 
             tmp.savefig("data/statistical_information/redundant_detection/" + location[:21]
-                        + "/" + type.split("/")[0] + "/redundant_information_exact.png")
+                        + "/" + type.split("/")[0] + "/redundant_information_exact.pdf")
 
             plt.close()
 
@@ -360,7 +360,7 @@ def plot_redundant_detection_data_exact():
             plt.gcf().autofmt_xdate()
 
         tmp.savefig("data/statistical_information/redundant_detection/"
-                    + types[0].split("/")[0] + "/redundant_information_exact.png")
+                    + types[0].split("/")[0] + "/redundant_information_exact.pdf")
 
         plt.close()
 
@@ -385,7 +385,7 @@ def plot_redundant_detection_data_exact():
                           dodge=True, data=df, ci=None)
 
         tmp.savefig("data/statistical_information/redundant_detection/"
-                    + types[0].split("/")[0] + "/overall_redundant_information_exact.png")
+                    + types[0].split("/")[0] + "/overall_redundant_information_exact.pdf")
 
         plt.close()
 
@@ -473,7 +473,7 @@ def plot_redundant_detection_data_exact():
 
         plt.gcf().autofmt_xdate()
 
-        tmp.get_figure().savefig("data/redundant_" + types[0].split("/")[0] + ".png")
+        tmp.get_figure().savefig("data/redundant_" + types[0].split("/")[0] + ".pdf")
 
         plt.close()
 
@@ -521,7 +521,7 @@ def plot_redundant_detection_data_exact():
 
         plt.gcf().autofmt_xdate()
 
-        tmp.get_figure().savefig("data/non-redundant_" + types[0].split("/")[0] + ".png")
+        tmp.get_figure().savefig("data/non-redundant_" + types[0].split("/")[0] + ".pdf")
 
         plt.close()
 
@@ -565,6 +565,6 @@ def plot_redundant_vs_non_redundant_metadata_queries_per_timeframe(timeframes):
     plt.gcf().autofmt_xdate()
     plt.ylim(0, )
 
-    tmp.savefig("data/redundant_vs_non_redundant_metadata_queries_per_timeframe.png")
+    tmp.savefig("data/redundant_vs_non_redundant_metadata_queries_per_timeframe.pdf")
 
     plt.close()

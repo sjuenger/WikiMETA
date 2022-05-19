@@ -165,7 +165,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
                                             replace("'", "'").replace(",", ",").\
                                             replace("\n", " ").replace("[", "[").\
                                             replace("http://www.", "").\
-                                            replace("/", "\\") + ".png"
+                                            replace("/", "\\") + ".pdf"
 
                 tmp.get_figure().savefig(save_path)
 
@@ -211,7 +211,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
             plt.gcf().autofmt_xdate()
 
             save_path = "data/statistical_information/query_research/non_redundant/"+\
-                datatype.split("/")[0] + "/scenarios/" + datatype.split("/")[1] +"_total_scenarios.png"
+                datatype.split("/")[0] + "/scenarios/" + datatype.split("/")[1] +"_total_scenarios.pdf"
 
             tmp.savefig(save_path)
 
@@ -229,7 +229,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
             plt.gcf().autofmt_xdate()
 
             save_path = "data/statistical_information/query_research/non_redundant/"+\
-                datatype.split("/")[0] + "/scenarios/" + datatype.split("/")[1] +"_total_occurrences.png"
+                datatype.split("/")[0] + "/scenarios/" + datatype.split("/")[1] +"_total_occurrences.pdf"
 
             tmp.savefig(save_path)
 
@@ -247,7 +247,7 @@ def plot_timeframe_metadata_distribution_per_datatype(timeframes, datatypes_list
             plt.gcf().autofmt_xdate()
 
             save_path = "data/statistical_information/query_research/non_redundant/"+\
-                datatype.split("/")[0] + "/scenarios/" + datatype.split("/")[1] +"_total_queries.png"
+                datatype.split("/")[0] + "/scenarios/" + datatype.split("/")[1] +"_total_queries.pdf"
 
             tmp.savefig(save_path)
 
@@ -380,7 +380,7 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
 
     plt.gcf().autofmt_xdate()
     save_path = "data/statistical_information/query_research/non_redundant/" \
-                                + metadata + "/scenarios/overall_scenarios.png"
+                                + metadata + "/scenarios/overall_scenarios.pdf"
 
     tmp.get_figure().savefig(save_path)
 
@@ -397,7 +397,7 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
     plt.gcf().autofmt_xdate()
 
     save_path = "data/statistical_information/query_research/non_redundant/"+\
-        metadata + "/scenarios/total_scenarios.png"
+        metadata + "/scenarios/total_scenarios.pdf"
 
     tmp.savefig(save_path)
 
@@ -415,7 +415,7 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
     plt.gcf().autofmt_xdate()
 
     save_path = "data/statistical_information/query_research/non_redundant/"+\
-        metadata + "/scenarios/total_occurrences.png"
+        metadata + "/scenarios/total_occurrences.pdf"
 
     tmp.savefig(save_path)
 
@@ -433,7 +433,7 @@ def plot_timeframe_metadata_distribution(timeframes, metadata):
     plt.gcf().autofmt_xdate()
 
     save_path = "data/statistical_information/query_research/non_redundant/"+\
-        metadata + "/scenarios/total_queries.png"
+        metadata + "/scenarios/total_queries.pdf"
 
     tmp.savefig(save_path)
 
@@ -541,7 +541,7 @@ def plot_metadata_distribution_per_datatype_overall(timeframes, datatypes_list):
         plt.gcf().autofmt_xdate()
         save_path = "data/statistical_information/query_research/non_redundant/" \
                     + datatype.split("/")[0] + "/scenarios/" + \
-                    datatype.split("/")[0] + "_datatypes_overall.png"
+                    datatype.split("/")[0] + "_datatypes_overall.pdf"
 
         tmp.get_figure().savefig(save_path)
 

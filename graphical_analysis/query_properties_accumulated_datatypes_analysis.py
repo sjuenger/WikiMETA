@@ -51,7 +51,7 @@ def plot_top_accumulated_datatypes_timeframe(timeframes,metadata_mode ,recommend
 
         tmp.savefig("data/statistical_information/query_research/non_redundant/"
                     + metadata_mode + "/" + recommended_mode + "/accumulated_datatypes/" +
-                    timeframe[:22] + "accumulated_datatypes.png")
+                    timeframe[:22] + "accumulated_datatypes.pdf")
 
         plt.close()
 
@@ -99,7 +99,7 @@ def plot_top_accumulated_datatypes_overall(metadata_mode, recommended_mode):
 
     tmp.savefig("data/statistical_information/query_research/non_redundant/"
                 + metadata_mode + "/" + recommended_mode + "/accumulated_datatypes" +
-                                "/accumulated_datatypes_overall.png")
+                                "/accumulated_datatypes_overall.pdf")
 
     plt.close()
 
@@ -157,7 +157,7 @@ def plot_top_accumulated_datatypes_overall_percentage(metadata_mode ,recommended
 
     tmp.savefig("data/statistical_information/query_research/non_redundant/"
                 + metadata_mode + "/" + recommended_mode +
-                "/accumulated_datatypes/accumulated_datatypes_overall_percentage.png")
+                "/accumulated_datatypes/accumulated_datatypes_overall_percentage.pdf")
 
     plt.close()
 

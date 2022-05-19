@@ -51,7 +51,7 @@ def plot_top_accumulated_facets_timeframe(timeframes,metadata_mode ,recommended_
 
         tmp.savefig("data/statistical_information/query_research/non_redundant/"
                     + metadata_mode + "/" + recommended_mode + "/accumulated_facets/" +
-                    timeframe[:22] + "accumulated_facets.png")
+                    timeframe[:22] + "accumulated_facets.pdf")
 
         plt.close()
 
@@ -99,7 +99,7 @@ def plot_top_accumulated_facets_overall(metadata_mode, recommended_mode, x):
 
     tmp.savefig("data/statistical_information/query_research/non_redundant/"
                 + metadata_mode + "/" + recommended_mode + "/accumulated_facets" +
-                                "/accumulated_facets_overall.png")
+                                "/accumulated_facets_overall.pdf")
 
     plt.close()
 
@@ -157,7 +157,7 @@ def plot_top_accumulated_facets_overall_percentage(metadata_mode ,recommended_mo
 
     tmp.savefig("data/statistical_information/query_research/non_redundant/"
                 + metadata_mode + "/" + recommended_mode +
-                "/accumulated_facets/accumulated_facets_overall_percentage.png")
+                "/accumulated_facets/accumulated_facets_overall_percentage.pdf")
 
     plt.close()
 

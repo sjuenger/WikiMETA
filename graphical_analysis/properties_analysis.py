@@ -96,7 +96,7 @@ def plot_top_properties_timeframe(timeframes,metadata_mode ,recommended_mode, x)
 
         tmp.savefig("data/statistical_information/query_research/non_redundant/"
                     + metadata_mode + "/" + recommended_mode + "/properties/" +
-                    timeframe[:22] + "properties.png")
+                    timeframe[:22] + "properties.pdf")
 
         plt.close()
 
@@ -181,7 +181,7 @@ def plot_top_properties_overall(metadata_mode, recommended_mode, x):
     plt.gcf().autofmt_xdate()
 
     tmp.savefig("data/statistical_information/query_research/non_redundant/"
-                + metadata_mode + "/" + recommended_mode + "/properties/properties_overall.png")
+                + metadata_mode + "/" + recommended_mode + "/properties/properties_overall.pdf")
 
     plt.close()
 
@@ -274,7 +274,7 @@ def plot_top_properties_overall_percentage(metadata_mode, recommended_mode, x):
 
     tmp.savefig("data/statistical_information/query_research/non_redundant/"
                 + metadata_mode + "/" + recommended_mode +
-                "/properties/properties_overall_percentage.png")
+                "/properties/properties_overall_percentage.pdf")
 
     plt.close()
 

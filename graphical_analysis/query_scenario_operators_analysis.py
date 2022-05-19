@@ -138,7 +138,7 @@ def plot_additional_operator_information_about_scenarios_per_timeframe_for_FILTE
 
     save_path = "data/statistical_information/query_research/non_redundant/" \
                                 + metadata + "/scenarios/additional_layer/" + \
-                                    scenario + "_operators.png"
+                                    scenario + "_operators.pdf"
 
     tmp.get_figure().savefig(save_path)
 
@@ -251,7 +251,7 @@ def plot_additional_operator_information_about_scenarios_per_datatype_for_FILTER
 
     save_path = "data/statistical_information/query_research/non_redundant/" \
                                 + metadata + "/scenarios/additional_layer/" + \
-                                    scenario + "_operators_per_datatype.png"
+                                    scenario + "_operators_per_datatype.pdf"
 
     tmp.get_figure().savefig(save_path)
 

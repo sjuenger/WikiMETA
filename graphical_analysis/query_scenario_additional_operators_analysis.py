@@ -134,7 +134,7 @@ def plot_additional_second_level_operator_information_about_scenarios_per_timefr
 
     save_path = "data/statistical_information/query_research/non_redundant/" \
                                 + metadata + "/scenarios/additional_layer/" + \
-                                    scenario + "_prop_path_operators.png"
+                                    scenario + "_prop_path_operators.pdf"
 
     tmp.get_figure().savefig(save_path)
 
@@ -232,7 +232,7 @@ def plot_additional_second_level_operator_information_about_scenarios_per_dataty
 
     save_path = "data/statistical_information/query_research/non_redundant/" \
                                 + metadata + "/scenarios/additional_layer/" + \
-                                    scenario + "_prop_path_operators_per_datatype.png"
+                                    scenario + "_prop_path_operators_per_datatype.pdf"
 
     tmp.get_figure().savefig(save_path)
 

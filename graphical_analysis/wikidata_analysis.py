@@ -136,7 +136,7 @@ def plot_top_wikidata_research_properties(x):
 
                 tmp.savefig("data/statistical_information/wikidata_research/" +
                             metadata_mode + "/" + recommended_mode +
-                            "/properties/properties.png")
+                            "/properties/properties.pdf")
 
                 plt.close()
 
@@ -215,7 +215,7 @@ def plot_top_wikidata_research_accumulated_facets(x):
 
                 tmp.savefig("data/statistical_information/wikidata_research/"+
                             metadata_mode + "/" + recommended_mode +
-                            "/accumulated_facets/accumulated_facets.png")
+                            "/accumulated_facets/accumulated_facets.pdf")
 
                 plt.close()
 
@@ -292,7 +292,7 @@ def plot_top_wikidata_research_accumulated_datatypes():
 
                 tmp.savefig("data/statistical_information/wikidata_research/" +
                             metadata_mode + "/" + recommended_mode +
-                            "/accumulated_datatypes/accumulated_datatypes.png")
+                            "/accumulated_datatypes/accumulated_datatypes.pdf")
 
                 plt.close()
 

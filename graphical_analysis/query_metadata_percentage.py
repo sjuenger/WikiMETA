@@ -75,7 +75,7 @@ def display_percentage_queries_with_metadata():
     plt.gcf().autofmt_xdate()
     plt.ylim(0,)
 
-    tmp.savefig("data/counted_metadata_queries_percentage_strip.png")
+    tmp.savefig("data/counted_metadata_queries_percentage_strip.pdf")
 
     plt.close()
 
@@ -88,7 +88,7 @@ def display_percentage_queries_with_metadata():
     plt.gcf().autofmt_xdate()
     plt.ylim(0,)
 
-    tmp.savefig("data/metadata_occurrences_per_overall_queries_strip.png")
+    tmp.savefig("data/metadata_occurrences_per_overall_queries_strip.pdf")
 
     plt.close()
 
@@ -101,7 +101,7 @@ def display_percentage_queries_with_metadata():
     plt.gcf().autofmt_xdate()
     plt.ylim(0,)
 
-    tmp.savefig("data/metadata_occurrences_per_matching_metadata_queries_strip.png")
+    tmp.savefig("data/metadata_occurrences_per_matching_metadata_queries_strip.pdf")
 
     plt.close()
 
@@ -116,7 +116,7 @@ def display_percentage_queries_with_metadata():
     plt.gcf().autofmt_xdate()
     plt.ylim(0,)
 
-    tmp.savefig("data/non_redundant_metadata_occurrences_per_matching_non_redundant_metadata_queries_strip.png")
+    tmp.savefig("data/non_redundant_metadata_occurrences_per_matching_non_redundant_metadata_queries_strip.pdf")
 
     plt.close()
 
@@ -130,7 +130,7 @@ def display_percentage_queries_with_metadata():
     plt.gcf().autofmt_xdate()
     plt.ylim(0,)
 
-    tmp.savefig("data/counted_metadata_queries_strip.png")
+    tmp.savefig("data/counted_metadata_queries_strip.pdf")
 
     plt.close()
 

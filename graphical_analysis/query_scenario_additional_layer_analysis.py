@@ -122,7 +122,7 @@ def plot_additional_layer_information_about_scenarios_per_timeframe_for_OPTIONAL
 
     plt.gcf().autofmt_xdate()
     save_path = "data/statistical_information/query_research/non_redundant/" \
-                                + metadata + "/scenarios/additional_layer/" + scenario + ".png"
+                                + metadata + "/scenarios/additional_layer/" + scenario + ".pdf"
 
     tmp.get_figure().savefig(save_path)
 
@@ -337,7 +337,7 @@ def plot_additional_additional_layer_information_about_scenarios_per_timeframe_f
 
     save_path = "data/statistical_information/query_research/non_redundant/" \
                                 + metadata + "/scenarios/additional_layer/" + \
-                                    scenario + tmpFileName + ".png"
+                                    scenario + tmpFileName + ".pdf"
 
     tmp.get_figure().savefig(save_path)
 
@@ -430,7 +430,7 @@ def plot_additional_layer_information_about_scenarios_per_datatype_for_OPTIONAL_
 
     plt.gcf().autofmt_xdate()
     save_path = "data/statistical_information/query_research/non_redundant/" \
-                                + metadata + "/scenarios/additional_layer/" + scenario + "_per_datatype.png"
+                                + metadata + "/scenarios/additional_layer/" + scenario + "_per_datatype.pdf"
 
     tmp.get_figure().savefig(save_path)
 
@@ -556,7 +556,7 @@ def plot_additional_additional_layer_information_about_scenarios_per_datatype_fo
 
     save_path = "data/statistical_information/query_research/non_redundant/" \
                                 + metadata + "/scenarios/additional_layer/" + \
-                                    scenario + tmpFileName + "_per_datatype.png"
+                                    scenario + tmpFileName + "_per_datatype.pdf"
 
     tmp.get_figure().savefig(save_path)
 

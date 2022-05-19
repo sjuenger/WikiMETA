@@ -67,6 +67,6 @@ def plot_WDT_usages_vs_PD_usages():
 
     plt.gcf().autofmt_xdate()
 
-    tmp.savefig("data/WDT_usages_vs_PS_usages.png")
+    tmp.savefig("data/WDT_usages_vs_PS_usages.pdf")
 
     plt.close()
