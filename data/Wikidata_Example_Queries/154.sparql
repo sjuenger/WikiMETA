@@ -1,0 +1,12 @@
+SELECT DISTINCT ?var1  ?var2 ( COUNT ( ?var3  ) AS  ?var4  )(  GROUP_CONCAT (  ?var3 ; SEPARATOR =  "string1" )  AS  ?var5  )(  GROUP_CONCAT (  ?var6 ; SEPARATOR =  "string1" )  AS  ?var7  )
+WHERE {
+  BIND (  (  NOW (  ) - ?var2  )  AS  ?var1 ).
+  ?var3  <http://www.wikidata.org/prop/P351>  ?var8 ;
+ <http://www.wikidata.org/prop/direct/P351>  ?var6 .
+  ?var8  <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var9 .
+  ?var9  <http://www.wikidata.org/prop/reference/P813>  ?var2 .
+ FILTER (  ( (  ?var1  > "31"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+}
+GROUP BY  ?var1  ?var2 
+ORDER BY  DESC( ?var4 )

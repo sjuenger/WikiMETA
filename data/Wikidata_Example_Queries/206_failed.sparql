@@ -1,0 +1,14 @@
+SELECT( COUNT ( ?var1  ) AS  ?var2  )(  SUM ( ?var3  ) AS  ?var4  )(  (  ( "100"^^<http://www.w3.org/2001/XMLSchema#integer> * ?var4  ) / ?var2  )  AS  ?var5  )
+WHERE {
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q12136> .
+ }
+  UNION
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P279>  <http://www.wikidata.org/entity/Q12136> .
+ }
+ OPTIONAL {
+  BIND ( "1"^^<http://www.w3.org/2001/XMLSchema#integer>  AS  ?var3 ).
+  ?var1  <http://www.wikidata.org/prop/P699>  ?var6 .
+ }
+}

@@ -1,0 +1,20 @@
+SELECT ?var1Label  ?var2  ?var3 
+WHERE {
+ {
+  SELECT ?var4 ( COUNT (* ) AS  ?var3  )
+  WHERE   {
+    ?var5  <http://www.wikidata.org/prop/direct/P106>  <http://www.wikidata.org/entity/Q1028181> .
+    ?var5  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+    ?var5  ?var4  [] .
+  }
+  GROUP BY  ?var4 
+ }
+  ?var1  <http://wikiba.se/ontology#propertyType>  <http://wikiba.se/ontology#ExternalId> .
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q19595382> .
+  ?var1  <http://wikiba.se/ontology#claim>  ?var4 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY  DESC( ?var3 )
+LIMIT 100

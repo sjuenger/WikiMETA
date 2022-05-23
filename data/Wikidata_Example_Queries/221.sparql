@@ -1,0 +1,7 @@
+SELECT ?var1 ( COUNT ( ?var1  ) AS  ?var2  )(  GROUP_CONCAT (  ?var3  )  AS  ?var4  )
+WHERE {
+  ?var3  <http://www.wikidata.org/prop/direct/P18>  ?var1 .
+}
+GROUP BY  ?var1 
+ HAVING  ( (  ?var2  > "10"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+ 

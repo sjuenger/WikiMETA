@@ -1,0 +1,22 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+ {
+  SELECT ?var1 ( COUNT ( DISTINCT  ?var3  ) AS  ?var2  )
+  WHERE   {
+    ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q41176> .
+    ?var1  <http://www.wikidata.org/prop/direct/P17>  ?var3 .
+ FILTER (    (  NOT EXISTS    {
+     ?var3  <http://www.wikidata.org/prop/direct/P576>  ?var4 .
+   }
+ ) 
+) .
+  }
+  GROUP BY  ?var1 
+ }
+ FILTER (  ( (  ?var2  > "1"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY  DESC( ?var2 )ASC( ?var5 )

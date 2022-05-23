@@ -1,0 +1,17 @@
+SELECT ?var1Label ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+  ?var4  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q3305213> .
+  ?var4  <http://www.wikidata.org/prop/direct/P170>  <http://www.wikidata.org/entity/Q4233718> .
+ OPTIONAL {
+  ?var4  <http://www.wikidata.org/prop/P170>  ?var5 .
+  ?var5  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>  <http://wikiba.se/ontology#BestRank> .
+  ?var5  ?var6  ?var2 .
+  ?var1  <http://wikiba.se/ontology#qualifier>  ?var6 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1Label 
+ HAVING  ( (  ?var3  > "2"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+ LIMIT 2000

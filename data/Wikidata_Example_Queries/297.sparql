@@ -1,0 +1,17 @@
+SELECT ?var1  ?var1Label  ?var2 (  ROUND (  (  (  NOW (  ) - ?var2  ) /"365.2425"^^<http://www.w3.org/2001/XMLSchema#decimal>  )  )  AS  ?var3  )
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P139> *) <http://www.wikidata.org/entity/Q7397> .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P571>  ?var2 .
+ }
+ OPTIONAL {
+  ?var1 ( <http://www.wikidata.org/prop/P348> / <http://www.wikidata.org/prop/qualifier/P577> ) ?var2 .
+ }
+ FILTER (  (  BOUND (  ?var2  )  ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var2 )
+LIMIT 10

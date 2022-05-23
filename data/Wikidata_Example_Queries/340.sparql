@@ -1,0 +1,16 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  ?var1  <http://www.wikidata.org/prop/direct/P27>  <http://www.wikidata.org/entity/Q31> .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "nl,fr,en,de,it,es,no,pt".
+  }
+ FILTER (  (  NOT EXISTS  {
+   ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var3Label .
+ FILTER (   ( (  LANG (  ?var3Label  )  =  "string1" ) ) 
+) .
+ }
+ ) 
+) .
+}
+ORDER BY ASC( ?var1Label )

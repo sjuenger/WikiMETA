@@ -1,0 +1,10 @@
+SELECT ?var1 (  SAMPLE ( ?var2  ) AS  ?var2  )(  SAMPLE ( ?var3  ) AS  ?var3  )(  MIN ( ?var4  ) AS  ?var5  )(  MAX ( ?var4  ) AS  ?var6  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q11344> ;
+ <http://www.wikidata.org/prop/direct/P1086>  ?var3 ;
+ <http://www.wikidata.org/prop/direct/P246>  ?var2 .
+  ?var7  <http://www.wikidata.org/prop/direct/P279>  ?var1 ;
+ <http://www.wikidata.org/prop/direct/P1148>  ?var4 .
+}
+GROUP BY  ?var1 
+ORDER BY ASC( ?var3 )

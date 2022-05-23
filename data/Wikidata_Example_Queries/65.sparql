@@ -1,0 +1,12 @@
+SELECT ?var1  ?var1Label  ?var2 (  SAMPLE ( ?var3  ) AS  ?var3  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q26529> .
+  ?var1  <http://www.wikidata.org/prop/direct/P619>  ?var2 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var3 .
+ }
+}
+GROUP BY  ?var1  ?var1Label  ?var2 

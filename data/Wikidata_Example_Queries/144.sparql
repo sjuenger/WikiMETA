@@ -1,0 +1,30 @@
+SELECT ?var1 (  SAMPLE ( ?var2  ) AS  ?var3  )(  SAMPLE ( ?var4  ) AS  ?var5  )(  SAMPLE ( ?var6  ) AS  ?var7  )(  GROUP_CONCAT (  DISTINCT  ?var8 ; SEPARATOR =  "string1" )  AS  ?var9  )(  SAMPLE ( ?var10  ) AS  ?var11  )(  SAMPLE ( ?var12  ) AS  ?var13  )
+WHERE {
+ SELECT ?var1  ?var2 (  YEAR (  ?var14  )  AS  ?var4  ) ?var6  ?var10  ?var12  ?var8 
+ WHERE  {
+   ?var1  <http://www.wikidata.org/prop/direct/P179>  <http://www.wikidata.org/entity/Q471379> .
+   ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var12 .
+   ?var1  <http://www.wikidata.org/prop/direct/P571>  ?var14 .
+   ?var1  <http://www.wikidata.org/prop/direct/P31>  ?var15 .
+   ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ FILTER (   ( (  LANG (  ?var2  )  =  "string2" ) ) 
+) .
+   ?var15  <http://www.w3.org/2000/01/rdf-schema#label>  ?var6 .
+ FILTER (   ( (  LANG (  ?var6  )  =  "string2" ) ) 
+) .
+  OPTIONAL {
+   ?var1  <http://www.wikidata.org/prop/direct/P195>  ?var11 .
+   ?var11  <http://www.w3.org/2000/01/rdf-schema#label>  ?var10 .
+ FILTER (   ( (  LANG (  ?var10  )  =  "string2" ) ) 
+) .
+  }
+  OPTIONAL {
+   ?var1  <http://www.wikidata.org/prop/direct/P186>  ?var16 .
+   ?var16  <http://www.w3.org/2000/01/rdf-schema#label>  ?var8 .
+ FILTER (   ( (  LANG (  ?var8  )  =  "string2" ) ) 
+) .
+  }
+ }
+}
+GROUP BY  ?var1 
+ORDER BY ASC( ?var5 )ASC( ?var1 )ASC( ?var1Label )

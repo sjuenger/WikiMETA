@@ -1,0 +1,17 @@
+SELECT ?var1  ?var2  ?var3Label  ?var4Label 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P106>  <http://www.wikidata.org/entity/Q82955> .
+  ?var1  <http://www.wikidata.org/prop/direct/P509>  ?var2 .
+  ?var2  <http://www.wikidata.org/prop/direct/P279> * <http://www.wikidata.org/entity/Q12078> .
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var3Label .
+ FILTER (  ( (  LANG (  ?var3Label  )  =  "string1" ) ) 
+) .
+ }
+ OPTIONAL {
+  ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var4Label .
+ FILTER (  ( (  LANG (  ?var4Label  )  =  "string1" ) ) 
+) .
+ }
+}
+ORDER BY ASC( ?var1 )

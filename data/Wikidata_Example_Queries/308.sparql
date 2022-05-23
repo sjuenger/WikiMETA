@@ -1,0 +1,11 @@
+SELECT ?var1  ?var2  ?var3Label ( COUNT ( ?var4  ) AS  ?var5  )
+WHERE {
+  BIND (  LANG (  ?var6Label  )  AS  ?var4 ).
+  ?var1  <http://www.wikidata.org/prop/direct/P699>  ?var2 ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var6Label ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var3Label .
+ FILTER (  ( (  LANG (  ?var3Label  )  =  "string1" ) ) 
+) .
+}
+GROUP BY  ?var1  ?var2  ?var3Label 
+ORDER BY  DESC( ?var5 )

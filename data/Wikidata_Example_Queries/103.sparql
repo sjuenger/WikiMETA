@@ -1,0 +1,26 @@
+SELECT(  REPLACE (  STR (  ?var1  ) , "string1", "string2" )  AS  ?var2  )(  REPLACE (  STR (  ?var3  ) , "string1", "string2" )  AS  ?var4  ) ?var3Label 
+WHERE {
+  VALUES (  ?var1  ) {
+   (  <http://www.wikidata.org/entity/Q6636058>  )
+   (  <http://www.wikidata.org/entity/Q8989284>  )
+   (  <http://www.wikidata.org/entity/Q243634>  )
+   (  <http://www.wikidata.org/entity/Q13383295>  )
+   (  <http://www.wikidata.org/entity/Q659516>  )
+   (  <http://www.wikidata.org/entity/Q1020776>  )
+   (  <http://www.wikidata.org/entity/Q10124662>  )
+   (  <http://www.wikidata.org/entity/Q9066399>  )
+   (  <http://www.wikidata.org/entity/Q12309669>  )
+   (  <http://www.wikidata.org/entity/Q16033883>  )
+   (  <http://www.wikidata.org/entity/Q733744>  )
+   (  <http://www.wikidata.org/entity/Q226569>  )
+   (  <http://www.wikidata.org/entity/Q14210256>  )
+   (  <http://www.wikidata.org/entity/Q408041>  )
+   (  <http://www.wikidata.org/entity/Q750594>  )
+   (  <http://www.wikidata.org/entity/Q11075312>  )
+  }
+  ?var1  <http://www.w3.org/2002/07/owl#sameAs>  ?var3 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "[AUTO_LANGUAGE],en".
+  }
+}
+ORDER BY ASC( ?var2 )

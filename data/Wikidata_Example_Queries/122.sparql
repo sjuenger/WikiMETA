@@ -1,0 +1,10 @@
+SELECT ?var1  ?var2Label (  LANG (  ?var2Label  )  AS  ?var3  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+ FILTER (  (  LANG (  ?var2Label  )  IN (  "string1", "string2", "string3", "string4" )  ) 
+) .
+ FILTER (  (  CONTAINS (  ?var2Label , "string5" )  ) 
+) .
+}
+LIMIT 10

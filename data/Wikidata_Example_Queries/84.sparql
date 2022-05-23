@@ -1,0 +1,15 @@
+SELECT ?var1  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  ?var1  <http://www.wikidata.org/prop/direct/P735>  ?var3 .
+ FILTER (  (  NOT EXISTS  {
+   ?var3  <http://www.w3.org/2000/01/rdf-schema#label>  ?var4 .
+ FILTER (   ( (  LANG (  ?var4  )  =  "string1" ) ) 
+) .
+ }
+ ) 
+) .
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ FILTER (  ( (  LANG (  ?var2  )  =  "string1" ) ) 
+) .
+}

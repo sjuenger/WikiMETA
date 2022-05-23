@@ -1,0 +1,10 @@
+SELECT ?var1 ( COUNT ( DISTINCT  ?var2  ) AS  ?var3  )
+WHERE {
+  ?var2  <http://www.wikidata.org/prop/direct/P1367>  ?var4 .
+  ?var5  <http://schema.org/about>  ?var2 .
+ FILTER (  ( (  SUBSTR (  STR (  ?var5  ) ,"11"^^<http://www.w3.org/2001/XMLSchema#integer> ,"15"^^<http://www.w3.org/2001/XMLSchema#integer>  )  =  "string1" ) ) 
+) .
+  ?var5  <http://schema.org/inLanguage>  ?var1 .
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var3 )

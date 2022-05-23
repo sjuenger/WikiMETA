@@ -1,0 +1,8 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P352>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P703>  <http://www.wikidata.org/entity/Q15978631> .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

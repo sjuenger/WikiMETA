@@ -1,0 +1,13 @@
+SELECT ?var1Label (  YEAR (  ?var2  )  AS  ?var3  ) ?var4 (  ?var1Label  AS  ?var5  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q185441> ;
+ <http://www.wikidata.org/prop/P1082>  ?var6 .
+  ?var6  <http://www.wikidata.org/prop/statement/P1082>  ?var4 ;
+ <http://www.wikidata.org/prop/qualifier/P585>  ?var2 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+ FILTER (  ( (  YEAR (  ?var2  )  >= "1960"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+}
+ORDER BY ASC( ?var1Label )ASC( ?var3 )

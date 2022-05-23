@@ -1,0 +1,13 @@
+SELECT ?var1Label  ?var2  ?var3  ?var4  ?var5  ?var6 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q11344> ;
+ <http://www.wikidata.org/prop/direct/P2102>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P2101>  ?var3 ;
+ <http://www.wikidata.org/prop/direct/P1108>  ?var4 ;
+ <http://www.wikidata.org/prop/direct/P2054>  ?var5 ;
+ <http://www.wikidata.org/prop/direct/P2067>  ?var6 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+LIMIT 100

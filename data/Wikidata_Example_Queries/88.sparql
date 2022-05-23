@@ -1,0 +1,19 @@
+SELECT ?var1Label ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+  VALUES (  ?var2  ) {
+   (  <http://www.wikidata.org/prop/direct/P3354>  )
+   (  <http://www.wikidata.org/prop/direct/P3355>  )
+   (  <http://www.wikidata.org/prop/direct/P3356>  )
+   (  <http://www.wikidata.org/prop/direct/P3357>  )
+   (  <http://www.wikidata.org/prop/direct/P3358>  )
+   (  <http://www.wikidata.org/prop/direct/P3359>  )
+  }
+  ?var4  <http://www.wikidata.org/prop/direct/P3329>  ?var5 ;
+ ?var2  ?var6 .
+  ?var1  <http://wikiba.se/ontology#directClaim>  ?var2 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1Label  ?var2Label 
+ORDER BY ASC( ?var3 )

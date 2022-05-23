@@ -1,0 +1,13 @@
+SELECT ?var1Label 
+WHERE {
+ {
+  SELECT DISTINCT ?var1 
+  WHERE   {
+    []  <http://www.wikidata.org/prop/direct/P30>  ?var1 .
+  }
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( <http://www.w3.org/2001/XMLSchema#integer>  ( SUBSTR (  STR (  ?var1  ) , (  STRLEN (  "string1" ) +"+1"^^<http://www.w3.org/2001/XMLSchema#integer>  )  ) ) )

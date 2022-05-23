@@ -1,0 +1,17 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3Label  ?var4  ?var5 
+WHERE {
+  ?var2  <http://www.wikidata.org/prop/direct/P106>  <http://www.wikidata.org/entity/Q49757> .
+  ?var2  <http://www.wikidata.org/prop/direct/P19>  ?var1 .
+  ?var1  <http://www.wikidata.org/prop/direct/P17>  <http://www.wikidata.org/entity/Q183> .
+  ?var1  <http://www.wikidata.org/prop/direct/P625>  ?var4 .
+  ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var3Label .
+ FILTER (  ( (  LANG (  ?var3Label  )  =  "string1" ) ) 
+) .
+ OPTIONAL {
+  ?var2  <http://www.wikidata.org/prop/direct/P569>  ?var6 .
+ }
+  BIND (  YEAR (  ?var6  )  AS  ?var5 ).
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

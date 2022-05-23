@@ -1,0 +1,15 @@
+SELECT DISTINCT ?var1  ?var2  ?var3  ?var4 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q532> .
+  ?var1  <http://www.wikidata.org/prop/direct/P17>  <http://www.wikidata.org/entity/Q212> .
+  ?var5  <http://schema.org/about>  ?var1 ;
+ <http://schema.org/isPartOf>  <https://ro.wikipedia.org/> ;
+ <http://schema.org/name>  ?var4 .
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ FILTER (  ( (  LANG (  ?var2  )  =  "string1" ) ) 
+) .
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var3 .
+ FILTER (  ( (  LANG (  ?var3  )  =  "string2" ) ) 
+) .
+}
+LIMIT 300

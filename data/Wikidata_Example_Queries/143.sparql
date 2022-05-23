@@ -1,0 +1,8 @@
+SELECT ?var1  ?var1Label 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  <http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20the%20Netherlands.svg> .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+LIMIT 100

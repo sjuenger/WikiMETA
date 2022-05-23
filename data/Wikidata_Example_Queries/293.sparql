@@ -1,0 +1,8 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1  <http://wikiba.se/ontology#propertyType>  <http://wikiba.se/ontology#ExternalId> .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var1Label )

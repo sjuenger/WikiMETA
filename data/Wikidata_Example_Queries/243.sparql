@@ -1,0 +1,26 @@
+SELECT ?var1  ?var2Label  ?var3  ?var4 
+WHERE {
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q571> .
+ }
+  UNION
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q7725634> .
+ }
+  ?var1  <http://www.wikidata.org/prop/direct/P577>  ?var5 .
+ FILTER (  ( (  ?var5  <  "1830-01-01T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime>  ) ) 
+) .
+ OPTIONAL {
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P291>  ?var4 .
+ }
+  UNION
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P840>  ?var4 .
+ }
+  ?var4  <http://www.wikidata.org/prop/direct/P625>  ?var3 .
+ }
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+ FILTER (  ( (  LANG (  ?var2Label  )  =  "string1" ) ) 
+) .
+}

@@ -1,0 +1,14 @@
+SELECT ?var1 ( COUNT ( DISTINCT  ?var2  ) AS  ?var3  )
+WHERE {
+  BIND (  (  (  YEAR (  ?var4  ) - YEAR (  ?var5  )  ) - IF ( (  MONTH (  ?var4  )  <  MONTH (  ?var5  )  ) || (  MONTH (  ?var4  )  =  MONTH (  ?var5  )  ) && (  DAY (  ?var4  )  <  DAY (  ?var5  )  ),"1"^^<http://www.w3.org/2001/XMLSchema#integer> ,"0"^^<http://www.w3.org/2001/XMLSchema#integer>  )  )  AS  ?var1 ).
+  ?var2  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  ?var2 ( <http://www.wikidata.org/prop/direct/P106> / <http://www.wikidata.org/prop/direct/P279> ) <http://www.wikidata.org/entity/Q639669> .
+  ?var2 ( <http://www.wikidata.org/prop/P569> / <http://www.wikidata.org/prop/statement/value/P569> ) ?var6 .
+  ?var2 ( <http://www.wikidata.org/prop/P570> / <http://www.wikidata.org/prop/statement/value/P570> ) ?var7 .
+  ?var6  <http://wikiba.se/ontology#timeValue>  ?var5 .
+  ?var7  <http://wikiba.se/ontology#timeValue>  ?var4 .
+ FILTER (  ( (  ?var1  > "10"^^<http://www.w3.org/2001/XMLSchema#integer>  ) && (  ?var1  < "100"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+}
+GROUP BY  ?var1 
+ORDER BY ASC( ?var1 )

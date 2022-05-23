@@ -1,0 +1,30 @@
+SELECT DISTINCT ?var1  ?var1Label  ?var2  ?var2Label  ?var3Label (  YEAR (  ?var4  )  AS  ?var5  ) ?var6Label  ?var7  ?var8 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P136>  <http://www.wikidata.org/entity/Q1164267> .
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q571> .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P50>  ?var3 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P571>  ?var4 .
+ }
+  ?var1  <http://www.wikidata.org/prop/direct/P840>  ?var6 .
+  MINUS   {
+    ?var1  <http://www.wikidata.org/prop/direct/P840>  <http://www.wikidata.org/entity/Q933> .
+  }
+  ?var6  <http://www.wikidata.org/prop/direct/P625>  ?var7 .
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P953>  ?var8 .
+   ?var1  <http://www.wikidata.org/prop/direct/P364>  <http://www.wikidata.org/entity/Q150> .
+ }
+  UNION
+ {
+   ?var2  <http://www.wikidata.org/prop/direct/P629>  ?var1 .
+   ?var2  <http://www.wikidata.org/prop/direct/P953>  ?var8 .
+   ?var2  <http://www.wikidata.org/prop/direct/P407>  <http://www.wikidata.org/entity/Q150> .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "fr,ar,be,bg,bn,ca,cs,da,de,el,en,es,et,fa,fi,he,hi,hu,hy,id,it,ja,jv,ko,nb,nl,eo,pa,pl,pt,ro,ru,sh,sk,sr,sv,sw,te,th,tr,uk,yue,vec,vi,zh".
+  }
+}
+ORDER BY ASC( ?var4 )

@@ -1,0 +1,7 @@
+SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+  ?var2  ?var4  ?var5 .
+  ?var5 ( <http://www.w3.org/ns/prov#wasDerivedFrom> / <http://www.wikidata.org/prop/reference/P248> / <http://www.wikidata.org/prop/direct/P356> ) ?var1 .
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var3 )

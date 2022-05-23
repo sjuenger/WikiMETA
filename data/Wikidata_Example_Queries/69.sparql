@@ -1,0 +1,8 @@
+SELECT DISTINCT ?var1 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> ;
+( <http://www.wikidata.org/prop/direct/P106> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q482980> .
+  ?var1  <http://www.wikidata.org/prop/direct/P570>  ?var2 .
+ FILTER (  ( (  ?var2  >=  "1945-01-01T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime>  ) && (  ?var2  <=  "1946-01-01T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime>  ) ) 
+) .
+}

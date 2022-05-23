@@ -1,0 +1,15 @@
+SELECT ?var1  ?var1Label (  MAX ( ?var2  ) AS  ?var2  )
+WHERE {
+  BIND (  (  ?var3 * ?var4  )  AS  ?var2 ).
+  ?var1 ( <http://www.wikidata.org/prop/P2067> / <http://www.wikidata.org/prop/statement/value/P2067> ) [  <http://wikiba.se/ontology#quantityAmount>  ?var3 ;
+ <http://wikiba.se/ontology#quantityUnit>  [ ( <http://www.wikidata.org/prop/P2370> / <http://www.wikidata.org/prop/statement/value/P2370> ) [  <http://wikiba.se/ontology#quantityAmount>  ?var4 ;
+ <http://wikiba.se/ontology#quantityUnit>  <http://www.wikidata.org/entity/Q11570>  ]  ]  ] .
+  MINUS   {
+    ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q3647172> .
+  }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1  ?var1Label 
+ORDER BY  DESC( ?var2 )

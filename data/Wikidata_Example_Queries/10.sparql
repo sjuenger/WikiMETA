@@ -1,0 +1,41 @@
+SELECT ?var1  ?var2 (  GROUP_CONCAT (  DISTINCT  ?var3 ; SEPARATOR =  "string1" )  AS  ?var3  )(  SAMPLE ( ?var4  ) AS  ?var4  )(  GROUP_CONCAT (  DISTINCT  ?var5 ; SEPARATOR =  "string1" )  AS  ?var5  )(  GROUP_CONCAT (  DISTINCT  ?var6 ; SEPARATOR =  "string1" )  AS  ?var6  )(  GROUP_CONCAT (  DISTINCT  ?var7 ; SEPARATOR =  "string1" )  AS  ?var7  )(  GROUP_CONCAT (  DISTINCT  ?var8 ; SEPARATOR =  "string1" )  AS  ?var8  ) ?var9 
+WHERE {
+ {
+  SELECT ?var1  ?var9 
+  WHERE   {
+    ?var9  <http://schema.org/about>  ?var1 ;
+ <http://schema.org/isPartOf>  <https://de.wikipedia.org/> .
+    ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  }
+  LIMIT 200
+ }
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2004/02/skos/core#altLabel>  ?var3 .
+ FILTER (  ( (  LANG (  ?var3  )  =  "string2" ) ) 
+) .
+ }
+ OPTIONAL {
+  ?var1  <http://schema.org/description>  ?var4 .
+ FILTER (  ( (  LANG (  ?var4  )  =  "string2" ) ) 
+) .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P569>  ?var5 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P19>  ?var10 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P570>  ?var7 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P20>  ?var11 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "string2".
+    ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+    ?var10  <http://www.w3.org/2000/01/rdf-schema#label>  ?var6 .
+    ?var11  <http://www.w3.org/2000/01/rdf-schema#label>  ?var8 .
+  }
+}
+GROUP BY  ?var1  ?var2  ?var9 

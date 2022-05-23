@@ -1,0 +1,10 @@
+SELECT( COUNT ( ?var1  ) AS  ?var2  ) ?var3 
+WHERE {
+  ?var1  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>  <http://wikiba.se/ontology#Property> .
+  ?var1  <http://wikiba.se/ontology#propertyType>  ?var3 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "[AUTO_LANGUAGE],en".
+  }
+}
+GROUP BY  ?var3 
+ORDER BY  DESC( ?var2 )

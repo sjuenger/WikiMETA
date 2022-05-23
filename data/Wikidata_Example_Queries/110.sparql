@@ -1,0 +1,11 @@
+SELECT DISTINCT ?var1  ?var1Label  ?var2  ?var3 
+WHERE {
+  <http://www.wikidata.org/entity/Q9832>  <http://www.wikidata.org/prop/direct/P1082>  ?var4 .
+  ?var1  <http://www.wikidata.org/prop/direct/P1082>  ?var3 ;
+ <http://www.wikidata.org/prop/direct/P625>  ?var2 .
+ FILTER (  ( (  ABS (  (  ?var4 - ?var3  )  )  < "1000"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "nl".
+  }
+}

@@ -1,0 +1,8 @@
+SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P569>  ?var2 .
+}
+GROUP BY  ?var1 
+ HAVING  ( (  ?var3  > "2"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+ ORDER BY  DESC( ?var3 )
+LIMIT 100

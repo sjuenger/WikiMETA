@@ -1,0 +1,19 @@
+SELECT ?var1  ?var2  ?var1Label  ?var2Label 
+WHERE {
+ {
+  SELECT ?var1 (  MAX ( ?var3  ) AS  ?var3  )
+  WHERE   {
+    ?var2 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q355304> ;
+ <http://www.wikidata.org/prop/direct/P2043>  ?var3 ;
+ <http://www.wikidata.org/prop/direct/P30>  ?var1 .
+  }
+  GROUP BY  ?var1 
+ }
+  ?var2 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q355304> ;
+ <http://www.wikidata.org/prop/direct/P2043>  ?var3 ;
+ <http://www.wikidata.org/prop/direct/P30>  ?var1 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var1Label )

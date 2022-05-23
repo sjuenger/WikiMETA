@@ -1,0 +1,31 @@
+SELECT ?var1Label  ?var2Label  ?var3 
+WHERE {
+ {
+  SELECT ?var1 (  MAX ( ?var3  ) AS  ?var3  )
+  WHERE   {
+   {
+    SELECT ?var1  ?var2 ( COUNT ( ?var4  ) AS  ?var3  )
+    WHERE     {
+      ?var4  <http://www.wikidata.org/prop/direct/P86>  ?var1 ;
+ <http://www.wikidata.org/prop/direct/P826>  ?var2 .
+    }
+    GROUP BY  ?var1  ?var2 
+ HAVING      ( (  ?var3  > "1"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+    }
+  }
+  GROUP BY  ?var1 
+ }
+ {
+  SELECT ?var1  ?var2 ( COUNT ( ?var4  ) AS  ?var3  )
+  WHERE   {
+    ?var4  <http://www.wikidata.org/prop/direct/P86>  ?var1 ;
+ <http://www.wikidata.org/prop/direct/P826>  ?var2 .
+  }
+  GROUP BY  ?var1  ?var2 
+ HAVING    ( (  ?var3  > "1"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+  }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY  DESC( ?var3 )

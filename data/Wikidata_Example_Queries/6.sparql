@@ -1,0 +1,19 @@
+SELECT ?var1Label  ?var2Label  ?var3Label  ?var4Label 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P129>  ?var5 .
+  ?var2  <http://www.wikidata.org/prop/direct/P688>  ?var5 .
+  ?var4  <http://www.wikidata.org/prop/direct/P2293>  ?var2 .
+  ?var4  <http://www.wikidata.org/prop/direct/P279> * <http://www.wikidata.org/entity/Q12078> .
+  ?var5  <http://www.wikidata.org/prop/direct/P682>  ?var3 .
+ {
+   ?var3  <http://www.wikidata.org/prop/direct/P279> * <http://www.wikidata.org/entity/Q14818032> .
+ }
+  UNION
+ {
+   ?var3  <http://www.wikidata.org/prop/direct/P361> * <http://www.wikidata.org/entity/Q14818032> .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+LIMIT 1000

@@ -1,0 +1,12 @@
+SELECT DISTINCT ?var1Label (  CONCAT (  "string1", ?var2  )  AS  ?var3  ) ?var4 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P2002>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P106>  ?var5 .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var4 .
+ }
+  ?var5  <http://www.wikidata.org/prop/direct/P279> * <http://www.wikidata.org/entity/Q864503> .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

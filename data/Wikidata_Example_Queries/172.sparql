@@ -1,0 +1,12 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3  ?var4 
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/P2044> / <http://www.wikidata.org/prop/statement/value-normalized/P2044> / <http://wikiba.se/ontology#quantityAmount> ) ?var3 ;
+ <http://www.wikidata.org/prop/direct/P625>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P17>  <http://www.wikidata.org/entity/Q38> ;
+ <http://www.wikidata.org/prop/direct/P18>  ?var4 .
+ FILTER (  ( (  ?var3  > "4000"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "it".
+  }
+}

@@ -1,0 +1,10 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q13442814> ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label .
+ FILTER (  (  CONTAINS (  LCASE (  ?var1Label  ) , "string1" )  ) 
+) .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P698>  ?var2 .
+ }
+}

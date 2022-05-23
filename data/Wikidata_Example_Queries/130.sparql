@@ -1,0 +1,27 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3  ?var4 
+WHERE {
+ {
+  SELECT ?var1 ( COUNT ( ?var5  ) AS  ?var4  )(  ROUND (  AVG ( ?var6  ) )  AS  ?var3  )(  AVG ( (  ?var7 - ?var6  )  ) AS  ?var2  )
+  WHERE   {
+   {
+    SELECT ?var5  ?var1 (  AVG ( YEAR (  ?var8  )  ) AS  ?var6  )(  AVG ( YEAR (  ?var9  )  ) AS  ?var7  )
+    WHERE     {
+      ?var5  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> ;
+ <http://www.wikidata.org/prop/direct/P106>  ?var1 ;
+( <http://www.wikidata.org/prop/P569> / <http://www.wikidata.org/prop/statement/value/P569> ) [  <http://wikiba.se/ontology#timePrecision>  "9"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+ <http://wikiba.se/ontology#timeValue>  ?var8  ] ;
+( <http://www.wikidata.org/prop/P570> / <http://www.wikidata.org/prop/statement/value/P570> ) [  <http://wikiba.se/ontology#timePrecision>  "9"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+ <http://wikiba.se/ontology#timeValue>  ?var9  ] .
+    }
+    GROUP BY  ?var5  ?var1 
+   }
+  }
+  GROUP BY  ?var1 
+ }
+ FILTER (  ( (  ?var4  > "300"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var2 )

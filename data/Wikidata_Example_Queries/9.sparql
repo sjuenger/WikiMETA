@@ -1,0 +1,30 @@
+SELECT DISTINCT ?var1  ?var1Label  ?var2Label (  GROUP_CONCAT (  DISTINCT  ?var3 ; SEPARATOR =  "string1" )  AS  ?var3  ) ?var4  ?var5 
+WHERE {
+ {
+  SELECT DISTINCT ?var1  ?var3 
+  WHERE   {
+    ?var1 ( <http://www.wikidata.org/prop/direct/P1435> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q916475> .
+    ?var1  <http://www.wikidata.org/prop/P1435>  ?var6 .
+ FILTER (    (  NOT EXISTS    {
+     ?var6  <http://www.wikidata.org/prop/qualifier/P582>  ?var7 .
+   }
+ ) 
+) .
+    ?var1  <http://www.wikidata.org/prop/direct/P380>  ?var3 .
+  }
+  ORDER BY ASC( ?var3 )
+ }
+  ?var1 ( <http://www.wikidata.org/prop/direct/P131> / <http://www.wikidata.org/prop/direct/P131> *) <http://www.wikidata.org/entity/Q3068> .
+  ?var1  <http://www.wikidata.org/prop/direct/P131>  ?var2 .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P625>  ?var4 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var5 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "fr".
+  }
+}
+GROUP BY  ?var1  ?var1Label  ?var2Label  ?var4  ?var5 
+ORDER BY ASC( ?var2Label )ASC( ?var1Label )

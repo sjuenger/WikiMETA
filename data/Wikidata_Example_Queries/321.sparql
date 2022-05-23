@@ -1,0 +1,14 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3  ?var4  ?var5 
+WHERE {
+  BIND (  (  YEAR (  ?var4  ) - YEAR (  ?var3  )  )  AS  ?var5 ).
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  ?var1  <http://www.wikidata.org/prop/direct/P569>  ?var3 .
+  ?var1  <http://www.wikidata.org/prop/direct/P570>  ?var4 .
+ FILTER (  ( (  ?var5  > "10"^^<http://www.w3.org/2001/XMLSchema#integer>  ) && (  ?var5  < "100"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ FILTER (  ( (  ?var3  >  "1452-04-15"^^<http://www.w3.org/2001/XMLSchema#dateTime>  ) && (  ?var4  <  "1519-05-02"^^<http://www.w3.org/2001/XMLSchema#dateTime>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

@@ -1,0 +1,10 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1082>  ?var2 .
+ FILTER (  ( (  (  ?var2 - ROUND (  ?var2  )  )  != "0"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var2 )

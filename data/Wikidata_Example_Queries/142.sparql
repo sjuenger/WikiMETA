@@ -1,0 +1,11 @@
+SELECT ?var1  ?var2Label  ?var3  ?var4 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P2044>  ?var4 .
+ FILTER (  ( (  ?var4  > "8000"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+  ?var1  <http://www.wikidata.org/prop/direct/P625>  ?var3 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "string1".
+    ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+  }
+}

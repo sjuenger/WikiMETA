@@ -1,0 +1,13 @@
+SELECT ?var1  ?var2 ( COUNT (* ) AS  ?var3  )
+WHERE {
+  ?var4  <http://www.wikidata.org/prop/direct/P19>  <http://www.wikidata.org/entity/Q64> .
+  ?var4  <http://www.wikidata.org/prop/direct/P735>  ?var1 .
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ FILTER (  ( (  LANG (  ?var2  )  =  "string1" ) ) 
+) .
+ }
+}
+GROUP BY  ?var1  ?var2 
+ORDER BY  DESC( ?var3 )ASC( ?var2 )
+LIMIT 50

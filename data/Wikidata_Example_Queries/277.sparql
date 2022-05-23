@@ -1,0 +1,19 @@
+SELECT ?var1Label  ?var2  ?var3  ?var4 
+WHERE {
+  ?var3  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q178561> .
+  ?var3  <http://www.wikidata.org/prop/direct/P625>  ?var2 .
+ OPTIONAL {
+  ?var3  <http://www.wikidata.org/prop/direct/P580>  ?var5 .
+ }
+ OPTIONAL {
+  ?var3  <http://www.wikidata.org/prop/direct/P585>  ?var6 .
+ }
+ OPTIONAL {
+  ?var3  <http://www.wikidata.org/prop/direct/P582>  ?var7 .
+ }
+  BIND (  IF ( !( BOUND (  ?var5  ) ), IF ( !( BOUND (  ?var6  ) ), ?var7 , ?var6  ) , ?var5  )  AS  ?var8 ).
+  BIND (  YEAR (  ?var8  )  AS  ?var4 ).
+  ?var3  <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label .
+ FILTER (  ( (  LANG (  ?var1Label  )  =  "string1" ) ) 
+) .
+}

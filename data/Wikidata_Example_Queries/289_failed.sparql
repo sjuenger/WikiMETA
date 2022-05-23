@@ -1,0 +1,14 @@
+SELECT ?var1  ?var2Label ( COUNT ( DISTINCT  ?var3  ) AS  ?var4  )( COUNT ( DISTINCT  ?var5  ) AS  ?var6  )(  (  ?var4 * ?var6  )  AS  ?var7  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P106>  <http://www.wikidata.org/entity/Q2526255> .
+  ?var3  <http://www.wikidata.org/prop/direct/P57>  ?var1 .
+  ?var5  <http://schema.org/about>  ?var1 .
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+ FILTER (  ( (  LANG (  ?var2Label  )  =  "string1" ) ) 
+) .
+ }
+}
+GROUP BY  ?var1  ?var2Label 
+ORDER BY  DESC( ?var7 )
+LIMIT 100

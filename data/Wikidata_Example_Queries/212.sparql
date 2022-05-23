@@ -1,0 +1,5 @@
+SELECT( COUNT ( ?var1  ) AS  ?var2  )
+WHERE {
+  ?var3  ?var4  ?var1 .
+  ?var1 ( <http://www.w3.org/ns/prov#wasDerivedFrom> / <http://www.wikidata.org/prop/reference/P248> / <http://www.wikidata.org/prop/direct/P356> ) ?var5 .
+}

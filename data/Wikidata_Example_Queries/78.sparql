@@ -1,0 +1,9 @@
+SELECT ?var1Label ( COUNT ( ?var1Label  ) AS  ?var2  )
+WHERE {
+  ?var3  <http://www.wikidata.org/prop/direct/P826>  ?var1 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1Label 
+ORDER BY  DESC( ?var2 )

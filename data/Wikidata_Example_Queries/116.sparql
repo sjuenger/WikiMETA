@@ -1,0 +1,52 @@
+SELECT ?var1  ?var1Label  ?var2Label (  GROUP_CONCAT (  DISTINCT  ?var3Label ; SEPARATOR =  "string1" )  AS  ?var4  )(  GROUP_CONCAT (  DISTINCT  ?var5Label ; SEPARATOR =  "string1" )  AS  ?var6  ) ?var7 
+WHERE {
+  VALUES (  ?var8  ) {
+   (  <http://www.wikidata.org/entity/Q16>  )
+   (  <http://www.wikidata.org/entity/Q31>  )
+   (  <http://www.wikidata.org/entity/Q39>  )
+   (  <http://www.wikidata.org/entity/Q142>  )
+  }
+  VALUES (  ?var3  ) {
+   (  <http://www.wikidata.org/entity/Q483501>  )
+   (  <http://www.wikidata.org/entity/Q36834>  )
+   (  <http://www.wikidata.org/entity/Q639669>  )
+   (  <http://www.wikidata.org/entity/Q753110>  )
+   (  <http://www.wikidata.org/entity/Q488205>  )
+   (  <http://www.wikidata.org/entity/Q49757>  )
+   (  <http://www.wikidata.org/entity/Q4964182>  )
+   (  <http://www.wikidata.org/entity/Q1281618>  )
+   (  <http://www.wikidata.org/entity/Q36180>  )
+   (  <http://www.wikidata.org/entity/Q482980>  )
+   (  <http://www.wikidata.org/entity/Q1028181>  )
+   (  <http://www.wikidata.org/entity/Q6625963>  )
+   (  <http://www.wikidata.org/entity/Q28389>  )
+   (  <http://www.wikidata.org/entity/Q1930187>  )
+   (  <http://www.wikidata.org/entity/Q33999>  )
+   (  <http://www.wikidata.org/entity/Q3282637>  )
+   (  <http://www.wikidata.org/entity/Q81096>  )
+   (  <http://www.wikidata.org/entity/Q201788>  )
+   (  <http://www.wikidata.org/entity/Q18939491>  )
+   (  <http://www.wikidata.org/entity/Q486748>  )
+   (  <http://www.wikidata.org/entity/Q3658608>  )
+   (  <http://www.wikidata.org/entity/Q214917>  )
+   (  <http://www.wikidata.org/entity/Q11774202>  )
+   (  <http://www.wikidata.org/entity/Q205375>  )
+  }
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> ;
+ <http://www.wikidata.org/prop/direct/P21>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P570>  ?var7 ;
+ <http://www.wikidata.org/prop/direct/P27>  ?var8 ;
+ <http://www.wikidata.org/prop/direct/P27>  ?var5 ;
+ <http://www.wikidata.org/prop/direct/P106>  ?var3 .
+ FILTER (  ( (  YEAR (  ?var7  )  = "1966"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "string2".
+    ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label .
+    ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+    ?var3  <http://www.w3.org/2000/01/rdf-schema#label>  ?var3Label .
+    ?var5  <http://www.w3.org/2000/01/rdf-schema#label>  ?var5Label .
+  }
+}
+GROUP BY  ?var1  ?var1Label  ?var2Label  ?var7 
+ORDER BY ASC( ?var1Label )

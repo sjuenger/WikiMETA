@@ -1,0 +1,18 @@
+SELECT DISTINCT ?var1  ?var1Label  ?var2Label  ?var3Label (  YEAR (  ?var4  )  AS  ?var5  ) ?var6 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P180>  <http://www.wikidata.org/entity/Q243> .
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  ?var2 .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P170>  ?var3 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P571>  ?var4 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var6 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var1Label )

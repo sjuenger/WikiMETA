@@ -1,0 +1,26 @@
+SELECT ?var1  ?var1Label  ?var2 (  CONCAT (  "string1", STR (  ?var3  )  )  AS  ?var4  )(  CONCAT (  "string2", STR (  ?var5  )  )  AS  ?var6  ) ?var7  ?var8 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  ?var9 .
+  VALUES (  ?var9  ) {
+   (  <http://www.wikidata.org/entity/Q18493502>  )
+   (  <http://www.wikidata.org/entity/Q217327>  )
+  }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P1339>  ?var3 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P1120>  ?var5 .
+ }
+ OPTIONAL {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P276> ?/ <http://www.wikidata.org/prop/direct/P625> ) ?var2 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P585>  ?var7 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var8 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

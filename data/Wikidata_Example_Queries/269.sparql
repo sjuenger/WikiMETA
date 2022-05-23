@@ -1,0 +1,21 @@
+SELECT ?var1 ( COUNT ( ?var1  ) AS  ?var2  )
+WHERE {
+ SELECT DISTINCT ?var3  ?var1 
+ WHERE  {
+   ?var3  <http://www.wikidata.org/prop/direct/P279>  <http://www.wikidata.org/entity/Q7187> ;
+ <http://www.wikidata.org/prop/direct/P703>  <http://www.wikidata.org/entity/Q5> ;
+ ?var1  ?var4 .
+ FILTER (   ( !( REGEX (  STR (  ?var1  ) , "string1" ) ) ) 
+) .
+ FILTER (   (  REGEX (  STR (  ?var1  ) , "string2" )  ) 
+) .
+ FILTER (   (  NOT EXISTS   {
+    ?var3  ?var1  ?var4 .
+    ?var4  <http://www.w3.org/ns/prov#wasDerivedFrom>  ?var5 .
+  }
+ ) 
+) .
+ }
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var2 )

@@ -1,0 +1,8 @@
+SELECT DISTINCT ?var1Label 
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P166> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q7191> .
+  ?var1 ( <http://www.wikidata.org/prop/direct/P166> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q19020> .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

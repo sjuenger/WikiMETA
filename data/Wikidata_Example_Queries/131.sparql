@@ -1,0 +1,12 @@
+SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+ {
+  SELECT DISTINCT ?var2  ?var1 
+  WHERE   {
+    ?var2  <http://www.wikidata.org/prop/direct/P40>  ?var4 .
+    ?var2  <http://www.wikidata.org/prop/direct/P31>  ?var1 .
+  }
+ }
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var3 )

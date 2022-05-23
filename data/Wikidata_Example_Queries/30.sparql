@@ -1,0 +1,19 @@
+SELECT ?var1  ?var2Label  ?var3Label  ?var4Label 
+WHERE {
+  BIND (  YEAR (  ?var5  )  AS  ?var1 ).
+  ?var3  <http://www.wikidata.org/prop/P39>  [  <http://www.wikidata.org/prop/statement/P39>  <http://www.wikidata.org/entity/Q19546> ;
+ <http://www.wikidata.org/prop/qualifier/P580>  ?var5 ;
+ <http://www.wikidata.org/prop/qualifier/P582>  ?var6 ;
+ <http://www.wikidata.org/prop/qualifier/P1365>  ?var2 ;
+ <http://www.wikidata.org/prop/qualifier/P1366>  ?var4  ] .
+  ?var2  <http://www.wikidata.org/prop/P39>  [  <http://www.wikidata.org/prop/statement/P39>  <http://www.wikidata.org/entity/Q19546> ;
+ <http://www.wikidata.org/prop/qualifier/P582>  ?var7  ] .
+  ?var4  <http://www.wikidata.org/prop/P39>  [  <http://www.wikidata.org/prop/statement/P39>  <http://www.wikidata.org/entity/Q19546> ;
+ <http://www.wikidata.org/prop/qualifier/P580>  ?var8  ] .
+ FILTER (  ( (  YEAR (  ?var6  )  =  ?var1  ) && (  YEAR (  ?var7  )  =  ?var1  ) && (  YEAR (  ?var8  )  =  ?var1  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+ORDER BY ASC( ?var1 )

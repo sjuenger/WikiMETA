@@ -1,0 +1,25 @@
+SELECT DISTINCT ?var1  ?var2  ?var3  ?var4 (  YEAR (  ?var5  )  AS  ?var6  )(  YEAR (  ?var7  )  AS  ?var8  )
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q1752346> .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P1342>  ?var3 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P1001>  ?var9 .
+  ?var9  <http://www.w3.org/2000/01/rdf-schema#label>  ?var4 .
+ FILTER (  ( (  LANG (  ?var4  )  =  "string1" ) ) 
+) .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P571>  ?var5 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P576>  ?var7 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ FILTER (  ( (  LANG (  ?var2  )  =  "string1" ) ) 
+) .
+ }
+}
+ORDER BY  DESC( ?var3 )ASC( ?var2 )

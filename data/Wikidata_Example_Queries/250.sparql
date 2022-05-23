@@ -1,0 +1,20 @@
+SELECT ?var1  ?var1Label  ?var2  ?var2Label  ?var3  ?var3Label  ?var4  ?var5 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P1082>  ?var5 .
+ FILTER (  ( (  ?var5  > "1000000"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q515> ;
+ <http://www.wikidata.org/prop/direct/P17>  ?var2 ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label .
+  ?var2  <http://www.wikidata.org/prop/direct/P37>  ?var3 ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+  ?var3  <http://www.wikidata.org/prop/direct/P424>  ?var4 ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var3Label .
+ FILTER (  ( (  LANG (  ?var1Label  )  =  ?var4  ) ) 
+) .
+ FILTER (  ( (  LANG (  ?var2Label  )  =  ?var4  ) ) 
+) .
+ FILTER (  ( (  LANG (  ?var3Label  )  =  ?var4  ) ) 
+) .
+}
+LIMIT 100

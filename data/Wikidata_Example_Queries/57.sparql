@@ -1,0 +1,14 @@
+SELECT ?var1  ?var2Label ( COUNT ( ?var3  ) AS  ?var4  )
+WHERE {
+  BIND (  CONCAT (  ?var5Label , "string1" )  AS  ?var1 ).
+  ?var3  <http://www.wikidata.org/prop/direct/P1340>  ?var6 .
+  ?var3  <http://www.wikidata.org/prop/direct/P1884>  ?var2 .
+  ?var3  <http://www.wikidata.org/prop/direct/P2048>  ?var7 .
+  ?var6  <http://www.w3.org/2000/01/rdf-schema#label>  ?var5Label .
+ FILTER (  ( (  LANG (  ?var5Label  )  =  "string2" ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1  ?var2Label 

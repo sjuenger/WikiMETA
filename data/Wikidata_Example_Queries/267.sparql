@@ -1,0 +1,9 @@
+SELECT ?var1  ?var2Label 
+WHERE {
+  ?var1  <http://schema.org/description>  "string1"@pt .
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+ FILTER (  ( (  LANG (  ?var2Label  )  =  "string2" ) ) 
+) .
+ }
+}

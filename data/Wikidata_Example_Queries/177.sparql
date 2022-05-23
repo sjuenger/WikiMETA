@@ -1,0 +1,13 @@
+SELECT ?var1  ?var2 
+WHERE {
+ {
+  SELECT DISTINCT ?var1 ( COUNT ( ?var3  ) AS  ?var2  )
+  WHERE   {
+    ?var3  <http://www.wikidata.org/prop/direct/P231>  ?var1 .
+  }
+  GROUP BY  ?var1 
+ }
+ FILTER (  ( (  ?var2  > "1"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+}
+ORDER BY  DESC( ?var2 )

@@ -1,0 +1,11 @@
+SELECT DISTINCT ?var1 (  SAMPLE ( ?var2  ) AS  ?var1Label  )( COUNT ( DISTINCT  ?var3  ) AS  ?var4  )
+WHERE {
+  ?var3  <http://www.wikidata.org/prop/direct/P180>  ?var1 .
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ FILTER (  ( (  LANG (  ?var2  )  =  "string1" ) ) 
+) .
+ }
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var4 )ASC( ?var1Label )

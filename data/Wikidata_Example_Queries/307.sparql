@@ -1,0 +1,15 @@
+SELECT DISTINCT ?var1  ?var1Label  ?var2Label  ?var3Label 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P39>  <http://www.wikidata.org/entity/Q3044918> .
+  ?var1  <http://www.wikidata.org/prop/direct/P19>  ?var2 .
+  ?var2  <http://www.wikidata.org/prop/direct/P17>  ?var3 .
+ FILTER (  (  NOT EXISTS  {
+   ?var2  <http://www.wikidata.org/prop/direct/P17>  <http://www.wikidata.org/entity/Q142> .
+ }
+ ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "fr".
+  }
+}
+ORDER BY ASC( ?var3Label )ASC( ?var1Label )

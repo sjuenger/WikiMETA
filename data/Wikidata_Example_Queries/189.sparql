@@ -1,0 +1,14 @@
+PREFIX wikibase: <http://wikiba.se/ontology#> 
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/> 
+SELECT ?var1  ?var2Label  ?var3 
+WHERE {
+  ?var4 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q838948> .
+  ?var4  <http://www.wikidata.org/prop/direct/P608>  <http://www.wikidata.org/entity/Q20980830> .
+  ?var4  <http://www.wikidata.org/prop/direct/P170>  ?var1 .
+  ?var1  <http://www.wikidata.org/prop/direct/P19>  ?var2 .
+  ?var2  <http://www.wikidata.org/prop/direct/P625>  ?var3 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "fr,es,en".
+  }
+}

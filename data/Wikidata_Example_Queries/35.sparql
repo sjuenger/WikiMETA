@@ -1,0 +1,8 @@
+PREFIX schema: <http://schema.org/> 
+SELECT ?var1 
+WHERE {
+  BIND (  <http://www.wikidata.org/entity/Q52>  AS  ?var2 ).
+  ?var1  <http://schema.org/about>  ?var2 .
+ FILTER (  (  REGEX (  STR (  ?var1  ) , "string1" )  ) 
+) .
+}

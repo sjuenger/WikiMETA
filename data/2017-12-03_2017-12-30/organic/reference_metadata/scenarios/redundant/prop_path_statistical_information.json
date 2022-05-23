@@ -1,0 +1,1 @@
+{"total_found_operators": 1055, "found_operators_overall": {"/": 972, "^": 80, "|": 2, "!": 1}, "found_operators_per_datatype": {"reference_metadata/derived_+_reference_property": {"/": 967, "^": 61, "|": 2}, "reference_metadata/only_derived": {"/": 2, "^": 3}, "reference_metadata/only_reference_property": {"/": 3, "^": 16, "!": 1}}}

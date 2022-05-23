@@ -1,0 +1,9 @@
+SELECT DISTINCT ?var1  ?var2  ?var3 
+WHERE {
+  BIND (  (  NOW (  ) - ?var3  )  AS  ?var4 ).
+  ?var1  <http://www.wikidata.org/prop/direct/P351>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P703>  <http://www.wikidata.org/entity/Q15978631> ;
+ <http://schema.org/dateModified>  ?var3 .
+ FILTER (  ( (  ?var4  < "8"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+}

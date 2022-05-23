@@ -1,0 +1,13 @@
+SELECT DISTINCT ?var1  ?var1Label (  SAMPLE ( ?var2  ) AS  ?var2  )(  MAX ( ?var3  ) AS  ?var3  )(  SAMPLE ( ?var4  ) AS  ?var4  )
+WHERE {
+  BIND (  IF ( (  ?var3  < "1000000"^^<http://www.w3.org/2001/XMLSchema#integer>  ), "string1", IF ( (  ?var3  < "2000000"^^<http://www.w3.org/2001/XMLSchema#integer>  ), "string2", IF ( (  ?var3  < "5000000"^^<http://www.w3.org/2001/XMLSchema#integer>  ), "string3", IF ( (  ?var3  < "10000000"^^<http://www.w3.org/2001/XMLSchema#integer>  ), "string4", IF ( (  ?var3  < "20000000"^^<http://www.w3.org/2001/XMLSchema#integer>  ), "string5", "string6" )  )  )  )  )  AS  ?var4 ).
+  ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q515> ;
+ <http://www.wikidata.org/prop/direct/P625>  ?var2 ;
+ <http://www.wikidata.org/prop/direct/P1082>  ?var3 .
+ FILTER (  ( (  ?var3  >= "500000"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1  ?var1Label 

@@ -1,0 +1,22 @@
+SELECT DISTINCT ?var1Label  ?var2  ?var3  ?var3Label (  ?var3Label  AS  ?var4  ) ?var5  ?var6  ?var7 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P539>  ?var8 .
+  ?var1  <http://www.wikidata.org/prop/direct/P131> * <http://www.wikidata.org/entity/Q12130> .
+  ?var1  <http://www.wikidata.org/prop/direct/P131>  ?var3 .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P856>  ?var9 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P625>  ?var5 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/P625>  ?var10 .
+  ?var10  <http://www.wikidata.org/prop/statement/value/P625>  ?var11 .
+  ?var11  <http://wikiba.se/ontology#geoLatitude>  ?var6 .
+  ?var11  <http://wikiba.se/ontology#geoLongitude>  ?var7 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "fr".
+  }
+}
+ORDER BY ASC( ?var3Label )

@@ -1,0 +1,21 @@
+SELECT DISTINCT ?var1  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5633421> .
+ {
+  {
+    ?var1  <http://www.wikidata.org/prop/direct/P921>  <http://www.wikidata.org/entity/Q199655> .
+  }
+   UNION
+  {
+    ?var1  <http://www.wikidata.org/prop/direct/P921>  <http://www.wikidata.org/entity/Q16387> .
+  }
+   UNION
+  {
+    ?var1  <http://www.wikidata.org/prop/direct/P921>  <http://www.wikidata.org/entity/Q13420675> .
+  }
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "string1".
+    ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+  }
+}

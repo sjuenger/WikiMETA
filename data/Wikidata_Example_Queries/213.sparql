@@ -1,0 +1,16 @@
+SELECT ?var1  ?var2  ?var3  ?var4 
+WHERE {
+  BIND ( "0.01"^^<http://www.w3.org/2001/XMLSchema#decimal>  AS  ?var5 ).
+  ?var1 ( <http://www.wikidata.org/prop/P2044> / <http://www.wikidata.org/prop/statement/value/P2044> ) ?var6 .
+  ?var6  <http://wikiba.se/ontology#quantityAmount>  ?var3 .
+  ?var6  <http://wikiba.se/ontology#quantityUnit>  ?var7 .
+ FILTER (  ( (  ?var3  <  (  ?var5 *"1000"^^<http://www.w3.org/2001/XMLSchema#integer>  )  ) && (  ?var7  =  <http://www.wikidata.org/entity/Q11573>  ) || (  ?var3  <  (  ?var5 *"3281"^^<http://www.w3.org/2001/XMLSchema#integer>  )  ) && (  ?var7  =  <http://www.wikidata.org/entity/Q3710>  ) || (  ?var3  <  ?var5  ) && (  ?var7  =  <http://www.wikidata.org/entity/Q828224>  ) ) 
+) .
+  ?var1  <http://www.wikidata.org/prop/direct/P625>  ?var2 .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var4 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

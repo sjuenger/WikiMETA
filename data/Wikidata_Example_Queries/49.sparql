@@ -1,0 +1,16 @@
+SELECT ?var1  ?var1Label ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+ {
+  SELECT DISTINCT ?var1  ?var2 
+  WHERE   {
+    ?var4  <http://www.wikidata.org/prop/P161>  [  <http://www.wikidata.org/prop/statement/P161>  ?var2 ;
+ <http://www.wikidata.org/prop/qualifier/P453>  ?var1  ] .
+  }
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+GROUP BY  ?var1  ?var1Label 
+ORDER BY  DESC( ?var3 )
+LIMIT 25

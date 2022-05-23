@@ -1,0 +1,35 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3Label  ?var4  ?var4Label 
+WHERE {
+ {
+   BIND (  <http://www.wikidata.org/entity/Q886>  AS  ?var1 ).
+   BIND (  SUBSTR (  ?var5Label ,"0"^^<http://www.w3.org/2001/XMLSchema#integer> , (  STRLEN (  ?var5Label  ) +"-23"^^<http://www.w3.org/2001/XMLSchema#integer>  )  )  AS  ?var3Label ).
+   ?var2  <http://www.wikidata.org/prop/direct/P361>  ?var1 .
+   ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var5Label .
+ FILTER (   ( (  LANG (  ?var5Label  )  =  "string1" ) ) 
+) .
+   ?var4  <http://www.wikidata.org/prop/direct/P361>  ?var2 .
+ }
+  UNION
+ {
+   BIND (  <http://www.wikidata.org/entity/Q16538>  AS  ?var1 ).
+   BIND (  SUBSTR (  ?var5Label ,"0"^^<http://www.w3.org/2001/XMLSchema#integer> , (  STRLEN (  ?var5Label  ) +"-20"^^<http://www.w3.org/2001/XMLSchema#integer>  )  )  AS  ?var3Label ).
+   ?var2  <http://www.wikidata.org/prop/direct/P361>  ?var1 .
+   ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var5Label .
+ FILTER (   ( (  LANG (  ?var5Label  )  =  "string1" ) ) 
+) .
+   ?var4  <http://www.wikidata.org/prop/direct/P361>  ?var2 .
+ }
+  UNION
+ {
+   BIND (  <http://www.wikidata.org/entity/Q147235>  AS  ?var1 ).
+   BIND (  CONCAT (  "string2", SUBSTR (  ?var5Label ,"25"^^<http://www.w3.org/2001/XMLSchema#integer>  )  )  AS  ?var3Label ).
+   ?var2  <http://www.wikidata.org/prop/direct/P361>  ?var1 .
+   ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var5Label .
+ FILTER (   ( (  LANG (  ?var5Label  )  =  "string1" ) ) 
+) .
+   ?var4  <http://www.wikidata.org/prop/direct/P361>  ?var2 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

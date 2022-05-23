@@ -1,0 +1,12 @@
+SELECT ?var1  ?var2 ( COUNT ( ?var3  ) AS  ?var4  )
+WHERE {
+  ?var3  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q3863> .
+  ?var3  <http://www.wikidata.org/prop/direct/P61>  ?var1 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "string1".
+    ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+  }
+}
+GROUP BY  ?var1  ?var2 
+ORDER BY  DESC( ?var4 )
+LIMIT 10

@@ -1,0 +1,22 @@
+SELECT ?var1  ?var1Label  ?var2Label  ?var3  ?var4  ?var5Label  ?var6 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  ?var1  <http://www.wikidata.org/prop/direct/P21>  <http://www.wikidata.org/entity/Q6581072> .
+  ?var1 ( <http://www.wikidata.org/prop/direct/P106> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q901> .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P734>  ?var2 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P569>  ?var3 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P570>  ?var4 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P27>  ?var5 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "nl,en,fr,de,es,it,no".
+  }
+}
+ORDER BY ASC( ?var1Label )

@@ -1,0 +1,11 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3 
+WHERE {
+  BIND (  <http://www.wikidata.org/entity/Q5>  AS  ?var4 ).
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  ?var4 ;
+( <http://www.wikidata.org/prop/P2067> / <http://www.wikidata.org/prop/statement/value-normalized/P2067> / <http://wikiba.se/ontology#quantityAmount> ) ?var2 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "[AUTO_LANGUAGE],en,es,fr,de".
+  }
+}
+ORDER BY  DESC( ?var2 )
+LIMIT 20

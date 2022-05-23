@@ -1,0 +1,13 @@
+SELECT ?var1  ?var1Label ( COUNT ( DISTINCT  ?var2  ) AS  ?var3  )(  GROUP_CONCAT (  DISTINCT  ?var2Label ; SEPARATOR =  "string1" )  AS  ?var4  )
+WHERE {
+  ?var5  <http://www.wikidata.org/prop/direct/P279> * <http://www.wikidata.org/entity/Q634> .
+  ?var2  <http://www.wikidata.org/prop/direct/P31>  ?var5 .
+  ?var2  <http://www.wikidata.org/prop/direct/P61>  ?var1 .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "string2".
+    ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label .
+    ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+  }
+}
+GROUP BY  ?var1  ?var1Label 
+ORDER BY  DESC( ?var3 )

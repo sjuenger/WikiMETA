@@ -1,0 +1,16 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q5> .
+  ?var1  <http://www.wikidata.org/prop/direct/P935>  ?var2 .
+ FILTER (  (  NOT EXISTS  {
+   ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var3 .
+ }
+ ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "fr,en".
+  }
+ FILTER (  (  REGEX (  STR (  ?var1  ) , "string1", "string2" )  ) 
+) .
+}
+LIMIT 100

@@ -1,0 +1,7 @@
+SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+  ?var2  <http://www.wikidata.org/prop/direct/P403> + ?var1 .
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var3 )
+LIMIT 10

@@ -1,0 +1,15 @@
+SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )(  SAMPLE ( ?var2Label  ) AS  ?var4Label  )(  ?var1  AS  ?var5  )
+WHERE {
+  BIND (  STR (  YEAR (  ?var6  )  )  AS  ?var1 ).
+  ?var7  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q11424> .
+  ?var7  <http://www.wikidata.org/prop/direct/P577>  ?var6 .
+  ?var7  <http://www.wikidata.org/prop/direct/P136>  ?var2 .
+  ?var2  <http://www.w3.org/2000/01/rdf-schema#label>  ?var2Label .
+ FILTER (  ( (  LANG (  ?var2Label  )  =  "string1" ) ) 
+) .
+ FILTER (  ( (  ?var6  >=  "2000-00-00T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime>  ) ) 
+) .
+}
+GROUP BY  ?var2Label  ?var1 
+ HAVING  ( (  ?var3  > "30"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+ 

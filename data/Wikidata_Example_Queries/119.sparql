@@ -1,0 +1,22 @@
+PREFIX gas: <http://www.bigdata.com/rdf/gas#> 
+SELECT ?var1  ?var1Label  ?var2  ?var3 
+WHERE {
+ SERVICE  <http://www.bigdata.com/rdf/gas#service>   {
+    <http://www.bigdata.com/rdf/gas#program>  <http://www.bigdata.com/rdf/gas#gasClass>  "com.bigdata.rdf.graph.analytics.SSSP";
+ <http://www.bigdata.com/rdf/gas#in>  <http://www.wikidata.org/entity/Q720> ;
+ <http://www.bigdata.com/rdf/gas#traversalDirection>  "string1";
+ <http://www.bigdata.com/rdf/gas#out>  ?var1 ;
+ <http://www.bigdata.com/rdf/gas#out1>  ?var4 ;
+ <http://www.bigdata.com/rdf/gas#maxIterations> "4"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+ <http://www.bigdata.com/rdf/gas#linkType>  <http://www.wikidata.org/prop/direct/P40> .
+  }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P40>  ?var3 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P18>  ?var2 .
+ }
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}

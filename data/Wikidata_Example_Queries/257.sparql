@@ -1,0 +1,21 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q1190554> .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P585>  ?var2 .
+ }
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P580>  ?var2 .
+ }
+  BIND (  (  NOW (  ) - ?var2  )  AS  ?var3 ).
+ FILTER (  (  BOUND (  ?var2  )  && (  DATATYPE (  ?var2  )  =  <http://www.w3.org/2001/XMLSchema#dateTime>  ) ) 
+) .
+ FILTER (  ( ( "0"^^<http://www.w3.org/2001/XMLSchema#integer>  <=  ?var3  ) && (  ?var3  < "31"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ OPTIONAL {
+  ?var1  <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label .
+ FILTER (  ( (  LANG (  ?var1Label  )  =  "string1" ) ) 
+) .
+ }
+}
+LIMIT 10

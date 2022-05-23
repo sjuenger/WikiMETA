@@ -1,0 +1,16 @@
+SELECT ?var1  ?var1Label  ?var2 
+WHERE {
+  ?var1 ( <http://www.wikidata.org/prop/direct/P31> / <http://www.wikidata.org/prop/direct/P279> *) <http://www.wikidata.org/entity/Q484170> ;
+ <http://www.wikidata.org/prop/direct/P17>  <http://www.wikidata.org/entity/Q142> ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var1Label ;
+ <http://www.wikidata.org/prop/direct/P625>  ?var2 .
+ FILTER (  ( (  LANG (  ?var1Label  )  =  "string1" ) ) 
+) .
+ FILTER (  (  REGEX (  ?var1Label , "string2" )  ) 
+) .
+ FILTER (  (  NOT EXISTS  {
+   ?var1  <http://www.wikidata.org/prop/direct/P131>  <http://www.wikidata.org/entity/Q33788> .
+ }
+ ) 
+) .
+}

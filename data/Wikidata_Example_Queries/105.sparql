@@ -1,0 +1,13 @@
+SELECT DISTINCT *
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q8513> ;
+ <http://www.w3.org/2000/01/rdf-schema#label>  ?var2 .
+ OPTIONAL {
+  ?var1  <http://www.wikidata.org/prop/direct/P275>  ?var3 .
+  ?var3  <http://www.w3.org/2000/01/rdf-schema#label>  ?var4 .
+ FILTER (  ( (  LANG (  ?var4  )  =  "string1" ) ) 
+) .
+ }
+ FILTER (  ( (  LANG (  ?var2  )  =  "string1" ) ) 
+) .
+}

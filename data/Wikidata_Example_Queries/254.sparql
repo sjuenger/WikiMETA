@@ -1,0 +1,12 @@
+SELECT ?var1Label (  YEAR (  ?var2  )  AS  ?var3  )
+WHERE {
+  BIND (  MONTH (  NOW (  )  )  AS  ?var4 ).
+  BIND (  DAY (  NOW (  )  )  AS  ?var5 ).
+  ?var1  <http://www.wikidata.org/prop/direct/P569>  ?var2 .
+ FILTER (  ( (  MONTH (  ?var2  )  =  ?var4  ) && (  DAY (  ?var2  )  =  ?var5  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en".
+  }
+}
+LIMIT 10

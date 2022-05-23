@@ -1,0 +1,8 @@
+SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q202444> ;
+ <http://www.wikidata.org/prop/direct/P460>  ?var2 .
+}
+GROUP BY  ?var1 
+ORDER BY  DESC( ?var3 )
+LIMIT 10

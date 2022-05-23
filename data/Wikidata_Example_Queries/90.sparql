@@ -1,0 +1,24 @@
+SELECT( COUNT ( DISTINCT  ?var1  ) AS  ?var2  )
+WHERE {
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P1971>  ?var3 .
+  {
+   SELECT ?var1 ( COUNT ( ?var4  ) AS  ?var5  )
+   WHERE    {
+     ?var1  <http://www.wikidata.org/prop/direct/P40>  ?var4 .
+   }
+   GROUP BY  ?var1 
+  }
+ FILTER (   ( (  ?var3  =  ?var5  ) ) 
+) .
+ }
+  UNION
+ {
+   ?var1  <http://www.wikidata.org/prop/direct/P1971>  "0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+ FILTER (   (  NOT EXISTS   {
+    ?var1  <http://www.wikidata.org/prop/direct/P40>  ?var4 .
+  }
+ ) 
+) .
+ }
+}

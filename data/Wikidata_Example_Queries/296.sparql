@@ -1,0 +1,12 @@
+SELECT *
+WHERE {
+ {
+  SELECT ?var1 ( COUNT ( ?var2  ) AS  ?var3  )(  GROUP_CONCAT (  ?var2 ; SEPARATOR =  "string1" )  AS  ?var4  )
+  WHERE   {
+    ?var2  <http://www.wikidata.org/prop/direct/P345>  ?var1 .
+  }
+  GROUP BY  ?var1 
+ }
+ FILTER (  ( (  ?var3  > "1"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+}

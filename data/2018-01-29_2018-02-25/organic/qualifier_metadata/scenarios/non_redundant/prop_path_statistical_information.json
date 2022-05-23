@@ -1,0 +1,1 @@
+{"total_found_operators": 653, "found_operators_overall": {"|": 549, "/": 90, "*": 7, "+": 4, "^": 3}, "found_operators_per_datatype": {"qualifier_metadata/property_qualifier": {"|": 549, "/": 90, "*": 7, "+": 4, "^": 3}}}

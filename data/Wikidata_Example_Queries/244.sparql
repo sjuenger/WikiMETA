@@ -1,0 +1,11 @@
+SELECT ?var1  ?var1Label  ?var2  ?var3 
+WHERE {
+  ?var1  <http://www.wikidata.org/prop/direct/P651>  [] .
+  ?var1  <http://wikiba.se/ontology#statements>  ?var3 .
+ FILTER (  ( (  ?var3  < "6"^^<http://www.w3.org/2001/XMLSchema#integer>  ) ) 
+) .
+ SERVICE  <http://wikiba.se/ontology#label>   {
+    <http://www.bigdata.com/rdf#serviceParam>  <http://wikiba.se/ontology#language>  "en,nl".
+  }
+}
+ORDER BY ASC( ?var1Label )
